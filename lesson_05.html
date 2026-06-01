@@ -4,82 +4,188 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Math Tutoring - Magic School</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Lato:ital,wght@0,400;0,700;1,400&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+    <!-- MathJax for Equations -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* ================= CSS VARIABLES - MAGIC THEME ================= */
         :root {
-            --primary-bg: #1a0b2e; --secondary-bg: #2d1b4e; --accent-gold: #d4af37;
-            --accent-blue: #4facfe; --text-light: #f0f8ff; --text-muted: #b0c4de;
-            --success: #2ecc71; --danger: #e74c3c; --parchment: #fdf5e6; --ink: #2c3e50;
+            --primary-bg: #1a0b2e;
+            --secondary-bg: #2d1b4e;
+            --accent-gold: #d4af37;
+            --accent-blue: #4facfe;
+            --text-light: #f0f8ff;
+            --text-muted: #b0c4de;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --parchment: #fdf5e6;
+            --ink: #2c3e50;
             --magic-glow: 0 0 15px rgba(212, 175, 55, 0.6);
         }
-        body { margin: 0; padding: 0; font-family: 'Lato', sans-serif; background-color: var(--primary-bg); color: var(--text-light); background-image: radial-gradient(circle at 10% 20%, rgb(45, 27, 78) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgb(26, 11, 46) 0%, transparent 50%); overflow-x: hidden; }
+
+        /* ================= BASE STYLES ================= */
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Lato', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgb(45, 27, 78) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgb(26, 11, 46) 0%, transparent 50%);
+            overflow-x: hidden;
+        }
+
         h1, h2, h3 { font-family: 'Cinzel Decorative', cursive; color: var(--accent-gold); text-shadow: var(--magic-glow); }
-        .bilingual { display: block; font-size: 0.8em; color: var(--text-muted); font-style: italic; margin-top: 2px; }
         
-        /* Header & Rules */
-        .main-header { background: linear-gradient(180deg, #2d1b4e 0%, #1a0b2e 100%); border-bottom: 2px solid var(--accent-gold); padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .class-rules { background: rgba(79, 172, 254, 0.1); border: 1px dashed var(--accent-blue); border-radius: 10px; padding: 10px 15px; margin: 15px 50px; text-align: center; }
+        .bilingual {
+            display: block; font-size: 0.8em; color: var(--text-muted);
+            font-style: italic; margin-top: 2px; font-family: 'Lato', sans-serif;
+        }
+
+        /* ================= HEADER & CLASS RULES ================= */
+        .main-header {
+            background: linear-gradient(180deg, #2d1b4e 0%, #1a0b2e 100%);
+            border-bottom: 2px solid var(--accent-gold);
+            padding: 15px; text-align: center;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .header-title { margin: 0; font-size: 2.2rem; letter-spacing: 2px; }
+        .header-info { font-size: 1rem; margin-top: 5px; font-family: 'Amatic SC', cursive; color: var(--accent-blue); letter-spacing: 1px; }
+
+        .class-rules {
+            background: rgba(79, 172, 254, 0.1); border: 1px dashed var(--accent-blue);
+            border-radius: 10px; padding: 10px 15px; margin: 15px 50px; text-align: center;
+        }
         .class-rules ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin: 0; }
         .class-rules li { display: flex; align-items: center; gap: 8px; font-size: 1rem; }
 
-        /* Layout */
-        .main-container { display: flex; padding: 20px; gap: 20px; max-width: 1400px; margin: 0 auto; }
+        /* ================= MAIN LAYOUT 3:1 ================= */
+        .main-container {
+            display: flex; padding: 20px; gap: 20px;
+            max-width: 1400px; margin: 0 auto;
+        }
         .content-area { flex: 3; display: flex; flex-direction: column; gap: 30px; }
         .sidebar-canvas { flex: 1; position: relative; }
-        .sticky-canvas-container { position: sticky; top: 80px; background: var(--secondary-bg); border: 2px solid var(--accent-gold); border-radius: 15px; padding: 15px; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); text-align: center; }
-        
+
+        /* ================= STICKY SIDEBAR CANVAS ================= */
+        .sticky-canvas-container {
+            position: sticky; top: 80px; background: var(--secondary-bg);
+            border: 2px solid var(--accent-gold); border-radius: 15px; padding: 15px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); text-align: center;
+        }
+        .sticky-canvas-container h3 { margin-top: 0; font-size: 1.2rem; }
+
         /* Scratchpad Tools */
-        .sp-tools { display: flex; gap: 5px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
-        .sp-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--text-muted); cursor: pointer; transition: 0.2s; }
+        .sp-tools { display: flex; gap: 8px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; align-items: center; }
+        .sp-btn {
+            width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--text-muted);
+            cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center;
+        }
         .sp-btn.active, .sp-btn:hover { border-color: var(--accent-gold); transform: scale(1.1); box-shadow: 0 0 8px var(--accent-gold); }
-        .sp-eraser { background: var(--parchment); color: var(--ink); font-size: 14px; display: flex; align-items: center; justify-content: center; border-radius: 5px; width: auto; padding: 0 8px; }
-        #scratchpad { background-color: var(--parchment); border-radius: 8px; cursor: crosshair; display: block; margin: 0 auto; box-shadow: inset 0 0 10px rgba(0,0,0,0.2); touch-action: none; }
+        .sp-tool-btn {
+            background: var(--primary-bg); color: var(--text-light); font-size: 12px;
+            width: auto; padding: 0 10px; height: 30px; border-radius: 15px;
+            border: 1px solid var(--text-muted);
+        }
+        .sp-tool-btn.active { background: var(--accent-gold); color: var(--primary-bg); border-color: var(--accent-gold); }
+        
+        #scratchpad {
+            background-color: var(--parchment); border-radius: 8px; cursor: crosshair;
+            display: block; margin: 0 auto; box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            touch-action: none; /* Prevent scrolling while drawing */
+        }
 
-        /* Cards & Sections */
-        .section-card { background: linear-gradient(145deg, var(--secondary-bg), #241545); border: 1px solid var(--accent-gold); border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: transform 0.3s ease; }
+        /* ================= SECTION CARDS ================= */
+        .section-card {
+            background: linear-gradient(145deg, var(--secondary-bg), #241545);
+            border: 1px solid var(--accent-gold); border-radius: 15px; padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: transform 0.3s ease;
+        }
         .section-card:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15); }
-        .section-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 10px; margin-bottom: 20px; }
-        .timer-badge { background: rgba(0,0,0,0.3); padding: 5px 12px; border-radius: 20px; font-family: monospace; color: var(--accent-blue); border: 1px solid var(--accent-blue); font-weight: bold; font-size: 0.9rem; }
-        .theory-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid var(--accent-gold); line-height: 1.5; }
+        
+        .section-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 10px; margin-bottom: 20px;
+        }
+        .timer-badge {
+            background: rgba(0,0,0,0.3); padding: 5px 12px; border-radius: 20px;
+            font-family: monospace; color: var(--accent-blue); border: 1px solid var(--accent-blue);
+            font-weight: bold; font-size: 0.9rem;
+        }
 
-        /* Interactive Elements */
-        .btn { padding: 10px 20px; border: none; border-radius: 5px; font-family: 'Cinzel Decorative', cursive; cursor: pointer; transition: all 0.3s; font-size: 0.9rem; }
+        .theory-box {
+            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;
+            margin-bottom: 20px; border-left: 4px solid var(--accent-gold); line-height: 1.5;
+        }
+
+        /* ================= BUTTONS ================= */
+        .btn {
+            padding: 10px 20px; border: none; border-radius: 5px;
+            font-family: 'Cinzel Decorative', cursive; cursor: pointer;
+            transition: all 0.3s; font-size: 0.9rem;
+        }
         .btn-check { background-color: var(--accent-gold); color: var(--primary-bg); font-weight: bold; }
         .btn-check:hover { box-shadow: 0 0 15px var(--accent-gold); transform: translateY(-2px); }
         .btn-reset { background-color: transparent; color: var(--danger); border: 1px solid var(--danger); }
         .btn-reset:hover { background-color: rgba(231, 76, 60, 0.2); }
-        .game-container { background: rgba(0,0,0,0.2); border-radius: 10px; padding: 20px; margin-top: 20px; border: 1px dashed rgba(255,255,255,0.1); }
 
-        /* Quest Grid (Multiple Choice) */
+        /* ================= GAME CONTAINERS & QUESTS ================= */
+        .game-container {
+            background: rgba(0,0,0,0.2); border-radius: 10px; padding: 20px; margin-top: 20px;
+            border: 1px dashed rgba(255,255,255,0.1);
+        }
         .quest-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 15px; }
-        .spell-card { background: var(--primary-bg); border: 2px solid var(--text-muted); border-radius: 10px; padding: 15px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+        
+        .spell-card {
+            background: var(--primary-bg); border: 2px solid var(--text-muted); border-radius: 10px;
+            padding: 15px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+        }
         .spell-card:hover { border-color: var(--accent-blue); background: rgba(79, 172, 254, 0.1); }
         .spell-card.selected { border-color: var(--accent-gold); background: rgba(212, 175, 55, 0.15); box-shadow: var(--magic-glow); }
         .spell-card.correct { border-color: var(--success); background: rgba(46, 204, 113, 0.2); }
         .spell-card.wrong { border-color: var(--danger); background: rgba(231, 76, 60, 0.2); animation: shake 0.5s; }
-        .spell-card .q-text { font-weight: bold; margin-bottom: 5px; }
+        .spell-card .q-text { font-weight: bold; margin-bottom: 8px; }
         .spell-card .opts { display: flex; gap: 10px; flex-wrap: wrap; }
-        .opt-btn { background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.2); }
-        .spell-card.selected .opt-btn { border-color: var(--accent-gold); color: var(--accent-gold); }
+        .opt-btn {
+            background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px;
+            font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.2); transition: 0.2s;
+        }
+        .spell-card.selected .opt-btn.chosen { border-color: var(--accent-gold); color: var(--accent-gold); background: rgba(212, 175, 55, 0.2); }
 
         /* Drag & Drop Zones */
         .drag-zone { display: flex; gap: 15px; justify-content: center; margin-bottom: 20px; }
-        .drop-zone { border: 2px dashed var(--accent-blue); min-height: 50px; border-radius: 8px; padding: 10px; display: flex; align-items: center; justify-content: center; transition: background 0.3s; background: rgba(79, 172, 254, 0.05); flex: 1; max-width: 150px; }
+        .drop-zone {
+            border: 2px dashed var(--accent-blue); min-height: 50px; border-radius: 8px; padding: 10px;
+            display: flex; align-items: center; justify-content: center; transition: background 0.3s;
+            background: rgba(79, 172, 254, 0.05); flex: 1; max-width: 150px;
+        }
         .drop-zone.over { background: rgba(79, 172, 254, 0.3); border-color: var(--accent-gold); }
-        .draggable { cursor: grab; background: var(--accent-gold); color: var(--primary-bg); font-weight: bold; padding: 10px 15px; border-radius: 5px; font-family: monospace; font-size: 1.2rem; user-select: none; }
+        .draggable {
+            cursor: grab; background: var(--accent-gold); color: var(--primary-bg); font-weight: bold;
+            padding: 10px 15px; border-radius: 5px; font-family: monospace; font-size: 1.2rem; user-select: none;
+        }
         .draggable:active { cursor: grabbing; }
 
         /* Visuals & SVGs */
-        .visual-box { background: rgba(0,0,0,0.3); border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center; border: 1px solid rgba(212, 175, 55, 0.2); }
+        .visual-box {
+            background: rgba(0,0,0,0.3); border-radius: 10px; padding: 20px; margin: 20px 0;
+            text-align: center; border: 1px solid rgba(212, 175, 55, 0.2);
+        }
         .interactive-cards { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
         .flip-card { width: 200px; height: 150px; perspective: 1000px; cursor: pointer; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; }
         .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid var(--accent-gold); }
+        .flip-card-front, .flip-card-back {
+            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden;
+            backface-visibility: hidden; border-radius: 10px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; border: 2px solid var(--accent-gold);
+        }
         .flip-card-front { background: var(--secondary-bg); }
         .flip-card-back { background: var(--accent-blue); color: white; transform: rotateY(180deg); }
 
@@ -92,43 +198,60 @@
         .nl-btn { background: var(--accent-gold); color: var(--primary-bg); width: 40px; height: 40px; border-radius: 50%; border: none; font-size: 1.5rem; cursor: pointer; font-weight: bold; transition: 0.2s; }
         .nl-btn:hover { transform: scale(1.1); }
 
+        /* Feedback Box */
         .feedback-box { margin-top: 15px; padding: 10px; border-radius: 5px; display: none; }
         .feedback-box.show { display: block; animation: fadeInDown 0.5s; }
         .feedback-box.ok { background: rgba(46, 204, 113, 0.2); color: var(--success); border: 1px solid var(--success); }
         .feedback-box.no { background: rgba(231, 76, 60, 0.2); color: var(--danger); border: 1px solid var(--danger); }
 
-        /* Assessment */
+        /* ================= ASSESSMENT STYLES ================= */
         .tab-container { display: flex; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; }
-        .tab-btn { background: rgba(0,0,0,0.3); color: var(--text-muted); border: 1px solid var(--text-muted); padding: 8px 15px; border-radius: 8px 8px 0 0; cursor: pointer; font-family: 'Cinzel Decorative', cursive; transition: all 0.3s; font-size: 0.8rem; }
+        .tab-btn {
+            background: rgba(0,0,0,0.3); color: var(--text-muted); border: 1px solid var(--text-muted);
+            padding: 8px 15px; border-radius: 8px 8px 0 0; cursor: pointer;
+            font-family: 'Cinzel Decorative', cursive; transition: all 0.3s; font-size: 0.8rem;
+        }
         .tab-btn.active { background: var(--accent-gold); color: var(--primary-bg); border-color: var(--accent-gold); }
-        .tab-content { display: none; background: rgba(0,0,0,0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(212, 175, 55, 0.3); }
+        .tab-content {
+            display: none; background: rgba(0,0,0,0.1); padding: 20px; border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
         .tab-content.active { display: block; animation: fadeInDown 0.5s; }
-        .assess-input { width: 100%; padding: 8px; margin-bottom: 15px; background: var(--parchment); color: var(--ink); border-radius: 5px; border: 1px solid var(--accent-gold); }
+        .assess-input {
+            width: 100%; padding: 8px; margin-bottom: 15px; background: var(--parchment);
+            color: var(--ink); border-radius: 5px; border: 1px solid var(--accent-gold);
+        }
         .a-question { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed rgba(255,255,255,0.1); }
-        .a-options label { display: block; background: var(--primary-bg); padding: 8px; border-radius: 5px; margin: 5px 0; cursor: pointer; border: 1px solid transparent; transition: 0.2s; }
+        .a-options label {
+            display: block; background: var(--primary-bg); padding: 8px; border-radius: 5px;
+            margin: 5px 0; cursor: pointer; border: 1px solid transparent; transition: 0.2s;
+        }
         .a-options label:hover { border-color: var(--accent-gold); }
         .a-options input { margin-right: 10px; accent-color: var(--accent-gold); }
-        .a-select { background: var(--primary-bg); color: var(--text-light); padding: 8px; borderRadius: 5px; border: 1px solid var(--accent-gold); width: 100%; }
+        .a-select { background: var(--primary-bg); color: var(--text-light); padding: 8px; border-radius: 5px; border: 1px solid var(--accent-gold); width: 100%; }
         .q-result { margin-top: 8px; padding: 8px; border-radius: 5px; font-size: 0.9rem; display: none; }
         .q-result.correct { display: block; background: rgba(46, 204, 113, 0.2); color: var(--success); border: 1px solid var(--success); }
         .q-result.incorrect { display: block; background: rgba(231, 76, 60, 0.2); color: var(--danger); border: 1px solid var(--danger); }
         .score-display { font-size: 1.2rem; font-family: 'Cinzel Decorative', cursive; color: var(--accent-gold); text-align: center; margin-top: 20px; }
+
+        /* Feedback Portal */
         .star-rating { display: flex; flex-direction: row-reverse; justify-content: center; gap: 10px; }
         .star-rating input { display: none; }
         .star-rating label { font-size: 2.5rem; color: var(--text-muted); cursor: pointer; transition: 0.2s; }
         .star-rating input:checked ~ label, .star-rating label:hover, .star-rating label:hover ~ label { color: var(--accent-gold); text-shadow: var(--magic-glow); }
         .magic-textarea { width: 100%; height: 80px; background: var(--parchment); color: var(--ink); border: 2px solid var(--accent-gold); border-radius: 10px; padding: 10px; resize: vertical; }
 
-        /* Animations */
+        /* ================= ANIMATIONS ================= */
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
         @keyframes pulseGlow { 0% { box-shadow: 0 0 5px var(--accent-gold); } 50% { box-shadow: 0 0 25px var(--accent-gold); } 100% { box-shadow: 0 0 5px var(--accent-gold); } }
         .float-anim { animation: float 3s ease-in-out infinite; }
 
+        /* ================= PRINT STYLES ================= */
         @media print {
             body { background: white; color: black; }
-            .main-header, .class-rules, .sidebar-canvas, .btn, .tab-container, .q-result.incorrect { display: none !important; }
+            .main-header, .class-rules, .sidebar-canvas, .btn, .tab-container, .q-result.incorrect, .sp-tools { display: none !important; }
             .section-card { box-shadow: none; border: 1px solid black; background: white; break-inside: avoid; }
             h1, h2, h3 { color: black; text-shadow: none; }
             .tab-content { display: block !important; border: none; background: white; }
@@ -139,11 +262,13 @@
 </head>
 <body>
 
+    <!-- ================= HEADER ================= -->
     <header class="main-header">
-        <h1 style="margin:0; font-size:2.2rem; letter-spacing:2px;"><i class="fas fa-hat-wizard"></i> MATH TUTORING <i class="fas fa-wand-magic-sparkles"></i></h1>
-        <div style="font-size: 1rem; margin-top: 5px; font-family: 'Amatic SC', cursive; color: var(--accent-blue);">Topic: Addition & Subtraction | Tutor: Deni | Cambridge</div>
+        <h1 class="header-title"><i class="fas fa-hat-wizard"></i> MATH TUTORING <i class="fas fa-wand-magic-sparkles"></i></h1>
+        <div class="header-info">Topic: Addition & Subtraction | Tutor: Deni | Cambridge</div>
     </header>
 
+    <!-- ================= CLASS RULES ================= -->
     <div class="class-rules">
         <ul>
             <li><i class="fas fa-comments" style="color:var(--accent-gold)"></i> Speak in turns <span class="bilingual">Berbicara bergantian</span></li>
@@ -151,14 +276,25 @@
         </ul>
     </div>
 
+    <!-- ================= MAIN LAYOUT ================= -->
     <div class="main-container">
+        
+        <!-- CONTENT AREA (3/4) -->
         <div class="content-area">
             
-            <!-- SEC 1: WARM UP -->
+            <!-- ================= SECTION 1: WARM UP ================= -->
             <div class="section-card">
-                <div class="section-header"><h2><i class="fas fa-fire float-anim"></i> Spiral Review</h2><span class="timer-badge"><i class="fas fa-clock"></i> 00:00-00:10</span></div>
-                <div class="game-container" id="game1">
-                    <div class="quest-grid" id="q-grid-1"></div>
+                <div class="section-header">
+                    <h2><i class="fas fa-fire float-anim"></i> Spiral Review</h2>
+                    <span class="timer-badge"><i class="fas fa-clock"></i> 00:00 - 00:10</span>
+                </div>
+                <div class="theory-box">
+                    <p>Before we start our magical journey, let's warm up our math muscles!</p>
+                    <span class="bilingual">Sebelum memulai perjalanan magis kita, mari pemanasan otak matematika!</span>
+                </div>
+                <div class="game-container">
+                    <h3><i class="fas fa-gamepad"></i> Quick Flash Review <span class="bilingual">Ulasan Kilat</span></h3>
+                    <div class="quest-grid" id="q-grid-q1"></div>
                     <div style="margin-top: 15px; display: flex; gap: 10px;">
                         <button class="btn btn-check" onclick="checkGame('q1', 5)"><i class="fas fa-check-circle"></i> Check</button>
                         <button class="btn btn-reset" onclick="resetGame('q1', 5)"><i class="fas fa-redo"></i> Reset</button>
@@ -167,64 +303,121 @@
                 </div>
             </div>
 
-            <!-- SEC 2: REAL WORLD -->
+            <!-- ================= SECTION 2: REAL WORLD ================= -->
             <div class="section-card">
-                <div class="section-header"><h2><i class="fas fa-globe-americas float-anim"></i> Real-World Magic</h2><span class="timer-badge"><i class="fas fa-clock"></i> 00:10-00:15</span></div>
+                <div class="section-header">
+                    <h2><i class="fas fa-globe-americas float-anim"></i> Real-World Magic</h2>
+                    <span class="timer-badge"><i class="fas fa-clock"></i> 00:10 - 00:15</span>
+                </div>
                 <div class="theory-box">
                     <p>Math is our survival kit! From buying potions (decimals) to tracking frostbite (integers).</p>
                     <span class="bilingual">Matematika adalah perlengkapan bertahan hidup! Dari membeli ramuan (desimal) hingga melacak suhu (bilangan bulat).</span>
                 </div>
                 <div class="interactive-cards">
+                    <!-- Desert Market Card -->
                     <div class="flip-card">
                         <div class="flip-card-inner">
-                            <div class="flip-card-front"><i class="fas fa-sun fa-3x" style="color:#f39c12"></i><br><b>The Souq (Market)</b></div>
-                            <div class="flip-card-back"><i class="fas fa-coins fa-2x"></i><br>Potion $12.50<br>Wand $4.75<br>Need Decimal Magic!</div>
+                            <div class="flip-card-front">
+                                <i class="fas fa-sun fa-3x" style="color:#f39c12"></i><br>
+                                <b>The Souq (Market)</b><br>
+                                <span style="font-size:0.8em; color:var(--text-muted)">(Hover to flip)</span>
+                            </div>
+                            <div class="flip-card-back">
+                                <i class="fas fa-coins fa-2x"></i><br>
+                                <b>Desimal Magic</b><br>
+                                Potion $12.50<br>
+                                Wand $4.75
+                            </div>
                         </div>
                     </div>
+                    <!-- Everest Peak Card -->
                     <div class="flip-card">
                         <div class="flip-card-inner">
-                            <div class="flip-card-front"><i class="fas fa-mountain fa-3x" style="color:#3498db"></i><br><b>Everest Peak</b></div>
-                            <div class="flip-card-back"><i class="fas fa-icicles fa-2x"></i><br>Base: 5°C<br>Peak: -8°C<br>Need Integer Magic!</div>
+                            <div class="flip-card-front">
+                                <i class="fas fa-mountain fa-3x" style="color:#3498db"></i><br>
+                                <b>Everest Peak</b><br>
+                                <span style="font-size:0.8em; color:var(--text-muted)">(Hover to flip)</span>
+                            </div>
+                            <div class="flip-card-back">
+                                <i class="fas fa-icicles fa-2x"></i><br>
+                                <b>Integer Magic</b><br>
+                                Base: 5°C<br>
+                                Peak: -8°C
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SEC 3: DECIMALS -->
+            <!-- ================= SECTION 3: DECIMALS ================= -->
             <div class="section-card">
-                <div class="section-header"><h2><i class="fas fa-coins float-anim"></i> Decimals: Golden Rule</h2><span class="timer-badge"><i class="fas fa-clock"></i> 00:15-00:25</span></div>
+                <div class="section-header">
+                    <h2><i class="fas fa-coins float-anim"></i> Decimals: The Golden Rule</h2>
+                    <span class="timer-badge"><i class="fas fa-clock"></i> 00:15 - 00:25</span>
+                </div>
                 <div class="theory-box">
-                    <p><i class="fas fa-star" style="color:var(--accent-gold)"></i> <strong>Golden Rule:</strong> Line up the decimal points like an anchor! Use "phantom zeros".</p>
-                    <span class="bilingual">Aturan Emas: Sejajarkan koma desimalnya! Gunakan "nol hantu".</span>
+                    <p><i class="fas fa-star" style="color:var(--accent-gold)"></i> <strong>Golden Rule:</strong> Line up the decimal points like an anchor! Use "phantom zeros" to help align.</p>
+                    <span class="bilingual"><i class="fas fa-star"></i> <strong>Aturan Emas:</strong> Sejajarkan koma desimalnya seperti jangkar! Gunakan "nol hantu" untuk membantu menyusun.</span>
                 </div>
                 
+                <!-- Visual: Place Value Table -->
                 <div class="visual-box">
                     <h3>Place Value Chart <span class="bilingual">Tabel Nilai Tempat</span></h3>
                     <table class="place-value-table">
-                        <tr><th>Tens</th><th>Ones</th><th style="color:var(--accent-blue)">.</th><th>Tenths</th><th>Hundredths</th></tr>
-                        <tr><td>1</td><td>4</td><td class="pv-decimal">.</td><td>6</td><td style="color:var(--accent-blue)">0 ← phantom!</td></tr>
-                        <tr><td></td><td>8</td><td class="pv-decimal">.</td><td>9</td><td>2</td></tr>
+                        <tr>
+                            <th>Tens<br><span class="bilingual">Puluhan</span></th>
+                            <th>Ones<br><span class="bilingual">Satuan</span></th>
+                            <th style="color:var(--accent-blue)">.</th>
+                            <th>Tenths<br><span class="bilingual">Persepuluhan</span></th>
+                            <th>Hundredths<br><span class="bilingual">Perseratusan</span></th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>4</td>
+                            <td class="pv-decimal">.</td>
+                            <td>6</td>
+                            <td style="color:var(--accent-blue); font-weight:bold;">0 ← phantom!</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>8</td>
+                            <td class="pv-decimal">.</td>
+                            <td>9</td>
+                            <td>2</td>
+                        </tr>
                     </table>
                 </div>
 
+                <!-- Game: Drag and Drop -->
                 <div class="game-container">
                     <h3><i class="fas fa-wand-magic-sparkles"></i> Quest: Build the Column (14.6 + 8.92)</h3>
-                    <p>Drag or click the numbers to align them correctly.</p>
+                    <p>Drag or click the numbers to align them correctly for addition.</p>
+                    <span class="bilingual">Seret atau klik angka untuk menyelaraskannya dengan benar.</span>
+                    
                     <div class="drag-zone" id="drag-source">
                         <div class="draggable" draggable="true" data-id="d1" id="drag-1460">14.60</div>
                         <div class="draggable" draggable="true" data-id="d2" id="drag-892">8.92</div>
                     </div>
+
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
-                        <div class="drop-zone" id="drop-1" data-accept="d1"></div>
-                        <div style="font-weight:bold; color:var(--accent-gold); font-size:1.5rem;">+</div>
-                        <div class="drop-zone" id="drop-2" data-accept="d2"></div>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <div style="font-weight:bold; color:var(--text-muted);">Top:</div>
+                            <div class="drop-zone" id="drop-1" data-accept="d1"></div>
+                        </div>
+                        <div style="font-weight:bold; color:var(--accent-gold); font-size:1.5rem; margin-left:40px;">+</div>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <div style="font-weight:bold; color:var(--text-muted);">Bottom:</div>
+                            <div class="drop-zone" id="drop-2" data-accept="d2"></div>
+                        </div>
                     </div>
+
                     <div style="margin-top: 15px; text-align:center;">
                         <button class="btn btn-check" onclick="checkDrag()"><i class="fas fa-check"></i> Check Alignment</button>
                     </div>
                     <div id="fb-drag" class="feedback-box"></div>
                 </div>
 
+                <!-- Game: Decimal Quests -->
                 <div class="game-container">
                     <h3><i class="fas fa-gamepad"></i> Decimal Quests <span class="bilingual">Misi Desimal</span></h3>
                     <div class="quest-grid" id="q-grid-dec"></div>
@@ -236,31 +429,42 @@
                 </div>
             </div>
 
-            <!-- SEC 4: INTEGERS -->
+            <!-- ================= SECTION 4: INTEGERS ================= -->
             <div class="section-card">
-                <div class="section-header"><h2><i class="fas fa-thermometer-half float-anim"></i> Integers: Across Zero</h2><span class="timer-badge"><i class="fas fa-clock"></i> 00:25-00:40</span></div>
+                <div class="section-header">
+                    <h2><i class="fas fa-thermometer-half float-anim"></i> Integers: Across Zero</h2>
+                    <span class="timer-badge"><i class="fas fa-clock"></i> 00:25 - 00:40</span>
+                </div>
                 <div class="theory-box">
-                    <p><i class="fas fa-snowflake" style="color:var(--accent-blue)"></i> Subtracting positive moves <b>left</b>. Adding positive moves <b>right</b>.</p>
-                    <span class="bilingual">Mengurangkan bilangan positif geser kiri. Menambahkan geser kanan.</span>
+                    <p><i class="fas fa-snowflake" style="color:var(--accent-blue)"></i> Integers are whole numbers that can be positive or negative. Subtracting a positive moves <b>left</b>. Adding a positive moves <b>right</b>.</p>
+                    <span class="bilingual"><i class="fas fa-snowflake"></i> Mengurangkan bilangan positif geser <b>kiri</b>. Menambahkan bilangan positif geser <b>kanan</b>.</span>
                 </div>
 
+                <!-- Visual: Interactive SVG Number Line -->
                 <div class="visual-box">
                     <h3>Magic Number Line <span class="bilingual">Garis Bilangan Ajaib</span></h3>
                     <svg id="nl-svg" width="100%" height="80" viewBox="0 0 400 80" style="overflow: visible;">
+                        <!-- Main Line -->
                         <line x1="20" y1="40" x2="380" y2="40" stroke="var(--text-muted)" stroke-width="2" />
                         <polygon points="380,40 370,35 370,45" fill="var(--text-muted)" />
                         <polygon points="20,40 30,35 30,45" fill="var(--text-muted)" />
-                        <!-- Ticks -->
-                        <line x1="200" y1="30" x2="200" y2="50" stroke="var(--accent-gold)" stroke-width="3" />
-                        <text x="200" y="65" fill="var(--accent-gold)" font-size="14" text-anchor="middle" font-weight="bold">0</text>
-                        <line x1="140" y1="35" x2="140" y2="45" stroke="var(--text-muted)" />
-                        <text x="140" y="65" fill="var(--text-muted)" font-size="12" text-anchor="middle">-5</text>
+                        
+                        <!-- Ticks & Labels -->
                         <line x1="80" y1="35" x2="80" y2="45" stroke="var(--text-muted)" />
                         <text x="80" y="65" fill="var(--text-muted)" font-size="12" text-anchor="middle">-10</text>
+                        
+                        <line x1="140" y1="35" x2="140" y2="45" stroke="var(--text-muted)" />
+                        <text x="140" y="65" fill="var(--text-muted)" font-size="12" text-anchor="middle">-5</text>
+                        
+                        <line x1="200" y1="30" x2="200" y2="50" stroke="var(--accent-gold)" stroke-width="3" />
+                        <text x="200" y="65" fill="var(--accent-gold)" font-size="14" text-anchor="middle" font-weight="bold">0</text>
+                        
                         <line x1="260" y1="35" x2="260" y2="45" stroke="var(--text-muted)" />
                         <text x="260" y="65" fill="var(--text-muted)" font-size="12" text-anchor="middle">5</text>
+                        
                         <line x1="320" y1="35" x2="320" y2="45" stroke="var(--text-muted)" />
                         <text x="320" y="65" fill="var(--text-muted)" font-size="12" text-anchor="middle">10</text>
+
                         <!-- Moving Dot -->
                         <circle id="nl-dot" cx="200" cy="40" r="8" fill="var(--accent-blue)" style="transition: cx 0.3s ease;">
                             <animate attributeName="r" values="8;10;8" dur="2s" repeatCount="indefinite" />
@@ -276,6 +480,7 @@
                     </div>
                 </div>
 
+                <!-- Game: Integer Quests -->
                 <div class="game-container">
                     <h3><i class="fas fa-gamepad"></i> Integer Quests <span class="bilingual">Misi Bilangan Bulat</span></h3>
                     <div class="quest-grid" id="q-grid-int"></div>
@@ -287,93 +492,274 @@
                 </div>
             </div>
 
-            <!-- SEC 5: ASSESSMENT -->
+            <!-- ======================================================= -->
+            <!-- PART 2 END -->
+            <!-- ======================================================= -->
+
+            <!-- ================= SECTION 5: INDEPENDENT PRACTICE ================= -->
             <div class="section-card">
-                <div class="section-header"><h2><i class="fas fa-dragon"></i> Final Assessment</h2></div>
-                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
-                    <div style="flex:1; min-width:150px;"><label><i class="fas fa-user"></i> Name <span class="bilingual">Nama</span></label><input type="text" id="studentName" class="assess-input"></div>
-                    <div style="flex:1; min-width:150px;"><label><i class="fas fa-calendar-alt"></i> Date <span class="bilingual">Tanggal</span></label><input type="date" id="assessDate" class="assess-input"></div>
+                <div class="section-header">
+                    <h2><i class="fas fa-hiking float-anim"></i> Independent Practice</h2>
+                    <span class="timer-badge"><i class="fas fa-clock"></i> 00:40 - 00:55</span>
                 </div>
-                <div class="tab-container">
-                    <button class="tab-btn active" onclick="switchTab(1)">Group 1</button>
-                    <button class="tab-btn" onclick="switchTab(2)">Group 2</button>
-                    <button class="tab-btn" onclick="switchTab(3)">Group 3</button>
-                    <button class="tab-btn" onclick="switchTab(4)">Group 4</button>
-                    <button class="tab-btn" onclick="switchTab(5)">Group 5</button>
+                <div class="theory-box">
+                    <p>It's your turn to lead the expedition! Calculate the challenges using your scratchpad if needed.</p>
+                    <span class="bilingual">Sekarang giliranmu memimpin ekspedisi! Hitung tantangan berikut menggunakan kertas coretan jika perlu.</span>
                 </div>
-                <div id="assess-container"></div>
-                <div style="margin-top: 20px; text-align: center;">
-                    <button class="btn btn-check" onclick="printAssessment()" style="font-size: 1rem; padding: 12px 25px; animation: pulseGlow 2s infinite;"><i class="fas fa-print"></i> Print to PDF</button>
+                <div class="game-container" id="game-practice">
+                    <div style="display: grid; gap: 20px;">
+                        <div class="spell-card" style="cursor: default; background: rgba(0,0,0,0.1);">
+                            <div class="q-text">1. You buy a magical tent for $12.50 and a lantern for $4.75. How much in total?</div>
+                            <span class="bilingual">Kamu membeli tenda magis $12.50 dan lentera $4.75. Berapa totalnya?</span>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                                <span style="font-weight:bold; color:var(--accent-gold);">$</span> 
+                                <input type="text" id="p-q1" class="assess-input" style="width: 150px; margin:0;" placeholder="?">
+                            </div>
+                            <div id="p-fb1" class="q-result"></div>
+                        </div>
+
+                        <div class="spell-card" style="cursor: default; background: rgba(0,0,0,0.1);">
+                            <div class="q-text">2. You have $25.80 and spend $12.35. How much change do you get?</div>
+                            <span class="bilingual">Kamu punya $25.80 dan belanjakan $12.35. Berapa kembaliannya?</span>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                                <span style="font-weight:bold; color:var(--accent-gold);">$</span> 
+                                <input type="text" id="p-q2" class="assess-input" style="width: 150px; margin:0;" placeholder="?">
+                            </div>
+                            <div id="p-fb2" class="q-result"></div>
+                        </div>
+
+                        <div class="spell-card" style="cursor: default; background: rgba(0,0,0,0.1);">
+                            <div class="q-text">3. Calculate: -4 + 9</div>
+                            <span class="bilingual">Hitunglah: -4 + 9</span>
+                            <div style="margin-top: 10px;">
+                                <input type="text" id="p-q3" class="assess-input" style="width: 150px; margin:0;" placeholder="?">
+                            </div>
+                            <div id="p-fb3" class="q-result"></div>
+                        </div>
+
+                        <div class="spell-card" style="cursor: default; background: rgba(0,0,0,0.1);">
+                            <div class="q-text">4. The temperature was 3°C and fell by 12°C. What is the new temperature?</div>
+                            <span class="bilingual">Suhu awalnya 3°C dan turun 12°C. Berapa suhu sekarang?</span>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                                <input type="text" id="p-q4" class="assess-input" style="width: 150px; margin:0;" placeholder="?"> 
+                                <span style="font-weight:bold; color:var(--accent-blue);">°C</span>
+                            </div>
+                            <div id="p-fb4" class="q-result"></div>
+                        </div>
+
+                        <div class="spell-card" style="cursor: default; background: rgba(0,0,0,0.1);">
+                            <div class="q-text">5. A hiker starts at -15m and climbs up 40m. What is their new elevation?</div>
+                            <span class="bilingual">Pendaki mulai dari -15m dan naik 40m. Berapa ketinggian barunya?</span>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                                <input type="text" id="p-q5" class="assess-input" style="width: 150px; margin:0;" placeholder="?"> 
+                                <span style="font-weight:bold; color:var(--accent-blue);">meters</span>
+                            </div>
+                            <div id="p-fb5" class="q-result"></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; display: flex; gap: 10px;">
+                        <button class="btn btn-check" onclick="checkPractice()"><i class="fas fa-check-circle"></i> Check All</button>
+                        <button class="btn btn-reset" onclick="resetPractice()"><i class="fas fa-redo"></i> Reset All</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- SEC 6: FEEDBACK -->
+            <!-- ================= SECTION 6: CONSOLIDATION ================= -->
             <div class="section-card">
-                <div class="section-header"><h2><i class="fas fa-envelope-open-text"></i> Class Feedback</h2></div>
+                <div class="section-header">
+                    <h2><i class="fas fa-trophy float-anim"></i> Consolidation & Reflection</h2>
+                    <span class="timer-badge"><i class="fas fa-clock"></i> 00:55 - 01:00</span>
+                </div>
+                <div class="theory-box" style="text-align: center; border-left: none; border-top: 4px solid var(--accent-gold);">
+                    <i class="fas fa-medal float-anim" style="font-size: 3rem; margin-bottom: 10px; color: var(--accent-gold);"></i>
+                    <p><strong>Outstanding Work!</strong> You survived the magical trek! Remember the two golden spells you learned today:</p>
+                    <span class="bilingual"><strong>Kerja Luar Biasa!</strong> Kamu bertahan dalam pendakian magis! Ingat dua mantra emas yang kamu pelajari hari ini:</span>
+                    <ul style="text-align: left; display: inline-block; margin-top: 15px; font-size: 1.1rem;">
+                        <li><i class="fas fa-coins" style="color: var(--accent-gold);"></i> Decimal points are like anchors—they must stay in the same place. <span class="bilingual">Koma desimal seperti jangkar—harus tetap di tempat yang sama.</span></li>
+                        <li><i class="fas fa-thermometer-half" style="color: var(--accent-blue);"></i> Subtracting moves left, adding moves right. Watch out for zero! <span class="bilingual">Pengurangan geser kiri, penjumlahan geser kanan. Hati-hati dengan nol!</span></li>
+                    </ul>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <p>To view your lesson summary and complete your homework tasks, step through the portal:</p>
+                    <span class="bilingual">Untuk melihat ringkasan pelajaran dan menyelesaikan tugas rumahmu, masuki portal ini:</span>
+                    <br>
+                    <a href="https://learn.algonova.id/login" target="_blank" class="btn btn-check" style="animation: pulseGlow 2s infinite; text-decoration: none; display: inline-block; margin-top: 15px; font-size: 1.1rem; padding: 15px 30px;"><i class="fas fa-door-open"></i> Enter Portal (learn.algonova.id)</a>
+                </div>
+            </div>
+
+            <!-- ================= SECTION 7: FINAL ASSESSMENT ================= -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2><i class="fas fa-dragon float-anim"></i> Final Assessment</h2>
+                </div>
+                <div class="theory-box">
+                    <p>Prove your mastery! Complete the challenges below.</p>
+                    <span class="bilingual">Buktikan kehebatanmu! Selesaikan tantangan di bawah ini.</span>
+                </div>
+
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <label><i class="fas fa-user"></i> Student Name <span class="bilingual">Nama Siswa</span></label>
+                        <input type="text" id="studentName" class="assess-input" placeholder="Enter your name">
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <label><i class="fas fa-calendar-alt"></i> Date <span class="bilingual">Tanggal</span></label>
+                        <input type="date" id="assessDate" class="assess-input">
+                    </div>
+                </div>
+
+                <div class="tab-container">
+                    <button class="tab-btn active" onclick="switchTab(1)"><i class="fas fa-coins"></i> Group 1</button>
+                    <button class="tab-btn" onclick="switchTab(2)"><i class="fas fa-scroll"></i> Group 2</button>
+                    <button class="tab-btn" onclick="switchTab(3)"><i class="fas fa-snowflake"></i> Group 3</button>
+                    <button class="tab-btn" onclick="switchTab(4)"><i class="fas fa-mountain"></i> Group 4</button>
+                    <button class="tab-btn" onclick="switchTab(5)"><i class="fas fa-hat-wizard"></i> Group 5</button>
+                </div>
+
+                <div id="assess-container"></div>
+
+                <div style="margin-top: 30px; text-align: center; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-check" onclick="printAssessment()" style="font-size: 1.1rem; padding: 15px 30px; animation: pulseGlow 2s infinite;"><i class="fas fa-print"></i> Print to PDF</button>
+                </div>
+            </div>
+
+            <!-- ================= SECTION 8: CLASS FEEDBACK ================= -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2><i class="fas fa-envelope-open-text float-anim"></i> Class Feedback</h2>
+                </div>
+                <div class="theory-box">
+                    <p>Please share your magical journey! How was the class today?</p>
+                    <span class="bilingual">Tolong bagikan pengalaman magismu! Bagaimana kelas hari ini?</span>
+                </div>
+
                 <div style="text-align: center;">
                     <h3>Rate your experience <span class="bilingual">Nilai pengalamanmu</span></h3>
-                    <div class="star-rating">
+                    <div class="star-rating" id="starRating">
                         <input type="radio" id="star5" name="rating" value="5"><label for="star5" class="fas fa-star"></label>
                         <input type="radio" id="star4" name="rating" value="4"><label for="star4" class="fas fa-star"></label>
                         <input type="radio" id="star3" name="rating" value="3"><label for="star3" class="fas fa-star"></label>
                         <input type="radio" id="star2" name="rating" value="2"><label for="star2" class="fas fa-star"></label>
                         <input type="radio" id="star1" name="rating" value="1"><label for="star1" class="fas fa-star"></label>
                     </div>
-                    <textarea id="feedbackText" class="magic-textarea" placeholder="Write your feedback... / Tulis masukanmu..."></textarea>
-                    <button class="btn btn-check" onclick="submitFeedback()" style="margin-top:10px;"><i class="fas fa-paper-plane"></i> Send</button>
-                    <div id="fb-done" style="display:none; margin-top:15px; color:var(--success); font-weight:bold;"><i class="fas fa-check-circle"></i> Thank you! Don't forget your homework at <a href="https://learn.algonova.id/login" target="_blank" style="color:var(--accent-gold)">learn.algonova.id</a></div>
+
+                    <div style="margin-top: 20px; text-align: left;">
+                        <label><h3><i class="fas fa-pencil-alt"></i> Any suggestions or thoughts? <span class="bilingual">Ada saran atau pikiran?</span></h3></label>
+                        <textarea id="feedbackText" class="magic-textarea" placeholder="Write your feedback here... / Tulis masukanmu di sini..."></textarea>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="btn btn-check" onclick="submitFeedback()"><i class="fas fa-paper-plane"></i> Send Feedback</button>
+                    </div>
+
+                    <div id="feedbackSuccess" style="display:none; margin-top:20px; padding:20px; border-radius:10px; background:rgba(46,204,113,0.1); border:1px solid var(--success); animation: fadeInDown 0.5s;">
+                        <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--success);"></i>
+                        <h3 style="color: var(--success);">Thank you for your feedback!</h3>
+                        <span class="bilingual">Terima kasih atas masukanmu!</span>
+                        <p style="margin-top: 10px;">Don't forget to complete your tasks on the portal:</p>
+                        <a href="https://learn.algonova.id/login" target="_blank" class="btn btn-check" style="text-decoration: none; display: inline-block; margin-top: 10px;"><i class="fas fa-hat-wizard"></i> Go to learn.algonova.id</a>
+                    </div>
                 </div>
             </div>
 
+            <!-- ======================================================= -->
+            <!-- PART 3 END -->
+            <!-- ======================================================= -->
+
         </div>
 
-        <!-- SIDEBAR CANVAS -->
+        <!-- SIDEBAR CANVAS (1/4) -->
         <div class="sidebar-canvas">
             <div class="sticky-canvas-container">
-                <h3 style="margin-top:0"><i class="fas fa-feather-pointed"></i> Scratchpad <span class="bilingual">Kertas Corat-coret</span></h3>
+                <h3><i class="fas fa-feather-pointed"></i> Scratchpad <span class="bilingual">Kertas Corat-coret</span></h3>
+                
                 <div class="sp-tools">
                     <div class="sp-btn active" style="background:#2c3e50" onclick="setPen('#2c3e50', this)"></div>
                     <div class="sp-btn" style="background:#e74c3c" onclick="setPen('#e74c3c', this)"></div>
                     <div class="sp-btn" style="background:#3498db" onclick="setPen('#3498db', this)"></div>
-                    <div class="sp-btn" style="background:#d4af37" onclick="setPen('#d4af37', this)"></div>
-                    <div class="sp-btn sp-eraser" onclick="setPen('eraser', this)"><i class="fas fa-eraser"></i></div>
-                    <div class="sp-btn sp-eraser" onclick="clearCanvas()" style="background:var(--danger); color:white; font-size:12px;"><i class="fas fa-trash"></i></div>
+                    <div class="sp-btn" style="background:#f1c40f" onclick="setPen('#f1c40f', this)"></div>
+                    <button class="sp-btn sp-tool-btn" onclick="setPen('eraser', this)"><i class="fas fa-eraser"></i></button>
+                    <button class="sp-btn sp-tool-btn" onclick="clearCanvas()" style="background:var(--danger); color:white; border-color:var(--danger);"><i class="fas fa-trash"></i></button>
                 </div>
+                
                 <canvas id="scratchpad" width="250" height="350"></canvas>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">Draw your calculations here!<br><span class="bilingual">Gambar perhitunganmu di sini!</span></p>
             </div>
         </div>
+
     </div>
 
     <script>
-        // --- CANVAS LOGIC ---
-        const canvas = document.getElementById('scratchpad'); const ctx = canvas.getContext('2d'); let painting = false;
-        let penColor = '#2c3e50'; let penSize = 3; let isEraser = false;
+        // ==================== CANVAS LOGIC ====================
+        const canvas = document.getElementById('scratchpad'); 
+        const ctx = canvas.getContext('2d'); 
+        let painting = false;
+        let penColor = '#2c3e50'; 
+        let isEraser = false;
+
         function setPen(color, el) {
-            document.querySelectorAll('.sp-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.sp-tools .sp-btn, .sp-tools .sp-tool-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
-            if(color === 'eraser') { isEraser = true; } else { isEraser = false; penColor = color; }
+            if(color === 'eraser') { isEraser = true; } 
+            else { isEraser = false; penColor = color; }
         }
+
         function startPosition(e) { painting = true; draw(e); } 
         function endPosition() { painting = false; ctx.beginPath(); }
+        
         function draw(e) {
-            if (!painting) return; e.preventDefault();
+            if (!painting) return; 
+            e.preventDefault();
             const rect = canvas.getBoundingClientRect();
-            const clientX = e.clientX || (e.touches && e.touches[0].clientX); const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-            const x = clientX - rect.left; const y = clientY - rect.top;
-            ctx.lineWidth = isEraser ? 20 : penSize; ctx.lineCap = 'round'; 
+            const clientX = e.clientX || (e.touches && e.touches[0].clientX); 
+            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+            const x = clientX - rect.left; 
+            const y = clientY - rect.top;
+            
+            ctx.lineWidth = isEraser ? 20 : 3; 
+            ctx.lineCap = 'round'; 
             ctx.globalCompositeOperation = isEraser ? 'destination-out' : 'source-over';
             ctx.strokeStyle = isEraser ? 'rgba(0,0,0,1)' : penColor;
+            
             ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
         }
-        canvas.addEventListener('mousedown', startPosition); canvas.addEventListener('mouseup', endPosition); canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startPosition(e); }); canvas.addEventListener('touchend', endPosition); canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
-        function clearCanvas() { ctx.globalCompositeOperation = 'source-over'; ctx.clearRect(0, 0, canvas.width, canvas.height); }
+        
+        canvas.addEventListener('mousedown', startPosition); 
+        canvas.addEventListener('mouseup', endPosition); 
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startPosition(e); }); 
+        canvas.addEventListener('touchend', endPosition); 
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
+        
+        function clearCanvas() { 
+            ctx.globalCompositeOperation = 'source-over'; 
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        }
 
-        // --- DYNAMIC GAMES DATA ---
+        // ==================== DYNAMIC GAMES DATA ====================
         const gameData = {
-            q1: [ { q: "1. In 4,302, what is in the thousands place?", opts: ["2", "3", "4"], ans: "4" }, { q: "2. Next number: 2, 5, 8, ...?", opts: ["9", "11", "10"], ans: "11" }, { q: "3. 10 less than 1000?", opts: ["990", "900", "1010"], ans: "990" }, { q: "4. 10 tens make 1...?", opts: ["Thousand", "Hundred", "Ten"], ans: "Hundred" }, { q: "5. Largest 4-digit number?", opts: ["9999", "1000", "9000"], ans: "9999" } ],
-            dec: [ { q: "1. Line up the dots! 12.5 + 4.75. Which is correct?", opts: ["12.5 + 4.75", "12.50 + 4.75"], ans: "12.50 + 4.75" }, { q: "2. Calculate: 14.55 + 3.21", opts: ["17.76", "17.21", "18.76"], ans: "17.76" }, { q: "3. Subtract: 25.80 - 12.35", opts: ["13.45", "13.55", "12.45"], ans: "13.45" }, { q: "4. Pay $20 for $15.75 item. Change?", opts: ["$4.25", "$5.25", "$4.75"], ans: "$4.25" }, { q: "5. 124.6 + 8.92 = ?", opts: ["133.52", "132.52", "133.50"], ans: "133.52" } ],
-            int: [ { q: "1. Calculate: -4 + 9", opts: ["5", "-5", "13"], ans: "5" }, { q: "2. Temp is 5°C, drops 8°C. New temp?", opts: ["-3°C", "3°C", "-13°C"], ans: "-3°C" }, { q: "3. Hiker at -15m, climbs 40m. Elevation?", opts: ["25m", "-55m", "-25m"], ans: "25m" }, { q: "4. Calculate: -15 - (-5)", opts: ["-10", "-20", "10"], ans: "-10" }, { q: "5. Subtracting a positive moves...", opts: ["Left", "Right", "Nowhere"], ans: "Left" } ]
+            q1: [ 
+                { q: "1. In 4,302, what is in the thousands place?", opts: ["2", "3", "4"], ans: "4" }, 
+                { q: "2. Next number: 2, 5, 8, ...?", opts: ["9", "11", "10"], ans: "11" }, 
+                { q: "3. 10 less than 1000?", opts: ["990", "900", "1010"], ans: "990" }, 
+                { q: "4. 10 tens make 1...?", opts: ["Thousand", "Hundred", "Ten"], ans: "Hundred" }, 
+                { q: "5. Largest 4-digit number?", opts: ["9999", "1000", "9000"], ans: "9999" } 
+            ],
+            dec: [ 
+                { q: "1. Line up the dots! 12.5 + 4.75. Which is correct?", opts: ["12.5 + 4.75", "12.50 + 4.75"], ans: "12.50 + 4.75" }, 
+                { q: "2. Calculate: 14.55 + 3.21", opts: ["17.76", "17.21", "18.76"], ans: "17.76" }, 
+                { q: "3. Subtract: 25.80 - 12.35", opts: ["13.45", "13.55", "12.45"], ans: "13.45" }, 
+                { q: "4. Pay $20 for $15.75 item. Change?", opts: ["$4.25", "$5.25", "$4.75"], ans: "$4.25" }, 
+                { q: "5. 124.6 + 8.92 = ?", opts: ["133.52", "132.52", "133.50"], ans: "133.52" } 
+            ],
+            int: [ 
+                { q: "1. Calculate: -4 + 9", opts: ["5", "-5", "13"], ans: "5" }, 
+                { q: "2. Temp is 5°C, drops 8°C. New temp?", opts: ["-3°C", "3°C", "-13°C"], ans: "-3°C" }, 
+                { q: "3. Hiker at -15m, climbs 40m. Elevation?", opts: ["25m", "-55m", "-25m"], ans: "25m" }, 
+                { q: "4. Calculate: -15 - (-5)", opts: ["-10", "-20", "10"], ans: "-10" }, 
+                { q: "5. Subtracting a positive moves...", opts: ["Left", "Right", "Nowhere"], ans: "Left" } 
+            ]
         };
 
         function renderGames() {
@@ -392,12 +778,11 @@
                 grid.innerHTML = html;
 
                 // Add click listeners
-                grid.querySelectorAll('.spell-card').forEach((card, i) => {
+                grid.querySelectorAll('.spell-card').forEach((card) => {
                     card.addEventListener('click', (e) => {
                         if(e.target.classList.contains('opt-btn')) {
-                            // Deselect other opts in card
-                            card.querySelectorAll('.opt-btn').forEach(o => o.style.borderColor = 'rgba(255,255,255,0.2)');
-                            e.target.style.borderColor = 'var(--accent-gold)';
+                            card.querySelectorAll('.opt-btn').forEach(o => o.classList.remove('chosen'));
+                            e.target.classList.add('chosen');
                             card.dataset.answer = e.target.innerText;
                             card.classList.add('selected');
                         }
@@ -426,12 +811,12 @@
                 const card = document.getElementById(`sc-${gKey}-${i}`);
                 card.classList.remove('selected', 'correct', 'wrong');
                 card.dataset.answer = "";
-                card.querySelectorAll('.opt-btn').forEach(o => o.style.borderColor = 'rgba(255,255,255,0.2)');
+                card.querySelectorAll('.opt-btn').forEach(o => o.classList.remove('chosen'));
             });
             document.getElementById(`fb-${gKey}`).className = 'feedback-box';
         }
 
-        // --- DRAG & DROP FIX ---
+        // ==================== DRAG & DROP LOGIC ====================
         let draggedId = null;
         document.querySelectorAll('.draggable').forEach(el => {
             el.addEventListener('dragstart', e => { draggedId = e.target.id; e.dataTransfer.effectAllowed = 'move'; });
@@ -445,7 +830,7 @@
             zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
             zone.addEventListener('dragleave', () => zone.classList.remove('over'));
             zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('over'); appendDragged(zone); });
-            zone.addEventListener('click', () => appendDragged(zone)); // Click fallback
+            zone.addEventListener('click', () => appendDragged(zone));
         });
 
         function appendDragged(zone) {
@@ -456,19 +841,22 @@
         }
 
         function checkDrag() {
-            const z1 = document.getElementById('drop-1'); const z2 = document.getElementById('drop-2');
+            const z1 = document.getElementById('drop-1'); 
+            const z2 = document.getElementById('drop-2'); 
             const fb = document.getElementById('fb-drag');
             const ans1 = z1.querySelector('.draggable')?.id === 'drag-1460';
             const ans2 = z2.querySelector('.draggable')?.id === 'drag-892';
             
             if(ans1 && ans2) {
-                fb.className = 'feedback-box show ok'; fb.innerHTML = '<i class="fas fa-check-circle"></i> Perfect Alignment!';
+                fb.className = 'feedback-box show ok'; 
+                fb.innerHTML = '<i class="fas fa-check-circle"></i> Perfect Alignment! The dots are locked.';
             } else {
-                fb.className = 'feedback-box show no'; fb.innerHTML = '<i class="fas fa-times-circle"></i> Remember: Line up the decimals! 14.60 goes on top, 8.92 below.';
+                fb.className = 'feedback-box show no'; 
+                fb.innerHTML = '<i class="fas fa-times-circle"></i> Remember: Line up the decimals! 14.60 goes on top, 8.92 below.';
             }
         }
 
-        // --- NUMBER LINE LOGIC ---
+        // ==================== NUMBER LINE LOGIC ====================
         let nlVal = 0;
         function moveDot(step) {
             nlVal += step;
@@ -478,18 +866,42 @@
         }
         function resetDot() { nlVal = 0; moveDot(0); }
 
-        // --- ASSESSMENT ENGINE ---
+        // ==================== INDEPENDENT PRACTICE LOGIC ====================
+        const practiceAnswers = { 'p-q1': '17.25', 'p-q2': '13.45', 'p-q3': '5', 'p-q4': '-9', 'p-q5': '25' };
+        const practiceHints = { 'p-q1': '12.50 + 4.75', 'p-q2': '25.80 - 12.35', 'p-q3': 'Start -4, right 9', 'p-q4': 'Start 3, left 12', 'p-q5': 'Start -15, right 40' };
+
+        function checkPractice() {
+            for(let id in practiceAnswers) {
+                const input = document.getElementById(id);
+                const fb = document.getElementById(id.replace('q', 'fb'));
+                if(input.value.trim() === practiceAnswers[id]) {
+                    fb.className = 'q-result correct'; fb.innerHTML = `<i class="fas fa-check"></i> Correct!`;
+                } else {
+                    fb.className = 'q-result incorrect'; fb.innerHTML = `<i class="fas fa-times"></i> Hint: ${practiceHints[id]}`;
+                }
+            }
+        }
+        function resetPractice() {
+            for(let id in practiceAnswers) {
+                document.getElementById(id).value = '';
+                document.getElementById(id.replace('q', 'fb')).className = 'q-result';
+            }
+        }
+
+        // ==================== ASSESSMENT ENGINE ====================
         const assessData = {
-            1: [ { id: "g1q1", type: "radio", q: "14.55 + 3.21", opts: ["17.76", "17.21"], ans: "17.76", hint: "5+1=6, 5+2=7" }, { id: "g1q2", type: "dropdown", q: "25.80 - 12.35", opts: ["13.45", "13.55"], ans: "13.45", hint: "Borrow" }, { id: "g1q3", type: "text", q: "Item $15.75, pay $20.00. Change?", ans: "4.25", hint: "20-15.75" }, { id: "g1q4", type: "checkbox", q: "Which are > 15?", opts: ["8.5+7.5", "9.9+4.2", "12.4+3.1"], ans: ["8.5+7.5", "12.4+3.1"], hint: "16 and 15.5" }, { id: "g1q5", type: "text", q: "124.6 + 8.92", ans: "133.52", hint: "Phantom zero" }, { id: "g1q6", type: "radio", q: "Alignment for 45.1 - 7.68?", opts: ["45.10 and 7.68", "45.1 and 76.8"], ans: "45.10 and 7.68", hint: "Phantom zero" }, { id: "g1q7", type: "text", q: "45.1 - 7.68", ans: "37.42", hint: "45.10-7.68" }, { id: "g1q8", type: "dropdown", q: "Shirt $12.20, disc $4.55. After?", opts: ["7.65", "8.65"], ans: "7.65", hint: "12.20-4.55" }, { id: "g1q9", type: "text", q: "Disc shirt + $1.99 sticker. Total?", ans: "9.64", hint: "7.65+1.99" }, { id: "g1q10", type: "radio", q: "Golden Rule?", opts: ["Line up dots", "Add zeros"], ans: "Line up dots", hint: "Anchor!" } ],
-            2: [ { id: "g2q1", type: "radio", q: "-4 + 9", opts: ["5", "-5"], ans: "5", hint: "Right 9" }, { id: "g2q2", type: "dropdown", q: "3°C falls 12°C", opts: ["-9°C", "9°C"], ans: "-9°C", hint: "3-12" }, { id: "g2q3", type: "text", q: "-15 - (-5)", ans: "-10", hint: "-15+5" }, { id: "g2q4", type: "checkbox", q: "Result in positive?", opts: ["-8+12", "-4-5", "15-10"], ans: ["-8+12", "15-10"], hint: "4 and 5" }, { id: "g2q5", type: "radio", q: "Where is -7?", opts: ["Left", "Right"], ans: "Left", hint: "Negatives left" }, { id: "g2q6", type: "text", q: "Owe $10 (-10), pay $4. Balance?", ans: "-6", hint: "-10+4" }, { id: "g2q7", type: "dropdown", q: "8 - 15", opts: ["-7", "7"], ans: "-7", hint: "Left 15" }, { id: "g2q8", type: "text", q: "-3 - 7", ans: "-10", hint: "Left 7" }, { id: "g2q9", type: "radio", q: "Subtracting positive moves?", opts: ["Left", "Right"], ans: "Left", hint: "Left" }, { id: "g2q10", type: "text", q: "-5 + 5", ans: "0", hint: "Inverse" } ],
-            3: [ { id: "g3q1", type: "text", q: "Hiker -15m up 40m", ans: "25", hint: "-15+40" }, { id: "g3q2", type: "dropdown", q: "Sub -50m dives 20m", opts: ["-70m", "-30m"], ans: "-70m", hint: "-50-20" }, { id: "g3q3", type: "radio", q: "-5°C rises 12°C", opts: ["7°C", "-17°C"], ans: "7°C", hint: "-5+12" }, { id: "g3q4", type: "text", q: "Balance -$25, deposit $50", ans: "25", hint: "-25+50" }, { id: "g3q5", type: "checkbox", q: "Negative integer?", opts: ["Owing $10", "10m below sea", "5 above sea"], ans: ["Owing $10", "10m below sea"], hint: "Debt/below zero" }, { id: "g3q6", type: "text", q: "2000m down 500m, up 300m", ans: "1800", hint: "2000-500+300" }, { id: "g3q7", type: "dropdown", q: "10m up to 5m down. Dist?", opts: ["15m", "5m"], ans: "15m", hint: "+10 to -5" }, { id: "g3q8", type: "text", q: "4°C to -8°C. Dropped?", ans: "12", hint: "4-(-8)" }, { id: "g3q9", type: "radio", q: "+7 moves 10 left", opts: ["-3", "3"], ans: "-3", hint: "7-10" }, { id: "g3q10", type: "text", q: "-8 - (-2) + 5", ans: "-1", hint: "-8+2+5" } ],
-            4: [ { id: "g4q1", type: "text", q: "12.5 + 3.75", ans: "16.25", hint: "12.50+3.75" }, { id: "g4q2", type: "radio", q: "-6 + 9", opts: ["3", "-3"], ans: "3", hint: "Right 9" }, { id: "g4q3", type: "text", q: "50.0 - 24.65", ans: "25.35", hint: "Borrow" }, { id: "g4q4", type: "dropdown", q: "-10 - 5", opts: ["-15", "-5"], ans: "-15", hint: "Left from -10" }, { id: "g4q5", type: "checkbox", q: "Equal 10?", opts: ["20.5-10.5", "5-(-5)", "2+8"], ans: ["20.5-10.5", "5-(-5)", "2+8"], hint: "All except 0" }, { id: "g4q6", type: "text", q: "145.8 + 9.42", ans: "155.22", hint: "145.80+9.42" }, { id: "g4q7", type: "text", q: "-4°C drops 6°C", ans: "-10", hint: "-4-6" }, { id: "g4q8", type: "radio", q: "$8.50 + $1.25", opts: ["$9.75", "$9.25"], ans: "$9.75", hint: "8.50+1.25" }, { id: "g4q9", type: "text", q: "Diver -20m up 12m", ans: "-8", hint: "-20+12" }, { id: "g4q10", type: "dropdown", q: "-2 - (-8)", opts: ["6", "-10"], ans: "6", hint: "-2+8" } ],
-            5: [ { id: "g5q1", type: "text", q: "100.0 - 45.89", ans: "54.11", hint: "Borrow" }, { id: "g5q2", type: "text", q: "-12 + 7 - 5", ans: "-10", hint: "Combine" }, { id: "g5q3", type: "radio", q: "Larger: 4.5-2.2 or -2+5?", opts: ["-2+5", "4.5-2.2"], ans: "-2+5", hint: "3 vs 2.3" }, { id: "g5q4", type: "checkbox", q: "Result 0?", opts: ["5.5-5.5", "-4+4", "5-5"], ans: ["5.5-5.5", "-4+4", "5-5"], hint: "Inverse" }, { id: "g5q5", type: "text", q: "Owe 45.50, pay 20. Balance?", ans: "-25.5", hint: "-45.5+20" }, { id: "g5q6", type: "dropdown", q: "-5m up 3m down 2m", opts: ["-4m", "-6m"], ans: "-4m", hint: "-5+3-2" }, { id: "g5q7", type: "text", q: "0.75 + 1.5 + 2.25", ans: "4.5", hint: "0.75+1.50+2.25" }, { id: "g5q8", type: "radio", q: "10 - 15.5", opts: ["-5.5", "5.5"], ans: "-5.5", hint: "Left 15.5" }, { id: "g5q9", type: "text", q: "-5 + x = 10. x=?", ans: "15", hint: "Move right" }, { id: "g5q10", type: "dropdown", q: "150cm down 12.5cm. Above 140?", opts: ["Below", "Above"], ans: "Below", hint: "137.5" } ]
+            1: [ { id:"1-1", q:"14.55 + 3.21", type:"radio", opts:["17.76","17.21"], ans:"17.76", hint:"5+1=6, 5+2=7" }, { id:"1-2", q:"25.80 - 12.35", type:"dropdown", opts:["13.45","13.55"], ans:"13.45", hint:"Borrow" }, { id:"1-3", q:"Item $15.75, pay $20. Change?", type:"text", ans:"4.25", hint:"20-15.75" }, { id:"1-4", q:"Which sums > 15?", type:"checkbox", opts:["8.5+7.5","9.9+4.2","12.4+3.1"], ans:["8.5+7.5","12.4+3.1"], hint:"16 and 15.5" }, { id:"1-5", q:"124.6 + 8.92", type:"text", ans:"133.52", hint:"Phantom zero" }, { id:"1-6", q:"Alignment for 45.1 - 7.68?", type:"radio", opts:["45.10 and 7.68","45.1 and 76.8"], ans:"45.10 and 7.68", hint:"Phantom zero" }, { id:"1-7", q:"45.1 - 7.68", type:"text", ans:"37.42", hint:"45.10-7.68" }, { id:"1-8", q:"Shirt $12.20, disc $4.55. After?", type:"dropdown", opts:["7.65","8.65"], ans:"7.65", hint:"12.20-4.55" }, { id:"1-9", q:"Disc shirt + $1.99 sticker. Total?", type:"text", ans:"9.64", hint:"7.65+1.99" }, { id:"1-10", q:"Golden Rule?", type:"radio", opts:["Line up dots","Add zeros"], ans:"Line up dots", hint:"Anchor!" } ],
+            2: [ { id:"2-1", q:"-4 + 9", type:"radio", opts:["5","-5"], ans:"5", hint:"Right 9" }, { id:"2-2", q:"3°C falls 12°C", type:"dropdown", opts:["-9°C","9°C"], ans:"-9°C", hint:"3-12" }, { id:"2-3", q:"-15 - (-5)", type:"text", ans:"-10", hint:"-15+5" }, { id:"2-4", q:"Result in positive?", type:"checkbox", opts:["-8+12","-4-5","15-10"], ans:["-8+12","15-10"], hint:"4 and 5" }, { id:"2-5", q:"Where is -7?", type:"radio", opts:["Left","Right"], ans:"Left", hint:"Negatives left" }, { id:"2-6", q:"Owe $10 (-10), pay $4. Balance?", type:"text", ans:"-6", hint:"-10+4" }, { id:"2-7", q:"8 - 15", type:"dropdown", opts:["-7","7"], ans:"-7", hint:"Left 15" }, { id:"2-8", q:"-3 - 7", type:"text", ans:"-10", hint:"Left 7" }, { id:"2-9", q:"Subtracting positive moves?", type:"radio", opts:["Left","Right"], ans:"Left", hint:"Left" }, { id:"2-10", q:"-5 + 5", type:"text", ans:"0", hint:"Inverse" } ],
+            3: [ { id:"3-1", q:"Hiker -15m up 40m", type:"text", ans:"25", hint:"-15+40" }, { id:"3-2", q:"Sub -50m dives 20m", type:"dropdown", opts:["-70m","-30m"], ans:"-70m", hint:"-50-20" }, { id:"3-3", q:"-5°C rises 12°C", type:"radio", opts:["7°C","-17°C"], ans:"7°C", hint:"-5+12" }, { id:"3-4", q:"Balance -$25, deposit $50", type:"text", ans:"25", hint:"-25+50" }, { id:"3-5", q:"Negative integer?", type:"checkbox", opts:["Owing $10","10m below sea","5 above sea"], ans:["Owing $10","10m below sea"], hint:"Debt/below zero" }, { id:"3-6", q:"2000m down 500m, up 300m", type:"text", ans:"1800", hint:"2000-500+300" }, { id:"3-7", q:"10m up to 5m down. Dist?", type:"dropdown", opts:["15m","5m"], ans:"15m", hint:"+10 to -5" }, { id:"3-8", q:"4°C to -8°C. Dropped?", type:"text", ans:"12", hint:"4-(-8)" }, { id:"3-9", q:"+7 moves 10 left", type:"radio", opts:["-3","3"], ans:"-3", hint:"7-10" }, { id:"3-10", q:"-8 - (-2) + 5", type:"text", ans:"-1", hint:"-8+2+5" } ],
+            4: [ { id:"4-1", q:"12.5 + 3.75", type:"text", ans:"16.25", hint:"12.50+3.75" }, { id:"4-2", q:"-6 + 9", type:"radio", opts:["3","-3"], ans:"3", hint:"Right 9" }, { id:"4-3", q:"50.0 - 24.65", type:"text", ans:"25.35", hint:"Borrow" }, { id:"4-4", q:"-10 - 5", type:"dropdown", opts:["-15","-5"], ans:"-15", hint:"Left from -10" }, { id:"4-5", q:"Equal 10?", type:"checkbox", opts:["20.5-10.5","5-(-5)","2+8"], ans:["20.5-10.5","5-(-5)","2+8"], hint:"All" }, { id:"4-6", q:"145.8 + 9.42", type:"text", ans:"155.22", hint:"145.80+9.42" }, { id:"4-7", q:"-4°C drops 6°C", type:"text", ans:"-10", hint:"-4-6" }, { id:"4-8", q:"$8.50 + $1.25", type:"radio", opts:["$9.75","$9.25"], ans:"$9.75", hint:"8.50+1.25" }, { id:"4-9", q:"Diver -20m up 12m", type:"text", ans:"-8", hint:"-20+12" }, { id:"4-10", q:"-2 - (-8)", type:"dropdown", opts:["6","-10"], ans:"6", hint:"-2+8" } ],
+            5: [ { id:"5-1", q:"100.0 - 45.89", type:"text", ans:"54.11", hint:"Borrow" }, { id:"5-2", q:"-12 + 7 - 5", type:"text", ans:"-10", hint:"Combine" }, { id:"5-3", q:"Larger: 4.5-2.2 or -2+5?", type:"radio", opts:["-2+5","4.5-2.2"], ans:"-2+5", hint:"3 vs 2.3" }, { id:"5-4", q:"Result 0?", type:"checkbox", opts:["5.5-5.5","-4+4","5-5"], ans:["5.5-5.5","-4+4","5-5"], hint:"Inverse" }, { id:"5-5", q:"Owe 45.50, pay 20. Balance?", type:"text", ans:"-25.5", hint:"-45.5+20" }, { id:"5-6", q:"-5m up 3m down 2m", type:"dropdown", opts:["-4m","-6m"], ans:"-4m", hint:"-5+3-2" }, { id:"5-7", q:"0.75 + 1.5 + 2.25", type:"text", ans:"4.5", hint:"0.75+1.50+2.25" }, { id:"5-8", q:"10 - 15.5", type:"radio", opts:["-5.5","5.5"], ans:"-5.5", hint:"Left 15.5" }, { id:"5-9", q:"-5 + x = 10. x=?", type:"text", ans:"15", hint:"Move right" }, { id:"5-10", q:"150cm down 12.5cm. Above 140?", type:"dropdown", opts:["Below","Above"], ans:"Below", hint:"137.5" } ]
         };
-        let currentTab = 1; let scores = { 1:-1, 2:-1, 3:-1, 4:-1, 5:-1 };
+        let currentTab = 1; 
+        let scores = { 1:-1, 2:-1, 3:-1, 4:-1, 5:-1 };
 
         function renderAssessment() {
-            const c = document.getElementById('assess-container'); let h = '';
+            const c = document.getElementById('assess-container'); 
+            let h = '';
             for (let g = 1; g <= 5; g++) {
                 h += `<div id="tab-${g}" class="tab-content ${g===1?'active':''}">`;
                 assessData[g].forEach((it, i) => {
@@ -505,31 +917,66 @@
             }
             c.innerHTML = h;
         }
-        function switchTab(n) { currentTab=n; document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active')); document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); document.getElementById(`tab-${n}`).classList.add('active'); document.querySelectorAll('.tab-btn')[n-1].classList.add('active'); }
+
+        function switchTab(n) { 
+            currentTab=n; 
+            document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active')); 
+            document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); 
+            document.getElementById(`tab-${n}`).classList.add('active'); 
+            document.querySelectorAll('.tab-btn')[n-1].classList.add('active'); 
+        }
+
         function submitGroup(g) {
-            if(scores[g]!==-1) return; let cc=0;
+            if(scores[g]!==-1) return; // Already submitted
+            let cc=0;
             assessData[g].forEach(it => {
-                const rd = document.getElementById(`res-${it.id}`); let ua="";
+                const rd = document.getElementById(`res-${it.id}`); 
+                let ua="";
                 if(it.type==='radio') { const s=document.querySelector(`input[name="${it.id}"]:checked`); if(s)ua=s.value; }
                 else if(it.type==='checkbox') { const ss=document.querySelectorAll(`input[name="${it.id}"]:checked`); ua=Array.from(ss).map(s=>s.value).sort(); }
                 else { ua=document.getElementById(it.id).value.trim(); }
-                let ok=false; if(it.type==='checkbox') ok=JSON.stringify(ua)===JSON.stringify(it.ans.sort()); else ok=ua===it.ans;
+                
+                let ok=false; 
+                if(it.type==='checkbox') ok=JSON.stringify(ua)===JSON.stringify(it.ans.sort()); 
+                else ok=ua===it.ans;
+                
                 if(ok) { rd.className='q-result correct'; rd.innerHTML=`<i class="fas fa-check"></i> Correct`; cc++; }
                 else { rd.className='q-result incorrect'; rd.innerHTML=`<i class="fas fa-times"></i> Hint: ${it.hint} (Ans: ${it.ans})`; }
             });
-            scores[g]=cc; document.getElementById(`score-g${g}`).innerHTML=`Score: ${cc}/10`;
+            scores[g]=cc; 
+            document.getElementById(`score-g${g}`).innerHTML=`<i class="fas fa-star"></i> Score: ${cc}/10`;
         }
-        function printAssessment() { document.querySelectorAll('.tab-content').forEach(t=>t.style.display='block'); window.print(); setTimeout(()=>{document.querySelectorAll('.tab-content').forEach(t=>t.style.display=''); switchTab(currentTab);}, 500); }
 
-        // --- FEEDBACK ---
+        function printAssessment() { 
+            document.querySelectorAll('.tab-content').forEach(t=>t.style.display='block'); 
+            window.print(); 
+            setTimeout(()=>{
+                document.querySelectorAll('.tab-content').forEach(t=>t.style.display=''); 
+                switchTab(currentTab);
+            }, 500); 
+        }
+
+        // ==================== FEEDBACK LOGIC ====================
         function submitFeedback() {
-            if(!document.querySelector('input[name="rating"]:checked')) { alert("Please rate!"); return; }
-            document.getElementById('fb-done').style.display = 'block';
+            if(!document.querySelector('input[name="rating"]:checked')) { 
+                alert("Please give a star rating before submitting! / Tolong berikan penilaian bintang sebelum mengirim!"); 
+                return; 
+            }
+            document.getElementById('starRating').style.display = 'none';
+            document.querySelector('.magic-textarea').style.display = 'none';
+            document.querySelector('.section-card:last-child .btn-check').style.display = 'none';
+            document.getElementById('feedbackSuccess').style.display = 'block';
         }
 
-        // Init
+        // ==================== INITIALIZATION ====================
         renderGames();
         renderAssessment();
+
     </script>
+
+    <!-- ======================================================= -->
+    <!-- PART 4 END -->
+    <!-- ======================================================= -->
+
 </body>
 </html>
