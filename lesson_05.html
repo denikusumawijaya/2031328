@@ -250,13 +250,17 @@
 
         /* ================= PRINT STYLES ================= */
         @media print {
-            body { background: white; color: black; }
-            .main-header, .class-rules, .sidebar-canvas, .btn, .tab-container, .q-result.incorrect, .sp-tools { display: none !important; }
-            .section-card { box-shadow: none; border: 1px solid black; background: white; break-inside: avoid; }
-            h1, h2, h3 { color: black; text-shadow: none; }
+            body { background: white; color: black; font-size: 12pt; }
+            .main-header, .class-rules, .sidebar-canvas, .btn, .tab-container, .sp-tools, .game-container, .theory-box, .visual-box, .interactive-cards, .section-card:not(.print-area) { display: none !important; }
+            .content-area { width: 100%; flex: none; }
+            .section-card.print-area { box-shadow: none; border: none; background: white; padding: 0; }
             .tab-content { display: block !important; border: none; background: white; }
-            .a-options label { border: 1px solid #ccc; background: #f9f9f9; color: black; }
-            .q-result.correct { display: block; background: #e8f5e9; color: #2e7d32; border: 1px solid #2e7d32; }
+            .a-options label { border: 1px solid #ccc; background: #f9f9f9; color: black; padding: 5px; }
+            .q-result { display: block !important; margin-top: 5px; padding: 5px; border: 1px solid #ddd; background: #fcfcfc; }
+            .q-result.correct { color: #155724; background-color: #d4edda; border-color: #c3e6cb; }
+            .q-result.incorrect { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
+            .assess-input, .a-select { border: 1px solid black !important; color: black !important; background: white !important; }
+            #print-header { display: block !important; border-bottom: 2px solid black; margin-bottom: 20px; padding-bottom: 10px; }
         }
     </style>
 </head>
@@ -310,41 +314,49 @@
                     <span class="timer-badge"><i class="fas fa-clock"></i> 00:10 - 00:15</span>
                 </div>
                 <div class="theory-box">
-                    <p>Math is our survival kit! From buying potions (decimals) to tracking frostbite (integers).</p>
-                    <span class="bilingual">Matematika adalah perlengkapan bertahan hidup! Dari membeli ramuan (desimal) hingga melacak suhu (bilangan bulat).</span>
+                    <p>Math is our survival kit! From buying potions to tracking frostbite.</p>
+                    <span class="bilingual">Matematika adalah perlengkapan bertahan hidup! Dari membeli ramuan hingga melacak suhu.</span>
                 </div>
-                <div class="interactive-cards">
-                    <!-- Desert Market Card -->
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <i class="fas fa-sun fa-3x" style="color:#f39c12"></i><br>
-                                <b>The Souq (Market)</b><br>
-                                <span style="font-size:0.8em; color:var(--text-muted)">(Hover to flip)</span>
-                            </div>
-                            <div class="flip-card-back">
-                                <i class="fas fa-coins fa-2x"></i><br>
-                                <b>Desimal Magic</b><br>
-                                Potion $12.50<br>
-                                Wand $4.75
-                            </div>
+                
+                <div class="game-container">
+                    <h3><i class="fas fa-gamepad"></i> Survival Quests <span class="bilingual">Misi Bertahan Hidup</span></h3>
+                    
+                    <!-- Quest 1 -->
+                    <div style="margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                        <div class="q-text"><i class="fas fa-sun" style="color:#f39c12"></i> 1. You buy a magical tent for $5.50 and a potion for $1.25. How much do you spend?</div>
+                        <span class="bilingual">Kamu membeli tenda $5.50 dan ramuan $1.25. Berapa total belanjamu?</span>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                            <span style="font-weight:bold; color:var(--accent-gold);">$</span> 
+                            <input type="text" id="rw-q1" class="assess-input" style="width: 150px; margin:0; background:var(--parchment); color:var(--ink);" placeholder="?">
                         </div>
+                        <div id="rw-fb1" class="q-result"></div>
                     </div>
-                    <!-- Everest Peak Card -->
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <i class="fas fa-mountain fa-3x" style="color:#3498db"></i><br>
-                                <b>Everest Peak</b><br>
-                                <span style="font-size:0.8em; color:var(--text-muted)">(Hover to flip)</span>
-                            </div>
-                            <div class="flip-card-back">
-                                <i class="fas fa-icicles fa-2x"></i><br>
-                                <b>Integer Magic</b><br>
-                                Base: 5°C<br>
-                                Peak: -8°C
-                            </div>
+
+                    <!-- Quest 2 -->
+                    <div style="margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                        <div class="q-text"><i class="fas fa-mountain" style="color:#3498db"></i> 2. The temperature at base camp is -2°C. During the day, it rises by 11°C. What is the new temperature?</div>
+                        <span class="bilingual">Suhu di basecamp -2°C. Siang hari suhu naik 11°C. Berapa suhu sekarang?</span>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                            <input type="text" id="rw-q2" class="assess-input" style="width: 150px; margin:0; background:var(--parchment); color:var(--ink);" placeholder="?"> 
+                            <span style="font-weight:bold; color:var(--accent-blue);">°C</span>
                         </div>
+                        <div id="rw-fb2" class="q-result"></div>
+                    </div>
+
+                    <!-- Quest 3 -->
+                    <div style="margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                        <div class="q-text"><i class="fas fa-water" style="color:#1abc9c"></i> 3. A submarine is at -30m below sea level. It dives another 15m down. What is its new position?</div>
+                        <span class="bilingual">Kapal selam di -30m di bawah permukaan laut. Ia menyelam 15m lagi. Berapa posisinya sekarang?</span>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                            <input type="text" id="rw-q3" class="assess-input" style="width: 150px; margin:0; background:var(--parchment); color:var(--ink);" placeholder="?"> 
+                            <span style="font-weight:bold; color:var(--accent-blue);">m</span>
+                        </div>
+                        <div id="rw-fb3" class="q-result"></div>
+                    </div>
+
+                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <button class="btn btn-check" onclick="checkRealWorld()"><i class="fas fa-check-circle"></i> Check</button>
+                        <button class="btn btn-reset" onclick="resetRealWorld()"><i class="fas fa-redo"></i> Reset</button>
                     </div>
                 </div>
             </div>
@@ -390,29 +402,14 @@
 
                 <!-- Game: Drag and Drop -->
                 <div class="game-container">
-                    <h3><i class="fas fa-wand-magic-sparkles"></i> Quest: Build the Column (14.6 + 8.92)</h3>
-                    <p>Drag or click the numbers to align them correctly for addition.</p>
-                    <span class="bilingual">Seret atau klik angka untuk menyelaraskannya dengan benar.</span>
+                    <h3><i class="fas fa-wand-magic-sparkles"></i> Quest: Build the Columns</h3>
+                    <p>Drag or click the numbers to align them correctly, then find the sum!</p>
+                    <span class="bilingual">Seret atau klik angka untuk menyelaraskannya, lalu temukan jawabannya!</span>
                     
-                    <div class="drag-zone" id="drag-source">
-                        <div class="draggable" draggable="true" data-id="d1" id="drag-1460">14.60</div>
-                        <div class="draggable" draggable="true" data-id="d2" id="drag-892">8.92</div>
-                    </div>
+                    <div id="dd-container" style="display: grid; gap: 25px; margin-top: 20px;"></div>
 
-                    <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <div style="font-weight:bold; color:var(--text-muted);">Top:</div>
-                            <div class="drop-zone" id="drop-1" data-accept="d1"></div>
-                        </div>
-                        <div style="font-weight:bold; color:var(--accent-gold); font-size:1.5rem; margin-left:40px;">+</div>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <div style="font-weight:bold; color:var(--text-muted);">Bottom:</div>
-                            <div class="drop-zone" id="drop-2" data-accept="d2"></div>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 15px; text-align:center;">
-                        <button class="btn btn-check" onclick="checkDrag()"><i class="fas fa-check"></i> Check Alignment</button>
+                    <div style="margin-top: 20px; text-align:center;">
+                        <button class="btn btn-check" onclick="checkDragSets()"><i class="fas fa-check"></i> Check All Alignments</button>
                     </div>
                     <div id="fb-drag" class="feedback-box"></div>
                 </div>
@@ -739,27 +736,9 @@
 
         // ==================== DYNAMIC GAMES DATA ====================
         const gameData = {
-            q1: [ 
-                { q: "1. In 4,302, what is in the thousands place?", opts: ["2", "3", "4"], ans: "4" }, 
-                { q: "2. Next number: 2, 5, 8, ...?", opts: ["9", "11", "10"], ans: "11" }, 
-                { q: "3. 10 less than 1000?", opts: ["990", "900", "1010"], ans: "990" }, 
-                { q: "4. 10 tens make 1...?", opts: ["Thousand", "Hundred", "Ten"], ans: "Hundred" }, 
-                { q: "5. Largest 4-digit number?", opts: ["9999", "1000", "9000"], ans: "9999" } 
-            ],
-            dec: [ 
-                { q: "1. Line up the dots! 12.5 + 4.75. Which is correct?", opts: ["12.5 + 4.75", "12.50 + 4.75"], ans: "12.50 + 4.75" }, 
-                { q: "2. Calculate: 14.55 + 3.21", opts: ["17.76", "17.21", "18.76"], ans: "17.76" }, 
-                { q: "3. Subtract: 25.80 - 12.35", opts: ["13.45", "13.55", "12.45"], ans: "13.45" }, 
-                { q: "4. Pay $20 for $15.75 item. Change?", opts: ["$4.25", "$5.25", "$4.75"], ans: "$4.25" }, 
-                { q: "5. 124.6 + 8.92 = ?", opts: ["133.52", "132.52", "133.50"], ans: "133.52" } 
-            ],
-            int: [ 
-                { q: "1. Calculate: -4 + 9", opts: ["5", "-5", "13"], ans: "5" }, 
-                { q: "2. Temp is 5°C, drops 8°C. New temp?", opts: ["-3°C", "3°C", "-13°C"], ans: "-3°C" }, 
-                { q: "3. Hiker at -15m, climbs 40m. Elevation?", opts: ["25m", "-55m", "-25m"], ans: "25m" }, 
-                { q: "4. Calculate: -15 - (-5)", opts: ["-10", "-20", "10"], ans: "-10" }, 
-                { q: "5. Subtracting a positive moves...", opts: ["Left", "Right", "Nowhere"], ans: "Left" } 
-            ]
+            q1: [ { q: "1. In 4,302, what is in the thousands place?", opts: ["2", "3", "4"], ans: "4" }, { q: "2. Next number: 2, 5, 8, ...?", opts: ["9", "11", "10"], ans: "11" }, { q: "3. 10 less than 1000?", opts: ["990", "900", "1010"], ans: "990" }, { q: "4. 10 tens make 1...?", opts: ["Thousand", "Hundred", "Ten"], ans: "Hundred" }, { q: "5. Largest 4-digit number?", opts: ["9999", "1000", "9000"], ans: "9999" } ],
+            dec: [ { q: "1. Line up the dots! 12.5 + 4.75. Which is correct?", opts: ["12.5 + 4.75", "12.50 + 4.75"], ans: "12.50 + 4.75" }, { q: "2. Calculate: 14.55 + 3.21", opts: ["17.76", "17.21", "18.76"], ans: "17.76" }, { q: "3. Subtract: 25.80 - 12.35", opts: ["13.45", "13.55", "12.45"], ans: "13.45" }, { q: "4. Pay $20 for $15.75 item. Change?", opts: ["$4.25", "$5.25", "$4.75"], ans: "$4.25" }, { q: "5. 124.6 + 8.92 = ?", opts: ["133.52", "132.52", "133.50"], ans: "133.52" } ],
+            int: [ { q: "1. Calculate: -4 + 9", opts: ["5", "-5", "13"], ans: "5" }, { q: "2. Temp is 5°C, drops 8°C. New temp?", opts: ["-3°C", "3°C", "-13°C"], ans: "-3°C" }, { q: "3. Hiker at -15m, climbs 40m. Elevation?", opts: ["25m", "-55m", "-25m"], ans: "25m" }, { q: "4. Calculate: -15 - (-5)", opts: ["-10", "-20", "10"], ans: "-10" }, { q: "5. Subtracting a positive moves...", opts: ["Left", "Right", "Nowhere"], ans: "Left" } ]
         };
 
         function renderGames() {
@@ -776,8 +755,6 @@
                     </div>`;
                 });
                 grid.innerHTML = html;
-
-                // Add click listeners
                 grid.querySelectorAll('.spell-card').forEach((card) => {
                     card.addEventListener('click', (e) => {
                         if(e.target.classList.contains('opt-btn')) {
@@ -795,11 +772,8 @@
             let score = 0;
             gameData[gKey].forEach((item, i) => {
                 const card = document.getElementById(`sc-${gKey}-${i}`);
-                if(card.dataset.answer === item.ans) {
-                    card.classList.add('correct'); card.classList.remove('wrong'); score++;
-                } else {
-                    card.classList.add('wrong'); card.classList.remove('correct');
-                }
+                if(card.dataset.answer === item.ans) { card.classList.add('correct'); card.classList.remove('wrong'); score++; }
+                else { card.classList.add('wrong'); card.classList.remove('correct'); }
             });
             const fb = document.getElementById(`fb-${gKey}`);
             fb.className = 'feedback-box show ' + (score === total ? 'ok' : 'no');
@@ -809,29 +783,85 @@
         function resetGame(gKey, total) {
             gameData[gKey].forEach((item, i) => {
                 const card = document.getElementById(`sc-${gKey}-${i}`);
-                card.classList.remove('selected', 'correct', 'wrong');
-                card.dataset.answer = "";
+                card.classList.remove('selected', 'correct', 'wrong'); card.dataset.answer = "";
                 card.querySelectorAll('.opt-btn').forEach(o => o.classList.remove('chosen'));
             });
             document.getElementById(`fb-${gKey}`).className = 'feedback-box';
         }
 
-        // ==================== DRAG & DROP LOGIC ====================
-        let draggedId = null;
-        document.querySelectorAll('.draggable').forEach(el => {
-            el.addEventListener('dragstart', e => { draggedId = e.target.id; e.dataTransfer.effectAllowed = 'move'; });
-            el.addEventListener('click', () => { 
-                document.querySelectorAll('.draggable').forEach(d => d.style.opacity = '1');
-                el.style.opacity = '0.5'; draggedId = el.id; 
-            });
-        });
+        // ==================== REAL WORLD LOGIC ====================
+        const rwAnswers = { 'rw-q1': '6.75', 'rw-q2': '9', 'rw-q3': '-45' };
+        function checkRealWorld() {
+            for(let id in rwAnswers) {
+                const input = document.getElementById(id);
+                const fb = document.getElementById(id.replace('q', 'fb'));
+                if(input.value.trim() === rwAnswers[id]) {
+                    fb.className = 'q-result correct'; fb.innerHTML = `<i class="fas fa-check"></i> Correct!`;
+                } else {
+                    fb.className = 'q-result incorrect'; fb.innerHTML = `<i class="fas fa-times"></i> Incorrect. The correct answer is ${rwAnswers[id]}.`;
+                }
+            }
+        }
+        function resetRealWorld() {
+            for(let id in rwAnswers) {
+                document.getElementById(id).value = '';
+                document.getElementById(id.replace('q', 'fb')).className = 'q-result';
+            }
+        }
 
-        document.querySelectorAll('.drop-zone').forEach(zone => {
-            zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
-            zone.addEventListener('dragleave', () => zone.classList.remove('over'));
-            zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('over'); appendDragged(zone); });
-            zone.addEventListener('click', () => appendDragged(zone));
-        });
+        // ==================== DRAG & DROP LOGIC (5 SETS) ====================
+        const ddData = [
+            { id: 1, top: "14.60", bot: "8.92", ans: "23.52" },
+            { id: 2, top: "45.10", bot: "7.68", ans: "37.42" },
+            { id: 3, top: "12.50", bot: "4.75", ans: "17.25" },
+            { id: 4, top: "100.00", bot: "24.65", ans: "75.35" },
+            { id: 5, top: "9.90", bot: "3.15", ans: "13.05" }
+        ];
+
+        let draggedId = null;
+        
+        function renderDragDrops() {
+            const container = document.getElementById('dd-container');
+            let html = '';
+            ddData.forEach(set => {
+                html += `<div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                        <div style="display:flex; gap:10px;">
+                            <div class="drag-zone" id="drag-source-${set.id}">
+                                <div class="draggable" draggable="true" data-id="top-${set.id}" id="drag-top-${set.id}">${set.top}</div>
+                                <div class="draggable" draggable="true" data-id="bot-${set.id}" id="drag-bot-${set.id}">${set.bot}</div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 5px;">
+                                <div class="drop-zone" id="drop-top-${set.id}" data-accept="top-${set.id}" style="max-width:100px;"></div>
+                                <div style="font-weight:bold; color:var(--accent-gold); text-align:center;">+</div>
+                                <div class="drop-zone" id="drop-bot-${set.id}" data-accept="bot-${set.id}" style="max-width:100px;"></div>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span style="font-weight:bold;">=</span>
+                            <span id="dd-ans-${set.id}" style="color:var(--text-muted); font-style:italic;">?</span>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+
+            // Attach Event Listeners
+            document.querySelectorAll('.draggable').forEach(el => {
+                el.addEventListener('dragstart', e => { draggedId = e.target.id; e.dataTransfer.effectAllowed = 'move'; });
+                el.addEventListener('click', () => { 
+                    document.querySelectorAll('.draggable').forEach(d => d.style.opacity = '1');
+                    el.style.opacity = '0.5'; draggedId = el.id; 
+                });
+            });
+
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+                zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+                zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('over'); appendDragged(zone); });
+                zone.addEventListener('click', () => appendDragged(zone));
+            });
+        }
 
         function appendDragged(zone) {
             if(draggedId) {
@@ -840,53 +870,46 @@
             }
         }
 
-        function checkDrag() {
-            const z1 = document.getElementById('drop-1'); 
-            const z2 = document.getElementById('drop-2'); 
+        function checkDragSets() {
+            let score = 0;
+            ddData.forEach(set => {
+                const zt = document.getElementById(`drop-top-${set.id}`);
+                const zb = document.getElementById(`drop-bot-${set.id}`);
+                const ansSpan = document.getElementById(`dd-ans-${set.id}`);
+                
+                const isTopCorrect = zt.querySelector('.draggable')?.id === `drag-top-${set.id}`;
+                const isBotCorrect = zb.querySelector('.draggable')?.id === `drag-bot-${set.id}`;
+
+                if(isTopCorrect && isBotCorrect) {
+                    zt.style.borderColor = "var(--success)"; zb.style.borderColor = "var(--success)";
+                    ansSpan.innerText = set.ans; ansSpan.style.color = "var(--success)"; ansSpan.style.fontStyle = "bold";
+                    score++;
+                } else {
+                    zt.style.borderColor = "var(--danger)"; zb.style.borderColor = "var(--danger)";
+                    ansSpan.innerText = "Misaligned!"; ansSpan.style.color = "var(--danger)"; ansSpan.style.fontStyle = "italic";
+                }
+            });
             const fb = document.getElementById('fb-drag');
-            const ans1 = z1.querySelector('.draggable')?.id === 'drag-1460';
-            const ans2 = z2.querySelector('.draggable')?.id === 'drag-892';
-            
-            if(ans1 && ans2) {
-                fb.className = 'feedback-box show ok'; 
-                fb.innerHTML = '<i class="fas fa-check-circle"></i> Perfect Alignment! The dots are locked.';
-            } else {
-                fb.className = 'feedback-box show no'; 
-                fb.innerHTML = '<i class="fas fa-times-circle"></i> Remember: Line up the decimals! 14.60 goes on top, 8.92 below.';
-            }
+            fb.className = 'feedback-box show ' + (score === 5 ? 'ok' : 'no');
+            fb.innerHTML = score === 5 ? `<i class="fas fa-check-circle"></i> All perfectly aligned!` : `<i class="fas fa-times-circle"></i> ${score}/5 correct. Remember to line up the dots!`;
         }
 
         // ==================== NUMBER LINE LOGIC ====================
         let nlVal = 0;
-        function moveDot(step) {
-            nlVal += step;
-            document.getElementById('nl-val').innerText = nlVal;
-            const cx = 200 + (nlVal * 12); // 12px per unit
-            document.getElementById('nl-dot').setAttribute('cx', cx);
-        }
+        function moveDot(step) { nlVal += step; document.getElementById('nl-val').innerText = nlVal; document.getElementById('nl-dot').setAttribute('cx', 200 + (nlVal * 12)); }
         function resetDot() { nlVal = 0; moveDot(0); }
 
         // ==================== INDEPENDENT PRACTICE LOGIC ====================
         const practiceAnswers = { 'p-q1': '17.25', 'p-q2': '13.45', 'p-q3': '5', 'p-q4': '-9', 'p-q5': '25' };
         const practiceHints = { 'p-q1': '12.50 + 4.75', 'p-q2': '25.80 - 12.35', 'p-q3': 'Start -4, right 9', 'p-q4': 'Start 3, left 12', 'p-q5': 'Start -15, right 40' };
-
         function checkPractice() {
             for(let id in practiceAnswers) {
-                const input = document.getElementById(id);
-                const fb = document.getElementById(id.replace('q', 'fb'));
-                if(input.value.trim() === practiceAnswers[id]) {
-                    fb.className = 'q-result correct'; fb.innerHTML = `<i class="fas fa-check"></i> Correct!`;
-                } else {
-                    fb.className = 'q-result incorrect'; fb.innerHTML = `<i class="fas fa-times"></i> Hint: ${practiceHints[id]}`;
-                }
+                const input = document.getElementById(id); const fb = document.getElementById(id.replace('q', 'fb'));
+                if(input.value.trim() === practiceAnswers[id]) { fb.className = 'q-result correct'; fb.innerHTML = `<i class="fas fa-check"></i> Correct!`; }
+                else { fb.className = 'q-result incorrect'; fb.innerHTML = `<i class="fas fa-times"></i> Incorrect. Answer: ${practiceAnswers[id]}`; }
             }
         }
-        function resetPractice() {
-            for(let id in practiceAnswers) {
-                document.getElementById(id).value = '';
-                document.getElementById(id.replace('q', 'fb')).className = 'q-result';
-            }
-        }
+        function resetPractice() { for(let id in practiceAnswers) { document.getElementById(id).value = ''; document.getElementById(id.replace('q', 'fb')).className = 'q-result'; } }
 
         // ==================== ASSESSMENT ENGINE ====================
         const assessData = {
@@ -900,8 +923,7 @@
         let scores = { 1:-1, 2:-1, 3:-1, 4:-1, 5:-1 };
 
         function renderAssessment() {
-            const c = document.getElementById('assess-container'); 
-            let h = '';
+            const c = document.getElementById('assess-container'); let h = '';
             for (let g = 1; g <= 5; g++) {
                 h += `<div id="tab-${g}" class="tab-content ${g===1?'active':''}">`;
                 assessData[g].forEach((it, i) => {
@@ -918,50 +940,69 @@
             c.innerHTML = h;
         }
 
-        function switchTab(n) { 
-            currentTab=n; 
-            document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active')); 
-            document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); 
-            document.getElementById(`tab-${n}`).classList.add('active'); 
-            document.querySelectorAll('.tab-btn')[n-1].classList.add('active'); 
-        }
+        function switchTab(n) { currentTab=n; document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active')); document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); document.getElementById(`tab-${n}`).classList.add('active'); document.querySelectorAll('.tab-btn')[n-1].classList.add('active'); }
 
         function submitGroup(g) {
-            if(scores[g]!==-1) return; // Already submitted
+            if(scores[g]!==-1) return;
             let cc=0;
             assessData[g].forEach(it => {
-                const rd = document.getElementById(`res-${it.id}`); 
-                let ua="";
+                const rd = document.getElementById(`res-${it.id}`); let ua="";
                 if(it.type==='radio') { const s=document.querySelector(`input[name="${it.id}"]:checked`); if(s)ua=s.value; }
-                else if(it.type==='checkbox') { const ss=document.querySelectorAll(`input[name="${it.id}"]:checked`); ua=Array.from(ss).map(s=>s.value).sort(); }
+                else if(it.type==='checkbox') { const ss=document.querySelectorAll(`input[name="${it.id}"]:checked`); ua=Array.from(ss).map(s=>s.value).sort().join(", "); }
                 else { ua=document.getElementById(it.id).value.trim(); }
                 
-                let ok=false; 
-                if(it.type==='checkbox') ok=JSON.stringify(ua)===JSON.stringify(it.ans.sort()); 
+                let expectedAns = Array.isArray(it.ans) ? it.ans.sort().join(", ") : it.ans;
+                let ok = false; 
+                if(it.type==='checkbox') ok=ua===expectedAns; 
                 else ok=ua===it.ans;
                 
-                if(ok) { rd.className='q-result correct'; rd.innerHTML=`<i class="fas fa-check"></i> Correct`; cc++; }
-                else { rd.className='q-result incorrect'; rd.innerHTML=`<i class="fas fa-times"></i> Hint: ${it.hint} (Ans: ${it.ans})`; }
+                if(ok) { rd.className='q-result correct'; rd.innerHTML=`<i class="fas fa-check"></i> Correct!`; cc++; }
+                else { rd.className='q-result incorrect'; rd.innerHTML=`<i class="fas fa-times"></i> Your answer: "${ua}". Correct: "${expectedAns}"`; }
             });
             scores[g]=cc; 
             document.getElementById(`score-g${g}`).innerHTML=`<i class="fas fa-star"></i> Score: ${cc}/10`;
         }
 
-        function printAssessment() { 
-            document.querySelectorAll('.tab-content').forEach(t=>t.style.display='block'); 
-            window.print(); 
-            setTimeout(()=>{
-                document.querySelectorAll('.tab-content').forEach(t=>t.style.display=''); 
+        function printAssessment() {
+            const name = document.getElementById('studentName').value || 'N/A';
+            const date = document.getElementById('assessDate').value || 'N/A';
+            const activeTab = document.querySelector('.tab-content.active');
+            const g = activeTab.id.split('-')[1];
+            const score = scores[g] !== -1 ? `${scores[g]}/10` : 'Not Submitted';
+
+            // 1. Tambahkan class ke body untuk mengaktifkan CSS Print
+            document.body.classList.add('printing-mode');
+            
+            // 2. Tambahkan kelas print-area ke section card assessment
+            activeTab.closest('.section-card').classList.add('print-area');
+
+            // 3. Sembunyikan tab lain, tampilkan yang aktif
+            document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+            activeTab.style.display = 'block';
+
+            // 4. Buat Header sementara untuk Print
+            let printHeader = document.createElement('div');
+            printHeader.id = 'print-header';
+            printHeader.innerHTML = `<h2 style="margin:0; color:black; text-shadow:none; font-family: 'Cinzel Decorative', cursive;">Math Assessment Report</h2>
+                                     <p style="margin:5px 0;"><b>Name:</b> ${name} | <b>Date:</b> ${date} | <b>Group ${g} Score:</b> ${score}</p>`;
+            activeTab.insertBefore(printHeader, activeTab.firstChild);
+
+            // 5. Cetak
+            window.print();
+
+            // 6. Bersihkan setelah cetak
+            setTimeout(() => {
+                document.body.classList.remove('printing-mode');
+                activeTab.closest('.section-card').classList.remove('print-area');
+                document.querySelectorAll('.tab-content').forEach(t => t.style.display = '');
+                if(printHeader) printHeader.remove();
                 switchTab(currentTab);
-            }, 500); 
+            }, 500);
         }
 
         // ==================== FEEDBACK LOGIC ====================
         function submitFeedback() {
-            if(!document.querySelector('input[name="rating"]:checked')) { 
-                alert("Please give a star rating before submitting! / Tolong berikan penilaian bintang sebelum mengirim!"); 
-                return; 
-            }
+            if(!document.querySelector('input[name="rating"]:checked')) { alert("Please give a star rating!"); return; }
             document.getElementById('starRating').style.display = 'none';
             document.querySelector('.magic-textarea').style.display = 'none';
             document.querySelector('.section-card:last-child .btn-check').style.display = 'none';
@@ -970,6 +1011,7 @@
 
         // ==================== INITIALIZATION ====================
         renderGames();
+        renderDragDrops();
         renderAssessment();
 
     </script>
