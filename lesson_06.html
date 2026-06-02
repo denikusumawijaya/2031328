@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Tutoring - Windows XP Edition</title>
+    <style>
+        /* Windows XP Theme Variables */
+        :root {
+            --xp-blue: #245EDC;
+            --xp-blue-light: #3A6DDA;
+            --xp-title-gradient: linear-gradient(180deg, #0997FF 0%, #0053EE 8%, #0050EE 40%, #0046CC 88%, #0040BF 93%, #003BAA 95%, #003494 100%);
+            --xp-silver: #ECE9D8;
+            --xp-silver-border: #808080;
+            --xp-window-border: #0054E3;
+            --xp-start-green: #2E8B10;
+        }
+
+        body {
+            font-family: 'Tahoma', 'Segoe UI', sans-serif;
+            background-color: #3A6DDA; /* XP Classic Desktop Blue */
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="%233A6DDA"/></svg>'); /* Fallback */
+            color: black;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* XP Taskbar Header */
+        .taskbar-header {
+            background: linear-gradient(to bottom, #245EDC, #1B4DB0);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid #5B9CFF;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+
+        .taskbar-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 2px rgba(0,0,0,0.4);
+        }
+
+        .taskbar-info {
+            text-align: right;
+            font-size: 0.9rem;
+        }
+
+        /* Main Layout 3:1 */
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .material-panel {
+            flex: 3;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .canvas-panel {
+            flex: 1;
+            background-color: var(--xp-silver);
+            border-left: 2px solid var(--xp-silver-border);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            box-shadow: inset 1px 1px white;
+        }
+
+        /* XP Window Styling */
+        .xp-window {
+            background: var(--xp-silver);
+            border: 2px solid var(--xp-silver-border);
+            border-radius: 8px 8px 0 0;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .xp-title-bar {
+            background: var(--xp-title-gradient);
+            padding: 5px 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+        }
+
+        .xp-title-bar span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .xp-buttons {
+            display: flex;
+            gap: 2px;
+        }
+
+        .xp-btn {
+            width: 21px;
+            height: 21px;
+            border-radius: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 12px;
+            border: 1px solid;
+            cursor: pointer;
+        }
+
+        .xp-btn-minimize { background: #3A6DDA; border-color: #5B9CFF; color: white; }
+        .xp-btn-maximize { background: #3A6DDA; border-color: #5B9CFF; color: white; }
+        .xp-btn-close { background: #E08040; border-color: #FFB080; color: white; }
+
+        .xp-body {
+            padding: 15px;
+        }
+
+        /* Typography & Bilingual */
+        .en-text { font-weight: bold; font-size: 1.1rem; }
+        .id-text { font-size: 0.9rem; color: #444; margin-top: 2px; margin-bottom: 10px; }
+
+        /* Timer */
+        .timer-badge {
+            background-color: #FFD700;
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            border: 1px solid #DAA520;
+            float: right;
+        }
+
+        /* Rules */
+        .rules-box {
+            background-color: #FFFFE1;
+            border: 1px solid #000;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-family: 'MS Sans Serif', sans-serif;
+            box-shadow: inset 1px 1px white;
+        }
+        .rules-box ul { margin: 5px 0; padding-left: 20px; }
+
+        /* Interactive Elements */
+        .xp-input {
+            border: 2px inset var(--xp-silver-border);
+            padding: 4px;
+            background: white;
+            font-family: Tahoma, sans-serif;
+        }
+
+        .xp-button {
+            background: var(--xp-silver);
+            border: 2px outset var(--xp-silver-border);
+            padding: 5px 15px;
+            font-family: Tahoma, sans-serif;
+            cursor: pointer;
+            box-shadow: inset 1px 1px white;
+        }
+        .xp-button:active { border-style: inset; }
+        .xp-button-primary { background: #E08040; color: white; border-color: #FFB080; }
+        .xp-button-success { background: var(--xp-start-green); color: white; border-color: #5CD050; }
+
+        /* Section Specifics */
+        .visual-block {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .base-ten {
+            width: 40px;
+            height: 40px;
+            background-color: #F4B41A;
+            border: 2px solid #D18916;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #000;
+        }
+        .question-box {
+            background: white;
+            border: 1px solid #808080;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .feedback-correct { color: green; font-weight: bold; }
+        .feedback-wrong { color: red; font-weight: bold; }
+
+        /* Scratchpad Canvas */
+        .canvas-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border: 2px inset var(--xp-silver-border);
+            margin-top: 5px;
+        }
+        #scratchpad {
+            flex: 1;
+            cursor: crosshair;
+        }
+        .canvas-tools {
+            display: flex;
+            justify-content: space-around;
+            padding: 5px;
+            background: var(--xp-silver);
+            border-bottom: 1px solid #808080;
+        }
+        .color-btn {
+            width: 20px;
+            height: 20px;
+            border: 2px outset #808080;
+            cursor: pointer;
+        }
+        .color-btn:active { border-style: inset; }
+
+        .scrollbar-xp::-webkit-scrollbar { width: 16px; }
+        .scrollbar-xp::-webkit-scrollbar-track { background: #EBE8D8; border: 1px solid #808080; }
+        .scrollbar-xp::-webkit-scrollbar-thumb { background: #CACBBD; border: 2px outset #808080; }
+        /* Tab styling */
+        .tab-btn {
+            border-radius: 5px 5px 0 0;
+            border-bottom: none;
+            background: #ECE9D8;
+            color: #444;
+        }
+        .active-tab {
+            background: white;
+            border-top: 2px solid var(--xp-blue);
+            border-left: 2px solid var(--xp-blue);
+            border-right: 2px solid var(--xp-blue);
+            font-weight: bold;
+            color: black;
+        }
+        .tab-content {
+            min-height: 300px;
+        }
+
+        /* Print Styles */
+        @media print {
+            body { background: white; }
+            .taskbar-header, .canvas-panel, .xp-buttons, button, .tab-btn, #section1, #section2, #section3, #section4, #section5, #section6, #section7, #section9 { display: none !important; }
+            .material-panel { overflow: visible !important; flex: 1 !important; padding: 0 !important; }
+            .xp-window { border: 1px solid black !important; box-shadow: none !important; margin-bottom: 10px !important; }
+            .xp-title-bar { background: #ddd !important; color: black !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .tab-content { display: block !important; page-break-inside: avoid; border: none !important; }
+            .q-feedback { font-weight: bold; }
+            .feedback-correct { color: green !important; }
+            .feedback-wrong { color: red !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TASKBAR HEADER -->
+    <div class="taskbar-header">
+        <div class="taskbar-title">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><fill='%23FF0000'/><path d='M8 0L0 16h16L8 0z'/></svg>" width="20" alt="icon"> 
+            MATH TUTORING
+        </div>
+        <div class="taskbar-info">
+            <div>Topic: Exploring Probability <br><small>Topik: Menjelajahi Peluang</small></div>
+            <div>Tutor: Deni</div>
+        </div>
+    </div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="main-container">
+        
+        <!-- MATERIAL PANEL (3 Ratio) -->
+        <div class="material-panel scrollbar-xp">
+            
+            <!-- CLASS RULES -->
+            <div class="xp-window">
+                <div class="xp-title-bar">
+                    <span>📜 Class Rules / Aturan Kelas</span>
+                    <div class="xp-buttons">
+                        <div class="xp-btn xp-btn-minimize">_</div>
+                        <div class="xp-btn xp-btn-maximize">□</div>
+                        <div class="xp-btn xp-btn-close">X</div>
+                    </div>
+                </div>
+                <div class="xp-body">
+                    <div class="rules-box">
+                        <ul>
+                            <li>Take turns speaking. <br><small>Berbicara secara bergantian.</small></li>
+                            <li>Ask for permission if you need to leave Zoom (e.g., toilet/drink). <br><small>Minta izin ketika ingin meninggalkan zoom (misal izin ke toilet atau minum).</small></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 1: Spiral Review Warm-up (00:00 - 00:10) -->
+            <div class="xp-window" id="section1">
+                <div class="xp-title-bar">
+                    <span>💻 Section 1: Spiral Review Warm-up <span class="timer-badge">00:00 - 00:10</span></span>
+                    <div class="xp-buttons">
+                        <div class="xp-btn xp-btn-minimize">_</div>
+                        <div class="xp-btn xp-btn-maximize">□</div>
+                        <div class="xp-btn xp-btn-close">X</div>
+                    </div>
+                </div>
+                <div class="xp-body">
+                    <p class="en-text">Let's flex those brain muscles with a quick review of place values and numbers!</p>
+                    <p class="id-text">Mari melatih otak kita dengan tinjauan cepat tentang nilai tempat dan angka!</p>
+                    
+                    <div class="visual-block" id="baseTenVisual">
+                        <!-- Base Ten SVGs -->
+                        <div class="base-ten" style="width: 80px; height: 80px;">1000<br>x4</div>
+                        <div class="base-ten" style="width: 60px; height: 20px;">100<br>x2</div>
+                        <div class="base-ten" style="width: 10px; height: 20px;">1<br>x5</div>
+                    </div>
+
+                    <div class="question-box">
+                        <p><strong>Q1:</strong> <span class="en-text">What number is shown by 4 thousands, 2 hundreds, and 5 units?</span><br><small class="id-text">Angka berapa yang ditunjukkan oleh 4 ribuan, 2 ratusan, dan 5 satuan?</small></p>
+                        <input type="text" class="xp-input" id="q1-answer" placeholder="Type answer...">
+                    </div>
+
+                    <div class="question-box">
+                        <p><strong>Q2:</strong> <span class="en-text">In the number 7,038, which digit is in the tens place?</span><br><small class="id-text">Pada angka 7.038, digit mana yang berada di tempat puluhan?</small></p>
+                        <input type="text" class="xp-input" id="q2-answer" placeholder="Type answer...">
+                    </div>
+
+                    <div class="question-box">
+                        <p><strong>Q3:</strong> <span class="en-text">What is the largest 4-digit number you can make using 0, 9, 2, and 5?</span><br><small class="id-text">Berapa angka 4 digit terbesar yang bisa kamu buat dari 0, 9, 2, dan 5?</small></p>
+                        <input type="text" class="xp-input" id="q3-answer" placeholder="Type answer...">
+                    </div>
+
+                    <div class="question-box">
+                        <p><strong>Q4:</strong> <span class="en-text">If I add 1,000 to 5,421, what is my new total?</span><br><small class="id-text">Jika saya menambahkan 1.000 ke 5.421, berapa total baru saya?</small></p>
+                        <input type="text" class="xp-input" id="q4-answer" placeholder="Type answer...">
+                    </div>
+
+                    <div style="margin-top: 10px; display: flex; gap: 10px;">
+                        <button class="xp-button xp-button-primary" onclick="checkSection1()">Check Answers</button>
+                        <button class="xp-button" onclick="resetSection1()">Reset</button>
+                    </div>
+                    <div id="section1-feedback" style="margin-top: 10px;"></div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: Introduction & Real-World Connection (00:10 - 00:15) -->
+            <div class="xp-window" id="section2">
+                <div class="xp-title-bar">
+                    <span>🌤️ Section 2: Introduction & Real-World Connection <span class="timer-badge">00:10 - 00:15</span></span>
+                    <div class="xp-buttons">
+                        <div class="xp-btn xp-btn-minimize">_</div>
+                        <div class="xp-btn xp-btn-maximize">□</div>
+                        <div class="xp-btn xp-btn-close">X</div>
+                    </div>
+                </div>
+                <div class="xp-body">
+                    <p class="en-text">Have you ever wondered why some games are harder to win than others? Or why a weather forecaster says there is a 50% chance of rain?</p>
+                    <p class="id-text">Pernahkah kamu bertanya-tanya mengapa beberapa permainan lebih sulit dimenangkan? Atau mengapa prakiraan cuaca mengatakan ada 50% kemungkinan hujan?</p>
+                    
+                    <p class="en-text">Probability is the math of 'guessing' the future! We use it in video games, sports, and even when deciding to bring an umbrella.</p>
+                    <p class="id-text">Peluang adalah matematika untuk 'menebak' masa depan! Kita menggunakannya dalam video game, olahraga, bahkan saat memutuskan untuk membawa payung.</p>
+
+                    <!-- Interactive SVG Weather -->
+                    <div style="text-align: center; margin: 20px 0;">
+                        <svg width="150" height="150" viewBox="0 0 100 100" id="weather-svg">
+                            <circle cx="50" cy="50" r="30" fill="#FFD700" stroke="#DAA520" stroke-width="2" id="sun-icon"/>
+                            <text x="50" y="90" text-anchor="middle" font-size="10" font-family="Tahoma" fill="black">50% Chance of Rain / 50% Kemungkinan Hujan</text>
+                        </svg>
+                    </div>
+
+                    <div class="question-box">
+                        <p class="en-text">Quick Check: Can you name one real-world example where we use probability?</p>
+                        <p class="id-text">Cek Cepat: Bisakah kamu menyebutkan satu contoh dunia nyata di mana kita menggunakan peluang?</p>
+                        <input type="text" class="xp-input" id="q5-answer" style="width: 100%;" placeholder="e.g., Flipping a coin / Melempar koin...">
+                    </div>
+
+                    <div style="margin-top: 10px; display: flex; gap: 10px;">
+                        <button class="xp-button xp-button-primary" onclick="checkSection2()">Check</button>
+                        <button class="xp-button" onclick="resetSection2()">Reset</button>
+                    </div>
+                    <div id="section2-feedback" style="margin-top: 10px;"></div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: Review of Prior Knowledge (00:15 - 00:25) -->
+            <div class="xp-window" id="section3">
+                <div class="xp-title-bar">
+                    <span>🧠 Section 3: Review of Prior Knowledge <span class="timer-badge">00:15 - 00:25</span></span>
+                    <div class="xp-buttons">
+                        <div class="xp-btn xp-btn-minimize">_</div>
+                        <div class="xp-btn xp-btn-maximize">□</div>
+                        <div class="xp-btn xp-btn-close">X</div>
+                    </div>
+                </div>
+                <div class="xp-body">
+                    <p class="en-text">Think back to when you've played games with dice or coins. If I toss a coin, can it land on its edge? Probably not! It’s usually heads or tails.</p>
+                    <p class="id-text">Ingat kembali saat kamu bermain dengan dadu atau koin. Jika saya melempar koin, bisakah mendarat di sisinya? Mungkin tidak! Biasanya sisi gambar atau angka.</p>
+
+                    <p class="en-text">Let's sort everyday events into 'Possible' and 'Impossible'.</p>
+                    <p class="id-text">Mari urutkan kejadian sehari-hari menjadi 'Mungkin' dan 'Mustahil'.</p>
+
+                    <div style="display: flex; justify-content: space-around; margin-bottom: 20px; padding: 10px; background: white; border: inset 2px #808080;">
+                        <div style="text-align: center; width: 45%;">
+                            <h4 style="margin:0; color: var(--xp-start-green);">Possible / Mungkin</h4>
+                            <div id="possible-box" style="min-height: 100px; border: 2px dashed #808080; padding: 5px; margin-top: 5px;"></div>
+                        </div>
+                        <div style="text-align: center; width: 45%;">
+                            <h4 style="margin:0; color: red;">Impossible / Mustahil</h4>
+                            <div id="impossible-box" style="min-height: 100px; border: 2px dashed #808080; padding: 5px; margin-top: 5px;"></div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;" id="drag-container">
+                        <div class="xp-button draggable-event" draggable="true" id="event1" data-category="possible">It will rain tomorrow / Hujan besok</div>
+                        <div class="xp-button draggable-event" draggable="true" id="event2" data-category="impossible">Pigs will fly / Babi bisa terbang</div>
+                        <div class="xp-button draggable-event" draggable="true" id="event3" data-category="possible">You will eat lunch / Kamu akan makan siang</div>
+                        <div class="xp-button draggable-event" draggable="true" id="event4" data-category="impossible">You meet an alien / Bertemu alien</div>
+                    </div>
+
+                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <button class="xp-button xp-button-primary" onclick="checkSection3()">Check Sorting</button>
+                        <button class="xp-button" onclick="resetSection3()">Reset</button>
+                    </div>
+                    <div id="section3-feedback" style="margin-top: 10px;"></div>
+                </div>
+            </div>
+
+            <!-- Placeholder for Sections 4-7 and Assessment (Will be added in Part 2 & 3) -->
+            <!-- SECTION 4: Problem Introduction (00:25 - 00:35) -->
+            <div class="xp-window" id="section4">
+                <div class="xp-title-bar">
+                    <span>📏 Section 4: The Likelihood Scale <span class="timer-badge">00:25 - 00:35</span></span>
+                    <div class="xp-buttons">
+                        <div class="xp-btn xp-btn-minimize">_</div>
+                        <div class="xp-btn xp-btn-maximize">□</div>
+                        <div class="xp-btn xp-btn-close">X</div>
+                    </div>
+                </div>
+                <div class="xp-body">
+                    <p class="en-text">Look at this 'Likelihood Scale'. It goes from 0 (Impossible) to 1 (Certain). In the middle at 0.5, we have 'Even Chance'.</p>
+                    <p class="id-text">Lihat 'Skala Kemungkinan' ini. Skalanya dari 0 (Mustahil) hingga 1 (Pasti). Di tengah pada 0.5, kita memiliki 'Kemungkinan Sama'.</p>
+
+                    <!-- Probability Scale Visual -->
+                    <div style="position: relative; height: 120px; background: white; border: inset 2px #808080; margin-bottom: 20px; display: flex; justify-content: space-between; padding: 0 20px;">
+                        <div style="position: absolute; bottom: 10px; left: 20px; font-weight: bold; color: red;">0<br>Impossible<br><small>Mustahil</small></div>
+                        <div style="position: absolute; bottom: 10px; left: 48%; font-weight: bold; color: orange;">0.5<br>Even Chance<br><small>Kemungkinan Sama</small></div>
+                        <div style="position: absolute; bottom: 10px; right: 20px; font-weight: bold; color: green;">1<br>Certain<br><small>Pasti</small></div>
+                        
+                        <!-- Drop Zones on Scale -->
+                        <div id="drop-impossible" style="position: absolute; top: 10px; left: 10px; width: 25%; height: 60px; border: 2px dashed red; background: rgba(255,0,0,0.1);"></div>
+                        <div id="drop-unlikely" style="position: absolute; top: 10px; left: 37%; width: 15%; height: 60px; border: 2px dashed #FF8C00; background: rgba(255,140,0,0.1);"></div>
+                        <div id="drop-even" style="position: absolute; top: 10px; left: 43%; width: 15%; height: 60px; border: 2px dashed orange; background: rgba(255,165,0,0.1);"></div>
+                        <div id="drop-likely" style="position: absolute; top: 10px; left: 59%; width: 15%; height: 60px; border: 2px dashed #32CD32; background: rgba(50,205,50,0.1);"></div>
+                        <div id="drop-certain" style="position: absolute; top: 10px; right: 10px; width: 25%; height: 60px; border: 2px dashed green; background: rgba(0,128,0,0.1);"></div>
+                    </div>
+
+                    <p class="en-text">Drag the situations to where they belong on the scale:</p>
+                    <p class="id-text">Seret situasi-situasi ini ke tempatnya pada skala:</p>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 15px;" id="scale-drag-container">
+                        <div class="xp-button draggable-scale" draggable="true" id="scale-event1" data-target="drop-certain" style="background: #ECE9D8; font-size: 0.9rem;">1. Sun will rise</div>
+                        <div class="xp-button draggable-scale" draggable="true" id="scale-event2" data-target="drop-impossible" style="background: #ECE9D8; font-size: 0.9rem;">2. Grow wings</div>
+                        <div class="xp-button draggable-scale" draggable="true" id="scale-event3" data-target="drop-impossible" style="background: #ECE9D8; font-size: 0.9rem;">3. Roll a 7 on 6-die</div>
+                        <div class="xp-button draggable-scale" draggable="true" id="scale-event4" data-target="drop-likely" style="background: #ECE9D8; font-size: 0.9rem;">4. Pick red (5R, 1B)</div>
+                        <div class="xp-button draggable-scale" draggable="true" id="scale-event5" data-target="drop-even" style="background: #ECE9D8; font-size: 0.9rem;">5. Coin lands Heads</div>
+                    </div>
+
+                    <div style="margin-top: 10px; display: flex; gap: 10px;">
+                        <button class="xp-button xp-button-primary" onclick="checkSection4()">Check Scale</button>
+                        <button class="xp-button" onclick="resetSection4()">Reset</button>
+                    </div>
+                    <div id="section4-feedback" style="margin-top: 10px;"></div>
+                </div>
+            </div>
+
+            <!-- SECTION 5: Guided Practice (00:35 - 00:50) -->
+            <div class="xp-window" id="section5">
+                <div class="xp-title-bar">
+                    <span>🪙 Section 5: Guided Practice - Coin Flip <span class="timer-badge">00:35 - 00:50</span></span>
+                    <div class="xp-buttons">
+                        <div class="xp-btn xp-btn-minimize">_</div>
+                        <div class="xp-btn xp-btn-maximize">□</div>
+                        <div class="xp-btn xp-btn-close">X</div>
+                    </div>
+                </div>
+                <div class="xp-body">
+                    <p class="en-text">Let's test our predictions! We predict that since it’s an 'Even Chance', we should get heads about half the time. More trials mean more accuracy!</p>
+                    <p class="id-text">Mari kita uji prediksi kita! Kita memprediksi bahwa karena 'Kemungkinan Sama', kita seharusnya mendapatkan gambar sekitar setengah dari waktu. Semakin banyak percobaan, semakin akurat!</p>
+
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                        <!-- Manual Flip Area -->
+                        <div style="flex: 1; min-width: 200px; background: white; padding: 10px; border: inset 2px #808080; text-align: center;">
+                            <h4>Manual Flip (10x) <br><small>Lempar Manual (10x)</small></h4>
+                            <div id="coin-display" style="width: 80px; height: 80px; background: gold; border-radius: 50%; margin: 10px auto; display: flex; justify-content: center; align-items: center; font-weight: bold; border: 4px solid #DAA520;">H / T</div>
+                            <button class="xp-button xp-button-success" onclick="flipCoin()">Flip Once!</button>
+                            <p>Flips: <span id="manual-flips">0</span>/10</p>
+                            <div style="text-align: left; margin-top: 10px;">
+                                <p>Heads (H): <span id="manual-heads">0</span></p>
+                                <p>Tails (T): <span id="manual-tails">0</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Simulator Area -->
+                        <div style="flex: 1; min-width: 200px; background: white; padding: 10px; border: inset 2px #808080; text-align: center;">
+                            <h4>Fast Simulator <br><small>Simulator Cepat</small></h4>
+                            <button class="xp-button xp-button-primary" onclick="simulate1000()">Simulate 1,000 Flips!</button>
+                            <div style="text-align: left; margin-top: 15px;">
+                                <p>Total Heads: <span id="sim-heads">0</span> (<span id="sim-heads-pct">0</span>%)</p>
+                                <p>Total Tails: <span id="sim-tails">0</span> (<span id="sim-tails-pct">0</span>%)</p>
+                            </div>
+                            <div style="height: 20px; background: #eee; border: 1px solid #808080; margin-top: 10px; display: flex;">
+                                <div id="sim-bar-h" style="background: gold; height: 100%; width: 50%;"></div>
+                                <div id="sim-bar-t" style="background: silver; height: 100%; width: 50%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-box" style="margin-top: 15px;">
+                        <p class="en-text">Observation: Did the 10 manual flips get exactly 5 Heads? What about the 1,000 simulation?</p>
+                        <p class="id-text">Observasi: Apakah 10 lemparan manual mendapat tepat 5 Gambar? Bagaimana dengan 1.000 simulasi?</p>
+                        <textarea class="xp-input" id="sec5-obs" style="width: 100%; height: 60px;" placeholder="Type your observation..."></textarea>
+                    </div>
+
+                    <div style="margin-top: 10px; display: flex; gap: 10px;">
+                        <button class="xp-button xp-button-primary" onclick="checkSection5()">Check Observation</button>
+                        <button class="xp-button" onclick="resetSection5()">Reset</button>
+                    </div>
+                    <div id="section5-feedback" style="margin-top: 10px;"></div>
+                </div>
+            </div>
+
+            <!-- SECTION 6: Independent Practice (00:50 - 01:05) -->
+            <div class="xp-window" id="section6">
+                <div class="xp-title-bar">
+                    <span>🔮 Section 6: Independent Practice - Marbles <span class="timer-badge">00:50 - 01:05</span></span>
+                    <div class="xp-buttons">
+                        <div class="xp-btn xp-btn-minimize">_</div>
+                        <div class="xp-btn xp-btn-maximize">□</div>
+                        <div class="xp-btn xp-btn-close">X</div>
+                    </div>
+                </div>
+                <div class="xp-body">
+                    <p class="en-text">Inside a virtual bag, there are 8 Green Marbles and 2 Yellow Marbles.</p>
+                    <p class="id-text">Di dalam kantong virtual, ada 8 Kelereng Hijau dan 2 Kelereng Kuning.</p>
+
+                    <!-- Marble Visual -->
+                    <div style="display: flex; gap: 5px; margin-bottom: 15px;">
+                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
+                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
+                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
+                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
+                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
+                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
+                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
+                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
+                        <div style="width:20px; height:20px; background:yellow; border-radius:50%; border:1px solid #8B8B00;"></div>
+                        <div style="width:20px; height:20px; background:yellow; border-radius:50%; border:1px solid #8B8B00;"></div>
+                    </div>
+
+                    <div class="question-box">
+                        <p><strong>Q1:</strong> <span class="en-text">Is it Likely, Unlikely, or Impossible to pick a Yellow marble?</span><br><small class="id-text">Apakah Kemungkinan Besar, Kemungkinan Kecil, atau Mustahil untuk mengambil kelereng Kuning?</small></p>
+                        <select class="xp-input" id="marble-q1">
+                            <option value="">-- Select --</option>
+                            <option value="likely">Likely / Kemungkinan Besar</option>
+                            <option value="unlikely">Unlikely / Kemungkinan Kecil</option>
+                            <option value="impossible">Impossible / Mustahil</option>
+                        </select>
+                    </div>
+
+                    <div class="question-box">
+                        <p><strong>Action:</strong> <span class="en-text">Simulate 20 picks. Click the button to draw!</span><br><small class="id-text">Simulasi 20 pengambilan. Klik tombol untuk mengambil!</small></p>
+                        <button class="xp-button xp-button-success" onclick="pickMarble()">Pick a Marble!</button>
+                        <p>Picks: <span id="marble-picks">0</span>/20</p>
+                        <p>Green: <span id="marble-green">0</span> | Yellow: <span id="marble-yellow">0</span></p>
+                    </div>
+
+                    <div class="question-box">
+                        <p><strong>Q2:</strong> <span class="en-text">If you added 10 more Yellow marbles, how would the probability of picking Yellow change?</span><br><small class="id-text">Jika kamu menambahkan 10 kelereng Kuning lagi, bagaimana peluang mengambil Kuning berubah?</small></p>
+                        <input type="text" class="xp-input" id="marble-q2" style="width: 100%;" placeholder="e.g., It becomes Likely / Menjadi Kemungkinan Besar">
+                    </div>
+
+                    <div style="margin-top: 10px; display: flex; gap: 10px;">
+                        <button class="xp-button xp-button-primary" onclick="checkSection6()">Check Answers</button>
+                        <button class="xp-button" onclick="resetSection6()">Reset</button>
+                    </div>
+                    <div id="section6-feedback" style="margin-top: 10px;"></div>
+                </div>
+            </div>
+
+            <!-- SECTION 7: Consolidation & Reflection (01:05 - 01:10) -->
+            <div class="xp-window" id="section7">
+                <div class="xp-title-bar">
+                    <span>🏁 Section 7: Consolidation & Reflection <span class="timer-badge">01:05 - 01:10</span></span>
+                    <div class="xp-buttons">
+                        <div class="xp-btn xp-btn-minimize">_</div>
+                        <div class="xp-btn xp-btn-maximize">□</div>
+                        <div class="xp-btn xp-btn-close">X</div>
+                    </div>
+                </div>
+                <div class="xp-body">
+                    <p class="en-text">What a hunt today! You've learned that math can predict the likelihood of the future. We learned about the scale from 0 to 1 and how experiments help us prove our theories.</p>
+                    <p class="id-text">Perburuan yang hebat hari ini! Kamu telah belajar bahwa matematika bisa memprediksi kemungkinan di masa depan. Kita belajar tentang skala dari 0 hingga 1 dan bagaimana eksperimen membantu membuktikan teori kita.</p>
+
+                    <div class="question-box">
+                        <p class="en-text">Reflection: Name one thing that is 'Certain' to happen tomorrow.</p>
+                        <p class="id-text">Refleksi: Sebutkan satu hal yang 'Pasti' akan terjadi besok.</p>
+                        <input type="text" class="xp-input" id="reflection-answer" style="width: 100%;" placeholder="Type your reflection...">
+                    </div>
+
+                    <div style="background-color: #C1DFFB; border: 2px solid #0054E3; padding: 10px; margin-top: 10px;">
+                        <p style="margin:0; font-weight: bold;">📚 Homework / Pekerjaan Rumah:</p>
+                        <p class="en-text" style="margin:0;">Don't forget to join <a href="https://learn.algonova.id/login" target="_blank" style="color: blue;">learn.algonova.id/login</a> to complete your tasks!</p>
+                        <p class="id-text" style="margin:0;">Jangan lupa bergabung dengan learn.algonova.id/login untuk menyelesaikan tugasmu!</p>
+                    </div>
+
+                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <button class="xp-button xp-button-primary" onclick="checkSection7()">Submit Reflection</button>
+                    </div>
+                    <div id="section7-feedback" style="margin-top: 10px;"></div>
+                </div>
+            </div>
+            <!-- SECTION 8: Assessment (01:10 - 01:50) -->
+            <div class="xp-window" id="section8">
+                <div class="xp-title-bar">
+                    <span>📝 Section 8: Assessment <span class="timer-badge">01:10 - 01:50</span></span>
+                    <div class="xp-buttons">
+                        <div class="xp-btn xp-btn-minimize">_</div>
+                        <div class="xp-btn xp-btn-maximize">□</div>
+                        <div class="xp-btn xp-btn-close">X</div>
+                    </div>
+                </div>
+                <div class="xp-body">
+                    <div style="background: #C1DFFB; padding: 10px; border: 1px solid #0054E3; margin-bottom: 15px;">
+                        <p class="en-text" style="margin:0;"><strong>Student Details:</strong></p>
+                        <p class="id-text" style="margin:0;">Data Siswa:</p>
+                        <div style="display: flex; gap: 10px; margin-top: 5px;">
+                            <input type="text" class="xp-input" id="student-name" placeholder="Name / Nama" style="flex: 2;">
+                            <input type="date" class="xp-input" id="student-date" style="flex: 1;">
+                        </div>
+                    </div>
+
+                    <!-- Tab Navigation -->
+                    <div style="display: flex; border-bottom: 2px solid #808080; background: #ECE9D8; padding-top: 5px;">
+                        <button class="xp-button tab-btn active-tab" onclick="openTab(event, 'Group1')">Group 1</button>
+                        <button class="xp-button tab-btn" onclick="openTab(event, 'Group2')">Group 2</button>
+                        <button class="xp-button tab-btn" onclick="openTab(event, 'Group3')">Group 3</button>
+                        <button class="xp-button tab-btn" onclick="openTab(event, 'Group4')">Group 4</button>
+                        <button class="xp-button tab-btn" onclick="openTab(event, 'Group5')">Group 5</button>
+                    </div>
+
+                    <!-- Group 1 Content -->
+                    <div id="Group1" class="tab-content" style="background: white; padding: 15px; border: 2px inset #808080;">
+                        <h4>Group 1: Basic Probability Terms / Istilah Dasar Peluang</h4>
+                        
+                        <div class="question-box" id="g1q1">
+                            <p>1. An event that will DEFINITELY happen is called... <br><small>Kejadian yang pasti terjadi disebut...</small></p>
+                            <select class="xp-input g1-input" data-answer="Certain">
+                                <option value="">-- Select --</option>
+                                <option value="Impossible">Impossible / Mustahil</option>
+                                <option value="Unlikely">Unlikely / Kemungkinan Kecil</option>
+                                <option value="Even Chance">Even Chance / Kemungkinan Sama</option>
+                                <option value="Likely">Likely / Kemungkinan Besar</option>
+                                <option value="Certain">Certain / Pasti</option>
+                            </select>
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g1q2">
+                            <p>2. Which of the following is IMPOSSIBLE? <br><small>Manakah yang MUSTAHIL?</small></p>
+                            <label><input type="radio" name="g1q2" class="g1-input" value="A"> A. It will rain tomorrow / Hujan besok</label><br>
+                            <label><input type="radio" name="g1q2" class="g1-input" value="B"> B. You will eat lunch / Makan siang</label><br>
+                            <label><input type="radio" name="g1q2" class="g1-input" value="C"> C. Pigs will fly / Babi terbang</label><br>
+                            <label><input type="radio" name="g1q2" class="g1-input" value="D"> D. Rolling a 3 on a die / Dadu angka 3</label>
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g1q3">
+                            <p>3. What term describes a 50% chance? <br><small>Istilah apa yang mendeskripsikan peluang 50%?</small></p>
+                            <input type="text" class="xp-input g1-input" data-answer="even chance" placeholder="Type your answer...">
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g1q4">
+                            <p>4. Select all events that are LIKELY (More than 50% chance): <br><small>Pilih semua kejadian yang KEMUNGKINAN BESAR (Lebih dari 50%)</small></p>
+                            <label><input type="checkbox" class="g1-input" data-correct="true"> Picking a red ball from 8 red, 2 blue / Ambil bola merah dari 8 merah, 2 biru</label><br>
+                            <label><input type="checkbox" class="g1-input" data-correct="false"> Rolling a 6 on a standard die / Dadu angka 6</label><br>
+                            <label><input type="checkbox" class="g1-input" data-correct="true"> It will be dark at midnight / Gelap di tengah malam</label><br>
+                            <label><input type="checkbox" class="g1-input" data-correct="false"> Picking an ace from a deck of cards / Ambil As dari kartu</label>
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g1q5">
+                            <p>5. The probability scale goes from [ 0 ] to [ 1 ]. What does 0 represent? <br><small>Skala peluang dari 0 sampai 1. Apa arti 0?</small></p>
+                            <input type="text" class="xp-input g1-input" data-answer="impossible" placeholder="Type your answer...">
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g1q6">
+                            <p>6. Where is 'Even Chance' located on the probability scale? <br><small>Di mana 'Kemungkinan Sama' pada skala peluang?</small></p>
+                            <select class="xp-input g1-input" data-answer="0.5">
+                                <option value="">-- Select --</option>
+                                <option value="0">0</option>
+                                <option value="0.25">0.25</option>
+                                <option value="0.5">0.5</option>
+                                <option value="0.75">0.75</option>
+                                <option value="1">1</option>
+                            </select>
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g1q7">
+                            <p>7. If you roll a standard 6-sided die, the chance of rolling a 7 is... <br><small>Jika melempar dadu 6 sisi, peluang mendapat angka 7 adalah...</small></p>
+                            <input type="text" class="xp-input g1-input" data-answer="impossible" placeholder="Type your answer...">
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g1q8">
+                            <p>8. What does the number 1 represent on the probability scale? <br><small>Apa yang diwakili angka 1 pada skala peluang?</small></p>
+                            <label><input type="radio" name="g1q8" class="g1-input" value="A"> A. Unlikely / Kemungkinan Kecil</label><br>
+                            <label><input type="radio" name="g1q8" class="g1-input" value="B"> B. Impossible / Mustahil</label><br>
+                            <label><input type="radio" name="g1q8" class="g1-input" value="C"> C. Even Chance / Kemungkinan Sama</label><br>
+                            <label><input type="radio" name="g1q8" class="g1-input" value="D"> D. Certain / Pasti</label>
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g1q9">
+                            <p>9. Select all IMPOSSIBLE events: <br><small>Pilih semua kejadian MUSTAHIL:</small></p>
+                            <label><input type="checkbox" class="g1-input" data-correct="true"> Sun turning into ice / Matahari jadi es</label><br>
+                            <label><input type="checkbox" class="g1-input" data-correct="false"> Getting tails on a coin / Koin angka</label><br>
+                            <label><input type="checkbox" class="g1-input" data-correct="true"> Surviving without water for a year / Hidup tanpa air setahun</label><br>
+                            <label><input type="checkbox" class="g1-input" data-correct="false"> Winning a race / Memenangkan lomba</label>
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g1q10">
+                            <p>10. An event that probably won't happen, but could, is called... <br><small>Kejadian yang mungkin tidak terjadi, tapi bisa, disebut...</small></p>
+                            <select class="xp-input g1-input" data-answer="Unlikely">
+                                <option value="">-- Select --</option>
+                                <option value="Certain">Certain</option>
+                                <option value="Likely">Likely</option>
+                                <option value="Unlikely">Unlikely</option>
+                                <option value="Impossible">Impossible</option>
+                            </select>
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div style="margin-top: 15px; display: flex; gap: 10px;">
+                            <button class="xp-button xp-button-primary" onclick="submitGroup(1)">Submit Group 1</button>
+                            <button class="xp-button" onclick="printGroup(1)">Print to PDF</button>
+                        </div>
+                    </div>
+
+                    <!-- Group 2 Content -->
+                    <div id="Group2" class="tab-content" style="background: white; padding: 15px; border: 2px inset #808080; display: none;">
+                        <h4>Group 2: Fractions & Scales / Pecahan & Skala</h4>
+                        
+                        <div class="question-box" id="g2q1">
+                            <p>1. What fraction represents an 'Even Chance'? <br><small>Pecahan apa yang menunjukkan 'Kemungkinan Sama'?</small></p>
+                            <input type="text" class="xp-input g2-input" data-answer="1/2" placeholder="e.g., 1/4">
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g2q2">
+                            <p>2. A bag has 4 red, 4 blue, 4 green candies. Likelihood of picking blue? <br><small>Kantong berisi 4 merah, 4 biru, 4 hijau. Peluang ambil biru?</small></p>
+                            <label><input type="radio" name="g2q2" class="g2-input" value="A"> A. Likely</label><br>
+                            <label><input type="radio" name="g2q2" class="g2-input" value="B"> B. Unlikely</label><br>
+                            <label><input type="radio" name="g2q2" class="g2-input" value="C"> C. Even Chance</label><br>
+                            <label><input type="radio" name="g2q2" class="g2-input" value="D"> D. Impossible</label>
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g2q3">
+                            <p>3. Picking a King from a standard deck of cards is... <br><small>Mengambil King dari setumpuk kartu adalah...</small></p>
+                            <select class="xp-input g2-input" data-answer="Unlikely">
+                                <option value="">-- Select --</option>
+                                <option value="Certain">Certain</option>
+                                <option value="Likely">Likely</option>
+                                <option value="Unlikely">Unlikely</option>
+                                <option value="Impossible">Impossible</option>
+                            </select>
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g2q4">
+                            <p>4. Rolling a number less than 7 on a standard 6-sided die is... <br><small>Melempar angka kurang dari 7 pada dadu standar adalah...</small></p>
+                            <input type="text" class="xp-input g2-input" data-answer="certain" placeholder="Type your answer...">
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g2q5">
+                            <p>5. Which probabilities are GREATER than 0.5? (Select all) <br><small>Peluang mana yang LEBIH BESAR dari 0.5? (Pilih semua)</small></p>
+                            <label><input type="checkbox" class="g2-input" data-correct="true"> 0.75</label><br>
+                            <label><input type="checkbox" class="g2-input" data-correct="false"> 0.25</label><br>
+                            <label><input type="checkbox" class="g2-input" data-correct="true"> 1</label><br>
+                            <label><input type="checkbox" class="g2-input" data-correct="false"> 0</label>
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g2q6">
+                            <p>6. A spinner has 5 sections: 1 Gold, 4 Silver. Landing on Gold is... <br><small>Spinner 5 bagian: 1 Emas, 4 Perak. Mendarat di Emas adalah...</small></p>
+                            <input type="text" class="xp-input g2-input" data-answer="unlikely" placeholder="Type your answer...">
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g2q7">
+                            <p>7. A probability of 0.75 is considered... <br><small>Peluang 0.75 dianggap...</small></p>
+                            <select class="xp-input g2-input" data-answer="Likely">
+                                <option value="">-- Select --</option>
+                                <option value="Impossible">Impossible</option>
+                                <option value="Unlikely">Unlikely</option>
+                                <option value="Even Chance">Even Chance</option>
+                                <option value="Likely">Likely</option>
+                            </select>
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g2q8">
+                            <p>8. Spinner 1-8. Landing on an even number (2,4,6,8) is... <br><small>Spinner 1-8. Mendarat di angka genap adalah...</small></p>
+                            <label><input type="radio" name="g2q8" class="g2-input" value="A"> A. Impossible</label><br>
+                            <label><input type="radio" name="g2q8" class="g2-input" value="B"> B. Unlikely</label><br>
+                            <label><input type="radio" name="g2q8" class="g2-input" value="C"> C. Even Chance (4/8 = 1/2)</label><br>
+                            <label><input type="radio" name="g2q8" class="g2-input" value="D"> D. Certain</label>
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g2q9">
+                            <p>9. Which events fall exactly at 0? (Select all) <br><small>Kejadian mana yang tepat di angka 0? (Pilih semua)</small></p>
+                            <label><input type="checkbox" class="g2-input" data-correct="false"> Flipping tails / Koin angka</label><br>
+                            <label><input type="checkbox" class="g2-input" data-correct="true"> Rolling a 9 on a 6-die / Dadu angka 9</label><br>
+                            <label><input type="checkbox" class="g2-input" data-correct="true"> Picking a green ball from a bag of reds / Ambil bola hijau dari kantong merah</label><br>
+                            <label><input type="checkbox" class="g2-input" data-correct="false"> It will snow in the desert / Salju di gurun (small chance but not 0)</label>
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div class="question-box" id="g2q10">
+                            <p>10. What is the numerical value of "Certain"? <br><small>Berapa nilai angka dari "Pasti"?</small></p>
+                            <input type="text" class="xp-input g2-input" data-answer="1" placeholder="Type your answer...">
+                            <div class="q-feedback"></div>
+                        </div>
+
+                        <div style="margin-top: 15px; display: flex; gap: 10px;">
+                            <button class="xp-button xp-button-primary" onclick="submitGroup(2)">Submit Group 2</button>
+                            <button class="xp-button" onclick="printGroup(2)">Print to PDF</button>
+                        </div>
+                    </div>
+
+                    <!-- Group 3, 4, 5 Abbreviated for structure, following exact same pattern -->
+                    <!-- To save space in the prompt, I will provide the JS logic that handles these, but you will copy the full HTML structure. I'll write the full HTML for 3,4,5 as requested. -->
+                     <div id="Group3" class="tab-content" style="background: white; padding: 15px; border: 2px inset #808080; display: none;">
+                        <h4>Group 3: Experiments / Eksperimen</h4>
+                        <div class="question-box" id="g3q1"><p>1. What we expect to happen is Theoretical Probability. What actually happens is... <br><small>Apa yang kita harapkan adalah Peluang Teoritis. Yang terjadi sebenarnya adalah...</small></p><input type="text" class="xp-input g3-input" data-answer="experimental probability" placeholder="Type your answer..."><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g3q2"><p>2. Flipping a coin 50 times and getting 35 Heads means it is... <br><small>Lempar koin 50 kali dapat 35 Gambar berarti...</small></p><select class="xp-input g3-input" data-answer="Not close to Even Chance"><option value="">-- Select --</option><option value="Close to Even Chance">Close to Even Chance</option><option value="Not close to Even Chance">Not close to Even Chance</option></select><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g3q3"><p>3. How do you increase the accuracy of an experiment? <br><small>Bagaimana cara meningkatkan akurasi eksperimen?</small></p><label><input type="radio" name="g3q3" class="g3-input" value="A"> A. Do fewer trials / Lebih sedikit percobaan</label><br><label><input type="radio" name="g3q3" class="g3-input" value="B"> B. Do more trials / Lebih banyak percobaan</label><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g3q4"><p>4. Select reasons why 10 coin flips might not be exactly 5 Heads and 5 Tails: <br><small>Pilih alasan mengapa 10 lemparan mungkin tidak tepat 5 Gambar 5 Angka:</small></p><label><input type="checkbox" class="g3-input" data-correct="true"> Small number of trials / Jumlah percobaan sedikit</label><br><label><input type="checkbox" class="g3-input" data-correct="true"> Randomness / Keacakan</label><br><label><input type="checkbox" class="g3-input" data-correct="false"> The coin is broken / Koin rusak (usually not the reason in theory)</label><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g3q5"><p>5. The theoretical chance of rolling a 6 on a die is 1/6. If you roll 60 times, you expect about... <br><small>Peluang teoritis dadu 6 adalah 1/6. Jika melempar 60 kali, perkirakan sekitar...</small></p><input type="text" class="xp-input g3-input" data-answer="10" placeholder="Type number..."><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g3q6"><p>6. True or False: Experimental Probability will always match Theoretical Probability. <br><small>Benar atau Salah: Peluang Eksperimen selalu sama dengan Peluang Teoritis.</small></p><select class="xp-input g3-input" data-answer="False"><option value="">-- Select --</option><option value="True">True / Benar</option><option value="False">False / Salah</option></select><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g3q7"><p>7. If you flip a coin 1000 times, the percentage of Heads will be close to... <br><small>Jika melempar koin 1000 kali, persentase Gambar akan mendekati...</small></p><input type="text" class="xp-input g3-input" data-answer="50%" placeholder="e.g., 20%"><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g3q8"><p>8. A bag has 1 red and 9 blue marbles. The theoretical probability of picking red is... <br><small>Kantong berisi 1 merah 9 biru. Peluang teoritis ambil merah adalah...</small></p><label><input type="radio" name="g3q8" class="g3-input" value="A"> A. 1/10</label><br><label><input type="radio" name="g3q8" class="g3-input" value="B"> B. 1/2</label><br><label><input type="radio" name="g3q8" class="g3-input" value="C"> C. 9/10</label><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g3q9"><p>9. Select all true statements: <br><small>Pilih semua pernyataan yang benar:</small></p><label><input type="checkbox" class="g3-input" data-correct="true"> More trials = closer to theory / Lebih banyak percobaan = makin dekat teori</label><br><label><input type="checkbox" class="g3-input" data-correct="false"> Theory is based on actual experiments / Teori berdasarkan eksperimen nyata</label><br><label><input type="checkbox" class="g3-input" data-correct="true"> Theory is based on math / Teori berdasarkan matematika</label><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g3q10"><p>10. Formula for experimental probability: (Number of times event happened) / ( ? ) <br><small>Rumus peluang eksperimen: (Jumlah kejadian terjadi) / ( ? )</small></p><input type="text" class="xp-input g3-input" data-answer="total trials" placeholder="Type your answer..."><div class="q-feedback"></div></div>
+                        <div style="margin-top: 15px; display: flex; gap: 10px;"><button class="xp-button xp-button-primary" onclick="submitGroup(3)">Submit Group 3</button><button class="xp-button" onclick="printGroup(3)">Print to PDF</button></div>
+                    </div>
+
+                    <div id="Group4" class="tab-content" style="background: white; padding: 15px; border: 2px inset #808080; display: none;">
+                        <h4>Group 4: Problem Solving / Pemecahan Masalah</h4>
+                        <div class="question-box" id="g4q1"><p>1. 10 marbles. 5 Blue, 5 Red. Likelihood of Blue? <br><small>10 kelereng. 5 Biru, 5 Merah. Peluang ambil Biru?</small></p><input type="text" class="xp-input g4-input" data-answer="even chance" placeholder="Type term..."><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g4q2"><p>2. A bag has 0 green marbles. P(Green) is... <br><small>Kantong tanpa kelereng hijau. P(Hijau) adalah...</small></p><select class="xp-input g4-input" data-answer="Impossible"><option value="">-- Select --</option><option value="Likely">Likely</option><option value="Even Chance">Even Chance</option><option value="Impossible">Impossible</option></select><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g4q3"><p>3. 8 Green, 2 Yellow. P(Yellow) is... <br><small>8 Hijau, 2 Kuning. P(Kuning) adalah...</small></p><label><input type="radio" name="g4q3" class="g4-input" value="A"> A. Likely</label><br><label><input type="radio" name="g4q3" class="g4-input" value="B"> B. Unlikely</label><br><label><input type="radio" name="g4q3" class="g4-input" value="C"> C. Impossible</label><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g4q4"><p>4. How to make P(Yellow) 'Likely' in the 8G, 2Y bag? (Select all correct actions) <br><small>Bagaimana agar P(Kuning) menjadi 'Likely' di kantong 8H, 2K?</small></p><label><input type="checkbox" class="g4-input" data-correct="true"> Add more Yellow marbles / Tambah kelereng kuning</label><br><label><input type="checkbox" class="g4-input" data-correct="true"> Remove some Green marbles / Keluarkan kelereng hijau</label><br><label><input type="checkbox" class="g4-input" data-correct="false"> Add more Green marbles / Tambah kelereng hijau</label><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g4q5"><p>5. Minimum number of blue marbles in a 10-marble bag to make P(Blue) 'Likely'? <br><small>Jumlah minimum kelereng biru di kantong 10-kelereng agar P(Biru) 'Likely'?</small></p><input type="text" class="xp-input g4-input" data-answer="6" placeholder="Type number..."><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g4q6"><p>6. Mystery box labeled 'Fruit' contains a rock. P(Picking a fruit) is... <br><small>Kotok misteri berlabel 'Buah' berisi batu. P(Ambil buah) adalah...</small></p><input type="text" class="xp-input g4-input" data-answer="impossible" placeholder="Type term..."><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g4q7"><p>7. If you add 10 Yellow to the 8G, 2Y bag, P(Yellow) becomes... <br><small>Jika tambah 10 Kuning ke kantong 8H, 2K, P(Kuning) menjadi...</small></p><select class="xp-input g4-input" data-answer="Likely"><option value="">-- Select --</option><option value="Impossible">Impossible</option><option value="Unlikely">Unlikely</option><option value="Likely">Likely</option></select><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g4q8"><p>8. Select ways to INCREASE the probability of picking a Red marble from a Red/Blue bag: <br><small>Pilih cara untuk MENINGKATKAN peluang ambil merah dari kantong Merah/Biru:</small></p><label><input type="checkbox" class="g4-input" data-correct="true"> Add Red marbles / Tambah merah</label><br><label><input type="checkbox" class="g4-input" data-correct="true"> Remove Blue marbles / Keluarkan biru</label><br><label><input type="checkbox" class="g4-input" data-correct="false"> Add Blue marbles / Tambah biru</label><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g4q9"><p>9. Probability of picking the ONLY red ball out of 10 total balls as a fraction is... <br><small>Peluang mengambil SATU-SATUNYA bola merah dari total 10 bola dalam pecahan adalah...</small></p><input type="text" class="xp-input g4-input" data-answer="1/10" placeholder="e.g., 1/2"><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g4q10"><p>10. If P(Event) = 1, what does the bag contain? <br><small>Jika P(Kejadian) = 1, apa isi kantong tersebut?</small></p><label><input type="radio" name="g4q10" class="g4-input" value="A"> A. Only the target item / Hanya item target</label><br><label><input type="radio" name="g4q10" class="g4-input" value="B"> B. Half target, half other / Setengah target setengah lain</label><br><label><input type="radio" name="g4q10" class="g4-input" value="C"> C. No target items / Tidak ada item target</label><div class="q-feedback"></div></div>
+                        <div style="margin-top: 15px; display: flex; gap: 10px;"><button class="xp-button xp-button-primary" onclick="submitGroup(4)">Submit Group 4</button><button class="xp-button" onclick="printGroup(4)">Print to PDF</button></div>
+                    </div>
+
+                    <div id="Group5" class="tab-content" style="background: white; padding: 15px; border: 2px inset #808080; display: none;">
+                        <h4>Group 5: Advanced & Critical Thinking / Lanjutan & Berpikir Kritis</h4>
+                        <div class="question-box" id="g5q1"><p>1. Create a scenario placed at exactly 0.75 on the scale. <br><small>Buat skenario yang diletakkan tepat di 0.75 pada skala.</small></p><input type="text" class="xp-input g5-input" data-answer="3 out of 4" placeholder="e.g., 3 out of 4..."><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g5q2"><p>2. Spinner 1-8. Likelihood of landing on an even number? <br><small>Spinner 1-8. Peluang mendarat di angka genap?</small></p><select class="xp-input g5-input" data-answer="Even Chance"><option value="">-- Select --</option><option value="Likely">Likely</option><option value="Unlikely">Unlikely</option><option value="Even Chance">Even Chance</option></select><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g5q3"><p>3. Theoretical Likelihood is what we expect; Experimental Probability is... <br><small>Peluang Teoritis apa yang kita harapkan; Peluang Eksperimen adalah...</small></p><input type="text" class="xp-input g5-input" data-answer="what actually happens" placeholder="Type your answer..."><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g5q4"><p>4. Select all scenarios that are 'Likely': <br><small>Pilih semua skenario yang 'Kemungkinan Besar':</small></p><label><input type="checkbox" class="g5-input" data-correct="true"> Picking a vowel from the word "APPLE" / Ambil vokal dari kata "APPLE"</label><br><label><input type="checkbox" class="g5-input" data-correct="false"> Rolling a 6 on a die / Dadu angka 6</label><br><label><input type="checkbox" class="g5-input" data-correct="true"> Rain in a rainforest / Hujan di hutan hujan</label><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g5q5"><p>5. Why can't probability be 1.5? <br><small>Mengapa peluang tidak bisa 1.5?</small></p><input type="text" class="xp-input g5-input" data-answer="probability is between 0 and 1" placeholder="Type reason..."><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g5q6"><p>6. Flipping a coin 1000 times, expected number of Tails is... <br><small>Lempar koin 1000 kali, perkiraan angka Angka adalah...</small></p><input type="text" class="xp-input g5-input" data-answer="500" placeholder="Type number..."><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g5q7"><p>7. A bag has 4 red, 4 blue, 4 green. P(Red) is... <br><small>Kantong berisi 4 merah, 4 biru, 4 hijau. P(Merah) adalah...</small></p><label><input type="radio" name="g5q7" class="g5-input" value="A"> A. Likely</label><br><label><input type="radio" name="g5q7" class="g5-input" value="B"> B. Unlikely</label><br><label><input type="radio" name="g5q7" class="g5-input" value="C"> C. Even Chance (1/3)</label><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g5q8"><p>8. Select all 'Unlikely' events: <br><small>Pilih semua kejadian 'Kemungkinan Kecil':</small></p><label><input type="checkbox" class="g5-input" data-correct="true"> Drawing an Ace from cards / Ambil As dari kartu</label><br><label><input type="checkbox" class="g5-input" data-correct="false"> Sun rising / Matahari terbit</label><br><label><input type="checkbox" class="g5-input" data-correct="true"> Winning the lottery / Memenangkan lotre</label><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g5q9"><p>9. Write 0.5 as a percentage. <br><small>Tulis 0.5 dalam persentase.</small></p><input type="text" class="xp-input g5-input" data-answer="50%" placeholder="e.g., 20%"><div class="q-feedback"></div></div>
+                        <div class="question-box" id="g5q10"><p>10. Can probability predict the EXACT outcome of ONE event? <br><small>Apakah peluang bisa memprediksi hasil TEPAT dari SATU kejadian?</small></p><select class="xp-input g5-input" data-answer="No"><option value="">-- Select --</option><option value="Yes">Yes</option><option value="No">No</option></select><div class="q-feedback"></div></div>
+                        <div style="margin-top: 15px; display: flex; gap: 10px;"><button class="xp-button xp-button-primary" onclick="submitGroup(5)">Submit Group 5</button><button class="xp-button" onclick="printGroup(5)">Print to PDF</button></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SECTION 9: Feedback (01:50 - 02:00) -->
+            <div class="xp-window" id="section9">
+                <div class="xp-title-bar">
+                    <span>💬 Section 9: Class Feedback <span class="timer-badge">01:50 - 02:00</span></span>
+                    <div class="xp-buttons">
+                        <div class="xp-btn xp-btn-minimize">_</div>
+                        <div class="xp-btn xp-btn-maximize">□</div>
+                        <div class="xp-btn xp-btn-close">X</div>
+                    </div>
+                </div>
+                <div class="xp-body">
+                    <p class="en-text">Thank you for joining today's class! Please provide your feedback about the class on our site.</p>
+                    <p class="id-text">Terima kasih telah mengikuti kelas hari ini! Silakan berikan feedback kamu tentang kelas di situs kami.</p>
+                    
+                    <div style="background: white; padding: 15px; border: inset 2px #808080; margin-top: 10px;">
+                        <label class="en-text" for="feedback-rating"><strong>Rate your experience today:</strong></label><br>
+                        <small class="id-text">Nilai pengalaman kamu hari ini:</small><br>
+                        <select class="xp-input" id="feedback-rating" style="margin-top: 5px;">
+                            <option value="">-- Select Rating --</option>
+                            <option value="5">⭐⭐⭐⭐⭐ (Excellent / Luar Biasa)</option>
+                            <option value="4">⭐⭐⭐⭐ (Good / Bagus)</option>
+                            <option value="3">⭐⭐⭐ (Okay / Biasa)</option>
+                            <option value="2">⭐⭐ (Needs Improvement / Perlu Perbaikan)</option>
+                            <option value="1">⭐ (Poor / Kurang)</option>
+                        </select>
+
+                        <br><br>
+
+                        <label class="en-text" for="feedback-text"><strong>Any suggestions or comments?</strong></label><br>
+                        <small class="id-text">Ada saran atau komentar?</small><br>
+                        <textarea class="xp-input" id="feedback-text" rows="4" style="width: 100%; margin-top: 5px;" placeholder="Write your feedback here... / Tulis feedback di sini..."></textarea>
+
+                        <br>
+                        <button class="xp-button xp-button-success" onclick="submitFeedback()" style="margin-top: 10px;">Submit Feedback to learn.algonova.id</button>
+                        <div id="section9-feedback" style="margin-top: 10px;"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CANVAS PANEL (1 Ratio) -->
+        <div class="canvas-panel">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 5px;">📝 Scratchpad / Corat-coret</div>
+            <div class="canvas-tools">
+                <div class="color-btn" style="background-color: #FF0000;" onclick="setColor('#FF0000')"></div>
+                <div class="color-btn" style="background-color: #00FF00;" onclick="setColor('#00FF00')"></div>
+                <div class="color-btn" style="background-color: #0000FF;" onclick="setColor('#0000FF')"></div>
+                <div class="color-btn" style="background-color: #000000;" onclick="setColor('#000000')"></div>
+                <button class="xp-button" style="font-size: 10px; padding: 2px 5px;" onclick="setEraser()">Eraser</button>
+                <button class="xp-button" style="font-size: 10px; padding: 2px 5px;" onclick="eraseAll()">Erase All</button>
+            </div>
+            <div class="canvas-container">
+                <canvas id="scratchpad"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // --- SCRATCHPAD LOGIC ---
+        const canvas = document.getElementById('scratchpad');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+        let currentColor = '#000000';
+        let isEraser = false;
+
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        // Initial resize after DOM loaded properly
+        setTimeout(resizeCanvas, 100);
+
+        canvas.addEventListener('mousedown', (e) => {
+            drawing = true;
+            const rect = canvas.getBoundingClientRect();
+            ctx.beginPath();
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!drawing) return;
+            const rect = canvas.getBoundingClientRect();
+            ctx.lineWidth = isEraser ? 20 : 3;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = isEraser ? '#FFFFFF' : currentColor;
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('mouseup', () => drawing = false);
+        canvas.addEventListener('mouseleave', () => drawing = false);
+
+        function setColor(color) {
+            currentColor = color;
+            isEraser = false;
+        }
+
+        function setEraser() {
+            isEraser = true;
+        }
+
+        function eraseAll() {
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+
+        // --- SECTION 1 LOGIC ---
+        function checkSection1() {
+            const a1 = document.getElementById('q1-answer').value.trim();
+            const a2 = document.getElementById('q2-answer').value.trim();
+            const a3 = document.getElementById('q3-answer').value.trim();
+            const a4 = document.getElementById('q4-answer').value.trim();
+            let feedback = "";
+            let score = 0;
+
+            if (a1 === "4205") { feedback += "<p class='feedback-correct'>Q1 Correct!</p>"; score++; }
+            else feedback += "<p class='feedback-wrong'>Q1 Incorrect. Solution: 4 thousands (4000) + 2 hundreds (200) + 5 units (5) = 4205.</p>";
+
+            if (a2 === "3") { feedback += "<p class='feedback-correct'>Q2 Correct!</p>"; score++; }
+            else feedback += "<p class='feedback-wrong'>Q2 Incorrect. Solution: In 7,038, the tens digit is 3.</p>";
+
+            if (a3 === "9520") { feedback += "<p class='feedback-correct'>Q3 Correct!</p>"; score++; }
+            else feedback += "<p class='feedback-wrong'>Q3 Incorrect. Solution: Arrange descending, but 0 can't be first. 9520.</p>";
+
+            if (a4 === "6421") { feedback += "<p class='feedback-correct'>Q4 Correct!</p>"; score++; }
+            else feedback += "<p class='feedback-wrong'>Q4 Incorrect. Solution: 5,421 + 1,000 = 6,421.</p>";
+
+            feedback += `<p><strong>Score: ${score}/4</strong></p>`;
+            document.getElementById('section1-feedback').innerHTML = feedback;
+        }
+
+        function resetSection1() {
+            document.getElementById('q1-answer').value = '';
+            document.getElementById('q2-answer').value = '';
+            document.getElementById('q3-answer').value = '';
+            document.getElementById('q4-answer').value = '';
+            document.getElementById('section1-feedback').innerHTML = '';
+        }
+
+        // --- SECTION 2 LOGIC ---
+        function checkSection2() {
+            const a5 = document.getElementById('q5-answer').value.trim().toLowerCase();
+            if(a5.length > 3) { // Simple validation if they type something meaningful
+                document.getElementById('section2-feedback').innerHTML = "<p class='feedback-correct'>Great example! Probability is everywhere.</p>";
+            } else {
+                document.getElementById('section2-feedback').innerHTML = "<p class='feedback-wrong'>Try typing a short example, like 'coin flip' or 'weather'.</p>";
+            }
+        }
+
+        function resetSection2() {
+            document.getElementById('q5-answer').value = '';
+            document.getElementById('section2-feedback').innerHTML = '';
+        }
+
+        // --- SECTION 3 DRAG & DROP LOGIC ---
+        let draggedItem = null;
+
+        document.querySelectorAll('.draggable-event').forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                draggedItem = e.target;
+                e.dataTransfer.setData('text/plain', e.target.id);
+                setTimeout(() => e.target.style.display = 'none', 0);
+            });
+        });
+
+        const dropZones = document.querySelectorAll('#possible-box, #impossible-box');
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', (e) => e.preventDefault());
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                if (draggedItem) {
+                    draggedItem.style.display = 'block';
+                    e.target.appendChild(draggedItem);
+                }
+            });
+        });
+
+        function checkSection3() {
+            let correct = 0;
+            const totalItems = 4;
+            let feedback = "";
+
+            const possibleBox = document.getElementById('possible-box');
+            const impossibleBox = document.getElementById('impossible-box');
+
+            // Check Possible Box
+            possibleBox.querySelectorAll('.draggable-event').forEach(item => {
+                if(item.getAttribute('data-category') === 'possible') correct++;
+                else feedback += `<p class='feedback-wrong'>${item.innerText} is NOT Possible.</p>`;
+            });
+
+            // Check Impossible Box
+            impossibleBox.querySelectorAll('.draggable-event').forEach(item => {
+                if(item.getAttribute('data-category') === 'impossible') correct++;
+                else feedback += `<p class='feedback-wrong'>${item.innerText} IS Possible.</p>`;
+            });
+
+            if(correct === totalItems) feedback = "<p class='feedback-correct'>Perfect! You sorted them all correctly!</p>";
+            else feedback += `<p>You got ${correct}/${totalItems} correct.</p>`;
+
+            document.getElementById('section3-feedback').innerHTML = feedback;
+        }
+
+        function resetSection3() {
+            const container = document.getElementById('drag-container');
+            const items = document.querySelectorAll('.draggable-event');
+            items.forEach(item => {
+                item.style.display = 'block';
+                container.appendChild(item);
+            });
+            document.getElementById('section3-feedback').innerHTML = '';
+        }
+        // --- SECTION 4: SCALE DRAG & DROP LOGIC ---
+        let scaleDraggedItem = null;
+
+        document.querySelectorAll('.draggable-scale').forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                scaleDraggedItem = e.target;
+                e.dataTransfer.setData('text/plain', e.target.id);
+                setTimeout(() => e.target.style.display = 'none', 0);
+            });
+        });
+
+        const scaleDropZones = document.querySelectorAll('#drop-impossible, #drop-unlikely, #drop-even, #drop-likely, #drop-certain');
+        scaleDropZones.forEach(zone => {
+            zone.addEventListener('dragover', (e) => e.preventDefault());
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                if (scaleDraggedItem) {
+                    scaleDraggedItem.style.display = 'inline-block';
+                    scaleDraggedItem.style.fontSize = '0.8rem';
+                    scaleDraggedItem.style.margin = '2px';
+                    e.target.appendChild(scaleDraggedItem);
+                }
+            });
+        });
+
+        function checkSection4() {
+            let correct = 0;
+            let feedback = "";
+            const items = document.querySelectorAll('.draggable-scale');
+            
+            items.forEach(item => {
+                const parent = item.parentElement;
+                if(parent.classList.contains('xp-button')) { // Still in container
+                    feedback += `<p class='feedback-wrong'>${item.innerText} is not placed on the scale!</p>`;
+                } else {
+                    const target = item.getAttribute('data-target');
+                    if(parent.id === target) {
+                        correct++;
+                    } else {
+                        feedback += `<p class='feedback-wrong'>${item.innerText} is in the wrong zone.</p>`;
+                    }
+                }
+            });
+
+            if(correct === 5) feedback = "<p class='feedback-correct'>Perfect! You understand the probability scale!</p>";
+            else feedback += `<p>You got ${correct}/5 correct.</p>`;
+            
+            document.getElementById('section4-feedback').innerHTML = feedback;
+        }
+
+        function resetSection4() {
+            const container = document.getElementById('scale-drag-container');
+            const items = document.querySelectorAll('.draggable-scale');
+            items.forEach(item => {
+                item.style.display = 'inline-block';
+                item.style.fontSize = '0.9rem';
+                item.style.margin = '';
+                container.appendChild(item);
+            });
+            document.getElementById('section4-feedback').innerHTML = '';
+        }
+
+
+        // --- SECTION 5: COIN FLIP LOGIC ---
+        let manualHeads = 0;
+        let manualTails = 0;
+
+        function flipCoin() {
+            if (manualHeads + manualTails >= 10) {
+                alert("You've reached 10 flips! Check your results or reset."); return;
+            }
+            const result = Math.random() < 0.5 ? 'H' : 'T';
+            const coinDisplay = document.getElementById('coin-display');
+            coinDisplay.innerText = result;
+            
+            if(result === 'H') {
+                manualHeads++;
+                coinDisplay.style.background = 'gold';
+            } else {
+                manualTails++;
+                coinDisplay.style.background = 'silver';
+            }
+
+            document.getElementById('manual-flips').innerText = manualHeads + manualTails;
+            document.getElementById('manual-heads').innerText = manualHeads;
+            document.getElementById('manual-tails').innerText = manualTails;
+        }
+
+        function simulate1000() {
+            let simH = 0;
+            let simT = 0;
+            for(let i=0; i<1000; i++) {
+                if(Math.random() < 0.5) simH++;
+                else simT++;
+            }
+            document.getElementById('sim-heads').innerText = simH;
+            document.getElementById('sim-tails').innerText = simT;
+            document.getElementById('sim-heads-pct').innerText = (simH/10).toFixed(1);
+            document.getElementById('sim-tails-pct').innerText = (simT/10).toFixed(1);
+            document.getElementById('sim-bar-h').style.width = (simH/10) + '%';
+            document.getElementById('sim-bar-t').style.width = (simT/10) + '%';
+        }
+
+        function checkSection5() {
+            const obs = document.getElementById('sec5-obs').value.trim().toLowerCase();
+            if(obs.length > 10) {
+                document.getElementById('section5-feedback').innerHTML = "<p class='feedback-correct'>Great observation! In small trials (10), results vary a lot. In large trials (1000), it gets very close to 50%.</p>";
+            } else {
+                document.getElementById('section5-feedback').innerHTML = "<p class='feedback-wrong'>Please write a slightly longer observation about the difference between 10 flips and 1000 flips.</p>";
+            }
+        }
+
+        function resetSection5() {
+            manualHeads = 0; manualTails = 0;
+            document.getElementById('manual-flips').innerText = '0';
+            document.getElementById('manual-heads').innerText = '0';
+            document.getElementById('manual-tails').innerText = '0';
+            document.getElementById('coin-display').innerText = 'H / T';
+            document.getElementById('coin-display').style.background = 'gold';
+            document.getElementById('sim-heads').innerText = '0';
+            document.getElementById('sim-tails').innerText = '0';
+            document.getElementById('sim-heads-pct').innerText = '0';
+            document.getElementById('sim-tails-pct').innerText = '0';
+            document.getElementById('sim-bar-h').style.width = '50%';
+            document.getElementById('sim-bar-t').style.width = '50%';
+            document.getElementById('sec5-obs').value = '';
+            document.getElementById('section5-feedback').innerHTML = '';
+        }
+
+
+        // --- SECTION 6: MARBLE LOGIC ---
+        let marblePicks = 0;
+        let marbleGreenCount = 0;
+        let marbleYellowCount = 0;
+        const bag = ['G','G','G','G','G','G','G','G','Y','Y']; // 8 Green, 2 Yellow
+
+        function pickMarble() {
+            if (marblePicks >= 20) {
+                alert("You've done 20 picks! Reset to try again."); return;
+            }
+            const randomIndex = Math.floor(Math.random() * bag.length);
+            const picked = bag[randomIndex];
+            
+            if(picked === 'G') marbleGreenCount++;
+            else marbleYellowCount++;
+            
+            marblePicks++;
+            document.getElementById('marble-picks').innerText = marblePicks;
+            document.getElementById('marble-green').innerText = marbleGreenCount;
+            document.getElementById('marble-yellow').innerText = marbleYellowCount;
+        }
+
+        function checkSection6() {
+            let feedback = "";
+            const q1 = document.getElementById('marble-q1').value;
+            const q2 = document.getElementById('marble-q2').value.trim().toLowerCase();
+
+            if(q1 === 'unlikely') {
+                feedback += "<p class='feedback-correct'>Q1 Correct! 2 out of 10 is a small chance (Unlikely).</p>";
+            } else {
+                feedback += "<p class='feedback-wrong'>Q1 Incorrect. With only 2 Yellow out of 10, it is 'Unlikely'.</p>";
+            }
+
+            if(q2.includes('likely') || q2.includes('increase') || q2.includes('besar')) {
+                feedback += "<p class='feedback-correct'>Q2 Correct! Adding 10 Yellow makes 12 Yellow and 8 Green, so picking Yellow becomes 'Likely'.</p>";
+            } else {
+                feedback += "<p class='feedback-wrong'>Q2 Incorrect or incomplete. If you add 10 Yellow, there will be 12 Yellow and 8 Green. It becomes 'Likely'.</p>";
+            }
+
+            if(marblePicks < 20) {
+                feedback += "<p style='color: orange; font-weight: bold;'>Note: You haven't finished 20 picks yet!</p>";
+            }
+
+            document.getElementById('section6-feedback').innerHTML = feedback;
+        }
+
+        function resetSection6() {
+            marblePicks = 0; marbleGreenCount = 0; marbleYellowCount = 0;
+            document.getElementById('marble-picks').innerText = '0';
+            document.getElementById('marble-green').innerText = '0';
+            document.getElementById('marble-yellow').innerText = '0';
+            document.getElementById('marble-q1').value = '';
+            document.getElementById('marble-q2').value = '';
+            document.getElementById('section6-feedback').innerHTML = '';
+        }
+
+        // --- SECTION 7: REFLECTION LOGIC ---
+        function checkSection7() {
+            const ans = document.getElementById('reflection-answer').value.trim();
+            if(ans.length > 2) {
+                document.getElementById('section7-feedback').innerHTML = "<p class='feedback-correct'>Great reflection! Class dismissed. See you next time!</p>";
+            } else {
+                document.getElementById('section7-feedback').innerHTML = "<p class='feedback-wrong'>Please write at least one certain event.</p>";
+            }
+        }
+        // --- ASSESSMENT TAB LOGIC ---
+        function openTab(evt, groupName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active-tab", "");
+            }
+            document.getElementById(groupName).style.display = "block";
+            evt.currentTarget.className += " active-tab";
+        }
+
+        // --- ASSESSMENT SUBMIT LOGIC ---
+        function submitGroup(groupNum) {
+            let score = 0;
+            const totalQ = 10;
+            const inputs = document.querySelectorAll(`.g${groupNum}-input`);
+            
+            // Reset feedback visuals
+            inputs.forEach(input => {
+                input.style.backgroundColor = '';
+                const qBox = input.closest('.question-box');
+                if(qBox) qBox.querySelector('.q-feedback').innerHTML = '';
+            });
+
+            for (let i = 1; i <= totalQ; i++) {
+                const qId = `g${groupNum}q${i}`;
+                const qBox = document.getElementById(qId);
+                const qInputs = qBox.querySelectorAll(`.g${groupNum}-input`);
+                let isCorrect = false;
+                let studentAnswer = "";
+                let correctAnswerStr = "";
+
+                // Handle Different Input Types
+                if (qInputs[0].type === 'text' || qInputs[0].tagName === 'SELECT') {
+                    const val = qInputs[0].value.trim().toLowerCase();
+                    const ans = qInputs[0].getAttribute('data-answer').toLowerCase();
+                    studentAnswer = qInputs[0].value;
+                    correctAnswerStr = qInputs[0].getAttribute('data-answer');
+                    if (val === ans) isCorrect = true;
+                } 
+                else if (qInputs[0].type === 'radio') {
+                    let selected = null;
+                    qInputs.forEach(radio => { if(radio.checked) selected = radio.value; });
+                    studentAnswer = selected || "No answer";
+                    
+                    // Define correct answers for radios manually based on group/number
+                    if(groupNum === 1 && i === 2) { correctAnswerStr = "C"; if(selected === "C") isCorrect = true; }
+                    if(groupNum === 1 && i === 8) { correctAnswerStr = "D"; if(selected === "D") isCorrect = true; }
+                    if(groupNum === 2 && i === 2) { correctAnswerStr = "B"; if(selected === "B") isCorrect = true; } // Unlikely (4/12 = 1/3)
+                    if(groupNum === 2 && i === 8) { correctAnswerStr = "C"; if(selected === "C") isCorrect = true; }
+                    if(groupNum === 3 && i === 3) { correctAnswerStr = "B"; if(selected === "B") isCorrect = true; }
+                    if(groupNum === 3 && i === 8) { correctAnswerStr = "A"; if(selected === "A") isCorrect = true; }
+                    if(groupNum === 4 && i === 3) { correctAnswerStr = "B"; if(selected === "B") isCorrect = true; }
+                    if(groupNum === 4 && i === 10) { correctAnswerStr = "A"; if(selected === "A") isCorrect = true; }
+                    if(groupNum === 5 && i === 7) { correctAnswerStr = "C"; if(selected === "C") isCorrect = true; }
+                }
+                else if (qInputs[0].type === 'checkbox') {
+                    let studentChecks = [];
+                    let correctChecks = [];
+                    qInputs.forEach(cb => {
+                        if(cb.checked) studentChecks.push(cb.value || cb.parentElement.innerText.trim());
+                        if(cb.getAttribute('data-correct') === 'true') correctChecks.push(cb.value || cb.parentElement.innerText.trim());
+                    });
+                    studentAnswer = studentChecks.join(", ");
+                    correctAnswerStr = correctChecks.join(", ");
+                    
+                    // Check if arrays match exactly (length and content)
+                    if(studentChecks.length === correctChecks.length && correctChecks.every(c => studentChecks.includes(c))) {
+                        isCorrect = true;
+                    }
+                }
+
+                // Provide Feedback
+                const fbDiv = qBox.querySelector('.q-feedback');
+                if (isCorrect) {
+                    score++;
+                    fbDiv.innerHTML = `<span class="feedback-correct">✓ Correct!</span>`;
+                    qInputs.forEach(inp => inp.style.backgroundColor = '#d4edda');
+                } else {
+                    fbDiv.innerHTML = `<span class="feedback-wrong">✗ Incorrect.</span> Your answer: <em>${studentAnswer}</em>. Correct answer/solution: <strong>${correctAnswerStr}</strong>`;
+                    qInputs.forEach(inp => inp.style.backgroundColor = '#f8d7da');
+                }
+            }
+
+            alert(`Group ${groupNum} Score: ${score} / ${totalQ}`);
+        }
+
+        // --- PRINT LOGIC ---
+        function printGroup(groupNum) {
+            const name = document.getElementById('student-name').value || "Unknown Student";
+            const date = document.getElementById('student-date').value || "No Date";
+            
+            // Temporarily inject details for print
+            const printHeader = document.createElement('div');
+            printHeader.id = "print-header-temp";
+            printHeader.innerHTML = `<h2>Assessment Group ${groupNum}</h2><p><strong>Name/Nama:</strong> ${name} | <strong>Date/Tanggal:</strong> ${date}</p><hr style="border:1px solid black;">`;
+            
+            const groupDiv = document.getElementById(`Group${groupNum}`);
+            groupDiv.insertBefore(printHeader, groupDiv.firstChild);
+
+            window.print();
+
+            // Remove after print
+            groupDiv.removeChild(printHeader);
+        }
+
+        // --- FEEDBACK SECTION 9 LOGIC ---
+        function submitFeedback() {
+            const rating = document.getElementById('feedback-rating').value;
+            const text = document.getElementById('feedback-text').value;
+            
+            if(rating === "") {
+                document.getElementById('section9-feedback').innerHTML = "<p class='feedback-wrong'>Please select a rating first.</p>";
+                return;
+            }
+
+            // Simulate sending to server
+            document.getElementById('section9-feedback').innerHTML = `
+                <div style="background-color: #d4edda; padding: 10px; border: 1px solid green; margin-top: 10px;">
+                    <p class="feedback-correct" style="margin:0;">Thank you for your feedback! / Terima kasih atas feedback kamu!</p>
+                    <p style="margin:0; font-size:0.9rem;">Rating: ${rating} Stars<br>Comment: ${text || 'No comment'}</p>
+                    <p style="margin:0; font-size:0.8rem; color: #555;">Data recorded to learn.algonova.id</p>
+                </div>
+            `;
+            document.getElementById('feedback-rating').disabled = true;
+            document.getElementById('feedback-text').disabled = true;
+        }
+    </script>
+</body>
+</html>
