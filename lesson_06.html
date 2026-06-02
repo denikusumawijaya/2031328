@@ -206,7 +206,7 @@
     .active-tab { background: white; border-top: 2px solid var(--xp-blue); border-left: 2px solid var(--xp-blue); border-right: 2px solid var(--xp-blue); font-weight: bold; color: black; }
     .tab-content { min-height: 300px; }
 
-    /* Print Styles Fix - Agar bisa multi-halaman */
+    /* Print Styles Fix - Cetak Per Grup Saja */
     @media print {
         body { 
             background: white !important; 
@@ -227,7 +227,6 @@
             display: none !important; 
         } 
         
-        /* Paksa panel materi untuk tampil penuh tanpa batasan scroll */
         .material-panel { 
             overflow: visible !important; 
             height: auto !important; 
@@ -249,15 +248,20 @@
             height: auto !important; 
         }
         
-        /* Paksa semua tab assessment terbuka dan tampil ke bawah */
-        .tab-content { 
+        /* SAAT PRINT, SEMUA TAB DISHIDDEN DULU */
+        .is-printing .tab-content { 
+            display: none !important; 
+        }
+
+        /* HANYA TAB YANG DITANDAI 'active-print-tab' YANG AKAN DICETAK */
+        .is-printing .tab-content.active-print-tab { 
             display: block !important; 
             overflow: visible !important; 
             height: auto !important; 
             border: none !important; 
         }
 
-        /* Mencegah soal terpotong di tengah-tengah halaman */
+        /* Mencegah soal terpotong di tengah halaman */
         .question-box { 
             page-break-inside: avoid; 
         }
