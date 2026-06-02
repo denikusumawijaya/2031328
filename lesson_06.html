@@ -206,17 +206,62 @@
     .active-tab { background: white; border-top: 2px solid var(--xp-blue); border-left: 2px solid var(--xp-blue); border-right: 2px solid var(--xp-blue); font-weight: bold; color: black; }
     .tab-content { min-height: 300px; }
 
-    /* Print Styles Fix */
+    /* Print Styles Fix - Agar bisa multi-halaman */
     @media print {
-        body { background: white; }
+        body { 
+            background: white !important; 
+            height: auto !important; 
+            overflow: visible !important; 
+        }
+        
+        .main-container { 
+            display: block !important; 
+            overflow: visible !important; 
+            height: auto !important; 
+        }
+
+        /* Sembunyikan elemen yang tidak perlu dicetak */
         .taskbar-header, .canvas-panel, .xp-buttons, button, .tab-btn, .case-nav,
         #section1, #section2, #section3, #section4, #section5, #section6, #section7, #section9,
-        .xp-window:first-of-type { display: none !important; } /* Hide Rules */
+        .xp-window:first-of-type { 
+            display: none !important; 
+        } 
         
-        .material-panel { overflow: visible !important; flex: 1 !important; padding: 0 !important; height: auto !important; }
-        .xp-window { overflow: visible !important; height: auto !important; border: 1px solid black !important; box-shadow: none !important; margin-bottom: 10px !important; }
-        .xp-body { overflow: visible !important; height: auto !important; }
-        .tab-content { display: block !important; page-break-inside: avoid; border: none !important; overflow: visible !important; height: auto !important; }
+        /* Paksa panel materi untuk tampil penuh tanpa batasan scroll */
+        .material-panel { 
+            overflow: visible !important; 
+            height: auto !important; 
+            width: 100% !important; 
+            display: block !important; 
+            padding: 0 !important; 
+        }
+        
+        .xp-window { 
+            overflow: visible !important; 
+            height: auto !important; 
+            border: 1px solid black !important; 
+            box-shadow: none !important; 
+            margin-bottom: 10px !important; 
+        }
+        
+        .xp-body { 
+            overflow: visible !important; 
+            height: auto !important; 
+        }
+        
+        /* Paksa semua tab assessment terbuka dan tampil ke bawah */
+        .tab-content { 
+            display: block !important; 
+            overflow: visible !important; 
+            height: auto !important; 
+            border: none !important; 
+        }
+
+        /* Mencegah soal terpotong di tengah-tengah halaman */
+        .question-box { 
+            page-break-inside: avoid; 
+        }
+        
         .q-feedback { font-weight: bold; }
         .feedback-correct { color: green !important; }
         .feedback-wrong { color: red !important; }
