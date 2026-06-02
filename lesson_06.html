@@ -1523,17 +1523,41 @@
             alert(`Group ${groupNum} Score: ${score} / ${totalQ}`);
         }
 
-        // --- PRINT LOGIC ---
+        // --- PRINT LOGIC (CETAK PER GRUP) ---
         function printGroup(groupNum) {
             const name = document.getElementById('student-name').value || "Unknown Student";
             const date = document.getElementById('student-date').value || "No Date";
+            
+            // 1. Buat header khusus print
             const printHeader = document.createElement('div');
             printHeader.id = "print-header-temp";
             printHeader.innerHTML = `<h2>Assessment Group ${groupNum}</h2><p><strong>Name/Nama:</strong> ${name} | <strong>Date/Tanggal:</strong> ${date}</p><hr style="border:1px solid black;">`;
+            
             const groupDiv = document.getElementById(`Group${groupNum}`);
             groupDiv.insertBefore(printHeader, groupDiv.firstChild);
+
+            // 2. Tandai body sedang print & tandai grup ini yang boleh tampil
+            document.body.classList.add('is-printing');
+            groupDiv.classList.add('active-print-tab');
+
+            // 3. Trigger Print
             window.print();
-            groupDiv.removeChild(printHeader);
+
+            // 4. Bersihkan setelah dialog print ditutup
+            const cleanup = () => {
+                document.body.classList.remove('is-printing');
+                groupDiv.classList.remove('active-print-tab');
+                if (document.getElementById("print-header-temp")) {
+                    groupDiv.removeChild(printHeader);
+                }
+                window.onafterprint = null;
+            };
+
+            // Gunakan event onafterprint jika browser mendukung
+            window.onafterprint = cleanup;
+            
+            // Fallback timer (untuk browser yang tidak support onafterprint)
+            setTimeout(cleanup, 1000); 
         }
 
         // --- FEEDBACK SECTION 9 LOGIC ---
