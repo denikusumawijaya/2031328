@@ -4,278 +4,235 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Math Tutoring - Windows XP Edition</title>
-    <style>
-        /* Windows XP Theme Variables */
-        :root {
-            --xp-blue: #245EDC;
-            --xp-blue-light: #3A6DDA;
-            --xp-title-gradient: linear-gradient(180deg, #0997FF 0%, #0053EE 8%, #0050EE 40%, #0046CC 88%, #0040BF 93%, #003BAA 95%, #003494 100%);
-            --xp-silver: #ECE9D8;
-            --xp-silver-border: #808080;
-            --xp-window-border: #0054E3;
-            --xp-start-green: #2E8B10;
-        }
+<style>
+    /* Windows XP Theme Variables */
+    :root {
+        --xp-blue: #245EDC;
+        --xp-blue-light: #3A6DDA;
+        --xp-title-gradient: linear-gradient(180deg, #0997FF 0%, #0053EE 8%, #0050EE 40%, #0046CC 88%, #0040BF 93%, #003BAA 95%, #003494 100%);
+        --xp-silver: #ECE9D8;
+        --xp-silver-border: #808080;
+        --xp-window-border: #0054E3;
+        --xp-start-green: #2E8B10;
+    }
 
-        body {
-            font-family: 'Tahoma', 'Segoe UI', sans-serif;
-            background-color: #3A6DDA; /* XP Classic Desktop Blue */
-            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="%233A6DDA"/></svg>'); /* Fallback */
-            color: black;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
+    body {
+        font-family: 'Tahoma', 'Segoe UI', sans-serif;
+        background-color: #3A6DDA;
+        color: black;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
 
-        /* XP Taskbar Header */
-        .taskbar-header {
-            background: linear-gradient(to bottom, #245EDC, #1B4DB0);
-            color: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 2px solid #5B9CFF;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            z-index: 100;
-        }
+    /* ANIMATIONS */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spinCoin {
+        0% { transform: rotateY(0deg); }
+        100% { transform: rotateY(1800deg); }
+    }
+    .coin-spin { animation: spinCoin 1.5s ease-out; }
 
-        .taskbar-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 2px rgba(0,0,0,0.4);
-        }
+    .taskbar-header {
+        background: linear-gradient(to bottom, #245EDC, #1B4DB0);
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 2px solid #5B9CFF;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        z-index: 100;
+    }
 
-        .taskbar-info {
-            text-align: right;
-            font-size: 0.9rem;
-        }
+    .taskbar-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 2px rgba(0,0,0,0.4);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-        /* Main Layout 3:1 */
-        .main-container {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
+    .taskbar-info {
+        text-align: right;
+        font-size: 0.9rem;
+    }
 
-        .material-panel {
-            flex: 3;
-            overflow-y: auto;
-            padding: 20px;
-        }
+    .main-container {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+    }
 
-        .canvas-panel {
-            flex: 1;
-            background-color: var(--xp-silver);
-            border-left: 2px solid var(--xp-silver-border);
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            box-shadow: inset 1px 1px white;
-        }
+    .material-panel {
+        flex: 3;
+        overflow-y: auto;
+        padding: 20px;
+    }
 
-        /* XP Window Styling */
-        .xp-window {
-            background: var(--xp-silver);
-            border: 2px solid var(--xp-silver-border);
-            border-radius: 8px 8px 0 0;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
+    .canvas-panel {
+        flex: 1;
+        background-color: var(--xp-silver);
+        border-left: 2px solid var(--xp-silver-border);
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        box-shadow: inset 1px 1px white;
+    }
 
-        .xp-title-bar {
-            background: var(--xp-title-gradient);
-            padding: 5px 10px;
-            color: white;
-            font-weight: bold;
-            font-size: 1.1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
-        }
+    .xp-window {
+        background: var(--xp-silver);
+        border: 2px solid var(--xp-silver-border);
+        border-radius: 8px 8px 0 0;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        margin-bottom: 20px;
+        overflow: hidden;
+        animation: fadeIn 0.6s ease-out; /* Animation added */
+    }
 
-        .xp-title-bar span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+    .xp-title-bar {
+        background: var(--xp-title-gradient);
+        padding: 5px 10px;
+        color: white;
+        font-weight: bold;
+        font-size: 1.1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+    }
 
-        .xp-buttons {
-            display: flex;
-            gap: 2px;
-        }
+    .xp-title-bar span { display: flex; align-items: center; gap: 5px; }
+    .xp-buttons { display: flex; gap: 2px; }
+    .xp-btn {
+        width: 21px; height: 21px; border-radius: 3px;
+        display: flex; justify-content: center; align-items: center;
+        font-weight: bold; font-size: 12px; border: 1px solid; cursor: pointer;
+    }
+    .xp-btn-minimize { background: #3A6DDA; border-color: #5B9CFF; color: white; }
+    .xp-btn-maximize { background: #3A6DDA; border-color: #5B9CFF; color: white; }
+    .xp-btn-close { background: #E08040; border-color: #FFB080; color: white; }
 
-        .xp-btn {
-            width: 21px;
-            height: 21px;
-            border-radius: 3px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 12px;
-            border: 1px solid;
-            cursor: pointer;
-        }
+    .xp-body { padding: 15px; }
 
-        .xp-btn-minimize { background: #3A6DDA; border-color: #5B9CFF; color: white; }
-        .xp-btn-maximize { background: #3A6DDA; border-color: #5B9CFF; color: white; }
-        .xp-btn-close { background: #E08040; border-color: #FFB080; color: white; }
+    .en-text { font-weight: bold; font-size: 1.1rem; }
+    .id-text { font-size: 0.9rem; color: #444; margin-top: 2px; margin-bottom: 10px; }
 
-        .xp-body {
-            padding: 15px;
-        }
+    .timer-badge {
+        background-color: #FFD700; color: #000; padding: 2px 8px;
+        border-radius: 4px; font-size: 0.8rem; border: 1px solid #DAA520; float: right;
+    }
 
-        /* Typography & Bilingual */
-        .en-text { font-weight: bold; font-size: 1.1rem; }
-        .id-text { font-size: 0.9rem; color: #444; margin-top: 2px; margin-bottom: 10px; }
+    .rules-box {
+        background-color: #FFFFE1; border: 1px solid #000; padding: 10px;
+        margin-bottom: 15px; font-family: 'MS Sans Serif', sans-serif; box-shadow: inset 1px 1px white;
+    }
+    .rules-box ul { margin: 5px 0; padding-left: 20px; }
 
-        /* Timer */
-        .timer-badge {
-            background-color: #FFD700;
-            color: #000;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            border: 1px solid #DAA520;
-            float: right;
-        }
+    .xp-input {
+        border: 2px inset var(--xp-silver-border); padding: 4px;
+        background: white; font-family: Tahoma, sans-serif;
+    }
 
-        /* Rules */
-        .rules-box {
-            background-color: #FFFFE1;
-            border: 1px solid #000;
-            padding: 10px;
-            margin-bottom: 15px;
-            font-family: 'MS Sans Serif', sans-serif;
-            box-shadow: inset 1px 1px white;
-        }
-        .rules-box ul { margin: 5px 0; padding-left: 20px; }
+    .xp-button {
+        background: var(--xp-silver); border: 2px outset var(--xp-silver-border);
+        padding: 5px 15px; font-family: Tahoma, sans-serif; cursor: pointer;
+        box-shadow: inset 1px 1px white; transition: 0.2s; /* Transition added */
+    }
+    .xp-button:active { border-style: inset; }
+    .xp-button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .xp-button-primary { background: #E08040; color: white; border-color: #FFB080; }
+    .xp-button-success { background: var(--xp-start-green); color: white; border-color: #5CD050; }
 
-        /* Interactive Elements */
-        .xp-input {
-            border: 2px inset var(--xp-silver-border);
-            padding: 4px;
-            background: white;
-            font-family: Tahoma, sans-serif;
-        }
+    .visual-block { display: flex; justify-content: center; gap: 15px; margin: 15px 0; flex-wrap: wrap; }
+    
+    /* Base Ten Fix */
+    .base-ten {
+        width: 90px; height: 90px; background-color: #F4B41A; border: 2px solid #D18916;
+        display: flex; flex-direction: column; justify-content: center; align-items: center;
+        font-weight: bold; color: #000; font-size: 0.9rem; text-align: center; padding: 5px; box-sizing: border-box;
+    }
 
-        .xp-button {
-            background: var(--xp-silver);
-            border: 2px outset var(--xp-silver-border);
-            padding: 5px 15px;
-            font-family: Tahoma, sans-serif;
-            cursor: pointer;
-            box-shadow: inset 1px 1px white;
-        }
-        .xp-button:active { border-style: inset; }
-        .xp-button-primary { background: #E08040; color: white; border-color: #FFB080; }
-        .xp-button-success { background: var(--xp-start-green); color: white; border-color: #5CD050; }
+    .question-box { background: white; border: 1px solid #808080; padding: 10px; margin-bottom: 10px; }
+    .feedback-correct { color: green; font-weight: bold; }
+    .feedback-wrong { color: red; font-weight: bold; }
 
-        /* Section Specifics */
-        .visual-block {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
-        }
-        .base-ten {
-            width: 40px;
-            height: 40px;
-            background-color: #F4B41A;
-            border: 2px solid #D18916;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            color: #000;
-        }
-        .question-box {
-            background: white;
-            border: 1px solid #808080;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        .feedback-correct { color: green; font-weight: bold; }
-        .feedback-wrong { color: red; font-weight: bold; }
+    /* Likelihood Scale Fix (Flexbox) */
+    .scale-container {
+        display: flex; justify-content: space-between; align-items: flex-start;
+        background: white; border: inset 2px #808080; padding: 15px 10px; margin-bottom: 20px;
+    }
+    .scale-zone {
+        width: 18%; text-align: center; min-height: 120px;
+        border: 2px dashed #ccc; padding: 5px; background: #f9f9f9; border-radius: 5px;
+    }
+    .scale-zone.active-drop { border-style: solid; }
+    #drop-impossible { border-color: red; background: rgba(255,0,0,0.05); }
+    #drop-unlikely { border-color: orange; background: rgba(255,165,0,0.05); }
+    #drop-even { border-color: #FFD700; background: rgba(255,215,0,0.05); }
+    #drop-likely { border-color: #32CD32; background: rgba(50,205,50,0.05); }
+    #drop-certain { border-color: green; background: rgba(0,128,0,0.05); }
 
-        /* Scratchpad Canvas */
-        .canvas-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: white;
-            border: 2px inset var(--xp-silver-border);
-            margin-top: 5px;
-        }
-        #scratchpad {
-            flex: 1;
-            cursor: crosshair;
-        }
-        .canvas-tools {
-            display: flex;
-            justify-content: space-around;
-            padding: 5px;
-            background: var(--xp-silver);
-            border-bottom: 1px solid #808080;
-        }
-        .color-btn {
-            width: 20px;
-            height: 20px;
-            border: 2px outset #808080;
-            cursor: pointer;
-        }
-        .color-btn:active { border-style: inset; }
+    .canvas-container {
+        flex: 1; display: flex; flex-direction: column; background: white;
+        border: 2px inset var(--xp-silver-border); margin-top: 5px;
+    }
+    #scratchpad { flex: 1; cursor: crosshair; }
+    .canvas-tools {
+        display: flex; justify-content: space-around; padding: 5px;
+        background: var(--xp-silver); border-bottom: 1px solid #808080;
+    }
+    .color-btn { width: 20px; height: 20px; border: 2px outset #808080; cursor: pointer; }
+    .color-btn:active { border-style: inset; }
 
-        .scrollbar-xp::-webkit-scrollbar { width: 16px; }
-        .scrollbar-xp::-webkit-scrollbar-track { background: #EBE8D8; border: 1px solid #808080; }
-        .scrollbar-xp::-webkit-scrollbar-thumb { background: #CACBBD; border: 2px outset #808080; }
-        /* Tab styling */
-        .tab-btn {
-            border-radius: 5px 5px 0 0;
-            border-bottom: none;
-            background: #ECE9D8;
-            color: #444;
-        }
-        .active-tab {
-            background: white;
-            border-top: 2px solid var(--xp-blue);
-            border-left: 2px solid var(--xp-blue);
-            border-right: 2px solid var(--xp-blue);
-            font-weight: bold;
-            color: black;
-        }
-        .tab-content {
-            min-height: 300px;
-        }
+    /* Case Tabs */
+    .case-nav { display: flex; gap: 5px; margin-bottom: 15px; border-bottom: 2px solid #808080; padding-bottom: 5px; }
+    .case-btn { background: #ddd; border: 2px outset #808080; padding: 3px 10px; cursor: pointer; }
+    .case-btn.active-case { background: white; border: 2px inset #808080; font-weight: bold; }
+    .case-content { display: none; }
+    .case-content.active-case-content { display: block; animation: fadeIn 0.4s ease-out; }
 
-        /* Print Styles */
-        @media print {
-            body { background: white; }
-            .taskbar-header, .canvas-panel, .xp-buttons, button, .tab-btn, #section1, #section2, #section3, #section4, #section5, #section6, #section7, #section9 { display: none !important; }
-            .material-panel { overflow: visible !important; flex: 1 !important; padding: 0 !important; }
-            .xp-window { border: 1px solid black !important; box-shadow: none !important; margin-bottom: 10px !important; }
-            .xp-title-bar { background: #ddd !important; color: black !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .tab-content { display: block !important; page-break-inside: avoid; border: none !important; }
-            .q-feedback { font-weight: bold; }
-            .feedback-correct { color: green !important; }
-            .feedback-wrong { color: red !important; }
-        }
-    </style>
+    /* Tab styling Assessment */
+    .tab-btn { border-radius: 5px 5px 0 0; border-bottom: none; background: #ECE9D8; color: #444; }
+    .active-tab { background: white; border-top: 2px solid var(--xp-blue); border-left: 2px solid var(--xp-blue); border-right: 2px solid var(--xp-blue); font-weight: bold; color: black; }
+    .tab-content { min-height: 300px; }
+
+    /* Print Styles Fix */
+    @media print {
+        body { background: white; }
+        .taskbar-header, .canvas-panel, .xp-buttons, button, .tab-btn, .case-nav,
+        #section1, #section2, #section3, #section4, #section5, #section6, #section7, #section9,
+        .xp-window:first-of-type { display: none !important; } /* Hide Rules */
+        
+        .material-panel { overflow: visible !important; flex: 1 !important; padding: 0 !important; height: auto !important; }
+        .xp-window { overflow: visible !important; height: auto !important; border: 1px solid black !important; box-shadow: none !important; margin-bottom: 10px !important; }
+        .xp-body { overflow: visible !important; height: auto !important; }
+        .tab-content { display: block !important; page-break-inside: avoid; border: none !important; overflow: visible !important; height: auto !important; }
+        .q-feedback { font-weight: bold; }
+        .feedback-correct { color: green !important; }
+        .feedback-wrong { color: red !important; }
+    }
+
+    .scrollbar-xp::-webkit-scrollbar { width: 16px; }
+    .scrollbar-xp::-webkit-scrollbar-track { background: #EBE8D8; border: 1px solid #808080; }
+    .scrollbar-xp::-webkit-scrollbar-thumb { background: #CACBBD; border: 2px outset #808080; }
+</style>
 </head>
 <body>
 
     <!-- TASKBAR HEADER -->
     <div class="taskbar-header">
         <div class="taskbar-title">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><fill='%23FF0000'/><path d='M8 0L0 16h16L8 0z'/></svg>" width="20" alt="icon"> 
-            MATH TUTORING
+            🖥️ MATH TUTORING <!-- Menggunakan emoji agar tidak error -->
         </div>
         <div class="taskbar-info">
             <div>Topic: Exploring Probability <br><small>Topik: Menjelajahi Peluang</small></div>
@@ -313,43 +270,35 @@
             <div class="xp-window" id="section1">
                 <div class="xp-title-bar">
                     <span>💻 Section 1: Spiral Review Warm-up <span class="timer-badge">00:00 - 00:10</span></span>
-                    <div class="xp-buttons">
-                        <div class="xp-btn xp-btn-minimize">_</div>
-                        <div class="xp-btn xp-btn-maximize">□</div>
-                        <div class="xp-btn xp-btn-close">X</div>
-                    </div>
+                    <div class="xp-buttons"><div class="xp-btn xp-btn-minimize">_</div><div class="xp-btn xp-btn-maximize">□</div><div class="xp-btn xp-btn-close">X</div></div>
                 </div>
                 <div class="xp-body">
                     <p class="en-text">Let's flex those brain muscles with a quick review of place values and numbers!</p>
-                    <p class="id-text">Mari melatih otak kita dengan tinjauan cepat tentang nilai tempat dan angka!</p>
+                    <p class="id-text">Mari melatih otot otak kita dengan tinjauan cepat tentang nilai tempat dan angka!</p>
                     
+                    <!-- Base Ten Visual FIX -->
                     <div class="visual-block" id="baseTenVisual">
-                        <!-- Base Ten SVGs -->
-                        <div class="base-ten" style="width: 80px; height: 80px;">1000<br>x4</div>
-                        <div class="base-ten" style="width: 60px; height: 20px;">100<br>x2</div>
-                        <div class="base-ten" style="width: 10px; height: 20px;">1<br>x5</div>
+                        <div class="base-ten">1000<br>x4</div>
+                        <div class="base-ten" style="width: 60px; height: 60px;">100<br>x2</div>
+                        <div class="base-ten" style="width: 30px; height: 60px;">1<br>x5</div>
                     </div>
 
                     <div class="question-box">
                         <p><strong>Q1:</strong> <span class="en-text">What number is shown by 4 thousands, 2 hundreds, and 5 units?</span><br><small class="id-text">Angka berapa yang ditunjukkan oleh 4 ribuan, 2 ratusan, dan 5 satuan?</small></p>
                         <input type="text" class="xp-input" id="q1-answer" placeholder="Type answer...">
                     </div>
-
                     <div class="question-box">
                         <p><strong>Q2:</strong> <span class="en-text">In the number 7,038, which digit is in the tens place?</span><br><small class="id-text">Pada angka 7.038, digit mana yang berada di tempat puluhan?</small></p>
                         <input type="text" class="xp-input" id="q2-answer" placeholder="Type answer...">
                     </div>
-
                     <div class="question-box">
                         <p><strong>Q3:</strong> <span class="en-text">What is the largest 4-digit number you can make using 0, 9, 2, and 5?</span><br><small class="id-text">Berapa angka 4 digit terbesar yang bisa kamu buat dari 0, 9, 2, dan 5?</small></p>
                         <input type="text" class="xp-input" id="q3-answer" placeholder="Type answer...">
                     </div>
-
                     <div class="question-box">
                         <p><strong>Q4:</strong> <span class="en-text">If I add 1,000 to 5,421, what is my new total?</span><br><small class="id-text">Jika saya menambahkan 1.000 ke 5.421, berapa total baru saya?</small></p>
                         <input type="text" class="xp-input" id="q4-answer" placeholder="Type answer...">
                     </div>
-
                     <div style="margin-top: 10px; display: flex; gap: 10px;">
                         <button class="xp-button xp-button-primary" onclick="checkSection1()">Check Answers</button>
                         <button class="xp-button" onclick="resetSection1()">Reset</button>
@@ -358,62 +307,95 @@
                 </div>
             </div>
 
-            <!-- SECTION 2: Introduction & Real-World Connection (00:10 - 00:15) -->
+            <!-- SECTION 2: Introduction & Real-World Connection (00:10 - 00:25) - 3 CASES -->
             <div class="xp-window" id="section2">
                 <div class="xp-title-bar">
-                    <span>🌤️ Section 2: Introduction & Real-World Connection <span class="timer-badge">00:10 - 00:15</span></span>
-                    <div class="xp-buttons">
-                        <div class="xp-btn xp-btn-minimize">_</div>
-                        <div class="xp-btn xp-btn-maximize">□</div>
-                        <div class="xp-btn xp-btn-close">X</div>
-                    </div>
+                    <span>🌤️ Section 2: Introduction & Real-World Connection <span class="timer-badge">00:10 - 00:25</span></span>
+                    <div class="xp-buttons"><div class="xp-btn xp-btn-minimize">_</div><div class="xp-btn xp-btn-maximize">□</div><div class="xp-btn xp-btn-close">X</div></div>
                 </div>
                 <div class="xp-body">
-                    <p class="en-text">Have you ever wondered why some games are harder to win than others? Or why a weather forecaster says there is a 50% chance of rain?</p>
-                    <p class="id-text">Pernahkah kamu bertanya-tanya mengapa beberapa permainan lebih sulit dimenangkan? Atau mengapa prakiraan cuaca mengatakan ada 50% kemungkinan hujan?</p>
-                    
                     <p class="en-text">Probability is the math of 'guessing' the future! We use it in video games, sports, and even when deciding to bring an umbrella.</p>
                     <p class="id-text">Peluang adalah matematika untuk 'menebak' masa depan! Kita menggunakannya dalam video game, olahraga, bahkan saat memutuskan untuk membawa payung.</p>
 
-                    <!-- Interactive SVG Weather -->
-                    <div style="text-align: center; margin: 20px 0;">
-                        <svg width="150" height="150" viewBox="0 0 100 100" id="weather-svg">
-                            <circle cx="50" cy="50" r="30" fill="#FFD700" stroke="#DAA520" stroke-width="2" id="sun-icon"/>
-                            <text x="50" y="90" text-anchor="middle" font-size="10" font-family="Tahoma" fill="black">50% Chance of Rain / 50% Kemungkinan Hujan</text>
-                        </svg>
+                    <div class="case-nav">
+                        <button class="case-btn active-case" onclick="switchCase(2, 1)">Case 1: Weather</button>
+                        <button class="case-btn" onclick="switchCase(2, 2)">Case 2: Board Game</button>
+                        <button class="case-btn" onclick="switchCase(2, 3)">Case 3: Sports</button>
                     </div>
 
-                    <div class="question-box">
-                        <p class="en-text">Quick Check: Can you name one real-world example where we use probability?</p>
-                        <p class="id-text">Cek Cepat: Bisakah kamu menyebutkan satu contoh dunia nyata di mana kita menggunakan peluang?</p>
-                        <input type="text" class="xp-input" id="q5-answer" style="width: 100%;" placeholder="e.g., Flipping a coin / Melempar koin...">
+                    <!-- Case 1: Weather -->
+                    <div id="sec2-case-1" class="case-content active-case-content">
+                        <div style="text-align: center; margin: 20px 0;">
+                            <svg width="120" height="120" viewBox="0 0 100 100">
+                                <circle cx="50" cy="40" r="30" fill="#FFD700" stroke="#DAA520" stroke-width="2"/>
+                            </svg>
+                            <!-- Text moved outside SVG -->
+                            <p style="font-weight: bold; margin-top: 10px;">50% Chance of Rain <br><small>50% Kemungkinan Hujan</small></p>
+                        </div>
+                        <div class="question-box">
+                            <p class="en-text">If the forecaster says 50% chance of rain, is it Likely, Unlikely, or Even Chance?</p>
+                            <p class="id-text">Jika prakiraan mengatakan 50% kemungkinan hujan, apakah Kemungkinan Besar, Kecil, atau Sama?</p>
+                            <input type="text" class="xp-input" id="s2c1-q1" style="width: 100%;" placeholder="Type your answer...">
+                        </div>
+                    </div>
+
+                    <!-- Case 2: Board Game -->
+                    <div id="sec2-case-2" class="case-content">
+                        <div style="text-align: center; margin: 20px 0;">
+                            <svg width="120" height="120" viewBox="0 0 100 100">
+                                <rect x="25" y="25" width="50" height="50" fill="#ECE9D8" stroke="black" stroke-width="2" rx="5"/>
+                                <text x="50" y="60" font-size="30" text-anchor="middle" fill="red">6</text>
+                            </svg>
+                            <p style="font-weight: bold; margin-top: 10px;">Rolling a 6 on a Die <br><small>Melempar angka 6 pada Dadu</small></p>
+                        </div>
+                        <div class="question-box">
+                            <p class="en-text">You need a 6 to win the board game. Is rolling a 6 Likely or Unlikely?</p>
+                            <p class="id-text">Kamu butuh 6 untuk menang. Apakah melempar 6 Kemungkinan Besar atau Kecil?</p>
+                            <input type="text" class="xp-input" id="s2c2-q1" style="width: 100%;" placeholder="Type your answer...">
+                        </div>
+                    </div>
+
+                    <!-- Case 3: Sports -->
+                    <div id="sec2-case-3" class="case-content">
+                        <div style="text-align: center; margin: 20px 0;">
+                            <svg width="120" height="120" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="40" fill="#FF6347" stroke="black" stroke-width="2"/>
+                                <path d="M50 10 L50 90 M10 50 L90 50" stroke="black" stroke-width="2"/>
+                            </svg>
+                            <p style="font-weight: bold; margin-top: 10px;">Winning the Lottery <br><small>Memenangkan Lotre</small></p>
+                        </div>
+                        <div class="question-box">
+                            <p class="en-text">Your favorite team has 1 out of 20 teams chance to win the league. Is it Likely or Unlikely?</p>
+                            <p class="id-text">Tim favoritmu punya peluang 1 dari 20 tim untuk menang. Kemungkinan Besar atau Kecil?</p>
+                            <input type="text" class="xp-input" id="s2c3-q1" style="width: 100%;" placeholder="Type your answer...">
+                        </div>
                     </div>
 
                     <div style="margin-top: 10px; display: flex; gap: 10px;">
-                        <button class="xp-button xp-button-primary" onclick="checkSection2()">Check</button>
+                        <button class="xp-button xp-button-primary" onclick="checkSection2()">Check All Cases</button>
                         <button class="xp-button" onclick="resetSection2()">Reset</button>
                     </div>
                     <div id="section2-feedback" style="margin-top: 10px;"></div>
                 </div>
             </div>
 
-            <!-- SECTION 3: Review of Prior Knowledge (00:15 - 00:25) -->
+            <!-- SECTION 3: Review of Prior Knowledge (00:15 - 00:25) - 3 CASES -->
             <div class="xp-window" id="section3">
                 <div class="xp-title-bar">
                     <span>🧠 Section 3: Review of Prior Knowledge <span class="timer-badge">00:15 - 00:25</span></span>
-                    <div class="xp-buttons">
-                        <div class="xp-btn xp-btn-minimize">_</div>
-                        <div class="xp-btn xp-btn-maximize">□</div>
-                        <div class="xp-btn xp-btn-close">X</div>
-                    </div>
+                    <div class="xp-buttons"><div class="xp-btn xp-btn-minimize">_</div><div class="xp-btn xp-btn-maximize">□</div><div class="xp-btn xp-btn-close">X</div></div>
                 </div>
                 <div class="xp-body">
-                    <p class="en-text">Think back to when you've played games with dice or coins. If I toss a coin, can it land on its edge? Probably not! It’s usually heads or tails.</p>
-                    <p class="id-text">Ingat kembali saat kamu bermain dengan dadu atau koin. Jika saya melempar koin, bisakah mendarat di sisinya? Mungkin tidak! Biasanya sisi gambar atau angka.</p>
-
                     <p class="en-text">Let's sort everyday events into 'Possible' and 'Impossible'.</p>
                     <p class="id-text">Mari urutkan kejadian sehari-hari menjadi 'Mungkin' dan 'Mustahil'.</p>
 
+                    <div class="case-nav">
+                        <button class="case-btn active-case" onclick="switchCase(3, 1)">Case 1: Daily Life</button>
+                        <button class="case-btn" onclick="switchCase(3, 2)">Case 2: Animals</button>
+                        <button class="case-btn" onclick="switchCase(3, 3)">Case 3: School</button>
+                    </div>
+
+                    <!-- Drop Zones (Shared for all cases to save space, but we will reset them) -->
                     <div style="display: flex; justify-content: space-around; margin-bottom: 20px; padding: 10px; background: white; border: inset 2px #808080;">
                         <div style="text-align: center; width: 45%;">
                             <h4 style="margin:0; color: var(--xp-start-green);">Possible / Mungkin</h4>
@@ -425,11 +407,34 @@
                         </div>
                     </div>
 
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;" id="drag-container">
-                        <div class="xp-button draggable-event" draggable="true" id="event1" data-category="possible">It will rain tomorrow / Hujan besok</div>
-                        <div class="xp-button draggable-event" draggable="true" id="event2" data-category="impossible">Pigs will fly / Babi bisa terbang</div>
-                        <div class="xp-button draggable-event" draggable="true" id="event3" data-category="possible">You will eat lunch / Kamu akan makan siang</div>
-                        <div class="xp-button draggable-event" draggable="true" id="event4" data-category="impossible">You meet an alien / Bertemu alien</div>
+                    <!-- Case 1 -->
+                    <div id="sec3-case-1" class="case-content active-case-content">
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;" id="drag-container-3-1">
+                            <div class="xp-button draggable-event" draggable="true" id="s3c1-e1" data-category="possible">It will rain tomorrow</div>
+                            <div class="xp-button draggable-event" draggable="true" id="s3c1-e2" data-category="impossible">Pigs will fly</div>
+                            <div class="xp-button draggable-event" draggable="true" id="s3c1-e3" data-category="possible">You will eat lunch</div>
+                            <div class="xp-button draggable-event" draggable="true" id="s3c1-e4" data-category="impossible">You meet an alien</div>
+                        </div>
+                    </div>
+
+                    <!-- Case 2 -->
+                    <div id="sec3-case-2" class="case-content">
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;" id="drag-container-3-2">
+                            <div class="xp-button draggable-event" draggable="true" id="s3c2-e1" data-category="possible">Fish can swim</div>
+                            <div class="xp-button draggable-event" draggable="true" id="s3c2-e2" data-category="impossible">Dogs can speak English</div>
+                            <div class="xp-button draggable-event" draggable="true" id="s3c2-e3" data-category="possible">Cat will sleep</div>
+                            <div class="xp-button draggable-event" draggable="true" id="s3c2-e4" data-category="impossible">Elephant can fit in a cup</div>
+                        </div>
+                    </div>
+
+                    <!-- Case 3 -->
+                    <div id="sec3-case-3" class="case-content">
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;" id="drag-container-3-3">
+                            <div class="xp-button draggable-event" draggable="true" id="s3c3-e1" data-category="possible">Bell will ring</div>
+                            <div class="xp-button draggable-event" draggable="true" id="s3c3-e2" data-category="impossible">Teacher turns into a dragon</div>
+                            <div class="xp-button draggable-event" draggable="true" id="s3c3-e3" data-category="possible">You will read a book</div>
+                            <div class="xp-button draggable-event" draggable="true" id="s3c3-e4" data-category="impossible">Pencil draws by itself</div>
+                        </div>
                     </div>
 
                     <div style="margin-top: 15px; display: flex; gap: 10px;">
@@ -441,98 +446,140 @@
             </div>
 
             <!-- Placeholder for Sections 4-7 and Assessment (Will be added in Part 2 & 3) -->
-            <!-- SECTION 4: Problem Introduction (00:25 - 00:35) -->
+            <!-- SECTION 4: Problem Introduction (00:25 - 00:35) - SKALA FLEXBOX & 3 CASES -->
             <div class="xp-window" id="section4">
                 <div class="xp-title-bar">
                     <span>📏 Section 4: The Likelihood Scale <span class="timer-badge">00:25 - 00:35</span></span>
-                    <div class="xp-buttons">
-                        <div class="xp-btn xp-btn-minimize">_</div>
-                        <div class="xp-btn xp-btn-maximize">□</div>
-                        <div class="xp-btn xp-btn-close">X</div>
-                    </div>
+                    <div class="xp-buttons"><div class="xp-btn xp-btn-minimize">_</div><div class="xp-btn xp-btn-maximize">□</div><div class="xp-btn xp-btn-close">X</div></div>
                 </div>
                 <div class="xp-body">
-                    <p class="en-text">Look at this 'Likelihood Scale'. It goes from 0 (Impossible) to 1 (Certain). In the middle at 0.5, we have 'Even Chance'.</p>
-                    <p class="id-text">Lihat 'Skala Kemungkinan' ini. Skalanya dari 0 (Mustahil) hingga 1 (Pasti). Di tengah pada 0.5, kita memiliki 'Kemungkinan Sama'.</p>
+                    <p class="en-text">Look at this 'Likelihood Scale'. It goes from 0 (Impossible) to 1 (Certain). Drag the situations to the correct zone!</p>
+                    <p class="id-text">Lihat 'Skala Kemungkinan'. Skalanya dari 0 (Mustahil) hingga 1 (Pasti). Seret situasi ke zona yang benar!</p>
 
-                    <!-- Probability Scale Visual -->
-                    <div style="position: relative; height: 120px; background: white; border: inset 2px #808080; margin-bottom: 20px; display: flex; justify-content: space-between; padding: 0 20px;">
-                        <div style="position: absolute; bottom: 10px; left: 20px; font-weight: bold; color: red;">0<br>Impossible<br><small>Mustahil</small></div>
-                        <div style="position: absolute; bottom: 10px; left: 48%; font-weight: bold; color: orange;">0.5<br>Even Chance<br><small>Kemungkinan Sama</small></div>
-                        <div style="position: absolute; bottom: 10px; right: 20px; font-weight: bold; color: green;">1<br>Certain<br><small>Pasti</small></div>
-                        
-                        <!-- Drop Zones on Scale -->
-                        <div id="drop-impossible" style="position: absolute; top: 10px; left: 10px; width: 25%; height: 60px; border: 2px dashed red; background: rgba(255,0,0,0.1);"></div>
-                        <div id="drop-unlikely" style="position: absolute; top: 10px; left: 37%; width: 15%; height: 60px; border: 2px dashed #FF8C00; background: rgba(255,140,0,0.1);"></div>
-                        <div id="drop-even" style="position: absolute; top: 10px; left: 43%; width: 15%; height: 60px; border: 2px dashed orange; background: rgba(255,165,0,0.1);"></div>
-                        <div id="drop-likely" style="position: absolute; top: 10px; left: 59%; width: 15%; height: 60px; border: 2px dashed #32CD32; background: rgba(50,205,50,0.1);"></div>
-                        <div id="drop-certain" style="position: absolute; top: 10px; right: 10px; width: 25%; height: 60px; border: 2px dashed green; background: rgba(0,128,0,0.1);"></div>
+                    <!-- FLEXBOX SCALE FIX -->
+                    <div class="scale-container">
+                        <div class="scale-zone" id="drop-impossible">
+                            <strong style="color:red;">0<br>Impossible<br><small>Mustahil</small></strong>
+                        </div>
+                        <div class="scale-zone" id="drop-unlikely">
+                            <strong style="color:orange;">0.25<br>Unlikely<br><small>Kemungkinan Kecil</small></strong>
+                        </div>
+                        <div class="scale-zone" id="drop-even">
+                            <strong style="color:#DAA520;">0.5<br>Even Chance<br><small>Kemungkinan Sama</small></strong>
+                        </div>
+                        <div class="scale-zone" id="drop-likely">
+                            <strong style="color:#32CD32;">0.75<br>Likely<br><small>Kemungkinan Besar</small></strong>
+                        </div>
+                        <div class="scale-zone" id="drop-certain">
+                            <strong style="color:green;">1<br>Certain<br><small>Pasti</small></strong>
+                        </div>
                     </div>
 
-                    <p class="en-text">Drag the situations to where they belong on the scale:</p>
-                    <p class="id-text">Seret situasi-situasi ini ke tempatnya pada skala:</p>
+                    <div class="case-nav">
+                        <button class="case-btn active-case" onclick="switchCase(4, 1)">Case 1</button>
+                        <button class="case-btn" onclick="switchCase(4, 2)">Case 2</button>
+                        <button class="case-btn" onclick="switchCase(4, 3)">Case 3</button>
+                    </div>
 
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 15px;" id="scale-drag-container">
-                        <div class="xp-button draggable-scale" draggable="true" id="scale-event1" data-target="drop-certain" style="background: #ECE9D8; font-size: 0.9rem;">1. Sun will rise</div>
-                        <div class="xp-button draggable-scale" draggable="true" id="scale-event2" data-target="drop-impossible" style="background: #ECE9D8; font-size: 0.9rem;">2. Grow wings</div>
-                        <div class="xp-button draggable-scale" draggable="true" id="scale-event3" data-target="drop-impossible" style="background: #ECE9D8; font-size: 0.9rem;">3. Roll a 7 on 6-die</div>
-                        <div class="xp-button draggable-scale" draggable="true" id="scale-event4" data-target="drop-likely" style="background: #ECE9D8; font-size: 0.9rem;">4. Pick red (5R, 1B)</div>
-                        <div class="xp-button draggable-scale" draggable="true" id="scale-event5" data-target="drop-even" style="background: #ECE9D8; font-size: 0.9rem;">5. Coin lands Heads</div>
+                    <!-- Case 1 -->
+                    <div id="sec4-case-1" class="case-content active-case-content">
+                        <p><strong>Situations Case 1:</strong></p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 15px;" id="scale-drag-container-1">
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c1-e1" data-target="drop-certain">1. Sun will rise</div>
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c1-e2" data-target="drop-impossible">2. Grow wings</div>
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c1-e3" data-target="drop-impossible">3. Roll a 7 on 6-die</div>
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c1-e4" data-target="drop-likely">4. Pick red (5R, 1B)</div>
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c1-e5" data-target="drop-even">5. Coin lands Heads</div>
+                        </div>
+                    </div>
+
+                    <!-- Case 2 -->
+                    <div id="sec4-case-2" class="case-content">
+                        <p><strong>Situations Case 2:</strong></p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 15px;" id="scale-drag-container-2">
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c2-e1" data-target="drop-certain">1. Day follows night</div>
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c2-e2" data-target="drop-impossible">2. Fly like Superman</div>
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c2-e3" data-target="drop-unlikely">3. Pick King from cards</div>
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c2-e4" data-target="drop-likely">4. Rain in monsoon</div>
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c2-e5" data-target="drop-even">5. Roll even on die</div>
+                        </div>
+                    </div>
+
+                    <!-- Case 3 -->
+                    <div id="sec4-case-3" class="case-content">
+                        <p><strong>Situations Case 3:</strong></p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 15px;" id="scale-drag-container-3">
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c3-e1" data-target="drop-certain">1. Gravity works</div>
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c3-e2" data-target="drop-impossible">2. Meet a unicorn</div>
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c3-e3" data-target="drop-unlikely">3. Win the lottery</div>
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c3-e4" data-target="drop-likely">4. Bus arrives on time</div>
+                            <div class="xp-button draggable-scale" draggable="true" id="s4c3-e5" data-target="drop-even">5. Guess coin flip right</div>
+                        </div>
                     </div>
 
                     <div style="margin-top: 10px; display: flex; gap: 10px;">
                         <button class="xp-button xp-button-primary" onclick="checkSection4()">Check Scale</button>
-                        <button class="xp-button" onclick="resetSection4()">Reset</button>
+                        <button class="xp-button" onclick="resetSection4()">Reset All Cases</button>
                     </div>
                     <div id="section4-feedback" style="margin-top: 10px;"></div>
                 </div>
             </div>
 
-            <!-- SECTION 5: Guided Practice (00:35 - 00:50) -->
+            <!-- SECTION 5: Guided Practice (00:35 - 00:50) - 3 CASES -->
             <div class="xp-window" id="section5">
                 <div class="xp-title-bar">
-                    <span>🪙 Section 5: Guided Practice - Coin Flip <span class="timer-badge">00:35 - 00:50</span></span>
-                    <div class="xp-buttons">
-                        <div class="xp-btn xp-btn-minimize">_</div>
-                        <div class="xp-btn xp-btn-maximize">□</div>
-                        <div class="xp-btn xp-btn-close">X</div>
-                    </div>
+                    <span>🎲 Section 5: Guided Practice - Experiments <span class="timer-badge">00:35 - 00:50</span></span>
+                    <div class="xp-buttons"><div class="xp-btn xp-btn-minimize">_</div><div class="xp-btn xp-btn-maximize">□</div><div class="xp-btn xp-btn-close">X</div></div>
                 </div>
                 <div class="xp-body">
-                    <p class="en-text">Let's test our predictions! We predict that since it’s an 'Even Chance', we should get heads about half the time. More trials mean more accuracy!</p>
-                    <p class="id-text">Mari kita uji prediksi kita! Kita memprediksi bahwa karena 'Kemungkinan Sama', kita seharusnya mendapatkan gambar sekitar setengah dari waktu. Semakin banyak percobaan, semakin akurat!</p>
+                    <p class="en-text">Let's test our predictions! We predict the theory, then run the experiment. More trials mean more accuracy!</p>
+                    <p class="id-text">Mari kita uji prediksi kita! Kita memprediksi teorinya, lalu menjalankan eksperimen. Semakin banyak percobaan, semakin akurat!</p>
 
-                    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                        <!-- Manual Flip Area -->
-                        <div style="flex: 1; min-width: 200px; background: white; padding: 10px; border: inset 2px #808080; text-align: center;">
-                            <h4>Manual Flip (10x) <br><small>Lempar Manual (10x)</small></h4>
+                    <div class="case-nav">
+                        <button class="case-btn active-case" onclick="switchCase(5, 1)">Case 1: Coin</button>
+                        <button class="case-btn active-case" onclick="switchCase(5, 2)">Case 2: Even Die</button>
+                        <button class="case-btn active-case" onclick="switchCase(5, 3)">Case 3: Die > 4</button>
+                    </div>
+
+                    <!-- Case 1: Coin -->
+                    <div id="sec5-case-1" class="case-content active-case-content">
+                        <p><strong>Theory:</strong> Even Chance (50% Heads). <br><small><strong>Teori:</strong> Kemungkinan Sama (50% Gambar).</small></p>
+                        <div style="background: white; padding: 10px; border: inset 2px #808080; text-align: center;">
                             <div id="coin-display" style="width: 80px; height: 80px; background: gold; border-radius: 50%; margin: 10px auto; display: flex; justify-content: center; align-items: center; font-weight: bold; border: 4px solid #DAA520;">H / T</div>
-                            <button class="xp-button xp-button-success" onclick="flipCoin()">Flip Once!</button>
-                            <p>Flips: <span id="manual-flips">0</span>/10</p>
-                            <div style="text-align: left; margin-top: 10px;">
-                                <p>Heads (H): <span id="manual-heads">0</span></p>
-                                <p>Tails (T): <span id="manual-tails">0</span></p>
-                            </div>
+                            <button class="xp-button xp-button-success" onclick="flipCoin()">Flip 10 Times!</button>
+                            <p>Flips: <span id="manual-flips">0</span>/10 | Heads: <span id="manual-heads">0</span> | Tails: <span id="manual-tails">0</span></p>
+                            <button class="xp-button xp-button-primary" style="font-size:10px;" onclick="simulate(1000, 'coin')">Simulate 1000</button>
+                            <span id="sim-result-coin" style="font-weight:bold; margin-left:10px;"></span>
                         </div>
+                    </div>
 
-                        <!-- Simulator Area -->
-                        <div style="flex: 1; min-width: 200px; background: white; padding: 10px; border: inset 2px #808080; text-align: center;">
-                            <h4>Fast Simulator <br><small>Simulator Cepat</small></h4>
-                            <button class="xp-button xp-button-primary" onclick="simulate1000()">Simulate 1,000 Flips!</button>
-                            <div style="text-align: left; margin-top: 15px;">
-                                <p>Total Heads: <span id="sim-heads">0</span> (<span id="sim-heads-pct">0</span>%)</p>
-                                <p>Total Tails: <span id="sim-tails">0</span> (<span id="sim-tails-pct">0</span>%)</p>
-                            </div>
-                            <div style="height: 20px; background: #eee; border: 1px solid #808080; margin-top: 10px; display: flex;">
-                                <div id="sim-bar-h" style="background: gold; height: 100%; width: 50%;"></div>
-                                <div id="sim-bar-t" style="background: silver; height: 100%; width: 50%;"></div>
-                            </div>
+                    <!-- Case 2: Even Die -->
+                    <div id="sec5-case-2" class="case-content">
+                        <p><strong>Theory:</strong> Even Chance (50% Even numbers: 2,4,6). <br><small><strong>Teori:</strong> Kemungkinan Sama (50% Angka genap: 2,4,6).</small></p>
+                        <div style="background: white; padding: 10px; border: inset 2px #808080; text-align: center;">
+                            <div id="die-display-even" style="width: 80px; height: 80px; background: white; border-radius: 10px; margin: 10px auto; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size:2rem; border: 2px solid black;">?</div>
+                            <button class="xp-button xp-button-success" onclick="rollDieEven()">Roll 10 Times!</button>
+                            <p>Rolls: <span id="die-even-rolls">0</span>/10 | Even: <span id="die-even-count">0</span> | Odd: <span id="die-odd-count">0</span></p>
+                            <button class="xp-button xp-button-primary" style="font-size:10px;" onclick="simulate(1000, 'even')">Simulate 1000</button>
+                            <span id="sim-result-even" style="font-weight:bold; margin-left:10px;"></span>
+                        </div>
+                    </div>
+
+                    <!-- Case 3: Die > 4 -->
+                    <div id="sec5-case-3" class="case-content">
+                        <p><strong>Theory:</strong> Unlikely (33% chance for 5 or 6). <br><small><strong>Teori:</strong> Kemungkinan Kecil (33% peluang untuk 5 atau 6).</small></p>
+                        <div style="background: white; padding: 10px; border: inset 2px #808080; text-align: center;">
+                            <div id="die-display-high" style="width: 80px; height: 80px; background: white; border-radius: 10px; margin: 10px auto; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size:2rem; border: 2px solid black;">?</div>
+                            <button class="xp-button xp-button-success" onclick="rollDieHigh()">Roll 10 Times!</button>
+                            <p>Rolls: <span id="die-high-rolls">0</span>/10 | >4 (Win): <span id="die-high-count">0</span> | ≤4 (Lose): <span id="die-low-count">0</span></p>
+                            <button class="xp-button xp-button-primary" style="font-size:10px;" onclick="simulate(1000, 'high')">Simulate 1000</button>
+                            <span id="sim-result-high" style="font-weight:bold; margin-left:10px;"></span>
                         </div>
                     </div>
 
                     <div class="question-box" style="margin-top: 15px;">
-                        <p class="en-text">Observation: Did the 10 manual flips get exactly 5 Heads? What about the 1,000 simulation?</p>
-                        <p class="id-text">Observasi: Apakah 10 lemparan manual mendapat tepat 5 Gambar? Bagaimana dengan 1.000 simulasi?</p>
+                        <p class="en-text">Observation: Did the 10 trials match the theory? What did the 1000 simulation prove?</p>
+                        <p class="id-text">Observasi: Apakah 10 percobaan cocok dengan teori? Apa yang dibuktikan oleh 1000 simulasi?</p>
                         <textarea class="xp-input" id="sec5-obs" style="width: 100%; height: 60px;" placeholder="Type your observation..."></textarea>
                     </div>
 
@@ -544,54 +591,52 @@
                 </div>
             </div>
 
-            <!-- SECTION 6: Independent Practice (00:50 - 01:05) -->
+            <!-- SECTION 6: Independent Practice (00:50 - 01:05) - 3 CASES -->
             <div class="xp-window" id="section6">
                 <div class="xp-title-bar">
                     <span>🔮 Section 6: Independent Practice - Marbles <span class="timer-badge">00:50 - 01:05</span></span>
-                    <div class="xp-buttons">
-                        <div class="xp-btn xp-btn-minimize">_</div>
-                        <div class="xp-btn xp-btn-maximize">□</div>
-                        <div class="xp-btn xp-btn-close">X</div>
-                    </div>
+                    <div class="xp-buttons"><div class="xp-btn xp-btn-minimize">_</div><div class="xp-btn xp-btn-maximize">□</div><div class="xp-btn xp-btn-close">X</div></div>
                 </div>
                 <div class="xp-body">
-                    <p class="en-text">Inside a virtual bag, there are 8 Green Marbles and 2 Yellow Marbles.</p>
-                    <p class="id-text">Di dalam kantong virtual, ada 8 Kelereng Hijau dan 2 Kelereng Kuning.</p>
-
-                    <!-- Marble Visual -->
-                    <div style="display: flex; gap: 5px; margin-bottom: 15px;">
-                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
-                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
-                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
-                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
-                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
-                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
-                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
-                        <div style="width:20px; height:20px; background:green; border-radius:50%; border:1px solid #003300;"></div>
-                        <div style="width:20px; height:20px; background:yellow; border-radius:50%; border:1px solid #8B8B00;"></div>
-                        <div style="width:20px; height:20px; background:yellow; border-radius:50%; border:1px solid #8B8B00;"></div>
+                    <div class="case-nav">
+                        <button class="case-btn active-case" onclick="switchCase(6, 1)">Case 1: 8G, 2Y</button>
+                        <button class="case-btn" onclick="switchCase(6, 2)">Case 2: 5R, 5B</button>
+                        <button class="case-btn" onclick="switchCase(6, 3)">Case 3: 1Bk, 9W</button>
                     </div>
 
-                    <div class="question-box">
-                        <p><strong>Q1:</strong> <span class="en-text">Is it Likely, Unlikely, or Impossible to pick a Yellow marble?</span><br><small class="id-text">Apakah Kemungkinan Besar, Kemungkinan Kecil, atau Mustahil untuk mengambil kelereng Kuning?</small></p>
-                        <select class="xp-input" id="marble-q1">
-                            <option value="">-- Select --</option>
-                            <option value="likely">Likely / Kemungkinan Besar</option>
-                            <option value="unlikely">Unlikely / Kemungkinan Kecil</option>
-                            <option value="impossible">Impossible / Mustahil</option>
-                        </select>
+                    <!-- Case 1: Unlikely -->
+                    <div id="sec6-case-1" class="case-content active-case-content">
+                        <p class="en-text">Bag contains 8 Green Marbles and 2 Yellow Marbles.</p>
+                        <p class="id-text">Kantong berisi 8 Kelereng Hijau dan 2 Kelereng Kuning.</p>
+                        <div style="display: flex; gap: 5px; margin-bottom: 15px;" id="marble-vis-1">
+                            <!-- 8 Green, 2 Yellow generated by JS on load -->
+                        </div>
+                        <p><strong>Q1:</strong> <span class="en-text">Is picking Yellow Likely, Unlikely, or Impossible?</span><br><small class="id-text">Apakah mengambil Kuning Kemungkinan Besar, Kecil, atau Mustahil?</small></p>
+                        <input type="text" class="xp-input" id="m1-q1" style="width:100%; margin-bottom:10px;" placeholder="Type answer...">
+                        <button class="xp-button xp-button-success" onclick="pickMarble(1)">Pick 20 Times!</button>
+                        <p>Picks: <span id="m1-picks">0</span>/20 | Green: <span id="m1-green">0</span> | Yellow: <span id="m1-yellow">0</span></p>
                     </div>
 
-                    <div class="question-box">
-                        <p><strong>Action:</strong> <span class="en-text">Simulate 20 picks. Click the button to draw!</span><br><small class="id-text">Simulasi 20 pengambilan. Klik tombol untuk mengambil!</small></p>
-                        <button class="xp-button xp-button-success" onclick="pickMarble()">Pick a Marble!</button>
-                        <p>Picks: <span id="marble-picks">0</span>/20</p>
-                        <p>Green: <span id="marble-green">0</span> | Yellow: <span id="marble-yellow">0</span></p>
+                    <!-- Case 2: Even Chance -->
+                    <div id="sec6-case-2" class="case-content">
+                        <p class="en-text">Bag contains 5 Red Marbles and 5 Blue Marbles.</p>
+                        <p class="id-text">Kantong berisi 5 Kelereng Merah dan 5 Kelereng Biru.</p>
+                        <div style="display: flex; gap: 5px; margin-bottom: 15px;" id="marble-vis-2"></div>
+                        <p><strong>Q1:</strong> <span class="en-text">Is picking Blue Likely, Unlikely, or Even Chance?</span><br><small class="id-text">Apakah mengambil Biru Kemungkinan Besar, Kecil, atau Sama?</small></p>
+                        <input type="text" class="xp-input" id="m2-q1" style="width:100%; margin-bottom:10px;" placeholder="Type answer...">
+                        <button class="xp-button xp-button-success" onclick="pickMarble(2)">Pick 20 Times!</button>
+                        <p>Picks: <span id="m2-picks">0</span>/20 | Red: <span id="m2-red">0</span> | Blue: <span id="m2-blue">0</span></p>
                     </div>
 
-                    <div class="question-box">
-                        <p><strong>Q2:</strong> <span class="en-text">If you added 10 more Yellow marbles, how would the probability of picking Yellow change?</span><br><small class="id-text">Jika kamu menambahkan 10 kelereng Kuning lagi, bagaimana peluang mengambil Kuning berubah?</small></p>
-                        <input type="text" class="xp-input" id="marble-q2" style="width: 100%;" placeholder="e.g., It becomes Likely / Menjadi Kemungkinan Besar">
+                    <!-- Case 3: Likely -->
+                    <div id="sec6-case-3" class="case-content">
+                        <p class="en-text">Bag contains 1 Black Marble and 9 White Marbles.</p>
+                        <p class="id-text">Kantong berisi 1 Kelereng Hitam dan 9 Kelereng Putih.</p>
+                        <div style="display: flex; gap: 5px; margin-bottom: 15px;" id="marble-vis-3"></div>
+                        <p><strong>Q1:</strong> <span class="en-text">Is picking White Likely, Unlikely, or Impossible?</span><br><small class="id-text">Apakah mengambil Putih Kemungkinan Besar, Kecil, atau Mustahil?</small></p>
+                        <input type="text" class="xp-input" id="m3-q1" style="width:100%; margin-bottom:10px;" placeholder="Type answer...">
+                        <button class="xp-button xp-button-success" onclick="pickMarble(3)">Pick 20 Times!</button>
+                        <p>Picks: <span id="m3-picks">0</span>/20 | Black: <span id="m3-black">0</span> | White: <span id="m3-white">0</span></p>
                     </div>
 
                     <div style="margin-top: 10px; display: flex; gap: 10px;">
@@ -602,27 +647,45 @@
                 </div>
             </div>
 
-            <!-- SECTION 7: Consolidation & Reflection (01:05 - 01:10) -->
+            <!-- SECTION 7: Consolidation & Reflection (01:05 - 01:10) - 3 CASES -->
             <div class="xp-window" id="section7">
                 <div class="xp-title-bar">
                     <span>🏁 Section 7: Consolidation & Reflection <span class="timer-badge">01:05 - 01:10</span></span>
-                    <div class="xp-buttons">
-                        <div class="xp-btn xp-btn-minimize">_</div>
-                        <div class="xp-btn xp-btn-maximize">□</div>
-                        <div class="xp-btn xp-btn-close">X</div>
-                    </div>
+                    <div class="xp-buttons"><div class="xp-btn xp-btn-minimize">_</div><div class="xp-btn xp-btn-maximize">□</div><div class="xp-btn xp-btn-close">X</div></div>
                 </div>
                 <div class="xp-body">
-                    <p class="en-text">What a hunt today! You've learned that math can predict the likelihood of the future. We learned about the scale from 0 to 1 and how experiments help us prove our theories.</p>
-                    <p class="id-text">Perburuan yang hebat hari ini! Kamu telah belajar bahwa matematika bisa memprediksi kemungkinan di masa depan. Kita belajar tentang skala dari 0 hingga 1 dan bagaimana eksperimen membantu membuktikan teori kita.</p>
+                    <p class="en-text">What a hunt today! Let's reflect on what we learned about the probability scale and experiments.</p>
+                    <p class="id-text">Perburuan yang hebat hari ini! Mari kita refleksikan apa yang kita pelajari tentang skala peluang dan eksperimen.</p>
 
-                    <div class="question-box">
-                        <p class="en-text">Reflection: Name one thing that is 'Certain' to happen tomorrow.</p>
-                        <p class="id-text">Refleksi: Sebutkan satu hal yang 'Pasti' akan terjadi besok.</p>
-                        <input type="text" class="xp-input" id="reflection-answer" style="width: 100%;" placeholder="Type your reflection...">
+                    <div class="case-nav">
+                        <button class="case-btn active-case" onclick="switchCase(7, 1)">Reflect 1</button>
+                        <button class="case-btn" onclick="switchCase(7, 2)">Reflect 2</button>
+                        <button class="case-btn" onclick="switchCase(7, 3)">Reflect 3</button>
                     </div>
 
-                    <div style="background-color: #C1DFFB; border: 2px solid #0054E3; padding: 10px; margin-top: 10px;">
+                    <div id="sec7-case-1" class="case-content active-case-content">
+                        <div class="question-box">
+                            <p class="en-text">Name one thing that is 'Certain' to happen tomorrow.</p>
+                            <p class="id-text">Sebutkan satu hal yang 'Pasti' akan terjadi besok.</p>
+                            <input type="text" class="xp-input" id="r1-answer" style="width: 100%;" placeholder="Type your reflection...">
+                        </div>
+                    </div>
+                    <div id="sec7-case-2" class="case-content">
+                        <div class="question-box">
+                            <p class="en-text">Name one thing that is 'Impossible' to happen tomorrow.</p>
+                            <p class="id-text">Sebutkan satu hal yang 'Mustahil' akan terjadi besok.</p>
+                            <input type="text" class="xp-input" id="r2-answer" style="width: 100%;" placeholder="Type your reflection...">
+                        </div>
+                    </div>
+                    <div id="sec7-case-3" class="case-content">
+                        <div class="question-box">
+                            <p class="en-text">Explain why a 1000-trial experiment is better than a 10-trial experiment.</p>
+                            <p class="id-text">Jelaskan mengapa eksperimen 1000 kali lebih baik daripada 10 kali.</p>
+                            <input type="text" class="xp-input" id="r3-answer" style="width: 100%;" placeholder="Type your reflection...">
+                        </div>
+                    </div>
+
+                    <div style="background-color: #C1DFFB; border: 2px solid #0054E3; padding: 10px; margin-top: 15px;">
                         <p style="margin:0; font-weight: bold;">📚 Homework / Pekerjaan Rumah:</p>
                         <p class="en-text" style="margin:0;">Don't forget to join <a href="https://learn.algonova.id/login" target="_blank" style="color: blue;">learn.algonova.id/login</a> to complete your tasks!</p>
                         <p class="id-text" style="margin:0;">Jangan lupa bergabung dengan learn.algonova.id/login untuk menyelesaikan tugasmu!</p>
@@ -985,7 +1048,6 @@
         }
         
         window.addEventListener('resize', resizeCanvas);
-        // Initial resize after DOM loaded properly
         setTimeout(resizeCanvas, 100);
 
         canvas.addEventListener('mousedown', (e) => {
@@ -1008,18 +1070,19 @@
         canvas.addEventListener('mouseup', () => drawing = false);
         canvas.addEventListener('mouseleave', () => drawing = false);
 
-        function setColor(color) {
-            currentColor = color;
-            isEraser = false;
-        }
+        function setColor(color) { currentColor = color; isEraser = false; }
+        function setEraser() { isEraser = true; }
+        function eraseAll() { ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, canvas.width, canvas.height); }
 
-        function setEraser() {
-            isEraser = true;
-        }
 
-        function eraseAll() {
-            ctx.fillStyle = '#FFFFFF';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // --- GLOBAL CASE SWITCHING LOGIC ---
+        function switchCase(secNum, caseNum) {
+            const cases = document.querySelectorAll(`#section${secNum} .case-content`);
+            cases.forEach(c => c.classList.remove('active-case-content'));
+            document.getElementById(`sec${secNum}-case-${caseNum}`).classList.add('active-case-content');
+            const btns = document.querySelectorAll(`#section${secNum} .case-btn`);
+            btns.forEach(b => b.classList.remove('active-case'));
+            event.currentTarget.classList.add('active-case');
         }
 
 
@@ -1033,16 +1096,16 @@
             let score = 0;
 
             if (a1 === "4205") { feedback += "<p class='feedback-correct'>Q1 Correct!</p>"; score++; }
-            else feedback += "<p class='feedback-wrong'>Q1 Incorrect. Solution: 4 thousands (4000) + 2 hundreds (200) + 5 units (5) = 4205.</p>";
+            else feedback += "<p class='feedback-wrong'>Q1 Incorrect. Solution: 4205.</p>";
 
             if (a2 === "3") { feedback += "<p class='feedback-correct'>Q2 Correct!</p>"; score++; }
-            else feedback += "<p class='feedback-wrong'>Q2 Incorrect. Solution: In 7,038, the tens digit is 3.</p>";
+            else feedback += "<p class='feedback-wrong'>Q2 Incorrect. Solution: 3.</p>";
 
             if (a3 === "9520") { feedback += "<p class='feedback-correct'>Q3 Correct!</p>"; score++; }
-            else feedback += "<p class='feedback-wrong'>Q3 Incorrect. Solution: Arrange descending, but 0 can't be first. 9520.</p>";
+            else feedback += "<p class='feedback-wrong'>Q3 Incorrect. Solution: 9520.</p>";
 
             if (a4 === "6421") { feedback += "<p class='feedback-correct'>Q4 Correct!</p>"; score++; }
-            else feedback += "<p class='feedback-wrong'>Q4 Incorrect. Solution: 5,421 + 1,000 = 6,421.</p>";
+            else feedback += "<p class='feedback-wrong'>Q4 Incorrect. Solution: 6421.</p>";
 
             feedback += `<p><strong>Score: ${score}/4</strong></p>`;
             document.getElementById('section1-feedback').innerHTML = feedback;
@@ -1056,82 +1119,82 @@
             document.getElementById('section1-feedback').innerHTML = '';
         }
 
-        // --- SECTION 2 LOGIC ---
-        function checkSection2() {
-            const a5 = document.getElementById('q5-answer').value.trim().toLowerCase();
-            if(a5.length > 3) { // Simple validation if they type something meaningful
-                document.getElementById('section2-feedback').innerHTML = "<p class='feedback-correct'>Great example! Probability is everywhere.</p>";
-            } else {
-                document.getElementById('section2-feedback').innerHTML = "<p class='feedback-wrong'>Try typing a short example, like 'coin flip' or 'weather'.</p>";
-            }
-        }
 
+        // --- SECTION 2 LOGIC (3 CASES) ---
+        function checkSection2() {
+            let feedback = "";
+            const a1 = document.getElementById('s2c1-q1').value.trim().toLowerCase();
+            const a2 = document.getElementById('s2c2-q1').value.trim().toLowerCase();
+            const a3 = document.getElementById('s2c3-q1').value.trim().toLowerCase();
+
+            if(a1.includes("even") || a1.includes("sama")) feedback += "<p class='feedback-correct'>Case 1 Correct! 50% is Even Chance.</p>";
+            else feedback += "<p class='feedback-wrong'>Case 1 Incorrect. 50% is Even Chance.</p>";
+
+            if(a2.includes("unlikely") || a2.includes("kecil")) feedback += "<p class='feedback-correct'>Case 2 Correct! 1/6 is Unlikely.</p>";
+            else feedback += "<p class='feedback-wrong'>Case 2 Incorrect. 1/6 is Unlikely.</p>";
+
+            if(a3.includes("unlikely") || a3.includes("kecil")) feedback += "<p class='feedback-correct'>Case 3 Correct! 1/20 is Unlikely.</p>";
+            else feedback += "<p class='feedback-wrong'>Case 3 Incorrect. 1/20 is Unlikely.</p>";
+
+            document.getElementById('section2-feedback').innerHTML = feedback;
+        }
         function resetSection2() {
-            document.getElementById('q5-answer').value = '';
+            document.getElementById('s2c1-q1').value = '';
+            document.getElementById('s2c2-q1').value = '';
+            document.getElementById('s2c3-q1').value = '';
             document.getElementById('section2-feedback').innerHTML = '';
         }
 
-        // --- SECTION 3 DRAG & DROP LOGIC ---
-        let draggedItem = null;
 
+        // --- SECTION 3 LOGIC (3 CASES DRAG & DROP) ---
+        let sec3DraggedItem = null;
         document.querySelectorAll('.draggable-event').forEach(item => {
             item.addEventListener('dragstart', (e) => {
-                draggedItem = e.target;
+                sec3DraggedItem = e.target;
                 e.dataTransfer.setData('text/plain', e.target.id);
                 setTimeout(() => e.target.style.display = 'none', 0);
             });
         });
-
-        const dropZones = document.querySelectorAll('#possible-box, #impossible-box');
-        dropZones.forEach(zone => {
+        const dropZones3 = document.querySelectorAll('#possible-box, #impossible-box');
+        dropZones3.forEach(zone => {
             zone.addEventListener('dragover', (e) => e.preventDefault());
             zone.addEventListener('drop', (e) => {
                 e.preventDefault();
-                if (draggedItem) {
-                    draggedItem.style.display = 'block';
-                    e.target.appendChild(draggedItem);
+                if (sec3DraggedItem) {
+                    sec3DraggedItem.style.display = 'block';
+                    e.currentTarget.appendChild(sec3DraggedItem);
                 }
             });
         });
 
         function checkSection3() {
-            let correct = 0;
-            const totalItems = 4;
-            let feedback = "";
-
-            const possibleBox = document.getElementById('possible-box');
-            const impossibleBox = document.getElementById('impossible-box');
-
-            // Check Possible Box
-            possibleBox.querySelectorAll('.draggable-event').forEach(item => {
-                if(item.getAttribute('data-category') === 'possible') correct++;
-                else feedback += `<p class='feedback-wrong'>${item.innerText} is NOT Possible.</p>`;
-            });
-
-            // Check Impossible Box
-            impossibleBox.querySelectorAll('.draggable-event').forEach(item => {
-                if(item.getAttribute('data-category') === 'impossible') correct++;
-                else feedback += `<p class='feedback-wrong'>${item.innerText} IS Possible.</p>`;
-            });
-
-            if(correct === totalItems) feedback = "<p class='feedback-correct'>Perfect! You sorted them all correctly!</p>";
-            else feedback += `<p>You got ${correct}/${totalItems} correct.</p>`;
-
+            let correct = 0; let feedback = "";
+            const boxes = { 'possible-box': 'possible', 'impossible-box': 'impossible' };
+            for (const [boxId, cat] of Object.entries(boxes)) {
+                document.getElementById(boxId).querySelectorAll('.draggable-event').forEach(item => {
+                    if(item.getAttribute('data-category') === cat) correct++;
+                    else feedback += `<p class='feedback-wrong'>${item.innerText} is NOT ${cat}.</p>`;
+                });
+            }
+            if(correct === 12) feedback = "<p class='feedback-correct'>Perfect! All cases sorted correctly!</p>";
+            else feedback += `<p>You got ${correct}/12 correct.</p>`;
             document.getElementById('section3-feedback').innerHTML = feedback;
         }
 
         function resetSection3() {
-            const container = document.getElementById('drag-container');
-            const items = document.querySelectorAll('.draggable-event');
-            items.forEach(item => {
-                item.style.display = 'block';
-                container.appendChild(item);
-            });
+            for(let i=1; i<=3; i++) {
+                const container = document.getElementById(`drag-container-3-${i}`);
+                container.querySelectorAll('.draggable-event').forEach(item => {
+                    item.style.display = 'inline-block';
+                    container.appendChild(item);
+                });
+            }
             document.getElementById('section3-feedback').innerHTML = '';
         }
-        // --- SECTION 4: SCALE DRAG & DROP LOGIC ---
-        let scaleDraggedItem = null;
 
+
+        // --- SECTION 4 LOGIC (3 CASES FLEXBOX SCALE) ---
+        let scaleDraggedItem = null;
         document.querySelectorAll('.draggable-scale').forEach(item => {
             item.addEventListener('dragstart', (e) => {
                 scaleDraggedItem = e.target;
@@ -1139,202 +1202,212 @@
                 setTimeout(() => e.target.style.display = 'none', 0);
             });
         });
-
-        const scaleDropZones = document.querySelectorAll('#drop-impossible, #drop-unlikely, #drop-even, #drop-likely, #drop-certain');
+        const scaleDropZones = document.querySelectorAll('.scale-zone');
         scaleDropZones.forEach(zone => {
             zone.addEventListener('dragover', (e) => e.preventDefault());
             zone.addEventListener('drop', (e) => {
                 e.preventDefault();
+                const targetZone = e.currentTarget; 
                 if (scaleDraggedItem) {
                     scaleDraggedItem.style.display = 'inline-block';
                     scaleDraggedItem.style.fontSize = '0.8rem';
                     scaleDraggedItem.style.margin = '2px';
-                    e.target.appendChild(scaleDraggedItem);
+                    targetZone.appendChild(scaleDraggedItem);
                 }
             });
         });
 
         function checkSection4() {
-            let correct = 0;
-            let feedback = "";
+            let correct = 0; let feedback = "";
             const items = document.querySelectorAll('.draggable-scale');
-            
             items.forEach(item => {
                 const parent = item.parentElement;
-                if(parent.classList.contains('xp-button')) { // Still in container
-                    feedback += `<p class='feedback-wrong'>${item.innerText} is not placed on the scale!</p>`;
+                const target = item.getAttribute('data-target');
+                if(parent.classList.contains('scale-zone')) {
+                    if(parent.id === target) correct++;
+                    else feedback += `<p class='feedback-wrong'>${item.innerText} is in the wrong zone.</p>`;
                 } else {
-                    const target = item.getAttribute('data-target');
-                    if(parent.id === target) {
-                        correct++;
-                    } else {
-                        feedback += `<p class='feedback-wrong'>${item.innerText} is in the wrong zone.</p>`;
-                    }
+                    feedback += `<p class='feedback-wrong'>${item.innerText} is not placed on the scale!</p>`;
                 }
             });
-
-            if(correct === 5) feedback = "<p class='feedback-correct'>Perfect! You understand the probability scale!</p>";
-            else feedback += `<p>You got ${correct}/5 correct.</p>`;
-            
+            if(correct === 15) feedback = "<p class='feedback-correct'>Perfect! All cases sorted correctly!</p>";
+            else feedback += `<p>You got ${correct}/15 correct across all cases.</p>`;
             document.getElementById('section4-feedback').innerHTML = feedback;
         }
 
         function resetSection4() {
-            const container = document.getElementById('scale-drag-container');
-            const items = document.querySelectorAll('.draggable-scale');
-            items.forEach(item => {
-                item.style.display = 'inline-block';
-                item.style.fontSize = '0.9rem';
-                item.style.margin = '';
-                container.appendChild(item);
-            });
+            for(let i=1; i<=3; i++) {
+                const container = document.getElementById(`scale-drag-container-${i}`);
+                container.querySelectorAll('.draggable-scale').forEach(item => {
+                    item.style.display = 'inline-block';
+                    item.style.fontSize = '0.9rem';
+                    item.style.margin = '';
+                    container.appendChild(item);
+                });
+            }
             document.getElementById('section4-feedback').innerHTML = '';
         }
 
 
-        // --- SECTION 5: COIN FLIP LOGIC ---
-        let manualHeads = 0;
-        let manualTails = 0;
-
+        // --- SECTION 5 LOGIC (3 EXPERIMENTS) ---
+        let coinH=0, coinT=0, dieEven=0, dieOdd=0, dieHigh=0, dieLow=0, dieEvenRolls=0, dieHighRolls=0;
+        
         function flipCoin() {
-            if (manualHeads + manualTails >= 10) {
-                alert("You've reached 10 flips! Check your results or reset."); return;
-            }
-            const result = Math.random() < 0.5 ? 'H' : 'T';
-            const coinDisplay = document.getElementById('coin-display');
-            coinDisplay.innerText = result;
-            
-            if(result === 'H') {
-                manualHeads++;
-                coinDisplay.style.background = 'gold';
-            } else {
-                manualTails++;
-                coinDisplay.style.background = 'silver';
-            }
-
-            document.getElementById('manual-flips').innerText = manualHeads + manualTails;
-            document.getElementById('manual-heads').innerText = manualHeads;
-            document.getElementById('manual-tails').innerText = manualTails;
+            if (coinH + coinT >= 10) return;
+            const r = Math.random() < 0.5 ? 'H' : 'T';
+            const d = document.getElementById('coin-display');
+            d.classList.remove('coin-spin'); void d.offsetWidth; d.classList.add('coin-spin');
+            setTimeout(() => {
+                d.innerText = r;
+                if(r==='H') { coinH++; d.style.background='gold'; } else { coinT++; d.style.background='silver'; }
+                document.getElementById('manual-flips').innerText = coinH+coinT;
+                document.getElementById('manual-heads').innerText = coinH;
+                document.getElementById('manual-tails').innerText = coinT;
+            }, 300);
         }
 
-        function simulate1000() {
-            let simH = 0;
-            let simT = 0;
-            for(let i=0; i<1000; i++) {
-                if(Math.random() < 0.5) simH++;
-                else simT++;
+        function rollDieEven() {
+            if (dieEvenRolls >= 10) return;
+            dieEvenRolls++;
+            const r = Math.floor(Math.random()*6)+1;
+            document.getElementById('die-display-even').innerText = r;
+            if(r%2===0) dieEven++; else dieOdd++;
+            document.getElementById('die-even-rolls').innerText = dieEvenRolls;
+            document.getElementById('die-even-count').innerText = dieEven;
+            document.getElementById('die-odd-count').innerText = dieOdd;
+        }
+
+        function rollDieHigh() {
+            if (dieHighRolls >= 10) return;
+            dieHighRolls++;
+            const r = Math.floor(Math.random()*6)+1;
+            document.getElementById('die-display-high').innerText = r;
+            if(r>4) dieHigh++; else dieLow++;
+            document.getElementById('die-high-rolls').innerText = dieHighRolls;
+            document.getElementById('die-high-count').innerText = dieHigh;
+            document.getElementById('die-low-count').innerText = dieLow;
+        }
+
+        function simulate(trials, type) {
+            let win = 0;
+            for(let i=0; i<trials; i++) {
+                if(type==='coin') { if(Math.random()<0.5) win++; }
+                else if(type==='even') { if(Math.floor(Math.random()*6)%2===0) win++; }
+                else if(type==='high') { if(Math.floor(Math.random()*6)>4) win++; }
             }
-            document.getElementById('sim-heads').innerText = simH;
-            document.getElementById('sim-tails').innerText = simT;
-            document.getElementById('sim-heads-pct').innerText = (simH/10).toFixed(1);
-            document.getElementById('sim-tails-pct').innerText = (simT/10).toFixed(1);
-            document.getElementById('sim-bar-h').style.width = (simH/10) + '%';
-            document.getElementById('sim-bar-t').style.width = (simT/10) + '%';
+            const pct = ((win/trials)*100).toFixed(1);
+            document.getElementById(`sim-result-${type}`).innerHTML = `Result: ${win}/${trials} (${pct}%)`;
         }
 
         function checkSection5() {
             const obs = document.getElementById('sec5-obs').value.trim().toLowerCase();
-            if(obs.length > 10) {
-                document.getElementById('section5-feedback').innerHTML = "<p class='feedback-correct'>Great observation! In small trials (10), results vary a lot. In large trials (1000), it gets very close to 50%.</p>";
-            } else {
-                document.getElementById('section5-feedback').innerHTML = "<p class='feedback-wrong'>Please write a slightly longer observation about the difference between 10 flips and 1000 flips.</p>";
-            }
+            if(obs.length > 10) document.getElementById('section5-feedback').innerHTML = "<p class='feedback-correct'>Great observation! Small trials vary, large trials match theory.</p>";
+            else document.getElementById('section5-feedback').innerHTML = "<p class='feedback-wrong'>Please write a slightly longer observation.</p>";
         }
 
         function resetSection5() {
-            manualHeads = 0; manualTails = 0;
-            document.getElementById('manual-flips').innerText = '0';
-            document.getElementById('manual-heads').innerText = '0';
-            document.getElementById('manual-tails').innerText = '0';
-            document.getElementById('coin-display').innerText = 'H / T';
-            document.getElementById('coin-display').style.background = 'gold';
-            document.getElementById('sim-heads').innerText = '0';
-            document.getElementById('sim-tails').innerText = '0';
-            document.getElementById('sim-heads-pct').innerText = '0';
-            document.getElementById('sim-tails-pct').innerText = '0';
-            document.getElementById('sim-bar-h').style.width = '50%';
-            document.getElementById('sim-bar-t').style.width = '50%';
-            document.getElementById('sec5-obs').value = '';
-            document.getElementById('section5-feedback').innerHTML = '';
+            coinH=0; coinT=0; dieEven=0; dieOdd=0; dieHigh=0; dieLow=0; dieEvenRolls=0; dieHighRolls=0;
+            document.getElementById('manual-flips').innerText='0'; document.getElementById('manual-heads').innerText='0'; document.getElementById('manual-tails').innerText='0';
+            document.getElementById('coin-display').innerText='H/T'; document.getElementById('coin-display').style.background='gold';
+            document.getElementById('die-even-rolls').innerText='0'; document.getElementById('die-even-count').innerText='0'; document.getElementById('die-odd-count').innerText='0';
+            document.getElementById('die-display-even').innerText='?';
+            document.getElementById('die-high-rolls').innerText='0'; document.getElementById('die-high-count').innerText='0'; document.getElementById('die-low-count').innerText='0';
+            document.getElementById('die-display-high').innerText='?';
+            document.getElementById('sim-result-coin').innerText=''; document.getElementById('sim-result-even').innerText=''; document.getElementById('sim-result-high').innerText='';
+            document.getElementById('sec5-obs').value='';
+            document.getElementById('section5-feedback').innerHTML='';
         }
 
 
-        // --- SECTION 6: MARBLE LOGIC ---
-        let marblePicks = 0;
-        let marbleGreenCount = 0;
-        let marbleYellowCount = 0;
-        const bag = ['G','G','G','G','G','G','G','G','Y','Y']; // 8 Green, 2 Yellow
+        // --- SECTION 6 LOGIC (3 MARBLE BAGS) ---
+        const bags = {
+            1: { colors: ['G','G','G','G','G','G','G','G','Y','Y'], target: 'Y', c1: 'Green', c2: 'Yellow' },
+            2: { colors: ['R','R','R','R','R','B','B','B','B','B'], target: 'B', c1: 'Red', c2: 'Blue' },
+            3: { colors: ['Bk','W','W','W','W','W','W','W','W','W'], target: 'W', c1: 'Black', c2: 'White' }
+        };
+        let marbleStats = { 1: {p:0, c1:0, c2:0}, 2: {p:0, c1:0, c2:0}, 3: {p:0, c1:0, c2:0} };
 
-        function pickMarble() {
-            if (marblePicks >= 20) {
-                alert("You've done 20 picks! Reset to try again."); return;
+        window.onload = function() {
+            resizeCanvas(); // Call canvas resize
+            // Generate Marble Visuals
+            for(let i=1; i<=3; i++) {
+                const vis = document.getElementById(`marble-vis-${i}`);
+                if(vis) {
+                    const colorMap = { G:'#008000', Y:'#FFFF00', R:'#FF0000', B:'#0000FF', Bk:'#000000', W:'#FFFFFF' };
+                    bags[i].colors.forEach(c => {
+                        const d = document.createElement('div');
+                        d.style.cssText = `width:20px; height:20px; background:${colorMap[c]}; border-radius:50%; border:1px solid #333;`;
+                        vis.appendChild(d);
+                    });
+                }
             }
-            const randomIndex = Math.floor(Math.random() * bag.length);
-            const picked = bag[randomIndex];
+        };
+
+        function pickMarble(bagId) {
+            if (marbleStats[bagId].p >= 20) return;
+            const bag = bags[bagId];
+            const r = bag.colors[Math.floor(Math.random()*bag.colors.length)];
+            if(r === bag.target) marbleStats[bagId].c2++;
+            else marbleStats[bagId].c1++;
+            marbleStats[bagId].p++;
             
-            if(picked === 'G') marbleGreenCount++;
-            else marbleYellowCount++;
-            
-            marblePicks++;
-            document.getElementById('marble-picks').innerText = marblePicks;
-            document.getElementById('marble-green').innerText = marbleGreenCount;
-            document.getElementById('marble-yellow').innerText = marbleYellowCount;
+            document.getElementById(`m${bagId}-picks`).innerText = marbleStats[bagId].p;
+            document.getElementById(`m${bagId}-${bag.c1.toLowerCase()}`).innerText = marbleStats[bagId].c1;
+            document.getElementById(`m${bagId}-${bag.c2.toLowerCase()}`).innerText = marbleStats[bagId].c2;
         }
 
         function checkSection6() {
-            let feedback = "";
-            const q1 = document.getElementById('marble-q1').value;
-            const q2 = document.getElementById('marble-q2').value.trim().toLowerCase();
+            let fb = "";
+            const a1 = document.getElementById('m1-q1').value.trim().toLowerCase();
+            const a2 = document.getElementById('m2-q1').value.trim().toLowerCase();
+            const a3 = document.getElementById('m3-q1').value.trim().toLowerCase();
 
-            if(q1 === 'unlikely') {
-                feedback += "<p class='feedback-correct'>Q1 Correct! 2 out of 10 is a small chance (Unlikely).</p>";
-            } else {
-                feedback += "<p class='feedback-wrong'>Q1 Incorrect. With only 2 Yellow out of 10, it is 'Unlikely'.</p>";
-            }
+            if(a1.includes('unlikely') || a1.includes('kecil')) fb += "<p class='feedback-correct'>Case 1 Correct!</p>";
+            else fb += "<p class='feedback-wrong'>Case 1 Incorrect. 2 out of 10 is Unlikely.</p>";
 
-            if(q2.includes('likely') || q2.includes('increase') || q2.includes('besar')) {
-                feedback += "<p class='feedback-correct'>Q2 Correct! Adding 10 Yellow makes 12 Yellow and 8 Green, so picking Yellow becomes 'Likely'.</p>";
-            } else {
-                feedback += "<p class='feedback-wrong'>Q2 Incorrect or incomplete. If you add 10 Yellow, there will be 12 Yellow and 8 Green. It becomes 'Likely'.</p>";
-            }
+            if(a2.includes('even') || a2.includes('sama')) fb += "<p class='feedback-correct'>Case 2 Correct!</p>";
+            else fb += "<p class='feedback-wrong'>Case 2 Incorrect. 5 out of 10 is Even Chance.</p>";
 
-            if(marblePicks < 20) {
-                feedback += "<p style='color: orange; font-weight: bold;'>Note: You haven't finished 20 picks yet!</p>";
-            }
+            if(a3.includes('likely') || a3.includes('besar')) fb += "<p class='feedback-correct'>Case 3 Correct!</p>";
+            else fb += "<p class='feedback-wrong'>Case 3 Incorrect. 9 out of 10 is Likely.</p>";
 
-            document.getElementById('section6-feedback').innerHTML = feedback;
+            document.getElementById('section6-feedback').innerHTML = fb;
         }
 
         function resetSection6() {
-            marblePicks = 0; marbleGreenCount = 0; marbleYellowCount = 0;
-            document.getElementById('marble-picks').innerText = '0';
-            document.getElementById('marble-green').innerText = '0';
-            document.getElementById('marble-yellow').innerText = '0';
-            document.getElementById('marble-q1').value = '';
-            document.getElementById('marble-q2').value = '';
-            document.getElementById('section6-feedback').innerHTML = '';
+            for(let i=1; i<=3; i++) {
+                marbleStats[i] = {p:0, c1:0, c2:0};
+                document.getElementById(`m${i}-picks`).innerText='0';
+                document.getElementById(`m${i}-${bags[i].c1.toLowerCase()}`).innerText='0';
+                document.getElementById(`m${i}-${bags[i].c2.toLowerCase()}`).innerText='0';
+                document.getElementById(`m${i}-q1`).value='';
+            }
+            document.getElementById('section6-feedback').innerHTML='';
         }
 
-        // --- SECTION 7: REFLECTION LOGIC ---
+
+        // --- SECTION 7 LOGIC (3 REFLECTIONS) ---
         function checkSection7() {
-            const ans = document.getElementById('reflection-answer').value.trim();
-            if(ans.length > 2) {
-                document.getElementById('section7-feedback').innerHTML = "<p class='feedback-correct'>Great reflection! Class dismissed. See you next time!</p>";
-            } else {
-                document.getElementById('section7-feedback').innerHTML = "<p class='feedback-wrong'>Please write at least one certain event.</p>";
-            }
+            const a1 = document.getElementById('r1-answer').value.trim();
+            const a2 = document.getElementById('r2-answer').value.trim();
+            const a3 = document.getElementById('r3-answer').value.trim();
+            let fb = "";
+            if(a1.length > 2) fb += "<p class='feedback-correct'>Reflect 1 Recorded!</p>";
+            if(a2.length > 2) fb += "<p class='feedback-correct'>Reflect 2 Recorded!</p>";
+            if(a3.length > 2) fb += "<p class='feedback-correct'>Reflect 3 Recorded!</p>";
+            if(fb === "") fb = "<p class='feedback-wrong'>Please answer the reflections.</p>";
+            else fb += "<p style='color:green; font-weight:bold;'>Great job today! Class dismissed!</p>";
+            document.getElementById('section7-feedback').innerHTML = fb;
         }
+
+
         // --- ASSESSMENT TAB LOGIC ---
         function openTab(evt, groupName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
+            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
             tablinks = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active-tab", "");
-            }
+            for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active-tab", ""); }
             document.getElementById(groupName).style.display = "block";
             evt.currentTarget.className += " active-tab";
         }
@@ -1345,7 +1418,6 @@
             const totalQ = 10;
             const inputs = document.querySelectorAll(`.g${groupNum}-input`);
             
-            // Reset feedback visuals
             inputs.forEach(input => {
                 input.style.backgroundColor = '';
                 const qBox = input.closest('.question-box');
@@ -1360,7 +1432,6 @@
                 let studentAnswer = "";
                 let correctAnswerStr = "";
 
-                // Handle Different Input Types
                 if (qInputs[0].type === 'text' || qInputs[0].tagName === 'SELECT') {
                     const val = qInputs[0].value.trim().toLowerCase();
                     const ans = qInputs[0].getAttribute('data-answer').toLowerCase();
@@ -1372,11 +1443,9 @@
                     let selected = null;
                     qInputs.forEach(radio => { if(radio.checked) selected = radio.value; });
                     studentAnswer = selected || "No answer";
-                    
-                    // Define correct answers for radios manually based on group/number
                     if(groupNum === 1 && i === 2) { correctAnswerStr = "C"; if(selected === "C") isCorrect = true; }
                     if(groupNum === 1 && i === 8) { correctAnswerStr = "D"; if(selected === "D") isCorrect = true; }
-                    if(groupNum === 2 && i === 2) { correctAnswerStr = "B"; if(selected === "B") isCorrect = true; } // Unlikely (4/12 = 1/3)
+                    if(groupNum === 2 && i === 2) { correctAnswerStr = "B"; if(selected === "B") isCorrect = true; }
                     if(groupNum === 2 && i === 8) { correctAnswerStr = "C"; if(selected === "C") isCorrect = true; }
                     if(groupNum === 3 && i === 3) { correctAnswerStr = "B"; if(selected === "B") isCorrect = true; }
                     if(groupNum === 3 && i === 8) { correctAnswerStr = "A"; if(selected === "A") isCorrect = true; }
@@ -1393,14 +1462,9 @@
                     });
                     studentAnswer = studentChecks.join(", ");
                     correctAnswerStr = correctChecks.join(", ");
-                    
-                    // Check if arrays match exactly (length and content)
-                    if(studentChecks.length === correctChecks.length && correctChecks.every(c => studentChecks.includes(c))) {
-                        isCorrect = true;
-                    }
+                    if(studentChecks.length === correctChecks.length && correctChecks.every(c => studentChecks.includes(c))) isCorrect = true;
                 }
 
-                // Provide Feedback
                 const fbDiv = qBox.querySelector('.q-feedback');
                 if (isCorrect) {
                     score++;
@@ -1411,7 +1475,6 @@
                     qInputs.forEach(inp => inp.style.backgroundColor = '#f8d7da');
                 }
             }
-
             alert(`Group ${groupNum} Score: ${score} / ${totalQ}`);
         }
 
@@ -1419,18 +1482,12 @@
         function printGroup(groupNum) {
             const name = document.getElementById('student-name').value || "Unknown Student";
             const date = document.getElementById('student-date').value || "No Date";
-            
-            // Temporarily inject details for print
             const printHeader = document.createElement('div');
             printHeader.id = "print-header-temp";
             printHeader.innerHTML = `<h2>Assessment Group ${groupNum}</h2><p><strong>Name/Nama:</strong> ${name} | <strong>Date/Tanggal:</strong> ${date}</p><hr style="border:1px solid black;">`;
-            
             const groupDiv = document.getElementById(`Group${groupNum}`);
             groupDiv.insertBefore(printHeader, groupDiv.firstChild);
-
             window.print();
-
-            // Remove after print
             groupDiv.removeChild(printHeader);
         }
 
@@ -1438,13 +1495,10 @@
         function submitFeedback() {
             const rating = document.getElementById('feedback-rating').value;
             const text = document.getElementById('feedback-text').value;
-            
             if(rating === "") {
                 document.getElementById('section9-feedback').innerHTML = "<p class='feedback-wrong'>Please select a rating first.</p>";
                 return;
             }
-
-            // Simulate sending to server
             document.getElementById('section9-feedback').innerHTML = `
                 <div style="background-color: #d4edda; padding: 10px; border: 1px solid green; margin-top: 10px;">
                     <p class="feedback-correct" style="margin:0;">Thank you for your feedback! / Terima kasih atas feedback kamu!</p>
