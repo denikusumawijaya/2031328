@@ -1242,7 +1242,7 @@
 
                     <div class="assessment-card" id="qA2">
                         <p><strong>2.</strong> Choose the correct integer for "Ten floors below ground". <span class="bilingual">Pilih bilangan bulat yang tepat untuk "Sepuluh lantai di bawah tanah".</span></p>
-                        <select id="qA2">
+                        <select id="input-qA2">
                             <option value="">-- Select --</option>
                             <option value="10">10</option>
                             <option value="-10">-10</option>
@@ -1254,7 +1254,7 @@
 
                     <div class="assessment-card" id="qA3">
                         <p><strong>3.</strong> Write the integer that represents a debt of \$50. <span class="bilingual">Tulis bilangan bulat yang mewakili utang \$50.</span></p>
-                        <input type="text" id="qA3" placeholder="Type answer (e.g. -5)">
+                       <input type="text" id="input-qA3" placeholder="Type answer (e.g. -5)">
                         <div class="feedback-text" id="fb-qA3"></div>
                     </div>
 
@@ -1292,7 +1292,7 @@
 
                     <div class="assessment-card" id="qA8">
                         <p><strong>8.</strong> Which symbol makes this true? \(-4 \quad \_\quad -9\) <span class="bilingual">Simbol mana yang membuat ini benar? \(-4 \quad \_\quad -9\)</span></p>
-                        <select id="qA8">
+                        <select id="input-qA8">
                             <option value="">-- Select --</option>
                             <option value="<"><</option>
                             <option value=">">></option>
@@ -1327,14 +1327,14 @@
                 <!-- GROUP B (Abbreviated structure for token limit, same logic applies) -->
                 <div id="GroupB" class="tab-content">
                     <div class="assessment-card" id="qB1"><p><strong>1.</strong> \(-7\) is a positive integer. (True/False) <span class="bilingual">\(-7\) adalah bilangan bulat positif.</span></p><label><input type="radio" name="qB1" value="True"> True</label><label><input type="radio" name="qB1" value="False"> False</label><div class="feedback-text" id="fb-qB1"></div></div>
-                    <div class="assessment-card" id="qB2"><p><strong>2.</strong> Which is warmer? <span class="bilingual">Mana yang lebih hangat?</span></p><select id="qB2"><option value="">--</option><option value="-2">-2°C</option><option value="-8">-8°C</option></select><div class="feedback-text" id="fb-qB2"></div></div>
-                    <div class="assessment-card" id="qB3"><p><strong>3.</strong> Distance from \(-6\) to \(0\)? <span class="bilingual">Jarak dari \(-6\) ke \(0\)?</span></p><input type="text" id="qB3" placeholder="Type answer"><div class="feedback-text" id="fb-qB3"></div></div>
+                    <div class="assessment-card" id="qB2"><p><strong>2.</strong> Which is warmer? <span class="bilingual">Mana yang lebih hangat?</span></p>select id="input-qB2"><option value="">--</option><option value="-2">-2°C</option><option value="-8">-8°C</option></select><div class="feedback-text" id="fb-qB2"></div></div>
+                    <div class="assessment-card" id="qB3"><p><strong>3.</strong> Distance from \(-6\) to \(0\)? <span class="bilingual">Jarak dari \(-6\) ke \(0\)?</span></p><input type="text" id="input-qB3" placeholder="Type answer"><div class="feedback-text" id="fb-qB3"></div></div>
                     <div class="assessment-card" id="qB4"><p><strong>4.</strong> Which are less than 0? (Select TWO) <span class="bilingual">Mana yang kurang dari 0? (Pilih DUA)</span></p><label><input type="checkbox" name="qB4" value="-1"> -1</label><label><input type="checkbox" name="qB4" value="5"> 5</label><label><input type="checkbox" name="qB4" value="-3"> -3</label><label><input type="checkbox" name="qB4" value="2"> 2</label><div class="feedback-text" id="fb-qB4"></div></div>
                     <div class="assessment-card" id="qB5"><p><strong>5.</strong> Drag to order coldest to warmest. <span class="bilingual">Seret untuk mengurutkan paling dingin ke hangat.</span></p><ul id="sort-qB5" class="sortable-list"><li draggable="true" data-val="0">0°C</li><li draggable="true" data-val="-5">-5°C</li><li draggable="true" data-val="2">2°C</li></ul><div class="feedback-text" id="fb-qB5"></div></div>
                     <div class="assessment-card" id="qB6"><p><strong>6.</strong> Is \(0\) a negative number? <span class="bilingual">Apakah \(0\) bilangan negatif?</span></p><label><input type="radio" name="qB6" value="Yes"> Yes</label><label><input type="radio" name="qB6" value="No"> No</label><div class="feedback-text" id="fb-qB6"></div></div>
-                    <div class="assessment-card" id="qB7"><p><strong>7.</strong> Sub at \(-20\)m rises 10m. New position? <span class="bilingual">Kapal selam di \(-20\)m naik 10m. Posisi baru?</span></p><input type="text" id="qB7" placeholder="Type answer"><div class="feedback-text" id="fb-qB7"></div></div>
-                    <div class="assessment-card" id="qB8"><p><strong>8.</strong> \(-12 \quad \_\quad -15\) <span class="bilingual">\(-12 \quad \_\quad -15\)</span></p><select id="qB8"><option value="">--</option><option value="<"><</option><option value=">">></option></select><div class="feedback-text" id="fb-qB8"></div></div>
-                    <div class="assessment-card" id="qB9"><p><strong>9.</strong> Distance between \(1\) and \(-4\)? <span class="bilingual">Jarak antara \(1\) dan \(-4\)?</span></p><input type="text" id="qB9" placeholder="Type answer"><div class="feedback-text" id="fb-qB9"></div></div>
+                    <div class="assessment-card" id="qB7"><p><strong>7.</strong> Sub at \(-20\)m rises 10m. New position? <span class="bilingual">Kapal selam di \(-20\)m naik 10m. Posisi baru?</span></p><input type="text" id="input-qB7" placeholder="Type answer"><div class="feedback-text" id="fb-qB7"></div></div>
+                    <div class="assessment-card" id="qB8"><p><strong>8.</strong> \(-12 \quad \_\quad -15\) <span class="bilingual">\(-12 \quad \_\quad -15\)</span></p><select id="input-qB8"><option value="">--</option><option value="<"><</option><option value=">">></option></select><div class="feedback-text" id="fb-qB8"></div></div>
+                    <div class="assessment-card" id="qB9"><p><strong>9.</strong> Distance between \(1\) and \(-4\)? <span class="bilingual">Jarak antara \(1\) dan \(-4\)?</span></p><input type="text" id="input-qB9" placeholder="Type answer"><div class="feedback-text" id="fb-qB9"></div></div>
                     <div class="assessment-card" id="qB10"><p><strong>10.</strong> Integers between \(-3\) and \(1\)? (Select ALL that apply) <span class="bilingual">Bilangan bulat antara \(-3\) dan \(1\)? (Pilih SEMUA yang berlaku)</span></p><label><input type="checkbox" name="qB10" value="-2"> -2</label><label><input type="checkbox" name="qB10" value="-1"> -1</label><label><input type="checkbox" name="qB10" value="0"> 0</label><label><input type="checkbox" name="qB10" value="1"> 1</label><div class="feedback-text" id="fb-qB10"></div></div>
                     <div class="btn-group"><button class="btn btn-check" onclick="checkAssessment('B')"><i class="fas fa-check-circle"></i> Submit Group B</button><button class="btn btn-reset" onclick="resetAssessment('B')"><i class="fas fa-redo"></i> Reset</button><button class="btn" style="background:#455A64" onclick="printAssessment('B')"><i class="fas fa-print"></i> Print</button><div id="scoreB" style="margin-left:auto; font-family:'Fredoka One'; font-size:1.2em; color:var(--primary)"></div></div>
                 </div>
@@ -1342,48 +1342,48 @@
                 <!-- GROUP C, D, E (Representative questions) -->
                 <div id="GroupC" class="tab-content">
                     <p style="text-align:center; font-weight:bold; color:var(--primary);">Group C: Advanced Word Problems <span class="bilingual">Grup C: Soal Cerita Lanjutan</span></p>
-                    <div class="assessment-card" id="qC1"><p><strong>1.</strong> A bank account has \$50. A withdrawal of \$70 is made. Balance? <span class="bilingual">Saldo rekening \$50. Penarikan \$70. Sisa?</span></p><input type="text" id="qC1" placeholder="-20"><div class="feedback-text" id="fb-qC1"></div></div>
-                    <div class="assessment-card" id="qC2"><p><strong>2.</strong> Temp is \(-15^\circ\)C. It drops \(5^\circ\)C, then rises \(10^\circ\)C. Final temp? <span class="bilingual">Suhu \(-15^\circ\)C. Turun \(5^\circ\)C, lalu naik \(10^\circ\)C. Suhu akhir?</span></p><input type="text" id="qC2" placeholder="Type answer"><div class="feedback-text" id="fb-qC2"></div></div>
-                    <div class="assessment-card" id="qC3"><p><strong>3.</strong> Elevator at floor 5. Goes down 8 floors. Where is it? <span class="bilingual">Lift di lantai 5. Turun 8 lantai. Di mana ia sekarang?</span></p><input type="text" id="qC3" placeholder="Type answer"><div class="feedback-text" id="fb-qC3"></div></div>
+                    <div class="assessment-card" id="qC1"><p><strong>1.</strong> A bank account has \$50. A withdrawal of \$70 is made. Balance? <span class="bilingual">Saldo rekening \$50. Penarikan \$70. Sisa?</span></p><input type="text" id="input-qC1" placeholder="-20"><div class="feedback-text" id="fb-qC1"></div></div>
+                    <div class="assessment-card" id="qC2"><p><strong>2.</strong> Temp is \(-15^\circ\)C. It drops \(5^\circ\)C, then rises \(10^\circ\)C. Final temp? <span class="bilingual">Suhu \(-15^\circ\)C. Turun \(5^\circ\)C, lalu naik \(10^\circ\)C. Suhu akhir?</span></p><input type="text" id="input-qC2" placeholder="Type answer"><div class="feedback-text" id="fb-qC2"></div></div>
+                    <div class="assessment-card" id="qC3"><p><strong>3.</strong> Elevator at floor 5. Goes down 8 floors. Where is it? <span class="bilingual">Lift di lantai 5. Turun 8 lantai. Di mana ia sekarang?</span></p><input type="text" id="input-qC3" placeholder="Type answer"><div class="feedback-text" id="fb-qC3"></div></div>
                     <div class="assessment-card" id="qC4"><p><strong>4.</strong> Which is further from 0: \(-9\) or \(6\)? <span class="bilingual">Mana yang lebih jauh dari 0: \(-9\) atau \(6\)?</span></p><label><input type="radio" name="qC4" value="-9"> -9</label><label><input type="radio" name="qC4" value="6"> 6</label><div class="feedback-text" id="fb-qC4"></div></div>
                     <div class="assessment-card" id="qC5"><p><strong>5.</strong> Order: \(-1, 3, -4, 0\) (Drag to sort smallest to largest) <span class="bilingual">Urutkan: \(-1, 3, -4, 0\)</span></p><ul id="sort-qC5" class="sortable-list"><li draggable="true" data-val="3">3</li><li draggable="true" data-val="-4">-4</li><li draggable="true" data-val="0">0</li><li draggable="true" data-val="-1">-1</li></ul><div class="feedback-text" id="fb-qC5"></div></div>
                     <!-- Add 5 more simple inputs/radios to make 10 for Group C -->
-                    <div class="assessment-card" id="qC6"><p><strong>6.</strong> \(|-8| = \) ? <span class="bilingual">Nilai mutlak dari \(-8\)?</span></p><input type="text" id="qC6" placeholder="8"><div class="feedback-text" id="fb-qC6"></div></div>
+                    <div class="assessment-card" id="qC6"><p><strong>6.</strong> \(|-8| = \) ? <span class="bilingual">Nilai mutlak dari \(-8\)?</span></p><input type="text" id="input-qC6" placeholder="8"><div class="feedback-text" id="fb-qC6"></div></div>
                     <div class="assessment-card" id="qC7"><p><strong>7.</strong> Is \(-3 > -10\)? <span class="bilingual">Apakah \(-3 > -10\)?</span></p><label><input type="radio" name="qC7" value="Yes"> Yes</label><label><input type="radio" name="qC7" value="No"> No</label><div class="feedback-text" id="fb-qC7"></div></div>
-                    <div class="assessment-card" id="qC8"><p><strong>8.</strong> Distance between \(-7\) and \(-2\)? <span class="bilingual">Jarak antara \(-7\) dan \(-2\)?</span></p><input type="text" id="qC8" placeholder="5"><div class="feedback-text" id="fb-qC8"></div></div>
-                    <div class="assessment-card" id="qC9"><p><strong>9.</strong> \(-5 + 8 = \) ? <span class="bilingual">\(-5 + 8 = \)?</span></p><input type="text" id="qC9" placeholder="3"><div class="feedback-text" id="fb-qC9"></div></div>
-                    <div class="assessment-card" id="qC10"><p><strong>10.</strong> Sum of distances from \(-4\) to \(0\) and \(0\) to \(2\). <span class="bilingual">Jumlah jarak dari \(-4\) ke \(0\) dan \(0\) ke \(2\).</span></p><input type="text" id="qC10" placeholder="6"><div class="feedback-text" id="fb-qC10"></div></div>
+                    <div class="assessment-card" id="qC8"><p><strong>8.</strong> Distance between \(-7\) and \(-2\)? <span class="bilingual">Jarak antara \(-7\) dan \(-2\)?</span></p><input type="text" id="input-qC8" placeholder="5"><div class="feedback-text" id="fb-qC8"></div></div>
+                    <div class="assessment-card" id="qC9"><p><strong>9.</strong> \(-5 + 8 = \) ? <span class="bilingual">\(-5 + 8 = \)?</span></p><input type="text" id="input-qC9" placeholder="3"><div class="feedback-text" id="fb-qC9"></div></div>
+                    <div class="assessment-card" id="qC10"><p><strong>10.</strong> Sum of distances from \(-4\) to \(0\) and \(0\) to \(2\). <span class="bilingual">Jumlah jarak dari \(-4\) ke \(0\) dan \(0\) ke \(2\).</span></p><input type="text" id="input-qC10" placeholder="6"><div class="feedback-text" id="fb-qC10"></div></div>
                     <div class="btn-group"><button class="btn btn-check" onclick="checkAssessment('C')"><i class="fas fa-check-circle"></i> Submit Group C</button><button class="btn btn-reset" onclick="resetAssessment('C')"><i class="fas fa-redo"></i> Reset</button><button class="btn" style="background:#455A64" onclick="printAssessment('C')"><i class="fas fa-print"></i> Print</button><div id="scoreC" style="margin-left:auto; font-family:'Fredoka One'; font-size:1.2em; color:var(--primary)"></div></div>
                 </div>
 
                 <div id="GroupD" class="tab-content">
                     <p style="text-align:center; font-weight:bold; color:var(--primary);">Group D: Inequalities & Distance <span class="bilingual">Grup D: Pertidaksamaan & Jarak</span></p>
                     <!-- Repeat pattern with 10 divs id="qD1" to "qD10" -->
-                    <div class="assessment-card" id="qD1"><p><strong>1.</strong> \(-15 \_\_ -12\) <span class="bilingual">Isi tanda: \(-15 \_\_ -12\)</span></p><select id="qD1"><option value="">--</option><option value="<"><</option><option value=">">></option></select><div class="feedback-text" id="fb-qD1"></div></div>
-                    <div class="assessment-card" id="qD2"><p><strong>2.</strong> Distance from \(-10\) to \(5\)? <span class="bilingual">Jarak dari \(-10\) ke \(5\)?</span></p><input type="text" id="qD2" placeholder="15"><div class="feedback-text" id="fb-qD2"></div></div>
+                    <div class="assessment-card" id="qD1"><p><strong>1.</strong> \(-15 \_\_ -12\) <span class="bilingual">Isi tanda: \(-15 \_\_ -12\)</span></p><select id="input-qD1"><option value="">--</option><option value="<"><</option><option value=">">></option></select><div class="feedback-text" id="fb-qD1"></div></div>
+                    <div class="assessment-card" id="qD2"><p><strong>2.</strong> Distance from \(-10\) to \(5\)? <span class="bilingual">Jarak dari \(-10\) ke \(5\)?</span></p><input type="text" id="input-qD2" placeholder="15"><div class="feedback-text" id="fb-qD2"></div></div>
                     <div class="assessment-card" id="qD3"><p><strong>3.</strong> Which is smallest? \(-25, -5, -50\) <span class="bilingual">Mana yang paling kecil?</span></p><label><input type="radio" name="qD3" value="-25"> -25</label><label><input type="radio" name="qD3" value="-5"> -5</label><label><input type="radio" name="qD3" value="-50"> -50</label><div class="feedback-text" id="fb-qD3"></div></div>
-                    <div class="assessment-card" id="qD4"><p><strong>4.</strong> \(-20 + 20 = \) <span class="bilingual">\(-20 + 20 = \)</span></p><input type="text" id="qD4" placeholder="0"><div class="feedback-text" id="fb-qD4"></div></div>
+                    <div class="assessment-card" id="qD4"><p><strong>4.</strong> \(-20 + 20 = \) <span class="bilingual">\(-20 + 20 = \)</span></p><input type="text" id="input-qD4" placeholder="0"><div class="feedback-text" id="fb-qD4"></div></div>
                     <div class="assessment-card" id="qD5"><p><strong>5.</strong> Drag to sort: \(0, -1, -4, 2\) (largest to smallest) <span class="bilingual">Seret: \(0, -1, -4, 2\) (terbesar ke terkecil)</span></p><ul id="sort-qD5" class="sortable-list"><li draggable="true" data-val="0">0</li><li draggable="true" data-val="-1">-1</li><li draggable="true" data-val="-4">-4</li><li draggable="true" data-val="2">2</li></ul><div class="feedback-text" id="fb-qD5"></div></div>
-                    <div class="assessment-card" id="qD6"><p><strong>6.</strong> Freezer at \(-18^\circ\)C. Rises \(5^\circ\)C. Temp now? <span class="bilingual">Pembeku \(-18^\circ\)C. Naik \(5^\circ\)C. Suhu sekarang?</span></p><input type="text" id="qD6" placeholder="-13"><div class="feedback-text" id="fb-qD6"></div></div>
+                    <div class="assessment-card" id="qD6"><p><strong>6.</strong> Freezer at \(-18^\circ\)C. Rises \(5^\circ\)C. Temp now? <span class="bilingual">Pembeku \(-18^\circ\)C. Naik \(5^\circ\)C. Suhu sekarang?</span></p><input type="text" id="input-qD6" placeholder="-13"><div class="feedback-text" id="fb-qD6"></div></div>
                     <div class="assessment-card" id="qD7"><p><strong>7.</strong> Identify integers \(> -4\) and \(< 0\). (Check ALL) <span class="bilingual">Tandai bilangan bulat \(> -4\) dan \(< 0\).</span></p><label><input type="checkbox" name="qD7" value="-3"> -3</label><label><input type="checkbox" name="qD7" value="-2"> -2</label><label><input type="checkbox" name="qD7" value="-1"> -1</label><label><input type="checkbox" name="qD7" value="0"> 0</label><div class="feedback-text" id="fb-qD7"></div></div>
                     <div class="assessment-card" id="qD8"><p><strong>8.</strong> Is \(|-6| > |2|\)? <span class="bilingual">Apakah \(|-6| > |2|\)?</span></p><label><input type="radio" name="qD8" value="Yes"> Yes</label><label><input type="radio" name="qD8" value="No"> No</label><div class="feedback-text" id="fb-qD8"></div></div>
-                    <div class="assessment-card" id="qD9"><p><strong>9.</strong> \(-7 - 3 = \) ? <span class="bilingual">\(-7 - 3 = \)?</span></p><input type="text" id="qD9" placeholder="-10"><div class="feedback-text" id="fb-qD9"></div></div>
-                    <div class="assessment-card" id="qD10"><p><strong>10.</strong> At \(-100\)m, a sub rises \(40\)m, then rises \(30\)m. Final? <span class="bilingual">Di \(-100\)m, kapal selam naik \(40\)m, lalu \(30\)m. Akhir?</span></p><input type="text" id="qD10" placeholder="-30"><div class="feedback-text" id="fb-qD10"></div></div>
+                    <div class="assessment-card" id="qD9"><p><strong>9.</strong> \(-7 - 3 = \) ? <span class="bilingual">\(-7 - 3 = \)?</span></p><input type="text" id="input-qD9" placeholder="-10"><div class="feedback-text" id="fb-qD9"></div></div>
+                    <div class="assessment-card" id="qD10"><p><strong>10.</strong> At \(-100\)m, a sub rises \(40\)m, then rises \(30\)m. Final? <span class="bilingual">Di \(-100\)m, kapal selam naik \(40\)m, lalu \(30\)m. Akhir?</span></p><input type="text" id="input-qD10" placeholder="-30"><div class="feedback-text" id="fb-qD10"></div></div>
                     <div class="btn-group"><button class="btn btn-check" onclick="checkAssessment('D')"><i class="fas fa-check-circle"></i> Submit Group D</button><button class="btn btn-reset" onclick="resetAssessment('D')"><i class="fas fa-redo"></i> Reset</button><button class="btn" style="background:#455A64" onclick="printAssessment('D')"><i class="fas fa-print"></i> Print</button><div id="scoreD" style="margin-left:auto; font-family:'Fredoka One'; font-size:1.2em; color:var(--primary)"></div></div>
                 </div>
 
                 <div id="GroupE" class="tab-content">
                     <p style="text-align:center; font-weight:bold; color:var(--primary);">Group E: Mixed Challenge <span class="bilingual">Grup E: Tantangan Campuran</span></p>
-                    <div class="assessment-card" id="qE1"><p><strong>1.</strong> What is the opposite of \(-8\)? <span class="bilingual">Apa lawan dari \(-8\)?</span></p><input type="text" id="qE1" placeholder="8"><div class="feedback-text" id="fb-qE1"></div></div>
+                    <div class="assessment-card" id="qE1"><p><strong>1.</strong> What is the opposite of \(-8\)? <span class="bilingual">Apa lawan dari \(-8\)?</span></p><input type="text" id="input-qE1" placeholder="8"><div class="feedback-text" id="fb-qE1"></div></div>
                     <div class="assessment-card" id="qE2"><p><strong>2.</strong> Which is greater? \(-100\) or \(-99\)? <span class="bilingual">Mana yang lebih besar?</span></p><label><input type="radio" name="qE2" value="-100"> -100</label><label><input type="radio" name="qE2" value="-99"> -99</label><div class="feedback-text" id="fb-qE2"></div></div>
-                    <div class="assessment-card" id="qE3"><p><strong>3.</strong> \(-4 + 4 = \) ? <span class="bilingual">\(-4 + 4 = \)?</span></p><input type="text" id="qE3" placeholder="0"><div class="feedback-text" id="fb-qE3"></div></div>
+                    <div class="assessment-card" id="qE3"><p><strong>3.</strong> \(-4 + 4 = \) ? <span class="bilingual">\(-4 + 4 = \)?</span></p><input type="text" id="input-qE3" placeholder="0"><div class="feedback-text" id="fb-qE3"></div></div>
                     <div class="assessment-card" id="qE4"><p><strong>4.</strong> Sort from warmest to coldest: \(10, -5, 0, -2\) (Drag) <span class="bilingual">Urutkan terhangat ke terdingin: \(10, -5, 0, -2\)</span></p><ul id="sort-qE4" class="sortable-list"><li draggable="true" data-val="-5">-5</li><li draggable="true" data-val="10">10</li><li draggable="true" data-val="-2">-2</li><li draggable="true" data-val="0">0</li></ul><div class="feedback-text" id="fb-qE4"></div></div>
-                    <div class="assessment-card" id="qE5"><p><strong>5.</strong> A diver is at \(-5\)m. A fish is at \(-15\)m. Distance between them? <span class="bilingual">Penyelam di \(-5\)m. Ikan di \(-15\)m. Jarak antar mereka?</span></p><input type="text" id="qE5" placeholder="10"><div class="feedback-text" id="fb-qE5"></div></div>
-                    <div class="assessment-card" id="qE6"><p><strong>6.</strong> Which is furthest from 0? \(-7, 4, -9, 6\) <span class="bilingual">Mana yang paling jauh dari 0?</span></p><select id="qE6"><option value="">--</option><option value="-7">-7</option><option value="4">4</option><option value="-9">-9</option><option value="6">6</option></select><div class="feedback-text" id="fb-qE6"></div></div>
-                    <div class="assessment-card" id="qE7"><p><strong>7.</strong> If \(x = -2\), what is \(x - 5\)? <span class="bilingual">Jika \(x = -2\), berapa \(x - 5\)?</span></p><input type="text" id="qE7" placeholder="-7"><div class="feedback-text" id="fb-qE7"></div></div>
+                    <div class="assessment-card" id="qE5"><p><strong>5.</strong> A diver is at \(-5\)m. A fish is at \(-15\)m. Distance between them? <span class="bilingual">Penyelam di \(-5\)m. Ikan di \(-15\)m. Jarak antar mereka?</span></p><input type="text" id="input-qE5" placeholder="10"><div class="feedback-text" id="fb-qE5"></div></div>
+                    <div class="assessment-card" id="qE6"><p><strong>6.</strong> Which is furthest from 0? \(-7, 4, -9, 6\) <span class="bilingual">Mana yang paling jauh dari 0?</span></p><select id="input-qE6"><option value="">--</option><option value="-7">-7</option><option value="4">4</option><option value="-9">-9</option><option value="6">6</option></select><div class="feedback-text" id="fb-qE6"></div></div>
+                    <div class="assessment-card" id="qE7"><p><strong>7.</strong> If \(x = -2\), what is \(x - 5\)? <span class="bilingual">Jika \(x = -2\), berapa \(x - 5\)?</span></p><input type="text" id="input-qE7" placeholder="-7"><div class="feedback-text" id="fb-qE7"></div></div>
                     <div class="assessment-card" id="qE8"><p><strong>8.</strong> True or False: \(0 > -1\) <span class="bilingual">Benar atau Salah: \(0 > -1\)</span></p><label><input type="radio" name="qE8" value="True"> True</label><label><input type="radio" name="qE8" value="False"> False</label><div class="feedback-text" id="fb-qE8"></div></div>
                     <div class="assessment-card" id="qE9"><p><strong>9.</strong> Which numbers are \(< 1\)? (Check ALL) <span class="bilingual">Angka mana yang \(< 1\)? (Pilih SEMUA)</span></p><label><input type="checkbox" name="qE9" value="0"> 0</label><label><input type="checkbox" name="qE9" value="-4"> -4</label><label><input type="checkbox" name="qE9" value="5"> 5</label><label><input type="checkbox" name="qE9" value="-1"> -1</label><div class="feedback-text" id="fb-qE9"></div></div>
-                    <div class="assessment-card" id="qE10"><p><strong>10.</strong> \(-10 \_\_ -20\) <span class="bilingual">\(-10 \_\_ -20\)</span></p><select id="qE10"><option value="">--</option><option value="<"><</option><option value=">">></option></select><div class="feedback-text" id="fb-qE10"></div></div>
+                    <div class="assessment-card" id="qE10"><p><strong>10.</strong> \(-10 \_\_ -20\) <span class="bilingual">\(-10 \_\_ -20\)</span></p><select id="input-qE10"><option value="">--</option><option value="<"><</option><option value=">">></option></select><div class="feedback-text" id="fb-qE10"></div></div>
                     <div class="btn-group"><button class="btn btn-check" onclick="checkAssessment('E')"><i class="fas fa-check-circle"></i> Submit Group E</button><button class="btn btn-reset" onclick="resetAssessment('E')"><i class="fas fa-redo"></i> Reset</button><button class="btn" style="background:#455A64" onclick="printAssessment('E')"><i class="fas fa-print"></i> Print</button><div id="scoreE" style="margin-left:auto; font-family:'Fredoka One'; font-size:1.2em; color:var(--primary)"></div></div>
                 </div>
             </div>
@@ -1534,10 +1534,12 @@
                     userAns = sel ? sel.value : '';
                     isCorrect = userAns === key[i].ans;
                 } else if(key[i].type === 'select') {
-                    userAns = document.getElementById(qId).value;
+                    // REVISI: Menggunakan awalan 'input-' agar menemukan elemen <select>, bukan <div>
+                    userAns = document.getElementById('input-' + qId).value;
                     isCorrect = userAns === key[i].ans;
                 } else if(key[i].type === 'text') {
-                    userAns = document.getElementById(qId).value.trim().replace(/ /g, '');
+                    // REVISI: Menggunakan awalan 'input-' agar menemukan elemen <input>, bukan <div>
+                    userAns = document.getElementById('input-' + qId).value.trim().replace(/ /g, '');
                     isCorrect = userAns === key[i].ans;
                 } else if(key[i].type === 'check') {
                     const checked = Array.from(document.querySelectorAll(`input[name="${qId}"]:checked`)).map(c => c.value).sort();
@@ -1577,8 +1579,13 @@
                 if(document.querySelector(`input[name="${qId}"]`)) {
                     document.querySelectorAll(`input[name="${qId}"]`).forEach(inp => inp.checked = false);
                 }
-                if(document.getElementById(qId) && document.getElementById(qId).tagName === 'SELECT') document.getElementById(qId).selectedIndex = 0;
-                if(document.getElementById(qId) && document.getElementById(qId).tagName === 'INPUT') document.getElementById(qId).value = '';
+                // REVISI: Menggunakan awalan 'input-' untuk menargetkan elemen yang tepat
+                if(document.getElementById('input-' + qId) && document.getElementById('input-' + qId).tagName === 'SELECT') {
+                    document.getElementById('input-' + qId).selectedIndex = 0;
+                }
+                if(document.getElementById('input-' + qId) && document.getElementById('input-' + qId).tagName === 'INPUT') {
+                    document.getElementById('input-' + qId).value = '';
+                }
             }
             document.getElementById(`score${group}`).innerHTML = '';
         }
