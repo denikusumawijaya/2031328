@@ -1521,35 +1521,46 @@
             for(let i=1; i<=totalQ; i++) {
                 const qId = `q${group}${i}`;
                 const fbId = `fb-q${group}${i}`;
-                const card = document.getElementById(qId);
+                const card = document.getElementById(qId); // Mengambil kartu soal <div>
                 const fbEl = document.getElementById(fbId);
+                
+                // Jika kartu soal tidak ditemukan, lewati
+                if(!card) continue; 
+
                 let userAns = '';
                 let isCorrect = false;
+                const type = key[i].type;
 
                 card.classList.remove('correct-card', 'wrong-card');
                 fbEl.className = 'feedback-text';
 
-                if(key[i].type === 'radio') {
-                    const sel = document.querySelector(`input[name="${qId}"]:checked`);
+                // Logika pencarian input SEKARANG dicari di DALAM kartu soal (card.querySelector)
+                // Ini menghilangkan kebutuhan untuk mengubah ID di HTML sama sekali!
+                
+                if(type === 'radio') {
+                    const sel = card.querySelector(`input[name="${qId}"]:checked`);
                     userAns = sel ? sel.value : '';
-                    isCorrect = userAns === key[i].ans;
-                } else if(key[i].type === 'select') {
-                    // REVISI: Menggunakan awalan 'input-' agar menemukan elemen <select>, bukan <div>
-                    userAns = document.getElementById('input-' + qId).value;
-                    isCorrect = userAns === key[i].ans;
-                } else if(key[i].type === 'text') {
-                    // REVISI: Menggunakan awalan 'input-' agar menemukan elemen <input>, bukan <div>
-                    userAns = document.getElementById('input-' + qId).value.trim().replace(/ /g, '');
-                    isCorrect = userAns === key[i].ans;
-                } else if(key[i].type === 'check') {
-                    const checked = Array.from(document.querySelectorAll(`input[name="${qId}"]:checked`)).map(c => c.value).sort();
+                } else if(type === 'select') {
+                    const selEl = card.querySelector('select');
+                    userAns = selEl ? selEl.value : '';
+                } else if(type === 'text') {
+                    const inputEl = card.querySelector('input[type="text"]');
+                    userAns = inputEl ? inputEl.value.trim().replace(/ /g, '') : '';
+                } else if(type === 'check') {
+                    const checked = Array.from(card.querySelectorAll(`input[name="${qId}"]:checked`)).map(c => c.value).sort();
                     userAns = checked.join(',');
-                    isCorrect = userAns === key[i].ans.sort().join(',');
-                } else if(key[i].type === 'sort') {
-                    const items = document.querySelectorAll(`#sort-${qId} li`);
+                } else if(type === 'sort') {
+                    const items = card.querySelectorAll(`#sort-${qId} li`);
                     userAns = Array.from(items).map(li => li.dataset.val).join(',');
-                    isCorrect = userAns === key[i].ans.join(',');
                 }
+
+                // Membandingkan jawaban
+                let correctAns = key[i].ans;
+                if (type === 'check' || type === 'sort') {
+                    correctAns = key[i].ans.sort().join(',');
+                }
+
+                isCorrect = userAns === correctAns;
 
                 if(isCorrect) {
                     score++;
@@ -1569,23 +1580,22 @@
             for(let i=1; i<=10; i++) {
                 const qId = `q${group}${i}`;
                 const card = document.getElementById(qId);
+                if(!card) continue;
+                
                 const fbEl = document.getElementById(`fb-q${group}${i}`);
                 
                 card.classList.remove('correct-card', 'wrong-card');
                 fbEl.className = 'feedback-text';
                 fbEl.textContent = '';
 
-                // Reset inputs based on type
-                if(document.querySelector(`input[name="${qId}"]`)) {
-                    document.querySelectorAll(`input[name="${qId}"]`).forEach(inp => inp.checked = false);
-                }
-                // REVISI: Menggunakan awalan 'input-' untuk menargetkan elemen yang tepat
-                if(document.getElementById('input-' + qId) && document.getElementById('input-' + qId).tagName === 'SELECT') {
-                    document.getElementById('input-' + qId).selectedIndex = 0;
-                }
-                if(document.getElementById('input-' + qId) && document.getElementById('input-' + qId).tagName === 'INPUT') {
-                    document.getElementById('input-' + qId).value = '';
-                }
+                // Mereset semua input di dalam kartu soal dengan aman
+                card.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(inp => inp.checked = false);
+                
+                const selEl = card.querySelector('select');
+                if (selEl) selEl.selectedIndex = 0;
+                
+                const inputEl = card.querySelector('input[type="text"]');
+                if (inputEl) inputEl.value = '';
             }
             document.getElementById(`score${group}`).innerHTML = '';
         }
