@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Tutoring - Negative Integers & Number Line</title>
+    <!-- MathJax for Math Equations -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --city-sky: #E0F7FA;
+            --city-grass: #C8E6C9;
+            --building-color1: #FFAB91;
+            --building-color2: #FFE082;
+            --building-color3: #B39DDB;
+            --road-color: #455A64;
+            --text-main: #263238;
+            --text-sub: #546E7A;
+            --primary: #009688;
+            --primary-light: #B2DFDB;
+            --danger: #EF5350;
+            --success: #66BB6A;
+            --warning: #FFA726;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--city-sky);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* Decorative City Background */
+        body::before {
+            content: '';
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: var(--city-grass);
+            z-index: -1;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .bilingual {
+            display: block;
+            color: var(--text-sub);
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary), #004D40);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--building-color1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+        }
+
+        .header-info {
+            margin-top: 10px;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        /* Class Rules */
+        .rules-box {
+            background: #FFF9C4;
+            border: 2px dashed var(--warning);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 800px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 0px var(--warning);
+        }
+
+        .rules-box i {
+            font-size: 2em;
+            color: var(--warning);
+        }
+
+        .rules-text strong {
+            color: #E65100;
+        }
+
+        /* Main Layout 3:1 */
+        .main-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .content-area {
+            flex: 3;
+        }
+
+        .sidebar-canvas {
+            flex: 1;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        /* Section Styling */
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 0px rgba(0,0,0,0.1);
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section:hover {
+            border-color: var(--primary-light);
+        }
+
+        /* Roof decoration for Miniature City Theme */
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background: repeating-linear-gradient(90deg, var(--building-color1), var(--building-color1) 20px, var(--building-color2) 20px, var(--building-color2) 40px, var(--building-color3) 40px, var(--building-color3) 60px);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-top: 10px;
+            border-bottom: 2px dashed var(--primary-light);
+            padding-bottom: 10px;
+        }
+
+        .timer-badge {
+            background: var(--road-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .theory-box {
+            background: #E3F2FD;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #2196F3;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .visualization-box {
+            background: #FAFAFA;
+            border: 2px solid #EEEEEE;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Interactive Game Area */
+        .game-area {
+            background: #F1F8E9;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid var(--success);
+        }
+
+        .question-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .q-title {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #ECEFF1;
+            border: 2px solid transparent;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            background: var(--primary-light);
+        }
+
+        .option-btn.selected {
+            background: var(--primary);
+            color: white;
+            border-color: #004D40;
+            transform: scale(1.05);
+        }
+
+        .option-btn.correct {
+            background: var(--success) !important;
+            color: white;
+            border-color: #2E7D32;
+        }
+
+        .option-btn.wrong {
+            background: var(--danger) !important;
+            color: white;
+            border-color: #C62828;
+        }
+
+        .feedback-text {
+            margin-top: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback-text.correct { color: var(--success); display: block; }
+        .feedback-text.wrong { color: var(--danger); display: block; }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.1s;
+            color: white;
+        }
+
+        .btn:active { transform: scale(0.95); }
+        
+        .btn-check { background: var(--primary); }
+        .btn-check:hover { background: #00796B; }
+        .btn-reset { background: var(--warning); }
+        .btn-reset:hover { background: #FB8C00; }
+
+        /* Canvas Styles */
+        .canvas-container {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 10px 0px rgba(0,0,0,0.1);
+        }
+
+        .canvas-container h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        #scratchpad {
+            border: 3px solid var(--road-color);
+            border-radius: 10px;
+            background: white;
+            cursor: crosshair;
+            width: 100%;
+            display: block;
+        }
+
+        .color-picker {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .color-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .color-btn.active, .color-btn:hover {
+            transform: scale(1.2);
+            border-color: black;
+        }
+
+        .tool-btn {
+            background: var(--road-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: bold;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        /* SVG Animations */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-bounce { animation: bounce 2s infinite; }
+        .animate-pulse { animation: pulse 3s infinite; }
+        /* Assessment Tab Styles */
+        .tab-nav { border-bottom: 2px solid #ddd; }
+        .tab-btn {
+            background: #E0E0E0; border: none; padding: 10px 20px;
+            font-family: 'Fredoka One'; cursor: pointer; border-radius: 10px 10px 0 0;
+            transition: background 0.3s;
+        }
+        .tab-btn:hover { background: #BDBDBD; }
+        .tab-btn.active { background: var(--primary); color: white; }
+        
+        .tab-content { display: none; padding-top: 20px; }
+        .active-assessment { display: block; }
+
+        .assessment-card {
+            background: #FAFAFA; border: 1px solid #E0E0E0; padding: 15px;
+            border-radius: 10px; margin-bottom: 15px;
+        }
+        .assessment-card label {
+            display: inline-block; margin-right: 15px; cursor: pointer;
+            padding: 5px 10px; border-radius: 5px; transition: background 0.2s;
+        }
+        .assessment-card label:hover { background: #E3F2FD; }
+        .assessment-card input[type="text"], .assessment-card select {
+            padding: 8px; border: 2px solid #BDBDBD; border-radius: 5px;
+            font-family: 'Quicksand'; width: 150px;
+        }
+        
+        .assessment-card.correct-card { border-color: var(--success); background: #E8F5E9; }
+        .assessment-card.wrong-card { border-color: var(--danger); background: #FFEBEE; }
+
+        /* Drag and Drop Styles */
+        .sortable-list {
+            list-style: none; padding: 0; display: flex; gap: 10px;
+        }
+        .sortable-list li {
+            background: var(--primary-light); padding: 10px 15px;
+            border-radius: 8px; cursor: grab; font-family: 'Fredoka One';
+            border: 2px solid var(--primary); user-select: none;
+        }
+        .sortable-list li:active { cursor: grabbing; background: var(--primary); color: white; }
+        .sortable-list li.dragging { opacity: 0.5; }
+
+        /* Print Styles */
+        @media print {
+            body { background: white !important; }
+            .header, .rules-box, .sidebar-canvas, .tab-nav, .btn-group, .section:not(#sec7), .section:not(#sec7) > * { display: none !important; }
+            .content-area { flex: 1 !important; width: 100% !important; }
+            .main-container { display: block !important; }
+            #sec7 { display: block !important; box-shadow: none !important; border: none !important; padding: 0 !important;}
+            #sec7::before { display: none !important; }
+            .tab-content { display: none !important; }
+            .active-assessment.printing { display: block !important; }
+            .assessment-card { border: 1px solid #ccc !important; background: white !important; page-break-inside: avoid; }
+            .feedback-text { display: block !important; font-size: 10pt; }
+            .theory-box { background: white !important; border: 1px solid black !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1><i class="fas fa-city"></i> MATH TUTORING</h1>
+        <div class="header-info">
+            <span>Topic: Negative Integers & Number Line <span class="bilingual" style="color:#B2DFDB">Topik: Bilangan Bulat Negatif & Garis Bilangan</span></span>
+            <span>Tutor: Deni</span>
+        </div>
+    </div>
+
+    <!-- CLASS RULES -->
+    <div class="rules-box">
+        <i class="fas fa-exclamation-triangle"></i>
+        <div class="rules-text">
+            <p><strong>Class Rules / Aturan Kelas:</strong></p>
+            <ul style="margin-left: 20px; margin-top: 5px; font-size: 0.95em;">
+                <li>Take turns speaking. <span class="bilingual">Berbicara secara bergantian.</span></li>
+                <li>Ask permission before leaving Zoom (e.g., toilet/drink). <span class="bilingual">Minta izin ketika ingin meninggalkan zoom (misal izin ke toilet atau minum).</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="main-container">
+        
+        <!-- CONTENT AREA (3/4) -->
+        <div class="content-area">
+
+            <!-- SECTION 1 -->
+            <div class="section" id="sec1">
+                <div class="section-header">
+                    <h2><i class="fas fa-history"></i> Spiral Review Warm-up <span class="bilingual">Sesi Ulangan Pemanasan</span></h2>
+                    <div class="timer-badge"><i class="fas fa-clock"></i> 00:00 - 00:10</div>
+                </div>
+
+                <div class="theory-box">
+                    <p><strong>Place Value & Sorting:</strong> Every digit in a number has a specific value based on its position. For example, in \(4,520\), the digit \(4\) is in the thousands place, which means \(4,000\). When sorting numbers, we look at the highest place value first.</p>
+                    <p class="bilingual">Nilai Tempat & Pengurutan: Setiap digit dalam angka memiliki nilai tertentu berdasarkan posisinya. Misalnya, dalam \(4,520\), digit \(4\) berada di tempat ribuan, yang berarti \(4,000\). Saat mengurutkan angka, kita melihat nilai tempat tertinggi terlebih dahulu.</p>
+                </div>
+
+                <div class="visualization-box">
+                    <!-- Visualisasi SVG Base-10 Blocks -->
+                    <svg width="100%" height="120" viewBox="0 0 400 100">
+                        <!-- 4 Thousands (Cubes) -->
+                        <g class="animate-bounce" style="animation-delay: 0s">
+                            <rect x="20" y="20" width="30" height="30" fill="#FF7043" stroke="#D84315" stroke-width="2"/>
+                            <rect x="60" y="20" width="30" height="30" fill="#FF7043" stroke="#D84315" stroke-width="2"/>
+                            <rect x="100" y="20" width="30" height="30" fill="#FF7043" stroke="#D84315" stroke-width="2"/>
+                            <rect x="140" y="20" width="30" height="30" fill="#FF7043" stroke="#D84315" stroke-width="2"/>
+                            <text x="95" y="70" font-family="Fredoka One" font-size="14" fill="#D84315" text-anchor="middle">4,000</text>
+                        </g>
+                        <!-- 5 Hundreds (Flats) -->
+                        <g class="animate-bounce" style="animation-delay: 0.2s">
+                            <rect x="190" y="20" width="40" height="30" fill="#FFA726" stroke="#EF6C00" stroke-width="2"/>
+                            <text x="210" y="70" font-family="Fredoka One" font-size="14" fill="#EF6C00" text-anchor="middle">500</text>
+                        </g>
+                        <!-- 2 Tens (Rods) -->
+                        <g class="animate-bounce" style="animation-delay: 0.4s">
+                            <rect x="260" y="20" width="10" height="30" fill="#66BB6A" stroke="#2E7D32" stroke-width="2"/>
+                            <rect x="275" y="20" width="10" height="30" fill="#66BB6A" stroke="#2E7D32" stroke-width="2"/>
+                            <text x="272" y="70" font-family="Fredoka One" font-size="14" fill="#2E7D32" text-anchor="middle">20</text>
+                        </g>
+                        <!-- 0 Ones -->
+                        <text x="330" y="45" font-family="Fredoka One" font-size="14" fill="#757575" text-anchor="middle">0</text>
+                    </svg>
+                    <p style="font-size:0.9em; color:#757575; margin-top:10px;">Visualization of 4,520 / Visualisasi dari 4,520</p>
+                </div>
+
+                <div class="game-area" id="game1">
+                    <h3><i class="fas fa-gamepad"></i> Quick-Fire Challenge! <span class="bilingual">Tantangan Cepat!</span></h3>
+                    
+                    <!-- Q1 -->
+                    <div class="question-card" id="g1q1">
+                        <div class="q-title">1. In \(4,520\), which digit is in the thousands place? <span class="bilingual">Di angka 4.520, digit mana yang berada di tempat ribuan?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g1q1', false)">0</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q1', false)">2</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q1', false)">5</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q1', true)">4</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g1q1"></div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="question-card" id="g1q2">
+                        <div class="q-title">2. How many 'flats' of 100 do we need to represent 1,304? <span class="bilingual">Berapa banyak 'flat' 100 yang kita butuhkan untuk mewakili 1.304?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g1q2', false)">1</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q2', true)">3</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q2', false)">4</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q2', false)">0</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g1q2"></div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="question-card" id="g1q3">
+                        <div class="q-title">3. A secret number between 50 and 60 ends in 7. What is it? <span class="bilingual">Sebuah angka rahasia antara 50 dan 60 yang berakhiran 7. Apa itu?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g1q3', true)">57</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q3', false)">67</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q3', false)">47</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q3', false)">75</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g1q3"></div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="question-card" id="g1q4">
+                        <div class="q-title">4. Sort from smallest to largest: 450, 405, 540. <span class="bilingual">Urutkan dari terkecil ke terbesar: 450, 405, 540.</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g1q4', true)">405, 450, 540</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q4', false)">450, 405, 540</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q4', false)">540, 450, 405</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g1q4"></div>
+                    </div>
+
+                    <!-- Add more questions up to 10 here (abbreviated for structure, will expand if needed, keeping 5 for balance in part 1) -->
+                     <!-- Q5 -->
+                     <div class="question-card" id="g1q5">
+                        <div class="q-title">5. What is the value of the digit 8 in the number 8,300? <span class="bilingual">Berapa nilai digit 8 pada angka 8.300?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g1q5', false)">8</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q5', false)">80</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q5', false)">800</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g1q5', true)">8,000</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g1q5"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-check" onclick="checkAnswers('game1')"><i class="fas fa-check-circle"></i> Check</button>
+                        <button class="btn btn-reset" onclick="resetGame('game1')"><i class="fas fa-redo"></i> Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="section" id="sec2">
+                <div class="section-header">
+                    <h2><i class="fas fa-snowflake"></i> Introduction & Real-World <span class="bilingual">Pengantar & Koneksi Dunia Nyata</span></h2>
+                    <div class="timer-badge"><i class="fas fa-clock"></i> 00:10 - 00:15</div>
+                </div>
+
+                <div class="theory-box">
+                    <p><strong>Below Zero:</strong> What happens when the temperature drops below freezing? We use negative integers! Negative integers are numbers less than zero, written with a minus sign (e.g., \(-1, -2, -3\)). They represent things like freezing temperatures, debts, or floors below the lobby.</p>
+                    <p class="bilingual">Di Bawah Nol: Apa yang terjadi ketika suhu turun di bawah titik beku? Kita menggunakan bilangan bulat negatif! Bilangan bulat negatif adalah angka yang kurang dari nol, ditulis dengan tanda minus (misalnya \(-1, -2, -3\)). Mereka mewakili hal-hal seperti suhu beku, utang, atau lantai di bawah lobi.</p>
+                </div>
+
+                <div class="visualization-box">
+                    <!-- SVG Thermometer Animation -->
+                    <svg width="100" height="200" viewBox="0 0 100 200" style="margin:auto; display:block;">
+                        <!-- Tube -->
+                        <rect x="35" y="10" width="30" height="150" rx="15" fill="#ECEFF1" stroke="#455A64" stroke-width="3"/>
+                        <!-- Bulb -->
+                        <circle cx="50" cy="170" r="25" fill="#EF5350" stroke="#455A64" stroke-width="3"/>
+                        <!-- Mercury (Animated) -->
+                        <rect id="mercury" x="40" y="110" width="20" height="60" fill="#EF5350">
+                            <animate attributeName="height" values="60;40;20;5" dur="3s" repeatCount="indefinite"/>
+                            <animate attributeName="y" values="110;130;150;165" dur="3s" repeatCount="indefinite"/>
+                        </rect>
+                        <!-- Scale -->
+                        <text x="75" y="30" font-size="12" fill="#EF5350">10°C</text>
+                        <text x="75" y="80" font-size="12" fill="#455A64">0°C</text>
+                        <text x="75" y="140" font-size="12" fill="#2196F3">-10°C</text>
+                        <!-- Snowflake -->
+                        <text x="10" y="140" font-size="20" class="animate-pulse">❄️</text>
+                    </svg>
+                    <p style="font-size:0.9em; color:#757575; margin-top:10px;">Temperature dropping below zero / Suhu turun di bawah nol</p>
+                </div>
+
+                <div class="game-area" id="game2">
+                    <h3><i class="fas fa-gamepad"></i> Temperature Tracker <span class="bilingual">Pelacak Suhu</span></h3>
+                    
+                    <div class="question-card" id="g2q1">
+                        <div class="q-title">1. If the temperature is 5°C and drops 10°C, where does it end up? <span class="bilingual">Jika suhunya 5°C dan turun 10°C, di mana akhirnya?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g2q1', false)">15°C</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g2q1', false)">5°C</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g2q1', true)">-5°C</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g2q1', false)">0°C</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g2q1"></div>
+                    </div>
+
+                    <div class="question-card" id="g2q2">
+                        <div class="q-title">2. Which number represents a debt of 50 dollars? <span class="bilingual">Angka mana yang mewakili utang 50 dolar?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g2q2', false)">50</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g2q2', true)">-50</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g2q2', false)">0</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g2q2', false)">+50</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g2q2"></div>
+                    </div>
+
+                    <div class="question-card" id="g2q3">
+                        <div class="q-title">3. The basement is 2 floors below the lobby (Floor 0). What floor is it? <span class="bilingual">Ruang bawah tanah berada 2 lantai di bawah lobi (Lantai 0). Lantai berapa itu?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g2q3', true)">-2</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g2q3', false)">2</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g2q3', false)">1</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g2q3', false)">-1</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g2q3"></div>
+                    </div>
+
+                    <div class="question-card" id="g2q4">
+                        <div class="q-title">4. True or False: Negative numbers are always greater than zero. <span class="bilingual">Benar atau Salah: Bilangan negatif selalu lebih besar dari nol.</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g2q4', false)">True (Benar)</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g2q4', true)">False (Salah)</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g2q4"></div>
+                    </div>
+
+                    <div class="question-card" id="g2q5">
+                        <div class="q-title">5. Which symbol represents a negative integer? <span class="bilingual">Simbol mana yang mewakili bilangan bulat negatif?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g2q5', true)">- (Minus/Dash)</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g2q5', false)">+ (Plus)</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g2q5', false)">= (Equals)</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g2q5', false)">% (Percent)</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g2q5"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-check" onclick="checkAnswers('game2')"><i class="fas fa-check-circle"></i> Check</button>
+                        <button class="btn btn-reset" onclick="resetGame('game2')"><i class="fas fa-redo"></i> Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div class="section" id="sec3">
+                <div class="section-header">
+                    <h2><i class="fas fa-search"></i> Review of Prior Knowledge <span class="bilingual">Tinjauan Pengetahuan Sebelumnya</span></h2>
+                    <div class="timer-badge"><i class="fas fa-clock"></i> 00:15 - 00:20</div>
+                </div>
+
+                <div class="theory-box">
+                    <p><strong>The Number Line:</strong> On a horizontal number line, positive integers (\(1, 2, 3...\)) are to the right of zero. Zero is the middle ground—it is neither positive nor negative. What happens if we go to the left of zero? We enter the world of negative integers!</p>
+                    <p class="bilingual">Garis Bilangan: Pada garis bilangan horizontal, bilangan bulat positif (\(1, 2, 3...\)) berada di sebelah kanan nol. Nol adalah titik tengah—ia bukan positif maupun negatif. Apa yang terjadi jika kita pergi ke kiri nol? Kita memasuki dunia bilangan bulat negatif!</p>
+                </div>
+
+                <div class="visualization-box">
+                    <!-- SVG Number Line 0-10 -->
+                    <svg width="100%" height="80" viewBox="0 0 500 80">
+                        <!-- Line -->
+                        <line x1="20" y1="40" x2="490" y2="40" stroke="#455A64" stroke-width="3" marker-end="url(#arrowRight)"/>
+                        <defs><marker id="arrowRight" markerWidth="10" markerHeight="10" refX="0" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10" fill="#455A64"/></marker></defs>
+                        
+                        <!-- Ticks & Labels -->
+                        <g font-family="Fredoka One" font-size="14" fill="#009688" text-anchor="middle">
+                            <line x1="40" y1="35" x2="40" y2="45" stroke="#455A64" stroke-width="2"/><text x="40" y="65">0</text>
+                            <line x1="80" y1="35" x2="80" y2="45" stroke="#455A64" stroke-width="2"/><text x="80" y="65">1</text>
+                            <line x1="120" y1="35" x2="120" y2="45" stroke="#455A64" stroke-width="2"/><text x="120" y="65">2</text>
+                            <line x1="160" y1="35" x2="160" y2="45" stroke="#455A64" stroke-width="2"/><text x="160" y="65">3</text>
+                            <line x1="200" y1="35" x2="200" y2="45" stroke="#455A64" stroke-width="2"/><text x="200" y="65">4</text>
+                            <line x1="240" y1="35" x2="240" y2="45" stroke="#455A64" stroke-width="2"/><text x="240" y="65">5</text>
+                            <line x1="280" y1="35" x2="280" y2="45" stroke="#455A64" stroke-width="2"/><text x="280" y="65">6</text>
+                            <line x1="320" y1="35" x2="320" y2="45" stroke="#455A64" stroke-width="2"/><text x="320" y="65">7</text>
+                            <line x1="360" y1="35" x2="360" y2="45" stroke="#455A64" stroke-width="2"/><text x="360" y="65">8</text>
+                            <line x1="400" y1="35" x2="400" y2="45" stroke="#455A64" stroke-width="2"/><text x="400" y="65">9</text>
+                            <line x1="440" y1="35" x2="440" y2="45" stroke="#455A64" stroke-width="2"/><text x="440" y="65">10</text>
+                        </g>
+                        <!-- Positive Label -->
+                        <text x="250" y="20" font-family="Quicksand" font-weight="bold" fill="#009688" text-anchor="middle" font-size="12">Positive Integers / Bilangan Bulat Positif →</text>
+                    </svg>
+                </div>
+
+                <div class="game-area" id="game3">
+                    <h3><i class="fas fa-gamepad"></i> Number Line Explorer <span class="bilingual">Penjelajah Garis Bilangan</span></h3>
+                    
+                    <div class="question-card" id="g3q1">
+                        <div class="q-title">1. On a number line, where are positive numbers located? <span class="bilingual">Pada garis bilangan, di mana angka positif berada?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g3q1', false)">Left of zero (Kiri nol)</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g3q1', true)">Right of zero (Kanan nol)</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g3q1', false)">On zero (Di nol)</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g3q1"></div>
+                    </div>
+
+                    <div class="question-card" id="g3q2">
+                        <div class="q-title">2. Which number is neither positive nor negative? <span class="bilingual">Angka mana yang bukan positif maupun negatif?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g3q2', false)">1</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g3q2', false)">-1</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g3q2', true)">0</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g3q2', false)">2</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g3q2"></div>
+                    </div>
+
+                    <div class="question-card" id="g3q3">
+                        <div class="q-title">3. If we go LEFT from zero on the number line, the numbers are... <span class="bilingual">Jika kita pergi KE KIRI dari nol pada garis bilangan, angkanya adalah...</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g3q3', true)">Negative integers (Bilangan bulat negatif)</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g3q3', false)">Positive integers (Bilangan bulat positif)</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g3q3', false)">Decimals (Desimal)</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g3q3"></div>
+                    </div>
+
+                    <div class="question-card" id="g3q4">
+                        <div class="q-title">4. What number comes immediately to the left of 0? <span class="bilingual">Angka apa yang tepat berada di sebelah kiri 0?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g3q4', false)">1</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g3q4', true)">-1</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g3q4', false)">2</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g3q4', false)">-2</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g3q4"></div>
+                    </div>
+
+                    <div class="question-card" id="g3q5">
+                        <div class="q-title">5. A number line goes on forever in both directions. <span class="bilingual">Garis bilangan berlanjut selamanya di kedua arah.</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g3q5', true)">True (Benar)</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g3q5', false)">False (Salah)</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g3q5"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-check" onclick="checkAnswers('game3')"><i class="fas fa-check-circle"></i> Check</button>
+                        <button class="btn btn-reset" onclick="resetGame('game3')"><i class="fas fa-redo"></i> Reset</button>
+                    </div>
+                </div>
+            </div>
+            <!-- SECTION 4 -->
+            <div class="section" id="sec4">
+                <div class="section-header">
+                    <h2><i class="fas fa-balance-scale-right"></i> Problem Introduction <span class="bilingual">Pengantar Masalah</span></h2>
+                    <div class="timer-badge"><i class="fas fa-clock"></i> 00:20 - 00:30</div>
+                </div>
+
+                <div class="theory-box">
+                    <p><strong>The Mirror of Numbers:</strong> On a full number line, negative integers (\(-1, -2, -3...\)) are the mirror image of positive integers. Remember this golden rule: On a horizontal number line, <strong>"greater" always means "further to the right."</strong> Therefore, \(-2\) is greater than \(-5\) because \(-2\) is further to the right. It’s like being less "in debt" or "less cold"!</p>
+                    <p class="bilingual">Cermin Angka: Pada garis bilangan penuh, bilangan bulat negatif adalah bayangan cermin dari bilangan positif. Ingat aturan emas ini: Pada garis bilangan horizontal, "lebih besar" selalu berarti "lebih jauh ke kanan." Oleh karena itu, \(-2\) lebih besar dari \(-5\) karena \(-2\) lebih jauh ke kanan. Ini seperti "kurang berutang" atau "kurang dingin"!</p>
+                </div>
+
+                <div class="visualization-box">
+                    <!-- SVG Number Line -10 to 10 with Mirror Concept -->
+                    <svg width="100%" height="120" viewBox="0 0 500 120">
+                        <!-- Line -->
+                        <line x1="10" y1="40" x2="490" y2="40" stroke="#455A64" stroke-width="3"/>
+                        <!-- Zero Mirror Line -->
+                        <line x1="250" y1="10" x2="250" y2="70" stroke="#9C27B0" stroke-width="2" stroke-dasharray="5,5"/>
+                        <text x="250" y="85" font-family="Fredoka One" font-size="14" fill="#9C27B0" text-anchor="middle">Mirror (0)</text>
+                        
+                        <!-- Ticks & Labels -->
+                        <g font-family="Fredoka One" font-size="12" text-anchor="middle">
+                        <!-- Positives -->
+                        <text x="290" y="30" fill="#009688">1</text><line x1="290" y1="35" x2="290" y2="45" stroke="#455A64" stroke-width="2"/>
+                        <text x="330" y="30" fill="#009688">2</text><line x1="330" y1="35" x2="330" y2="45" stroke="#455A64" stroke-width="2"/>
+                        <text x="370" y="30" fill="#009688">3</text><line x1="370" y1="35" x2="370" y2="45" stroke="#455A64" stroke-width="2"/>
+                        <text x="410" y="30" fill="#009688">4</text><line x1="410" y1="35" x2="410" y2="45" stroke="#455A64" stroke-width="2"/>
+                        <text x="450" y="30" fill="#009688">5</text><line x1="450" y1="35" x2="450" y2="45" stroke="#455A64" stroke-width="2"/>
+                        <!-- Negatives -->
+                        <text x="210" y="30" fill="#EF5350">-1</text><line x1="210" y1="35" x2="210" y2="45" stroke="#455A64" stroke-width="2"/>
+                        <text x="170" y="30" fill="#EF5350">-2</text><line x1="170" y1="35" x2="170" y2="45" stroke="#455A64" stroke-width="2"/>
+                        <text x="130" y="30" fill="#EF5350">-3</text><line x1="130" y1="35" x2="130" y2="45" stroke="#455A64" stroke-width="2"/>
+                        <text x="90" y="30" fill="#EF5350">-4</text><line x1="90" y1="35" x2="90" y2="45" stroke="#455A64" stroke-width="2"/>
+                        <text x="50" y="30" fill="#EF5350">-5</text><line x1="50" y1="35" x2="50" y2="45" stroke="#455A64" stroke-width="2"/>
+                        <text x="250" y="30" fill="#455A64" font-size="14">0</text><line x1="250" y1="35" x2="250" y2="45" stroke="#455A64" stroke-width="3"/>
+                        </g>
+                        <!-- Comparison Arrows -->
+                        <path d="M170,60 L330,60" stroke="#2196F3" stroke-width="2" fill="none" marker-end="url(#arrowBlue)"/>
+                        <text x="250" y="75" font-family="Quicksand" font-size="12" fill="#2196F3" text-anchor="middle" font-weight="bold">-2 is greater than -5 (Further Right)</text>
+                        <defs><marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="0" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10" fill="#2196F3"/></marker></defs>
+                    </svg>
+                </div>
+
+                <div class="game-area" id="game4">
+                    <h3><i class="fas fa-gamepad"></i> Comparison Challenge <span class="bilingual">Tantangan Perbandingan</span></h3>
+                    
+                    <div class="question-card" id="g4q1">
+                        <div class="q-title">1. Which is greater: \(-5\) or \(-2\)? <span class="bilingual">Mana yang lebih besar: \(-5\) atau \(-2\)?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g4q1', false)">-5</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g4q1', true)">-2</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g4q1"></div>
+                    </div>
+
+                    <div class="question-card" id="g4q2">
+                        <div class="q-title">2. Which is greater: \(-10\) or \(-1\)? <span class="bilingual">Mana yang lebih besar: \(-10\) atau \(-1\)?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g4q2', false)">-10</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g4q2', true)">-1</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g4q2"></div>
+                    </div>
+
+                    <div class="question-card" id="g4q3">
+                        <div class="q-title">3. Which is greater: \(-4\) or \(0\)? <span class="bilingual">Mana yang lebih besar: \(-4\) atau \(0\)?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g4q3', true)">0</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g4q3', false)">-4</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g4q3"></div>
+                    </div>
+
+                    <div class="question-card" id="g4q4">
+                        <div class="q-title">4. True or False: \(-7\) is greater than \(-3\). <span class="bilingual">Benar atau Salah: \(-7\) lebih besar dari \(-3\).</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g4q4', false)">True (Benar)</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g4q4', true)">False (Salah)</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g4q4"></div>
+                    </div>
+
+                    <div class="question-card" id="g4q5">
+                        <div class="q-title">5. On a number line, which number is furthest to the right? <span class="bilingual">Pada garis bilangan, angka mana yang paling jauh ke kanan?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g4q5', false)">-9</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g4q5', false)">-5</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g4q5', true)">-1</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g4q5"></div>
+                    </div>
+
+                    <div class="question-card" id="g4q6">
+                        <div class="q-title">6. Which is smaller: \(-2\) or \(-8\)? <span class="bilingual">Mana yang lebih kecil: \(-2\) atau \(-8\)?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g4q6', false)">-2</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g4q6', true)">-8</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g4q6"></div>
+                    </div>
+
+                    <div class="question-card" id="g4q7">
+                        <div class="q-title">7. Think about debt. Is owing \$2 "greater" than owing \$5? <span class="bilingual">Pikirkan tentang utang. Apakah berutang \$2 "lebih besar" dari berutang \$5?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g4q7', true)">Yes, -2 is greater than -5.</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g4q7', false)">No, -5 is greater than -2.</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g4q7"></div>
+                    </div>
+
+                    <div class="question-card" id="g4q8">
+                        <div class="q-title">8. Which integer is exactly between \(-4\) and \(-2\)? <span class="bilingual">Bilangan bulat mana yang tepat berada di antara \(-4\) dan \(-2\)?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g4q8', true)">-3</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g4q8', false)">3</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g4q8', false)">-1</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g4q8"></div>
+                    </div>
+
+                    <div class="question-card" id="g4q9">
+                        <div class="q-title">9. Sort from smallest to largest: \(-3, 1, -1\). <span class="bilingual">Urutkan dari terkecil ke terbesar: \(-3, 1, -1\).</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g4q9', true)">-3, -1, 1</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g4q9', false)">1, -1, -3</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g4q9', false)">-1, -3, 1</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g4q9"></div>
+                    </div>
+
+                    <div class="question-card" id="g4q10">
+                        <div class="q-title">10. The further LEFT a number is on the number line, the _________ its value. <span class="bilingual">Semakin ke KIRI suatu angka pada garis bilangan, semakin _________ nilainya.</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g4q10', true)">Smaller (Lebih kecil)</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g4q10', false)">Greater (Lebih besar)</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g4q10"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-check" onclick="checkAnswers('game4')"><i class="fas fa-check-circle"></i> Check</button>
+                        <button class="btn btn-reset" onclick="resetGame('game4')"><i class="fas fa-redo"></i> Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 5 -->
+            <div class="section" id="sec5">
+                <div class="section-header">
+                    <h2><i class="fas fa-frog"></i> Guided Practice: The Distance Jump <span class="bilingual">Praktik Terbimbing: Lompatan Jarak</span></h2>
+                    <div class="timer-badge"><i class="fas fa-clock"></i> 00:30 - 00:45</div>
+                </div>
+
+                <div class="theory-box">
+                    <p><strong>Counting the Steps:</strong> How far is it from \(-3\) to \(2\)? On a number line, you can count the "jumps" between them: \(-2, -1, 0, 1, 2\). That's 5 steps! The distance between any two numbers is always a positive value. This is called the <strong>absolute distance</strong>.</p>
+                    <p class="bilingual">Menghitung Langkah: Seberapa jauh jarak dari \(-3\) ke \(2\)? Pada garis bilangan, kamu bisa menghitung "lompatan" di antaranya: \(-2, -1, 0, 1, 2\). Itu 5 langkah! Jarak antara dua angka selalu bernilai positif. Ini disebut jarak mutlak.</p>
+                </div>
+
+                <div class="visualization-box">
+                    <!-- SVG Frog Jump -->
+                    <svg width="100%" height="100" viewBox="0 0 500 100">
+                        <line x1="10" y1="50" x2="490" y2="50" stroke="#455A64" stroke-width="3"/>
+                        <g font-family="Fredoka One" font-size="12" text-anchor="middle" fill="#455A64">
+                            <text x="50" y="40">-5</text><line x1="50" y1="45" x2="50" y2="55" stroke="#455A64" stroke-width="2"/>
+                            <text x="130" y="40">-3</text><line x1="130" y1="45" x2="130" y2="55" stroke="#455A64" stroke-width="2"/>
+                            <text x="210" y="40">-1</text><line x1="210" y1="45" x2="210" y2="55" stroke="#455A64" stroke-width="2"/>
+                            <text x="250" y="40">0</text><line x1="250" y1="45" x2="250" y2="55" stroke="#455A64" stroke-width="3"/>
+                            <text x="290" y="40">1</text><line x1="290" y1="45" x2="290" y2="55" stroke="#455A64" stroke-width="2"/>
+                            <text x="330" y="40">2</text><line x1="330" y1="45" x2="330" y2="55" stroke="#455A64" stroke-width="2"/>
+                            <text x="410" y="40">4</text><line x1="410" y1="45" x2="410" y2="55" stroke="#455A64" stroke-width="2"/>
+                        </g>
+                        <!-- Frog -->
+                        <text x="130" y="80" font-size="24" class="animate-bounce" style="animation-duration: 2s">🐸</text>
+                        <!-- Arrow Jump -->
+                        <path d="M135,75 L325,75" stroke="#EF5350" stroke-width="3" fill="none" marker-end="url(#arrowRed)" stroke-dasharray="5,5"/>
+                        <text x="227" y="95" font-family="Quicksand" font-size="12" fill="#EF5350" text-anchor="middle" font-weight="bold">Distance = 5 steps</text>
+                        <defs><marker id="arrowRed" markerWidth="10" markerHeight="10" refX="0" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10" fill="#EF5350"/></marker></defs>
+                    </svg>
+                </div>
+
+                <div class="game-area" id="game5">
+                    <h3><i class="fas fa-gamepad"></i> Frog Jump Calculator <span class="bilingual">Kalkulator Lompatan Katak</span></h3>
+                    
+                    <div class="question-card" id="g5q1">
+                        <div class="q-title">1. What is the distance between \(-3\) and \(2\)? <span class="bilingual">Berapa jarak antara \(-3\) dan \(2\)?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g5q1', false)">1</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q1', true)">5</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q1', false)">3</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q1', false)">6</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g5q1"></div>
+                    </div>
+
+                    <div class="question-card" id="g5q2">
+                        <div class="q-title">2. What is the distance between \(-4\) and \(0\)? <span class="bilingual">Berapa jarak antara \(-4\) dan \(0\)?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g5q2', true)">4</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q2', false)">-4</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q2', false)">3</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g5q2"></div>
+                    </div>
+
+                    <div class="question-card" id="g5q3">
+                        <div class="q-title">3. Distance from \(-1\) to \(3\) is... <span class="bilingual">Jarak dari \(-1\) ke \(3\) adalah...</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g5q3', false)">2</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q3', true)">4</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q3', false)">3</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g5q3"></div>
+                    </div>
+
+                    <div class="question-card" id="g5q4">
+                        <div class="q-title">4. What is the distance between \(-5\) and \(-1\)? <span class="bilingual">Berapa jarak antara \(-5\) dan \(-1\)?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g5q4', false)">6</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q4', true)">4</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q4', false)">5</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g5q4"></div>
+                    </div>
+
+                    <div class="question-card" id="g5q5">
+                        <div class="q-title">5. A frog starts at \(1\) and jumps to \(-4\). What is the distance? <span class="bilingual">Seekor katak mulai dari \(1\) dan melompat ke \(-4\). Berapa jaraknya?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g5q5', true)">5</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q5', false)">3</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q5', false)">4</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g5q5"></div>
+                    </div>
+
+                    <div class="question-card" id="g5q6">
+                        <div class="q-title">6. True or False: The distance between \(2\) and \(-2\) is \(0\). <span class="bilingual">Benar atau Salah: Jarak antara \(2\) dan \(-2\) adalah \(0\).</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g5q6', false)">True (Benar)</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q6', true)">False (Salah, it is 4)</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g5q6"></div>
+                    </div>
+
+                    <div class="question-card" id="g5q7">
+                        <div class="q-title">7. Distance between \(-7\) and \(0\) is... <span class="bilingual">Jarak antara \(-7\) dan \(0\) adalah...</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g5q7', true)">7</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q7', false)">6</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q7', false)">8</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g5q7"></div>
+                    </div>
+
+                    <div class="question-card" id="g5q8">
+                        <div class="q-title">8. If the distance from \(0\) is \(5\), what are the two possible integers? <span class="bilingual">Jika jarak dari \(0\) adalah \(5\), apa dua bilangan bulat yang mungkin?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g5q8', true)">5 and -5</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q8', false)">4 and -4</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q8', false)">1 and -1</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g5q8"></div>
+                    </div>
+
+                    <div class="question-card" id="g5q9">
+                        <div class="q-title">9. What is the distance between \(-2\) and \(4\)? <span class="bilingual">Berapa jarak antara \(-2\) dan \(4\)?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g5q9', false)">4</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q9', true)">6</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q9', false)">2</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g5q9"></div>
+                    </div>
+
+                    <div class="question-card" id="g5q10">
+                        <div class="q-title">10. A grasshopper is at \(-6\). It jumps \(4\) units to the right. Where does it land? <span class="bilingual">Seekor belalang berada di \(-6\). Ia melompat \(4\) unit ke kanan. Di mana ia mendarat?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g5q10', true)">-2</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q10', false)">2</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g5q10', false)">-10</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g5q10"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-check" onclick="checkAnswers('game5')"><i class="fas fa-check-circle"></i> Check</button>
+                        <button class="btn btn-reset" onclick="resetGame('game5')"><i class="fas fa-redo"></i> Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 6 -->
+            <div class="section" id="sec6">
+                <div class="section-header">
+                    <h2><i class="fas fa-flask"></i> Independent Practice <span class="bilingual">Latihan Mandiri</span></h2>
+                    <div class="timer-badge"><i class="fas fa-clock"></i> 00:45 - 00:55</div>
+                </div>
+
+                <div class="theory-box">
+                    <p><strong>Real-World Math:</strong> Negative numbers aren't just on a line; they exist in the real world! Scientists measure freezing temperatures below \(0^\circ\)C, and submarine pilots navigate depths below sea level (represented as negative numbers). If a temperature rises, we move to the right on the number line. If a submarine rises, its negative depth gets closer to zero.</p>
+                    <p class="bilingual">Matematika Dunia Nyata: Bilangan negatif bukan hanya di atas kertas; mereka ada di dunia nyata! Ilmuwan mengukur suhu beku di bawah \(0^\circ\)C, dan pilot kapal selam menavigasi kedalaman di bawah permukaan laut (diwakili sebagai angka negatif). Jika suhu naik, kita bergerak ke kanan pada garis bilangan. Jika kapal selam naik, kedalaman negatifnya mendekati nol.</p>
+                </div>
+
+                <div class="visualization-box">
+                    <!-- SVG Submarine & Depth -->
+                    <svg width="100%" height="150" viewBox="0 0 500 150">
+                        <!-- Water Surface -->
+                        <path d="M0,30 Q50,20 100,30 T200,30 T300,30 T400,30 T500,30" fill="#81D4FA" stroke="#0288D1" stroke-width="2"/>
+                        <rect x="0" y="30" width="500" height="120" fill="#4FC3F7" opacity="0.5"/>
+                        
+                        <!-- Depth Lines -->
+                        <line x1="400" y1="30" x2="400" y2="150" stroke="#455A64" stroke-width="2"/>
+                        <text x="420" y="35" font-family="Fredoka One" font-size="12" fill="#01579B">0 m (Sea Level)</text>
+                        <line x1="390" y1="70" x2="410" y2="70" stroke="#455A64" stroke-width="2"/>
+                        <text x="420" y="75" font-family="Fredoka One" font-size="12" fill="#01579B">-20 m</text>
+                        <line x1="390" y1="110" x2="410" y2="110" stroke="#455A64" stroke-width="2"/>
+                        <text x="420" y="115" font-family="Fredoka One" font-size="12" fill="#01579B">-50 m</text>
+                        
+                        <!-- Submarine at -50 -->
+                        <g class="animate-pulse">
+                            <path d="M200,105 L280,105 Q300,105 300,115 L300,125 Q300,135 280,135 L200,135 Q180,135 180,125 L180,115 Q180,105 200,105 Z" fill="#FFB74D" stroke="#E65100" stroke-width="2"/>
+                            <rect x="230" y="95" width="20" height="15" fill="#E65100"/>
+                            <circle cx="220" cy="115" r="4" fill="#FFF9C4"/>
+                            <circle cx="260" cy="115" r="4" fill="#FFF9C4"/>
+                        </g>
+                        <text x="230" y="155" font-family="Quicksand" font-weight="bold" font-size="12" fill="#E65100" text-anchor="middle">Start: -50m</text>
+                    </svg>
+                </div>
+
+                <div class="game-area" id="game6">
+                    <h3><i class="fas fa-gamepad"></i> Sorting & Word Problems <span class="bilingual">Pengurutan & Soal Cerita</span></h3>
+                    
+                    <div class="question-card" id="g6q1">
+                        <div class="q-title">1. Sort from smallest to largest: \(-8, 2, 0, -3\). <span class="bilingual">Urutkan dari terkecil ke terbesar: \(-8, 2, 0, -3\).</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g6q1', true)">-8, -3, 0, 2</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q1', false)">2, 0, -3, -8</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q1', false)">-3, -8, 0, 2</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g6q1"></div>
+                    </div>
+
+                    <div class="question-card" id="g6q2">
+                        <div class="q-title">2. The temperature is \(-10^\circ\)C. It rises 4 degrees. What is the new temperature? <span class="bilingual">Suhunya \(-10^\circ\)C. Naik 4 derajat. Berapa suhu barunya?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g6q2', false)">-14°C</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q2', true)">-6°C</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q2', false)">6°C</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q2', false)">14°C</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g6q2"></div>
+                    </div>
+
+                    <div class="question-card" id="g6q3">
+                        <div class="q-title">3. Sort from coldest to warmest: \(4^\circ\)C, \(-2^\circ\)C, \(-10^\circ\)C, \(0^\circ\)C. <span class="bilingual">Urutkan dari terdingin ke terhangat: \(4^\circ\)C, \(-2^\circ\)C, \(-10^\circ\)C, \(0^\circ\)C.</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g6q3', true)">-10°C, -2°C, 0°C, 4°C</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q3', false)">4°C, 0°C, -2°C, -10°C</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q3', false)">-2°C, -10°C, 0°C, 4°C</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g6q3"></div>
+                    </div>
+
+                    <div class="question-card" id="g6q4">
+                        <div class="q-title">4. A submarine is at \(-50\)m. It rises 20m. What is its new position? <span class="bilingual">Kapal selam berada di \(-50\)m. Ia naik 20m. Berapa posisi barunya?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g6q4", false)">-70m</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q4', true)">-30m</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q4', false)">30m</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g6q4"></div>
+                    </div>
+
+                    <div class="question-card" id="g6q5">
+                        <div class="q-title">5. Find the sum of the distance from \(-5\) to \(0\) and the distance from \(0\) to \(3\). <span class="bilingual">Jumlahkan jarak dari \(-5\) ke \(0\) dan jarak dari \(0\) ke \(3\).</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g6q5', true)">8</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q5', false)">2</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q5', false)">-8</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g6q5"></div>
+                    </div>
+
+                    <div class="question-card" id="g6q6">
+                        <div class="q-title">6. If you are at \(-8\) and you move 10 units to the right, where do you land? <span class="bilingual">Jika Anda di \(-8\) dan bergerak 10 unit ke kanan, di mana Anda mendarat?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g6q6', true)">2</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q6', false)">-2</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q6', false)">18</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g6q6"></div>
+                    </div>
+
+                    <div class="question-card" id="g6q7">
+                        <div class="q-title">7. Complete the inequality: \(-15\) ___ \(-12\). <span class="bilingual">Lengkapi pertidaksamaan: \(-15\) ___ \(-12\).</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g6q7', true)"><</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q7', false)">></button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q7', false)">=</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g6q7"></div>
+                    </div>
+
+                    <div class="question-card" id="g6q8">
+                        <div class="q-title">8. A freezer was at \(-18^\circ\)C. A power outage caused it to rise 5 degrees. What is the temperature now? <span class="bilingual">Pembeku suhunya \(-18^\circ\)C. Pemadaman listrik menyebabkannya naik 5 derajat. Berapa suhunya sekarang?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g6q8', true)">-13°C</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q8', false)">-23°C</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q8', false)">13°C</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g6q8"></div>
+                    </div>
+
+                    <div class="question-card" id="g6q9">
+                        <div class="q-title">9. Which of these integers is greater than \(-4\) but less than \(2\)? <span class="bilingual">Bilangan bulat mana yang lebih besar dari \(-4\) tetapi kurang dari \(2\)?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g6q9', false)">-5</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q9', true)">0</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q9', false)">3</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g6q9"></div>
+                    </div>
+
+                    <div class="question-card" id="g6q10">
+                        <div class="q-title">10. What is the distance between \(-4\) and \(1\)? <span class="bilingual">Berapa jarak antara \(-4\) dan \(1\)?</span></div>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectOption(this, 'g6q10', false)">3</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q10', true)">5</button>
+                            <button class="option-btn" onclick="selectOption(this, 'g6q10', false)">4</button>
+                        </div>
+                        <div class="feedback-text" id="fb-g6q10"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-check" onclick="checkAnswers('game6')"><i class="fas fa-check-circle"></i> Check</button>
+                        <button class="btn btn-reset" onclick="resetGame('game6')"><i class="fas fa-redo"></i> Reset</button>
+                    </div>
+                </div>
+            </div>
+            <!-- SECTION 7: ASSESSMENT -->
+            <div class="section" id="sec7">
+                <div class="section-header">
+                    <h2><i class="fas fa-clipboard-check"></i> Assessment <span class="bilingual">Penilaian</span></h2>
+                    <div class="timer-badge"><i class="fas fa-clock"></i> 00:55 - 01:00</div>
+                </div>
+
+                <div class="theory-box" style="background: #E8EAF6; border-left-color: #3F51B5;">
+                    <p><strong>Time to Shine!</strong> Complete the questions below. Read carefully and do your best. Good luck! <span class="bilingual">Saatnya Bersinar! Jawab pertanyaan di bawah ini. Baca dengan cermat dan lakukan yang terbaik. Semoga sukses!</span></p>
+                    <div style="display: flex; gap: 15px; margin-top: 15px; flex-wrap: wrap;">
+                        <div style="flex:1; min-width: 200px;">
+                            <label><strong>Name / Nama:</strong></label><br>
+                            <input type="text" id="studentName" style="width: 100%; padding: 8px; border: 2px solid #3F51B5; border-radius: 5px; font-family: 'Quicksand';" placeholder="Enter your name">
+                        </div>
+                        <div style="flex:1; min-width: 200px;">
+                            <label><strong>Date / Tanggal:</strong></label><br>
+                            <input type="date" id="assessmentDate" style="width: 100%; padding: 8px; border: 2px solid #3F51B5; border-radius: 5px; font-family: 'Quicksand';">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="tab-nav" style="display: flex; gap: 5px; margin-bottom: 15px; flex-wrap: wrap;">
+                    <button class="tab-btn active" onclick="openTab('GroupA')">Group A</button>
+                    <button class="tab-btn" onclick="openTab('GroupB')">Group B</button>
+                    <button class="tab-btn" onclick="openTab('GroupC')">Group C</button>
+                    <button class="tab-btn" onclick="openTab('GroupD')">Group D</button>
+                    <button class="tab-btn" onclick="openTab('GroupE')">Group E</button>
+                </div>
+
+                <!-- GROUP A -->
+                <div id="GroupA" class="tab-content active-assessment">
+                    <div class="assessment-card" id="qA1">
+                        <p><strong>1.</strong> Which number is \(-3\) units to the left of \(0\)? <span class="bilingual">Angka mana yang berada \(-3\) unit di sebelah kiri \(0\)?</span></p>
+                        <label><input type="radio" name="qA1" value="3"> 3</label>
+                        <label><input type="radio" name="qA1" value="-3"> -3</label>
+                        <label><input type="radio" name="qA1" value="0"> 0</label>
+                        <div class="feedback-text" id="fb-qA1"></div>
+                    </div>
+
+                    <div class="assessment-card" id="qA2">
+                        <p><strong>2.</strong> Choose the correct integer for "Ten floors below ground". <span class="bilingual">Pilih bilangan bulat yang tepat untuk "Sepuluh lantai di bawah tanah".</span></p>
+                        <select id="qA2">
+                            <option value="">-- Select --</option>
+                            <option value="10">10</option>
+                            <option value="-10">-10</option>
+                            <option value="0">0</option>
+                            <option value="-1">-1</option>
+                        </select>
+                        <div class="feedback-text" id="fb-qA2"></div>
+                    </div>
+
+                    <div class="assessment-card" id="qA3">
+                        <p><strong>3.</strong> Write the integer that represents a debt of \$50. <span class="bilingual">Tulis bilangan bulat yang mewakili utang \$50.</span></p>
+                        <input type="text" id="qA3" placeholder="Type answer (e.g. -5)">
+                        <div class="feedback-text" id="fb-qA3"></div>
+                    </div>
+
+                    <div class="assessment-card" id="qA4">
+                        <p><strong>4.</strong> Which of the following are NEGATIVE integers? (Select TWO) <span class="bilingual">Manakah yang merupakan bilangan bulat NEGATIF? (Pilih DUA)</span></p>
+                        <label><input type="checkbox" name="qA4" value="-7"> -7</label>
+                        <label><input type="checkbox" name="qA4" value="0"> 0</label>
+                        <label><input type="checkbox" name="qA4" value="4"> 4</label>
+                        <label><input type="checkbox" name="qA4" value="-2"> -2</label>
+                        <div class="feedback-text" id="fb-qA4"></div>
+                    </div>
+
+                    <div class="assessment-card" id="qA5">
+                        <p><strong>5.</strong> Order from smallest to largest by dragging. <span class="bilingual">Urutkan dari terkecil ke terbesar dengan menyeret.</span></p>
+                        <ul id="sort-qA5" class="sortable-list">
+                            <li draggable="true" data-val="1">1</li>
+                            <li draggable="true" data-val="-2">-2</li>
+                            <li draggable="true" data-val="0">0</li>
+                        </ul>
+                        <div class="feedback-text" id="fb-qA5"></div>
+                    </div>
+                    
+                    <div class="assessment-card" id="qA6">
+                        <p><strong>6.</strong> Is \(-5\) greater than \(-2\)? <span class="bilingual">Apakah \(-5\) lebih besar dari \(-2\)?</span></p>
+                        <label><input type="radio" name="qA6" value="Yes"> Yes</label>
+                        <label><input type="radio" name="qA6" value="No"> No</label>
+                        <div class="feedback-text" id="fb-qA6"></div>
+                    </div>
+
+                    <div class="assessment-card" id="qA7">
+                        <p><strong>7.</strong> The temperature is \(-20^\circ\)C. It rises by \(5^\circ\)C. What is the new temperature? <span class="bilingual">Suhunya \(-20^\circ\)C. Naik \(5^\circ\)C. Berapa suhu barunya?</span></p>
+                        <input type="text" id="qA7" placeholder="Type answer">
+                        <div class="feedback-text" id="fb-qA7"></div>
+                    </div>
+
+                    <div class="assessment-card" id="qA8">
+                        <p><strong>8.</strong> Which symbol makes this true? \(-4 \quad \_\quad -9\) <span class="bilingual">Simbol mana yang membuat ini benar? \(-4 \quad \_\quad -9\)</span></p>
+                        <select id="qA8">
+                            <option value="">-- Select --</option>
+                            <option value="<"><</option>
+                            <option value=">">></option>
+                            <option value="=">=</option>
+                        </select>
+                        <div class="feedback-text" id="fb-qA8"></div>
+                    </div>
+
+                    <div class="assessment-card" id="qA9">
+                        <p><strong>9.</strong> What is the distance between \(-4\) and \(3\)? <span class="bilingual">Berapa jarak antara \(-4\) dan \(3\)?</span></p>
+                        <input type="text" id="qA9" placeholder="Type number">
+                        <div class="feedback-text" id="fb-qA9"></div>
+                    </div>
+
+                    <div class="assessment-card" id="qA10">
+                        <p><strong>10.</strong> Which numbers have an absolute distance of 4 from 0? (Select TWO) <span class="bilingual">Angka mana yang memiliki jarak mutlak 4 dari 0? (Pilih DUA)</span></p>
+                        <label><input type="checkbox" name="qA10" value="4"> 4</label>
+                        <label><input type="checkbox" name="qA10" value="-4"> -4</label>
+                        <label><input type="checkbox" name="qA10" value="2"> 2</label>
+                        <label><input type="checkbox" name="qA10" value="-5"> -5</label>
+                        <div class="feedback-text" id="fb-qA10"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-check" onclick="checkAssessment('A')"><i class="fas fa-check-circle"></i> Submit Group A</button>
+                        <button class="btn btn-reset" onclick="resetAssessment('A')"><i class="fas fa-redo"></i> Reset Group A</button>
+                        <button class="btn" style="background:#455A64" onclick="printAssessment('A')"><i class="fas fa-print"></i> Print Group A</button>
+                        <div id="scoreA" style="margin-left:auto; font-family:'Fredoka One'; font-size:1.2em; color:var(--primary)"></div>
+                    </div>
+                </div>
+
+                <!-- GROUP B (Abbreviated structure for token limit, same logic applies) -->
+                <div id="GroupB" class="tab-content">
+                    <div class="assessment-card" id="qB1"><p><strong>1.</strong> \(-7\) is a positive integer. (True/False) <span class="bilingual">\(-7\) adalah bilangan bulat positif.</span></p><label><input type="radio" name="qB1" value="True"> True</label><label><input type="radio" name="qB1" value="False"> False</label><div class="feedback-text" id="fb-qB1"></div></div>
+                    <div class="assessment-card" id="qB2"><p><strong>2.</strong> Which is warmer? <span class="bilingual">Mana yang lebih hangat?</span></p><select id="qB2"><option value="">--</option><option value="-2">-2°C</option><option value="-8">-8°C</option></select><div class="feedback-text" id="fb-qB2"></div></div>
+                    <div class="assessment-card" id="qB3"><p><strong>3.</strong> Distance from \(-6\) to \(0\)? <span class="bilingual">Jarak dari \(-6\) ke \(0\)?</span></p><input type="text" id="qB3" placeholder="Type answer"><div class="feedback-text" id="fb-qB3"></div></div>
+                    <div class="assessment-card" id="qB4"><p><strong>4.</strong> Which are less than 0? (Select TWO) <span class="bilingual">Mana yang kurang dari 0? (Pilih DUA)</span></p><label><input type="checkbox" name="qB4" value="-1"> -1</label><label><input type="checkbox" name="qB4" value="5"> 5</label><label><input type="checkbox" name="qB4" value="-3"> -3</label><label><input type="checkbox" name="qB4" value="2"> 2</label><div class="feedback-text" id="fb-qB4"></div></div>
+                    <div class="assessment-card" id="qB5"><p><strong>5.</strong> Drag to order coldest to warmest. <span class="bilingual">Seret untuk mengurutkan paling dingin ke hangat.</span></p><ul id="sort-qB5" class="sortable-list"><li draggable="true" data-val="0">0°C</li><li draggable="true" data-val="-5">-5°C</li><li draggable="true" data-val="2">2°C</li></ul><div class="feedback-text" id="fb-qB5"></div></div>
+                    <div class="assessment-card" id="qB6"><p><strong>6.</strong> Is \(0\) a negative number? <span class="bilingual">Apakah \(0\) bilangan negatif?</span></p><label><input type="radio" name="qB6" value="Yes"> Yes</label><label><input type="radio" name="qB6" value="No"> No</label><div class="feedback-text" id="fb-qB6"></div></div>
+                    <div class="assessment-card" id="qB7"><p><strong>7.</strong> Sub at \(-20\)m rises 10m. New position? <span class="bilingual">Kapal selam di \(-20\)m naik 10m. Posisi baru?</span></p><input type="text" id="qB7" placeholder="Type answer"><div class="feedback-text" id="fb-qB7"></div></div>
+                    <div class="assessment-card" id="qB8"><p><strong>8.</strong> \(-12 \quad \_\quad -15\) <span class="bilingual">\(-12 \quad \_\quad -15\)</span></p><select id="qB8"><option value="">--</option><option value="<"><</option><option value=">">></option></select><div class="feedback-text" id="fb-qB8"></div></div>
+                    <div class="assessment-card" id="qB9"><p><strong>9.</strong> Distance between \(1\) and \(-4\)? <span class="bilingual">Jarak antara \(1\) dan \(-4\)?</span></p><input type="text" id="qB9" placeholder="Type answer"><div class="feedback-text" id="fb-qB9"></div></div>
+                    <div class="assessment-card" id="qB10"><p><strong>10.</strong> Integers between \(-3\) and \(1\)? (Select ALL that apply) <span class="bilingual">Bilangan bulat antara \(-3\) dan \(1\)? (Pilih SEMUA yang berlaku)</span></p><label><input type="checkbox" name="qB10" value="-2"> -2</label><label><input type="checkbox" name="qB10" value="-1"> -1</label><label><input type="checkbox" name="qB10" value="0"> 0</label><label><input type="checkbox" name="qB10" value="1"> 1</label><div class="feedback-text" id="fb-qB10"></div></div>
+                    <div class="btn-group"><button class="btn btn-check" onclick="checkAssessment('B')"><i class="fas fa-check-circle"></i> Submit Group B</button><button class="btn btn-reset" onclick="resetAssessment('B')"><i class="fas fa-redo"></i> Reset</button><button class="btn" style="background:#455A64" onclick="printAssessment('B')"><i class="fas fa-print"></i> Print</button><div id="scoreB" style="margin-left:auto; font-family:'Fredoka One'; font-size:1.2em; color:var(--primary)"></div></div>
+                </div>
+
+                <!-- GROUP C, D, E (Representative questions) -->
+                <div id="GroupC" class="tab-content">
+                    <p style="text-align:center; font-weight:bold; color:var(--primary);">Group C: Advanced Word Problems <span class="bilingual">Grup C: Soal Cerita Lanjutan</span></p>
+                    <div class="assessment-card" id="qC1"><p><strong>1.</strong> A bank account has \$50. A withdrawal of \$70 is made. Balance? <span class="bilingual">Saldo rekening \$50. Penarikan \$70. Sisa?</span></p><input type="text" id="qC1" placeholder="-20"><div class="feedback-text" id="fb-qC1"></div></div>
+                    <div class="assessment-card" id="qC2"><p><strong>2.</strong> Temp is \(-15^\circ\)C. It drops \(5^\circ\)C, then rises \(10^\circ\)C. Final temp? <span class="bilingual">Suhu \(-15^\circ\)C. Turun \(5^\circ\)C, lalu naik \(10^\circ\)C. Suhu akhir?</span></p><input type="text" id="qC2" placeholder="Type answer"><div class="feedback-text" id="fb-qC2"></div></div>
+                    <div class="assessment-card" id="qC3"><p><strong>3.</strong> Elevator at floor 5. Goes down 8 floors. Where is it? <span class="bilingual">Lift di lantai 5. Turun 8 lantai. Di mana ia sekarang?</span></p><input type="text" id="qC3" placeholder="Type answer"><div class="feedback-text" id="fb-qC3"></div></div>
+                    <div class="assessment-card" id="qC4"><p><strong>4.</strong> Which is further from 0: \(-9\) or \(6\)? <span class="bilingual">Mana yang lebih jauh dari 0: \(-9\) atau \(6\)?</span></p><label><input type="radio" name="qC4" value="-9"> -9</label><label><input type="radio" name="qC4" value="6"> 6</label><div class="feedback-text" id="fb-qC4"></div></div>
+                    <div class="assessment-card" id="qC5"><p><strong>5.</strong> Order: \(-1, 3, -4, 0\) (Drag to sort smallest to largest) <span class="bilingual">Urutkan: \(-1, 3, -4, 0\)</span></p><ul id="sort-qC5" class="sortable-list"><li draggable="true" data-val="3">3</li><li draggable="true" data-val="-4">-4</li><li draggable="true" data-val="0">0</li><li draggable="true" data-val="-1">-1</li></ul><div class="feedback-text" id="fb-qC5"></div></div>
+                    <!-- Add 5 more simple inputs/radios to make 10 for Group C -->
+                    <div class="assessment-card" id="qC6"><p><strong>6.</strong> \(|-8| = \) ? <span class="bilingual">Nilai mutlak dari \(-8\)?</span></p><input type="text" id="qC6" placeholder="8"><div class="feedback-text" id="fb-qC6"></div></div>
+                    <div class="assessment-card" id="qC7"><p><strong>7.</strong> Is \(-3 > -10\)? <span class="bilingual">Apakah \(-3 > -10\)?</span></p><label><input type="radio" name="qC7" value="Yes"> Yes</label><label><input type="radio" name="qC7" value="No"> No</label><div class="feedback-text" id="fb-qC7"></div></div>
+                    <div class="assessment-card" id="qC8"><p><strong>8.</strong> Distance between \(-7\) and \(-2\)? <span class="bilingual">Jarak antara \(-7\) dan \(-2\)?</span></p><input type="text" id="qC8" placeholder="5"><div class="feedback-text" id="fb-qC8"></div></div>
+                    <div class="assessment-card" id="qC9"><p><strong>9.</strong> \(-5 + 8 = \) ? <span class="bilingual">\(-5 + 8 = \)?</span></p><input type="text" id="qC9" placeholder="3"><div class="feedback-text" id="fb-qC9"></div></div>
+                    <div class="assessment-card" id="qC10"><p><strong>10.</strong> Sum of distances from \(-4\) to \(0\) and \(0\) to \(2\). <span class="bilingual">Jumlah jarak dari \(-4\) ke \(0\) dan \(0\) ke \(2\).</span></p><input type="text" id="qC10" placeholder="6"><div class="feedback-text" id="fb-qC10"></div></div>
+                    <div class="btn-group"><button class="btn btn-check" onclick="checkAssessment('C')"><i class="fas fa-check-circle"></i> Submit Group C</button><button class="btn btn-reset" onclick="resetAssessment('C')"><i class="fas fa-redo"></i> Reset</button><button class="btn" style="background:#455A64" onclick="printAssessment('C')"><i class="fas fa-print"></i> Print</button><div id="scoreC" style="margin-left:auto; font-family:'Fredoka One'; font-size:1.2em; color:var(--primary)"></div></div>
+                </div>
+
+                <div id="GroupD" class="tab-content">
+                    <p style="text-align:center; font-weight:bold; color:var(--primary);">Group D: Inequalities & Distance <span class="bilingual">Grup D: Pertidaksamaan & Jarak</span></p>
+                    <!-- Repeat pattern with 10 divs id="qD1" to "qD10" -->
+                    <div class="assessment-card" id="qD1"><p><strong>1.</strong> \(-15 \_\_ -12\) <span class="bilingual">Isi tanda: \(-15 \_\_ -12\)</span></p><select id="qD1"><option value="">--</option><option value="<"><</option><option value=">">></option></select><div class="feedback-text" id="fb-qD1"></div></div>
+                    <div class="assessment-card" id="qD2"><p><strong>2.</strong> Distance from \(-10\) to \(5\)? <span class="bilingual">Jarak dari \(-10\) ke \(5\)?</span></p><input type="text" id="qD2" placeholder="15"><div class="feedback-text" id="fb-qD2"></div></div>
+                    <div class="assessment-card" id="qD3"><p><strong>3.</strong> Which is smallest? \(-25, -5, -50\) <span class="bilingual">Mana yang paling kecil?</span></p><label><input type="radio" name="qD3" value="-25"> -25</label><label><input type="radio" name="qD3" value="-5"> -5</label><label><input type="radio" name="qD3" value="-50"> -50</label><div class="feedback-text" id="fb-qD3"></div></div>
+                    <div class="assessment-card" id="qD4"><p><strong>4.</strong> \(-20 + 20 = \) <span class="bilingual">\(-20 + 20 = \)</span></p><input type="text" id="qD4" placeholder="0"><div class="feedback-text" id="fb-qD4"></div></div>
+                    <div class="assessment-card" id="qD5"><p><strong>5.</strong> Drag to sort: \(0, -1, -4, 2\) (largest to smallest) <span class="bilingual">Seret: \(0, -1, -4, 2\) (terbesar ke terkecil)</span></p><ul id="sort-qD5" class="sortable-list"><li draggable="true" data-val="0">0</li><li draggable="true" data-val="-1">-1</li><li draggable="true" data-val="-4">-4</li><li draggable="true" data-val="2">2</li></ul><div class="feedback-text" id="fb-qD5"></div></div>
+                    <div class="assessment-card" id="qD6"><p><strong>6.</strong> Freezer at \(-18^\circ\)C. Rises \(5^\circ\)C. Temp now? <span class="bilingual">Pembeku \(-18^\circ\)C. Naik \(5^\circ\)C. Suhu sekarang?</span></p><input type="text" id="qD6" placeholder="-13"><div class="feedback-text" id="fb-qD6"></div></div>
+                    <div class="assessment-card" id="qD7"><p><strong>7.</strong> Identify integers \(> -4\) and \(< 0\). (Check ALL) <span class="bilingual">Tandai bilangan bulat \(> -4\) dan \(< 0\).</span></p><label><input type="checkbox" name="qD7" value="-3"> -3</label><label><input type="checkbox" name="qD7" value="-2"> -2</label><label><input type="checkbox" name="qD7" value="-1"> -1</label><label><input type="checkbox" name="qD7" value="0"> 0</label><div class="feedback-text" id="fb-qD7"></div></div>
+                    <div class="assessment-card" id="qD8"><p><strong>8.</strong> Is \(|-6| > |2|\)? <span class="bilingual">Apakah \(|-6| > |2|\)?</span></p><label><input type="radio" name="qD8" value="Yes"> Yes</label><label><input type="radio" name="qD8" value="No"> No</label><div class="feedback-text" id="fb-qD8"></div></div>
+                    <div class="assessment-card" id="qD9"><p><strong>9.</strong> \(-7 - 3 = \) ? <span class="bilingual">\(-7 - 3 = \)?</span></p><input type="text" id="qD9" placeholder="-10"><div class="feedback-text" id="fb-qD9"></div></div>
+                    <div class="assessment-card" id="qD10"><p><strong>10.</strong> At \(-100\)m, a sub rises \(40\)m, then rises \(30\)m. Final? <span class="bilingual">Di \(-100\)m, kapal selam naik \(40\)m, lalu \(30\)m. Akhir?</span></p><input type="text" id="qD10" placeholder="-30"><div class="feedback-text" id="fb-qD10"></div></div>
+                    <div class="btn-group"><button class="btn btn-check" onclick="checkAssessment('D')"><i class="fas fa-check-circle"></i> Submit Group D</button><button class="btn btn-reset" onclick="resetAssessment('D')"><i class="fas fa-redo"></i> Reset</button><button class="btn" style="background:#455A64" onclick="printAssessment('D')"><i class="fas fa-print"></i> Print</button><div id="scoreD" style="margin-left:auto; font-family:'Fredoka One'; font-size:1.2em; color:var(--primary)"></div></div>
+                </div>
+
+                <div id="GroupE" class="tab-content">
+                    <p style="text-align:center; font-weight:bold; color:var(--primary);">Group E: Mixed Challenge <span class="bilingual">Grup E: Tantangan Campuran</span></p>
+                    <div class="assessment-card" id="qE1"><p><strong>1.</strong> What is the opposite of \(-8\)? <span class="bilingual">Apa lawan dari \(-8\)?</span></p><input type="text" id="qE1" placeholder="8"><div class="feedback-text" id="fb-qE1"></div></div>
+                    <div class="assessment-card" id="qE2"><p><strong>2.</strong> Which is greater? \(-100\) or \(-99\)? <span class="bilingual">Mana yang lebih besar?</span></p><label><input type="radio" name="qE2" value="-100"> -100</label><label><input type="radio" name="qE2" value="-99"> -99</label><div class="feedback-text" id="fb-qE2"></div></div>
+                    <div class="assessment-card" id="qE3"><p><strong>3.</strong> \(-4 + 4 = \) ? <span class="bilingual">\(-4 + 4 = \)?</span></p><input type="text" id="qE3" placeholder="0"><div class="feedback-text" id="fb-qE3"></div></div>
+                    <div class="assessment-card" id="qE4"><p><strong>4.</strong> Sort from warmest to coldest: \(10, -5, 0, -2\) (Drag) <span class="bilingual">Urutkan terhangat ke terdingin: \(10, -5, 0, -2\)</span></p><ul id="sort-qE4" class="sortable-list"><li draggable="true" data-val="-5">-5</li><li draggable="true" data-val="10">10</li><li draggable="true" data-val="-2">-2</li><li draggable="true" data-val="0">0</li></ul><div class="feedback-text" id="fb-qE4"></div></div>
+                    <div class="assessment-card" id="qE5"><p><strong>5.</strong> A diver is at \(-5\)m. A fish is at \(-15\)m. Distance between them? <span class="bilingual">Penyelam di \(-5\)m. Ikan di \(-15\)m. Jarak antar mereka?</span></p><input type="text" id="qE5" placeholder="10"><div class="feedback-text" id="fb-qE5"></div></div>
+                    <div class="assessment-card" id="qE6"><p><strong>6.</strong> Which is furthest from 0? \(-7, 4, -9, 6\) <span class="bilingual">Mana yang paling jauh dari 0?</span></p><select id="qE6"><option value="">--</option><option value="-7">-7</option><option value="4">4</option><option value="-9">-9</option><option value="6">6</option></select><div class="feedback-text" id="fb-qE6"></div></div>
+                    <div class="assessment-card" id="qE7"><p><strong>7.</strong> If \(x = -2\), what is \(x - 5\)? <span class="bilingual">Jika \(x = -2\), berapa \(x - 5\)?</span></p><input type="text" id="qE7" placeholder="-7"><div class="feedback-text" id="fb-qE7"></div></div>
+                    <div class="assessment-card" id="qE8"><p><strong>8.</strong> True or False: \(0 > -1\) <span class="bilingual">Benar atau Salah: \(0 > -1\)</span></p><label><input type="radio" name="qE8" value="True"> True</label><label><input type="radio" name="qE8" value="False"> False</label><div class="feedback-text" id="fb-qE8"></div></div>
+                    <div class="assessment-card" id="qE9"><p><strong>9.</strong> Which numbers are \(< 1\)? (Check ALL) <span class="bilingual">Angka mana yang \(< 1\)? (Pilih SEMUA)</span></p><label><input type="checkbox" name="qE9" value="0"> 0</label><label><input type="checkbox" name="qE9" value="-4"> -4</label><label><input type="checkbox" name="qE9" value="5"> 5</label><label><input type="checkbox" name="qE9" value="-1"> -1</label><div class="feedback-text" id="fb-qE9"></div></div>
+                    <div class="assessment-card" id="qE10"><p><strong>10.</strong> \(-10 \_\_ -20\) <span class="bilingual">\(-10 \_\_ -20\)</span></p><select id="qE10"><option value="">--</option><option value="<"><</option><option value=">">></option></select><div class="feedback-text" id="fb-qE10"></div></div>
+                    <div class="btn-group"><button class="btn btn-check" onclick="checkAssessment('E')"><i class="fas fa-check-circle"></i> Submit Group E</button><button class="btn btn-reset" onclick="resetAssessment('E')"><i class="fas fa-redo"></i> Reset</button><button class="btn" style="background:#455A64" onclick="printAssessment('E')"><i class="fas fa-print"></i> Print</button><div id="scoreE" style="margin-left:auto; font-family:'Fredoka One'; font-size:1.2em; color:var(--primary)"></div></div>
+                </div>
+            </div>
+
+            <!-- SECTION 8: CONSOLIDATION & REFLECTION -->
+            <div class="section" id="sec8">
+                <div class="section-header">
+                    <h2><i class="fas fa-star"></i> Consolidation & Reflection <span class="bilingual">Konsolidasi & Refleksi</span></h2>
+                    <div class="timer-badge"><i class="fas fa-clock"></i> End of Class</div>
+                </div>
+
+                <div class="theory-box" style="background: #FFF3E0; border-left-color: #FF9800; text-align: center;">
+                    <p style="font-size: 1.2em;"><i class="fas fa-trophy" style="color: #FFC107; font-size: 1.5em;"></i> <strong>Amazing work today!</strong> Remember, with negative numbers, the 'bigger' the negative digit looks (like \(-100\)), the 'smaller' its value actually is because it's so far left on the number line.</p>
+                    <p class="bilingual" style="font-size: 1.1em;">Kerja luar biasa hari ini! Ingat, dengan angka negatif, semakin 'besar' tampilan digit negatifnya (seperti \(-100\)), semakin 'kecil' nilainya karena ia sangat jauh ke kiri pada garis bilangan.</p>
+                </div>
+
+                <div class="visualization-box" style="border: 3px dashed var(--primary); background: #E0F2F1;">
+                    <h3 style="color: var(--primary); margin-bottom: 15px;">Claim Your Stars! <span class="bilingual">Klaim Bintangmu!</span></h3>
+                    <a href="https://learn.algonova.id/login" target="_blank" style="display: inline-block; padding: 15px 30px; background: var(--primary); color: white; text-decoration: none; border-radius: 30px; font-family: 'Fredoka One'; font-size: 1.2em; box-shadow: 0 5px 0 #004D40; transition: transform 0.1s;">
+                        <i class="fas fa-external-link-alt"></i> Go to Learn.Algonova.id
+                    </a>
+                    <p style="margin-top: 15px; color: var(--text-sub);">Head to your lesson dashboard to see your gold stars! <span class="bilingual">Pergi ke dasbor pelajaranmu untuk melihat bintang emasmu!</span></p>
+                </div>
+            </div>
+
+        </div> <!-- End of Content Area -->
+        </div>
+
+        <!-- SIDEBAR CANVAS (1/4) -->
+        <div class="sidebar-canvas">
+            <div class="canvas-container">
+                <h3><i class="fas fa-paint-brush"></i> Scratchpad <span class="bilingual">Corat-coret</span></h3>
+                <canvas id="scratchpad" width="300" height="400"></canvas>
+                <div class="color-picker">
+                    <button class="color-btn active" style="background:#000000" onclick="setColor('#000000', this)"></button>
+                    <button class="color-btn" style="background:#FF0000" onclick="setColor('#FF0000', this)"></button>
+                    <button class="color-btn" style="background:#0000FF" onclick="setColor('#0000FF', this)"></button>
+                    <button class="color-btn" style="background:#00AA00" onclick="setColor('#00AA00', this)"></button>
+                </div>
+                <button class="tool-btn" onclick="setEraser()"><i class="fas fa-eraser"></i> Eraser (Penghapus)</button>
+                <button class="tool-btn" style="background:#EF5350" onclick="eraseAll()"><i class="fas fa-trash"></i> Erase All (Hapus Semua)</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // --- CANVAS LOGIC ---
+        const canvas = document.getElementById('scratchpad');
+        const ctx = canvas.getContext('2d');
+        let painting = false;
+        let currentColor = '#000000';
+        let isEraser = false;
+
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+
+        canvas.addEventListener('mousedown', (e) => { painting = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); });
+        canvas.addEventListener('mousemove', (e) => { if (!painting) return; ctx.strokeStyle = isEraser ? '#FFFFFF' : currentColor; ctx.lineWidth = isEraser ? 20 : 3; ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); });
+        canvas.addEventListener('mouseup', () => painting = false);
+        canvas.addEventListener('mouseleave', () => painting = false);
+
+        // Touch support
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); const r = canvas.getBoundingClientRect(); const t = e.touches[0]; painting = true; ctx.beginPath(); ctx.moveTo(t.clientX - r.left, t.clientY - r.top); });
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if (!painting) return; const r = canvas.getBoundingClientRect(); const t = e.touches[0]; ctx.strokeStyle = isEraser ? '#FFFFFF' : currentColor; ctx.lineWidth = isEraser ? 20 : 3; ctx.lineTo(t.clientX - r.left, t.clientY - r.top); ctx.stroke(); });
+        canvas.addEventListener('touchend', () => painting = false);
+
+        function setColor(color, btnElement) { currentColor = color; isEraser = false; document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active')); btnElement.classList.add('active'); }
+        function setEraser() { isEraser = true; document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active')); }
+        function eraseAll() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+        // --- INTERACTIVE GAME LOGIC (Seks 1-6) ---
+        const feedbackMessages = {
+            'g1q1': { correct: "Correct!", wrong: "4 is in the thousands place." }, 'g1q2': { correct: "Correct!", wrong: "Focus on the hundreds place in 1,304." }, 'g1q3': { correct: "Correct!", wrong: "Think: 50 + 7 = ?" }, 'g1q4': { correct: "Correct!", wrong: "Check the tens digit." }, 'g1q5': { correct: "Correct!", wrong: "The digit 8 is in the thousands place." },
+            'g2q1': { correct: "Correct!", wrong: "Subtract: 5 - 10 goes below 0." }, 'g2q2': { correct: "Correct!", wrong: "Owing money means you have less than 0." }, 'g2q3': { correct: "Correct!", wrong: "Count down from 0: 0, -1, -2." }, 'g2q4': { correct: "Correct!", wrong: "Negative numbers are LESS than zero." }, 'g2q5': { correct: "Correct!", wrong: "Negative numbers use the minus symbol." },
+            'g3q1': { correct: "Correct!", wrong: "Right is positive, Left is negative." }, 'g3q2': { correct: "Correct!", wrong: "Zero separates positive and negative." }, 'g3q3': { correct: "Correct!", wrong: "The left side of 0 contains negative integers." }, 'g3q4': { correct: "Correct!", wrong: "Count one step back from 0." }, 'g3q5': { correct: "Correct!", wrong: "Arrows mean it continues infinitely." },
+            'g4q1': { correct: "Correct!", wrong: "Further right = greater value." }, 'g4q2': { correct: "Correct!", wrong: "Which number is closer to zero on the right?" }, 'g4q3': { correct: "Correct!", wrong: "Zero is the middle, negatives are smaller." }, 'g4q4': { correct: "Correct!", wrong: "Check their positions: -7 is left of -3." }, 'g4q5': { correct: "Correct!", wrong: "The one closest to 0 is furthest right." }, 'g4q6': { correct: "Correct!", wrong: "Smaller means further to the left." }, 'g4q7': { correct: "Correct!", wrong: "Owing less money is 'greater'." }, 'g4q8': { correct: "Correct!", wrong: "Count: -4, -3, -2." }, 'g4q9': { correct: "Correct!", wrong: "Left to Right on the line." }, 'g4q10': { correct: "Correct!", wrong: "Moving left decreases value." },
+            'g5q1': { correct: "Correct!", wrong: "Count from -3 up to 2." }, 'g5q2': { correct: "Correct!", wrong: "Count from -4 up to 0." }, 'g5q3': { correct: "Correct!", wrong: "Count from -1 up to 3." }, 'g5q4': { correct: "Correct!", wrong: "Count from -5 to -1." }, 'g5q5': { correct: "Correct!", wrong: "Count jumps from 1 down to -4." }, 'g5q6': { correct: "Correct!", wrong: "Distance from -2 to 0 is 2. 0 to 2 is 2. 2+2=4." }, 'g5q7': { correct: "Correct!", wrong: "Count from -7 to 0." }, 'g5q8': { correct: "Correct!", wrong: "Distance goes in both directions from 0." }, 'g5q9': { correct: "Correct!", wrong: "Count from -2 up to 4." }, 'g5q10': { correct: "Correct!", wrong: "Start at -6, add 4." },
+            'g6q1': { correct: "Correct!", wrong: "Order from leftmost to rightmost." }, 'g6q2': { correct: "Correct!", wrong: "Rising temperature means moving right. -10 + 4." }, 'g6q3': { correct: "Correct!", wrong: "Coldest is the most negative number." }, 'g6q4': { correct: "Correct!", wrong: "Rising means moving right. -50 + 20." }, 'g6q5': { correct: "Correct!", wrong: "Distance -5 to 0 is 5. 0 to 3 is 3." }, 'g6q6': { correct: "Correct!", wrong: "Moving 10 units right from -8." }, 'g6q7': { correct: "Correct!", wrong: "-15 is further left than -12." }, 'g6q8': { correct: "Correct!", wrong: "Rising 5 degrees from -18." }, 'g6q9': { correct: "Correct!", wrong: "Find a number right of -4 but left of 2." }, 'g6q10': { correct: "Correct!", wrong: "Count from -4 up to 1." }
+        };
+
+        function selectOption(btn, qId, isCorrect) {
+            const parent = document.getElementById(qId);
+            parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            btn.dataset.iscorrect = isCorrect ? "true" : "false";
+        }
+
+        function checkAnswers(gameId) {
+            const gameArea = document.getElementById(gameId);
+            const questions = gameArea.querySelectorAll('.question-card');
+            questions.forEach(q => {
+                const qId = q.id;
+                const fbElement = document.getElementById('fb-' + qId);
+                const selectedBtn = q.querySelector('.option-btn.selected');
+                fbElement.className = 'feedback-text';
+                q.querySelectorAll('.option-btn').forEach(b => b.classList.remove('correct', 'wrong'));
+                if (!selectedBtn) { fbElement.textContent = "Please select an answer!"; fbElement.classList.add('wrong'); return; }
+                const isCorrect = selectedBtn.dataset.iscorrect === "true";
+                if (isCorrect) { selectedBtn.classList.add('correct'); fbElement.textContent = "✓ " + feedbackMessages[qId].correct; fbElement.classList.add('correct'); } 
+                else { selectedBtn.classList.add('wrong'); fbElement.innerHTML = "✗ " + feedbackMessages[qId].wrong + "<br><span style='font-weight:normal'>Correct answer is in green.</span>"; fbElement.classList.add('wrong'); q.querySelectorAll('.option-btn').forEach(b => { if (b.dataset.iscorrect === "true") b.classList.add('correct'); }); }
+            });
+        }
+
+        function resetGame(gameId) {
+            const gameArea = document.getElementById(gameId);
+            gameArea.querySelectorAll('.question-card').forEach(q => {
+                document.getElementById('fb-' + q.id).className = 'feedback-text';
+                q.querySelectorAll('.option-btn').forEach(b => { b.classList.remove('selected', 'correct', 'wrong'); delete b.dataset.iscorrect; });
+            });
+        }
+
+        // --- ASSESSMENT LOGIC ---
+        const answerKey = {
+            A: { 1: {type:'radio', ans:'-3', hint:'Left of 0 is negative.'}, 2: {type:'select', ans:'-10', hint:'Below ground is negative.'}, 3: {type:'text', ans:'-50', hint:'Debt is represented with a minus.'}, 4: {type:'check', ans:['-7','-2'], hint:'Negative numbers have a minus sign.'}, 5: {type:'sort', ans:['-2','0','1'], hint:'Smallest (left) to largest (right).'}, 6: {type:'radio', ans:'No', hint:'-5 is left of -2, so it is smaller.'}, 7: {type:'text', ans:'-15', hint:'-20 + 5 = -15.'}, 8: {type:'select', ans:'>', hint:'-4 is right of -9.'}, 9: {type:'text', ans:'7', hint:'Distance from -4 to 0 is 4. 0 to 3 is 3. 4+3=7.'}, 10: {type:'check', ans:['4','-4'], hint:'Distance from 0 in both directions.'} },
+            B: { 1: {type:'radio', ans:'False', hint:'It has a minus sign.'}, 2: {type:'select', ans:'-2', hint:'-2 is further right than -8.'}, 3: {type:'text', ans:'6', hint:'Count the steps to 0.'}, 4: {type:'check', ans:['-1','-3'], hint:'Numbers less than 0.'}, 5: {type:'sort', ans:['-5','0','2'], hint:'Coldest is most negative.'}, 6: {type:'radio', ans:'No', hint:'0 is neutral.'}, 7: {type:'text', ans:'-10', hint:'-20 + 10 = -10.'}, 8: {type:'select', ans:'>', hint:'-12 is closer to 0.'}, 9: {type:'text', ans:'5', hint:'1 to 0 is 1. 0 to -4 is 4. 1+4=5.'}, 10: {type:'check', ans:['-2','-1','0'], hint:'Does not include 1 or -3.'} },
+            C: { 1: {type:'text', ans:'-20', hint:'50 - 70 = -20.'}, 2: {type:'text', ans:'-10', hint:'-15 - 5 + 10 = -10.'}, 3: {type:'text', ans:'-3', hint:'5 - 8 = -3.'}, 4: {type:'radio', ans:'-9', hint:'Distance of -9 is 9, 6 is 6.'}, 5: {type:'sort', ans:['-4','-1','0','3'], hint:'Left to right.'}, 6: {type:'text', ans:'8', hint:'Absolute value is distance from 0.'}, 7: {type:'radio', ans:'Yes', hint:'-3 is right of -10.'}, 8: {type:'text', ans:'5', hint:'Count from -7 to -2.'}, 9: {type:'text', ans:'3', hint:'Move 8 right from -5.'}, 10: {type:'text', ans:'6', hint:'4 + 2 = 6.'} },
+            D: { 1: {type:'select', ans:'<', hint:'-15 is left of -12.'}, 2: {type:'text', ans:'15', hint:'-10 to 0 is 10. 0 to 5 is 5.'}, 3: {type:'radio', ans:'-50', hint:'Most left is smallest.'}, 4: {type:'text', ans:'0', hint:'Opposites cancel out.'}, 5: {type:'sort', ans:['2','0','-1','-4'], hint:'Largest (right) to smallest (left).'}, 6: {type:'text', ans:'-13', hint:'-18 + 5 = -13.'}, 7: {type:'check', ans:['-3','-2','-1'], hint:'0 is not less than 0.'}, 8: {type:'radio', ans:'Yes', hint:'|-6| is 6, |2| is 2.'}, 9: {type:'text', ans:'-10', hint:'Move 3 left from -7.'}, 10: {type:'text', ans:'-30', hint:'-100 + 40 + 30 = -30.'} },
+            E: { 1: {type:'text', ans:'8', hint:'Positive version.'}, 2: {type:'radio', ans:'-99', hint:'Closer to 0 is greater.'}, 3: {type:'text', ans:'0', hint:'Opposites cancel.'}, 4: {type:'sort', ans:['10','0','-2','-5'], hint:'Warmest (highest) to coldest (lowest).'}, 5: {type:'text', ans:'10', hint:'-5 to -15 is 10 steps.'}, 6: {type:'select', ans:'-9', hint:'Distance is 9.'}, 7: {type:'text', ans:'-7', hint:'-2 - 5 = -7.'}, 8: {type:'radio', ans:'True', hint:'0 is right of -1.'}, 9: {type:'check', ans:['0','-4','-1'], hint:'5 is greater than 1.'}, 10: {type:'select', ans:'>', hint:'-10 is right of -20.'} }
+        };
+
+        function openTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active-assessment'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active-assessment');
+            event.currentTarget.classList.add('active');
+        }
+
+        function checkAssessment(group) {
+            let score = 0;
+            const totalQ = 10;
+            const key = answerKey[group];
+
+            for(let i=1; i<=totalQ; i++) {
+                const qId = `q${group}${i}`;
+                const fbId = `fb-q${group}${i}`;
+                const card = document.getElementById(qId);
+                const fbEl = document.getElementById(fbId);
+                let userAns = '';
+                let isCorrect = false;
+
+                card.classList.remove('correct-card', 'wrong-card');
+                fbEl.className = 'feedback-text';
+
+                if(key[i].type === 'radio') {
+                    const sel = document.querySelector(`input[name="${qId}"]:checked`);
+                    userAns = sel ? sel.value : '';
+                    isCorrect = userAns === key[i].ans;
+                } else if(key[i].type === 'select') {
+                    userAns = document.getElementById(qId).value;
+                    isCorrect = userAns === key[i].ans;
+                } else if(key[i].type === 'text') {
+                    userAns = document.getElementById(qId).value.trim().replace(/ /g, '');
+                    isCorrect = userAns === key[i].ans;
+                } else if(key[i].type === 'check') {
+                    const checked = Array.from(document.querySelectorAll(`input[name="${qId}"]:checked`)).map(c => c.value).sort();
+                    userAns = checked.join(',');
+                    isCorrect = userAns === key[i].ans.sort().join(',');
+                } else if(key[i].type === 'sort') {
+                    const items = document.querySelectorAll(`#sort-${qId} li`);
+                    userAns = Array.from(items).map(li => li.dataset.val).join(',');
+                    isCorrect = userAns === key[i].ans.join(',');
+                }
+
+                if(isCorrect) {
+                    score++;
+                    card.classList.add('correct-card');
+                    fbEl.textContent = "✓ Correct!";
+                    fbEl.classList.add('correct');
+                } else {
+                    card.classList.add('wrong-card');
+                    fbEl.innerHTML = `✗ Incorrect. <span style="font-weight:normal; font-size:0.9em">Hint: ${key[i].hint}</span>`;
+                    fbEl.classList.add('wrong');
+                }
+            }
+            document.getElementById(`score${group}`).innerHTML = `Score: ${score}/${totalQ}`;
+        }
+
+        function resetAssessment(group) {
+            for(let i=1; i<=10; i++) {
+                const qId = `q${group}${i}`;
+                const card = document.getElementById(qId);
+                const fbEl = document.getElementById(`fb-q${group}${i}`);
+                
+                card.classList.remove('correct-card', 'wrong-card');
+                fbEl.className = 'feedback-text';
+                fbEl.textContent = '';
+
+                // Reset inputs based on type
+                if(document.querySelector(`input[name="${qId}"]`)) {
+                    document.querySelectorAll(`input[name="${qId}"]`).forEach(inp => inp.checked = false);
+                }
+                if(document.getElementById(qId) && document.getElementById(qId).tagName === 'SELECT') document.getElementById(qId).selectedIndex = 0;
+                if(document.getElementById(qId) && document.getElementById(qId).tagName === 'INPUT') document.getElementById(qId).value = '';
+            }
+            document.getElementById(`score${group}`).innerHTML = '';
+        }
+
+        function printAssessment(group) {
+            // Remove printing class from all, add to current
+            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('printing'));
+            document.getElementById(`Group${group}`).classList.add('printing');
+            window.print();
+        }
+
+        // --- DRAG AND DROP LOGIC ---
+        document.querySelectorAll('.sortable-list').forEach(list => {
+            let dragItem = null;
+
+            list.addEventListener('dragstart', (e) => {
+                dragItem = e.target;
+                setTimeout(() => e.target.classList.add('dragging'), 0);
+            });
+
+            list.addEventListener('dragend', (e) => {
+                e.target.classList.remove('dragging');
+                dragItem = null;
+            });
+
+            list.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                const afterElement = getDragAfterElement(list, e.clientX);
+                if (afterElement == null) {
+                    list.appendChild(dragItem);
+                } else {
+                    list.insertBefore(dragItem, afterElement);
+                }
+            });
+
+            function getDragAfterElement(container, x) {
+                const draggableElements = [...container.querySelectorAll('li:not(.dragging)')];
+                return draggableElements.reduce((closest, child) => {
+                    const box = child.getBoundingClientRect();
+                    const offset = x - box.left - box.width / 2;
+                    if (offset < 0 && offset > closest.offset) {
+                        return { offset: offset, element: child };
+                    } else {
+                        return closest;
+                    }
+                }, { offset: Number.NEGATIVE_INFINITY }).element;
+            }
+        });
+    </script>
+</body>
+</html>
