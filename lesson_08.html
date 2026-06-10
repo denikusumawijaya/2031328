@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operasi Hitung Campuran - Zaman Prasejarah</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- KaTeX for Math Equations -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    
+    <style>
+        :root {
+            --rock-dark: #3e2723;
+            --rock-mid: #5d4037;
+            --rock-light: #8d6e63;
+            --sand: #d7ccc8;
+            --cave-bg: #efebe9;
+            --moss-green: #558b2f;
+            --bone-white: #fafafa;
+            --fire-orange: #ff6f00;
+            --water-blue: #0277bd;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--cave-bg);
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238d6e63' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            color: var(--rock-dark);
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* Header Styles */
+        .cave-header {
+            background: linear-gradient(135deg, var(--rock-dark), var(--rock-mid));
+            color: var(--bone-white);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--moss-green);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .cave-header h1 { margin: 0; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 3px; text-shadow: 2px 2px 0px #000; }
+        .cave-header p { margin: 5px 0 0; font-size: 1.1rem; color: var(--sand); }
+
+        /* Class Rules */
+        .class-rules {
+            background-color: var(--rock-light);
+            color: var(--bone-white);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 0.95rem;
+        }
+        .class-rules span { display: flex; align-items: center; gap: 8px; }
+
+        /* Main Layout 3:1 */
+        .main-container {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .material-col { display: flex; flex-direction: column; gap: 25px; }
+        .canvas-col { position: relative; }
+
+        .sticky-canvas {
+            position: sticky;
+            top: 20px;
+            background: var(--bone-white);
+            border: 3px solid var(--rock-dark);
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 5px 5px 0px var(--rock-light);
+        }
+        .canvas-tools { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .color-btn {
+            width: 25px; height: 25px; border-radius: 50%;
+            border: 2px solid var(--rock-dark); cursor: pointer; transition: transform 0.2s;
+        }
+        .color-btn:hover { transform: scale(1.2); }
+        .color-btn.active { border: 3px solid var(--fire-orange); }
+        .canvas-btn {
+            background: var(--rock-mid); color: white; border: none;
+            padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;
+        }
+        .canvas-btn:hover { background: var(--rock-dark); }
+        #scratchpad {
+            width: 100%; height: 400px; background-color: white;
+            border: 1px solid var(--rock-light); cursor: crosshair;
+        }
+
+        /* Section Styling */
+        .section-card {
+            background: var(--bone-white); border: 2px solid var(--rock-light);
+            border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s; animation: slideUp 0.8s ease-out;
+        }
+        .section-card:hover { transform: translateY(-3px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
+        .section-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px dashed var(--rock-light); padding-bottom: 10px; margin-bottom: 15px;
+        }
+        .section-title { font-size: 1.5rem; color: var(--rock-dark); display: flex; align-items: center; gap: 10px; }
+        .timer-badge {
+            background-color: var(--fire-orange); color: white; padding: 5px 10px;
+            border-radius: 20px; font-size: 0.9rem; font-weight: bold; box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+        }
+        .theory-box {
+            background-color: var(--sand); border-left: 5px solid var(--moss-green);
+            padding: 15px; margin: 15px 0; border-radius: 0 8px 8px 0;
+        }
+        .theory-box p { margin: 0 0 10px; line-height: 1.6; }
+        .theory-box p:last-child { margin-bottom: 0; }
+
+        /* Visualizations */
+        .visual-container { display: flex; justify-content: center; margin: 20px 0; }
+        .place-value-table { width: 100%; border-collapse: collapse; text-align: center; font-family: 'Courier New', Courier, monospace; }
+        .place-value-table th, .place-value-table td { border: 2px solid var(--rock-dark); padding: 10px; background-color: var(--sand); }
+        .place-value-table th { background-color: var(--rock-mid); color: white; }
+        .vault-svg { width: 150px; height: 150px; animation: pulse 2s infinite; }
+        .math-comparison { display: flex; justify-content: space-around; margin-top: 15px; }
+        .math-box { border: 2px solid var(--rock-light); padding: 15px; border-radius: 8px; text-align: center; width: 45%; }
+        .math-box.wrong { border-color: #d32f2f; background-color: #ffebee; }
+        .math-box.right { border-color: var(--moss-green); background-color: #f1f8e9; }
+        .math-display { font-size: 1.5rem; margin-bottom: 10px; }
+
+        /* Drag and Drop Styles */
+        .drag-item {
+            background-color: var(--sand); border: 2px solid var(--rock-dark);
+            padding: 8px 15px; border-radius: 20px; cursor: grab; font-weight: bold;
+            user-select: none; transition: transform 0.2s; display: inline-block;
+        }
+        .drag-item:active { cursor: grabbing; transform: scale(1.1); }
+        .drop-row { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
+        .drop-zone {
+            min-width: 120px; min-height: 35px; border: 2px dashed var(--rock-light);
+            border-radius: 8px; background-color: white; display: flex;
+            align-items: center; justify-content: center; font-size: 0.9rem;
+        }
+        .drop-zone.over { border-color: var(--fire-orange); background-color: #fff3e0; }
+        .drop-zone.correct { border-color: var(--moss-green); background-color: #e8f5e9; border-style: solid; }
+        .drop-zone.incorrect { border-color: #d32f2f; background-color: #ffebee; border-style: solid; }
+
+        /* Click Game Styles */
+        .click-question { background: white; border: 1px solid var(--rock-light); padding: 15px; border-radius: 8px; text-align: center; }
+        .clickable {
+            background-color: #fff3e0; padding: 2px 8px; border-radius: 4px;
+            cursor: pointer; border: 2px solid transparent; transition: 0.2s;
+        }
+        .clickable:hover { border-color: var(--fire-orange); }
+        .clickable.selected { background-color: #ffcc80; border-color: var(--rock-dark); }
+        .clickable.correct-click { background-color: #a5d6a7; border-color: var(--moss-green); }
+        .clickable.incorrect-click { background-color: #ef9a9a; border-color: #d32f2f; }
+        .click-feedback { font-size: 0.85rem; margin-top: 8px; font-weight: bold; }
+
+        /* Input Game Styles */
+        .input-question { background: white; border: 1px solid var(--rock-light); padding: 15px; border-radius: 8px; }
+        .math-input {
+            width: 60px; padding: 5px; font-size: 1rem; border: 2px solid var(--rock-light);
+            border-radius: 4px; text-align: center;
+        }
+        .math-input:focus { outline: none; border-color: var(--moss-green); }
+        .input-feedback { font-size: 0.85rem; margin-top: 5px; font-weight: bold; }
+
+        /* Assessment Tabs & Questions */
+        .tab-navigation { display: flex; border-bottom: 2px solid var(--rock-mid); margin-bottom: 20px; }
+        .tab-btn {
+            background-color: var(--sand); border: none; padding: 10px 20px; cursor: pointer;
+            font-weight: bold; color: var(--rock-dark); border-top-left-radius: 8px;
+            border-top-right-radius: 8px; margin-right: 5px; transition: 0.3s;
+        }
+        .tab-btn:hover { background-color: var(--rock-light); color: white; }
+        .tab-btn.active { background-color: var(--rock-mid); color: white; border-bottom: 2px solid var(--rock-mid); }
+        .tab-content { display: none; animation: fadeIn 0.5s; }
+        .tab-content.active { display: block; }
+        .q-container {
+            background: white; border: 1px solid var(--sand); border-left: 4px solid var(--rock-light);
+            padding: 15px; margin-bottom: 15px; border-radius: 5px;
+        }
+        .q-container p { margin: 0 0 10px 0; font-weight: bold; }
+        .q-container label { display: block; margin: 5px 0; cursor: pointer; }
+        .q-select { padding: 5px 10px; border: 2px solid var(--rock-light); border-radius: 4px; font-size: 1rem; background: white; }
+        .feedback { margin-top: 8px; font-size: 0.9rem; font-weight: bold; display: none; }
+        .q-container.correct-q { border-left-color: var(--moss-green); background-color: #f1f8e9; }
+        .q-container.incorrect-q { border-left-color: #d32f2f; background-color: #ffebee; }
+
+        /* Drag Sequence specific */
+        .drag-seq-item {
+            background-color: var(--sand); border: 2px solid var(--rock-dark); padding: 8px 15px;
+            border-radius: 20px; cursor: grab; user-select: none; display: inline-block;
+        }
+        .seq-slot { display: flex; align-items: center; justify-content: center; }
+        .seq-slot.over { border-color: var(--fire-orange); background-color: #fff3e0; }
+        .seq-slot.correct-seq { border-color: var(--moss-green); background-color: #e8f5e9; border-style: solid; }
+        .seq-slot.incorrect-seq { border-color: #d32f2f; background-color: #ffebee; border-style: solid; }
+
+        /* Reflection Area */
+        .reflection-container { background: white; border: 2px solid var(--rock-light); border-radius: 8px; padding: 15px; margin-top: 15px; }
+        .reflection-textarea {
+            width: 100%; min-height: 80px; padding: 10px; border: 2px dashed var(--sand);
+            border-radius: 5px; font-family: inherit; resize: vertical; box-sizing: border-box;
+        }
+        .reflection-textarea:focus { outline: none; border-color: var(--moss-green); background-color: #f1f8e9; }
+
+        /* Reward Button */
+        .reward-btn {
+            display: inline-block; background: linear-gradient(45deg, var(--fire-orange), #ff8f00);
+            color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none;
+            font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 0 #c43e00, 0 6px 10px rgba(0,0,0,0.2);
+            transition: all 0.2s; margin-bottom: 20px;
+        }
+        .reward-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c43e00, 0 8px 15px rgba(0,0,0,0.3); }
+        .reward-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #c43e00, 0 2px 5px rgba(0,0,0,0.2); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--cave-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--rock-mid); border-radius: 5px; border: 2px solid var(--cave-bg); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--rock-dark); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-container { grid-template-columns: 1fr; }
+            .canvas-col { order: -1; }
+            .sticky-canvas { position: relative; top: 0; }
+            #scratchpad { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="cave-header">
+        <h1><i class="fas fa-fire"></i> MATH TUTORING <i class="fas fa-fire"></i></h1>
+        <p>Topic: Operasi Hitung Campuran (BODMAS/PEMDAS)</p>
+        <p>Tutor: Deni</p>
+    </header>
+
+    <!-- Class Rules -->
+    <div class="class-rules">
+        <span><i class="fas fa-comments"></i> Speak in turn (Bergantian bicara)</span>
+        <span><i class="fas fa-door-open"></i> Ask permission to leave Zoom (Izin ke toilet/minum)</span>
+    </div>
+
+    <!-- Main Content Layout 3:1 -->
+    <div class="main-container">
+        
+        <!-- Column 1: Material -->
+        <div class="material-col">
+
+            <!-- Section 1 -->
+            <div class="section-card" id="sec1">
+                <div class="section-header">
+                    <div class="section-title"><i class="fas fa-history"></i> Spiral Review Warm-up</div>
+                    <div class="timer-badge"><i class="far fa-clock"></i> 00:00 - 00:10</div>
+                </div>
+                <div class="theory-box">
+                    <p><i class="fas fa-lightbulb"></i> <strong>Place Value Recap:</strong> Every digit in a number has a specific value based on its position. For example, in the number 4,521, the digit 5 is in the hundreds place, which means its value is 500. Understanding place value is like understanding the bones of a number—each bone supports the next!</p>
+                </div>
+                <h3 style="text-align:center; color:var(--rock-dark);"><i class="fas fa-table"></i> Number: 4,521</h3>
+                <div class="visual-container">
+                    <table class="place-value-table">
+                        <tr><th>Thousands</th><th>Hundreds</th><th>Tens</th><th>Ones</th></tr>
+                        <tr><td>4</td><td style="background-color: #ffcc80; font-weight: bold;">5</td><td>2</td><td>1</td></tr>
+                        <tr><td>4,000</td><td style="background-color: #ffcc80; font-weight: bold;">500</td><td>20</td><td>1</td></tr>
+                    </table>
+                </div>
+                <div class="theory-box">
+                    <p><i class="fas fa-bone"></i> <strong>Block Values:</strong> If you have 3 blocks of a thousand (3 x 1000) and 7 blocks of ten (7 x 10), you combine them to find the total. 3,000 + 70 = 3,070. Always group your dinosaur bones carefully before counting!</p>
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="section-card" id="sec2">
+                <div class="section-header">
+                    <div class="section-title"><i class="fas fa-key"></i> Introduction & Real-World Connection</div>
+                    <div class="timer-badge"><i class="far fa-clock"></i> 00:10 - 00:15</div>
+                </div>
+                <div class="theory-box">
+                    <p><i class="fas fa-dungeon"></i> Imagine you are a prehistoric detective opening a high-security cave vault. If you enter the code numbers in the wrong order, the alarm goes off and the cave door locks forever! Math is exactly like that. If we solve a big equation in the wrong order, we get the wrong answer.</p>
+                    <p>Today, we are learning the 'Secret Code' called <strong>BODMAS</strong>. It tells us exactly which part of the math problem to solve first so we can unlock the right answer every single time. Without BODMAS, math would be chaotic!</p>
+                </div>
+                <div class="visual-container">
+                    <svg class="vault-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="10" y="10" width="180" height="180" rx="10" fill="#5d4037" stroke="#3e2723" stroke-width="5"/>
+                        <circle cx="100" cy="100" r="70" fill="#8d6e63" stroke="#3e2723" stroke-width="4"/>
+                        <circle cx="100" cy="100" r="20" fill="#3e2723"/>
+                        <path d="M100 80 L100 60 M80 100 L60 100 M100 120 L100 140 M120 100 L140 100" stroke="#ff6f00" stroke-width="6" stroke-linecap="round"/>
+                        <text x="100" y="108" font-family="Arial" font-size="24" fill="#ff6f00" text-anchor="middle" font-weight="bold">?</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="section-card" id="sec3">
+                <div class="section-header">
+                    <div class="section-title"><i class="fas fa-brain"></i> Review of Prior Knowledge</div>
+                    <div class="timer-badge"><i class="far fa-clock"></i> 00:15 - 00:20</div>
+                </div>
+                <div class="theory-box">
+                    <p><i class="fas fa-search"></i> Before we dive into the secret code, look at this simple expression: \( 5 + 2 \times 3 \). If you just read from left to right, you might add first (5+2=7) then multiply (7x3=21). But in math land, multiplication is stronger than addition! We must do multiplication first.</p>
+                    <p>An <strong>Operation</strong> is a mathematical process like Addition (Plus), Subtraction (Minus), Multiplication (Multiply), and Division (Divide). Today, we will learn the hierarchy—who gets to go first!</p>
+                </div>
+                <div class="math-comparison">
+                    <div class="math-box wrong">
+                        <h4><i class="fas fa-times-circle"></i> Left to Right</h4>
+                        <div class="math-display">\( (5 + 2) \times 3 \)</div>
+                        <p>= \( 7 \times 3 = 21 \)</p>
+                    </div>
+                    <div class="math-box right">
+                        <h4><i class="fas fa-check-circle"></i> Multiply First</h4>
+                        <div class="math-display">\( 5 + (2 \times 3) \)</div>
+                        <p>= \( 5 + 6 = 11 \)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4 -->
+            <div class="section-card" id="sec4">
+                <div class="section-header">
+                    <div class="section-title"><i class="fas fa-sort-amount-up"></i> Problem Introduction</div>
+                    <div class="timer-badge"><i class="far fa-clock"></i> 00:20 - 00:30</div>
+                </div>
+                <div class="theory-box">
+                    <p><i class="fas fa-key"></i> Let's meet the secret code: <strong>BODMAS</strong>. It stands for <strong>B</strong>rackets (), <strong>O</strong>rders (squares/roots), <strong>D</strong>ivision, <strong>M</strong>ultiplication, <strong>A</strong>ddition, and <strong>S</strong>ubtraction. Think of it as a ladder. We must climb from the top (Brackets) down to the bottom (Subtraction).</p>
+                    <p>If you have both Division and Multiplication, or Addition and Subtraction in the same level, you simply solve them from <strong>left to right</strong>—just like reading a map!</p>
+                </div>
+                <div class="visual-container">
+                    <svg width="250" height="300" viewBox="0 0 250 300" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="80" y="20" width="20" height="260" fill="#5d4037"/>
+                        <rect x="150" y="20" width="20" height="260" fill="#5d4037"/>
+                        <rect x="80" y="30" width="90" height="35" rx="5" fill="#d32f2f" stroke="#3e2723" stroke-width="2"/>
+                        <text x="125" y="53" font-family="Arial" font-size="16" fill="white" text-anchor="middle" font-weight="bold">B - Brackets</text>
+                        <rect x="80" y="75" width="90" height="35" rx="5" fill="#ff6f00" stroke="#3e2723" stroke-width="2"/>
+                        <text x="125" y="98" font-family="Arial" font-size="16" fill="white" text-anchor="middle" font-weight="bold">O - Orders</text>
+                        <rect x="80" y="120" width="90" height="35" rx="5" fill="#fbc02d" stroke="#3e2723" stroke-width="2"/>
+                        <text x="125" y="143" font-family="Arial" font-size="16" fill="#3e2723" text-anchor="middle" font-weight="bold">D - Divide</text>
+                        <rect x="80" y="165" width="90" height="35" rx="5" fill="#2e7d32" stroke="#3e2723" stroke-width="2"/>
+                        <text x="125" y="188" font-family="Arial" font-size="16" fill="white" text-anchor="middle" font-weight="bold">M - Multiply</text>
+                        <rect x="80" y="210" width="90" height="35" rx="5" fill="#0277bd" stroke="#3e2723" stroke-width="2"/>
+                        <text x="125" y="233" font-family="Arial" font-size="16" fill="white" text-anchor="middle" font-weight="bold">A - Add</text>
+                        <rect x="80" y="255" width="90" height="35" rx="5" fill="#5d4037" stroke="#3e2723" stroke-width="2"/>
+                        <text x="125" y="278" font-family="Arial" font-size="16" fill="white" text-anchor="middle" font-weight="bold">S - Subtract</text>
+                        <path d="M60 20 L60 280 L45 260 M60 280 L75 260" stroke="#3e2723" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="theory-box">
+                    <p>Look at this: \( (10 + 2) \times 5 \). Based on BODMAS, the brackets are the bosses at the top of the ladder. We must do \( 10 + 2 \) first! What do we get? 12! Then \( 12 \times 5 = 60 \). See how the brackets changed the game?</p>
+                </div>
+            </div>
+
+            <!-- Section 5 -->
+            <div class="section-card" id="sec5">
+                <div class="section-header">
+                    <div class="section-title"><i class="fas fa-hand-holding-heart"></i> Guided Practice</div>
+                    <div class="timer-badge"><i class="far fa-clock"></i> 00:30 - 00:45</div>
+                </div>
+                <div class="theory-box">
+                    <p><i class="fas fa-shoe-prints"></i> When solving mysteries, writing down your steps is crucial. Let's solve together: \( 50 - (10 + 5) \times 2 \). First, circle the brackets. \( 10 + 5 = 15 \). Write down the new equation: \( 50 - 15 \times 2 \).</p>
+                    <p>Next, look at the BODMAS ladder... do we subtract or multiply first? Correct, Multiply! \( 15 \times 2 = 30 \). Finally, \( 50 - 30 = 20 \). Always rewrite the equation after each step!</p>
+                </div>
+                <div class="visual-container">
+                    <table class="place-value-table" style="width: 80%;">
+                        <tr><th>Step</th><th>Equation</th><th>Action</th></tr>
+                        <tr><td>1</td><td>\( 50 - (10 + 5) \times 2 \)</td><td>Brackets first: \( 10+5=15 \)</td></tr>
+                        <tr><td>2</td><td>\( 50 - 15 \times 2 \)</td><td>Multiply: \( 15 \times 2=30 \)</td></tr>
+                        <tr><td style="background-color: #c8e6c9;">3</td><td style="background-color: #c8e6c9;">\( 50 - 30 \)</td><td style="background-color: #c8e6c9;">Subtract: \( 20 \)</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 6: Games -->
+            <div class="section-card" id="sec6">
+                <div class="section-header">
+                    <div class="section-title"><i class="fas fa-gamepad"></i> Solo Detective Challenge</div>
+                    <div class="timer-badge"><i class="far fa-clock"></i> 00:45 - 00:60</div>
+                </div>
+                <div class="theory-box">
+                    <p><i class="fas fa-user-secret"></i> It's time for the 'Solo Detective Challenge'. You have 16 locked briefcases with math expressions. Solve them using the BODMAS code. If you get stuck, use the hint button, but try your best first!</p>
+                </div>
+                <div id="gameArea" style="margin-top: 20px;">
+                    <h3 class="section-title" style="font-size: 1.2rem; border-bottom: 2px solid var(--sand); padding-bottom:5px;"><i class="fas fa-puzzle-piece"></i> Part A: Drag & Drop the Meaning</h3>
+                    <p style="font-size:0.9rem;">Drag the correct word to match the BODMAS letter.</p>
+                    <div class="drag-drop-container" style="margin-bottom: 30px;">
+                        <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                            <div class="drag-item" draggable="true" id="drag-add" data-value="Addition">Addition 🧮</div>
+                            <div class="drag-item" draggable="true" id="drag-sub" data-value="Subtraction">Subtraction ➖</div>
+                            <div class="drag-item" draggable="true" id="drag-mul" data-value="Multiplication">Multiplication ✖️</div>
+                            <div class="drag-item" draggable="true" id="drag-div" data-value="Division">Division ➗</div>
+                            <div class="drag-item" draggable="true" id="drag-bra" data-value="Brackets">Brackets 🧱</div>
+                            <div class="drag-item" draggable="true" id="drag-ord" data-value="Orders">Orders ²</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="drop-row"><strong>B = </strong> <div class="drop-zone" id="drop-b" data-answer="Brackets"></div></div>
+                            <div class="drop-row"><strong>O = </strong> <div class="drop-zone" id="drop-o" data-answer="Orders"></div></div>
+                            <div class="drop-row"><strong>D = </strong> <div class="drop-zone" id="drop-d" data-answer="Division"></div></div>
+                            <div class="drop-row"><strong>M = </strong> <div class="drop-zone" id="drop-m" data-answer="Multiplication"></div></div>
+                            <div class="drop-row"><strong>A = </strong> <div class="drop-zone" id="drop-a" data-answer="Addition"></div></div>
+                            <div class="drop-row"><strong>S = </strong> <div class="drop-zone" id="drop-s" data-answer="Subtraction"></div></div>
+                        </div>
+                    </div>
+
+                    <h3 class="section-title" style="font-size: 1.2rem; border-bottom: 2px solid var(--sand); padding-bottom:5px;"><i class="fas fa-mouse-pointer"></i> Part B: Click the Operation to Do First</h3>
+                    <p style="font-size:0.9rem;">Click on the part of the expression you should calculate first.</p>
+                    <div id="clickGame" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">
+                        <div class="click-question" id="cq1">
+                            <div class="click-expr">\( 3 \times \) <span class="clickable" onclick="handleClick(this, 'cq1')" data-correct="true">\( (8 + 2) \)</span></div>
+                            <div class="click-feedback"></div>
+                        </div>
+                        <div class="click-question" id="cq2">
+                            <div class="click-expr">\( 10 + \) <span class="clickable" onclick="handleClick(this, 'cq2')" data-correct="true">\( 4 \times 5 \)</span></div>
+                            <div class="click-feedback"></div>
+                        </div>
+                        <div class="click-question" id="cq3">
+                            <div class="click-expr">\( 20 \div \) <span class="clickable" onclick="handleClick(this, 'cq3')" data-correct="true">\( (15 - 5) \)</span></div>
+                            <div class="click-feedback"></div>
+                        </div>
+                        <div class="click-question" id="cq4">
+                            <div class="click-expr"><span class="clickable" onclick="handleClick(this, 'cq4')" data-correct="true">\( 12 \div 3 \)</span> \( + 7 \)</div>
+                            <div class="click-feedback"></div>
+                        </div>
+                        <div class="click-question" id="cq5">
+                            <div class="click-expr">\( 50 - \) <span class="clickable" onclick="handleClick(this, 'cq5')" data-correct="true">\( (2 + 6) \)</span> \( \times 4 \)</div>
+                            <div class="click-feedback"></div>
+                        </div>
+                    </div>
+
+                    <h3 class="section-title" style="font-size: 1.2rem; border-bottom: 2px solid var(--sand); padding-bottom:5px;"><i class="fas fa-pencil-alt"></i> Part C: Calculate the Answer</h3>
+                    <p style="font-size:0.9rem;">Solve the following expressions. Type your answer in the box.</p>
+                    <div id="inputGame" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                        <div class="input-question"><label>1. \( 12 + (15 \div 3) = \) </label><input type="number" class="math-input" id="iq1" data-answer="17"><div class="input-feedback"></div></div>
+                        <div class="input-question"><label>2. \( (20 - 5) \times 4 = \) </label><input type="number" class="math-input" id="iq2" data-answer="60"><div class="input-feedback"></div></div>
+                        <div class="input-question"><label>3. \( 40 \div (2 + 3) \times 2 = \) </label><input type="number" class="math-input" id="iq3" data-answer="16"><div class="input-feedback"></div></div>
+                        <div class="input-question"><label>4. \( 100 - (25 \times 3) + 10 = \) </label><input type="number" class="math-input" id="iq4" data-answer="35"><div class="input-feedback"></div></div>
+                        <div class="input-question"><label>5. \( 50 + (10 \times 2) \div (12 - 7) = \) </label><input type="number" class="math-input" id="iq5" data-answer="54"><div class="input-feedback"></div></div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 15px;">
+                    <button class="canvas-btn" style="padding: 10px 20px; font-size: 1rem; background-color: var(--moss-green);" onclick="checkGames()"><i class="fas fa-check-circle"></i> Check Answers</button>
+                    <button class="canvas-btn" style="padding: 10px 20px; font-size: 1rem; background-color: var(--fire-orange);" onclick="resetGames()"><i class="fas fa-redo"></i> Reset</button>
+                </div>
+            </div>
+
+            <!-- Assessment Section -->
+            <div class="section-card" id="sec-assessment">
+                <div class="section-header">
+                    <div class="section-title"><i class="fas fa-clipboard-check"></i> Assessment: BODMAS Mission</div>
+                    <div class="timer-badge"><i class="far fa-clock"></i> Extended Time</div>
+                </div>
+                <div class="theory-box" style="background-color: #fff3e0; border-left-color: var(--fire-orange);">
+                    <p><i class="fas fa-exclamation-triangle"></i> <strong>Instruction:</strong> Please fill out your name and the date before starting. There are 5 Groups of questions. Click the tabs to switch between groups. Click <strong>Submit Group</strong> at the bottom of each tab to check your answers. You can print your results using the Print button.</p>
+                </div>
+                <div style="display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <label style="font-weight: bold; color: var(--rock-dark);"><i class="fas fa-user"></i> Student Name:</label>
+                        <input type="text" id="studentName" class="math-input" style="width: 100%; margin-top: 5px;" placeholder="Enter your name">
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <label style="font-weight: bold; color: var(--rock-dark);"><i class="fas fa-calendar-alt"></i> Date:</label>
+                        <input type="date" id="assessmentDate" class="math-input" style="width: 100%; margin-top: 5px;">
+                    </div>
+                </div>
+                <div class="tab-navigation">
+                    <button class="tab-btn active" onclick="switchTab(event, 'tab1')">Group 1</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'tab2')">Group 2</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'tab3')">Group 3</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'tab4')">Group 4</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'tab5')">Group 5</button>
+                </div>
+                <div class="tab-content-container">
+                    <div id="tab1" class="tab-content active">
+                        <h3 style="color:var(--rock-dark); margin-top:0;">Group 1: BODMAS Basics</h3>
+                        <div class="q-container" data-answer="B" data-type="radio" data-group="1"><p>1. In the BODMAS rule, what does the 'B' stand for?</p><label><input type="radio" name="g1q1" value="B"> Brackets</label><label><input type="radio" name="g1q1" value="O"> Orders</label><label><input type="radio" name="g1q1" value="D"> Division</label><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="Multiply" data-type="select" data-group="1"><p>2. Which operation should you do first in: \( 5 + 3 \times 2 \) ?</p><select id="g1q2" class="q-select"><option value="">-- Select --</option><option value="Add">Addition</option><option value="Multiply">Multiplication</option></select><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="10" data-type="text" data-group="1"><p>3. Calculate: \( 4 + 2 \times 3 = \) <input type="text" id="g1q3" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="2,3" data-type="checkbox" data-group="1"><p>4. Which of the following expressions contain brackets? (Select MORE THAN ONE)</p><label><input type="checkbox" class="g1q4" value="1"> \( 5 + 2 \times 2 \)</label><label><input type="checkbox" class="g1q4" value="2"> \( (10 - 5) + 3 \)</label><label><input type="checkbox" class="g1q4" value="3"> \( 4 \times (2 + 1) \)</label><label><input type="checkbox" class="g1q4" value="4"> \( 12 \div 4 \)</label><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="Multiply,Add" data-type="drag-sequence" data-group="1"><p>5. Drag the operations into the correct order of solving \( 2 + 3 \times 4 \):</p><div class="drag-seq-zone" id="seq-drop-1" style="display:flex; gap:10px; margin-bottom:10px;"><div class="seq-slot" data-index="1" style="border:2px dashed var(--rock-light); min-width:100px; min-height:40px; border-radius:5px; background:white;"></div><div class="seq-slot" data-index="2" style="border:2px dashed var(--rock-light); min-width:100px; min-height:40px; border-radius:5px; background:white;"></div></div><div style="display:flex; gap:10px;"><div class="drag-seq-item" draggable="true" data-value="Add" id="d-add1">Add ➕</div><div class="drag-seq-item" draggable="true" data-value="Multiply" id="d-mul1">Multiply ✖️</div></div><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="Left" data-type="select" data-group="1"><p>6. If you have both Division and Multiplication, which direction do you solve?</p><select id="g1q6" class="q-select"><option value="">-- Select --</option><option value="Left">Left to Right</option><option value="Right">Right to Left</option></select><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="8" data-type="text" data-group="1"><p>7. \( 10 - 4 \div 2 = \) <input type="text" id="g1q7" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="2+3" data-type="text" data-group="1"><p>8. In \( 20 \div (2 + 3) \), what is the first step? (e.g., 5+1) <input type="text" id="g1q8" class="math-input q-text" placeholder="e.g. 2+3"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="13" data-type="text" data-group="1"><p>9. \( 6 \times 2 + 1 = \) <input type="text" id="g1q9" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="5" data-type="text" data-group="1"><p>10. \( (5 + 5) \div 2 = \) <input type="text" id="g1q10" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div style="text-align:center; margin-top:20px;"><button class="canvas-btn" style="background-color:var(--moss-green); padding:10px 20px;" onclick="submitGroup(1)"><i class="fas fa-check"></i> Submit Group 1</button></div>
+                    </div>
+
+                    <div id="tab2" class="tab-content">
+                        <h3 style="color:var(--rock-dark); margin-top:0;">Group 2: Brackets Power</h3>
+                        <div class="q-container" data-answer="18" data-type="text" data-group="2"><p>1. \( (4 + 5) \times 2 = \) <input type="text" id="g2q1" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="Brackets" data-type="radio" data-group="2"><p>2. What changes the order of operations in an equation?</p><label><input type="radio" name="g2q2" value="Brackets"> Brackets</label><label><input type="radio" name="g2q2" value="Addition"> Addition</label><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="2" data-type="text" data-group="2"><p>3. \( (10 - 6) \div 2 = \) <input type="text" id="g2q3" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="1,3" data-type="checkbox" data-group="2"><p>4. Which expressions equal 10? (Select more than one)</p><label><input type="checkbox" class="g2q4" value="1"> \( 5 \times 2 \)</label><label><input type="checkbox" class="g2q4" value="2"> \( 2 + 3 \times 4 \)</label><label><input type="checkbox" class="g2q4" value="3"> \( (2 + 3) \times 2 \)</label><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="18" data-type="text" data-group="2"><p>5. \( 3 \times (2 + 4) = \) <input type="text" id="g2q5" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="35" data-type="text" data-group="2"><p>6. \( 50 - (10 + 5) = \) <input type="text" id="g2q6" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="Different" data-type="select" data-group="2"><p>7. Compare \( (3+2)\times4 \) and \( 3+(2\times4) \). Are the results the same?</p><select id="g2q7" class="q-select"><option value="">-- Select --</option><option value="Same">Same</option><option value="Different">Different</option></select><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="8-3" data-type="text" data-group="2"><p>8. What is the first step of \( 2 \times (8 - 3) \)? <input type="text" id="g2q8" class="math-input q-text" placeholder="e.g. 8-3"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="24" data-type="text" data-group="2"><p>9. \( (12 - 4) \times 3 = \) <input type="text" id="g2q9" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="1,2" data-type="checkbox" data-group="2"><p>10. Which equal 20? (Select more than one)</p><label><input type="checkbox" class="g2q10" value="1"> \( 4 \times 5 \)</label><label><input type="checkbox" class="g2q10" value="2"> \( 2 \times (6 + 4) \)</label><label><input type="checkbox" class="g2q10" value="3"> \( 2 + 6 \times 3 \)</label><div class="feedback"></div></div>
+                        <div style="text-align:center; margin-top:20px;"><button class="canvas-btn" style="background-color:var(--moss-green); padding:10px 20px;" onclick="submitGroup(2)"><i class="fas fa-check"></i> Submit Group 2</button></div>
+                    </div>
+
+                    <div id="tab3" class="tab-content">
+                        <h3 style="color:var(--rock-dark); margin-top:0;">Group 3: Division & Multiplication</h3>
+                        <div class="q-container" data-answer="6" data-type="text" data-group="3"><p>1. \( 24 \div 6 + 2 = \) <input type="text" id="g3q1" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="5x4" data-type="radio" data-group="3"><p>2. First step of \( 5 \times 4 \div 2 \)?</p><label><input type="radio" name="g3q2" value="4/2"> \( 4 \div 2 \)</label><label><input type="radio" name="g3q2" value="5x4"> \( 5 \times 4 \)</label><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="12" data-type="text" data-group="3"><p>3. \( 30 \div 5 \times 2 = \) <input type="text" id="g3q3" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="12" data-type="text" data-group="3"><p>4. \( 10 + 8 \div 4 = \) <input type="text" id="g3q4" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="1,2" data-type="checkbox" data-group="3"><p>5. Which require Multiplication/Division first?</p><label><input type="checkbox" class="g3q5" value="1"> \( 4 \times 2 + 1 \)</label><label><input type="checkbox" class="g3q5" value="2"> \( 10 - 9 \div 3 \)</label><label><input type="checkbox" class="g3q5" value="3"> \( (1+2) - 3 \)</label><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="16" data-type="text" data-group="3"><p>6. \( 7 \times 3 - 5 = \) <input type="text" id="g3q6" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="5" data-type="radio" data-group="3"><p>7. \( 16 \div 4 + 1 = \) ?</p><label><input type="radio" name="g3q7" value="5"> 5</label><label><input type="radio" name="g3q7" value="4"> 4</label><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="5" data-type="select" data-group="3"><p>8. \( 40 \div (5 + 3) = \) ?</p><select id="g3q8" class="q-select"><option value="">-- Select --</option><option value="5">5</option><option value="8">8</option></select><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="6" data-type="text" data-group="3"><p>9. \( 9 \times 2 \div 3 = \) <input type="text" id="g3q9" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="5" data-type="text" data-group="3"><p>10. \( 15 - 2 \times 5 = \) <input type="text" id="g3q10" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div style="text-align:center; margin-top:20px;"><button class="canvas-btn" style="background-color:var(--moss-green); padding:10px 20px;" onclick="submitGroup(3)"><i class="fas fa-check"></i> Submit Group 3</button></div>
+                    </div>
+
+                    <div id="tab4" class="tab-content">
+                        <h3 style="color:var(--rock-dark); margin-top:0;">Group 4: Addition & Subtraction</h3>
+                        <div class="q-container" data-answer="9" data-type="text" data-group="4"><p>1. \( 10 - 3 + 2 = \) <input type="text" id="g4q1" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="Left" data-type="radio" data-group="4"><p>2. Addition and Subtraction are solved from...?</p><label><input type="radio" name="g4q2" value="Left"> Left to Right</label><label><input type="radio" name="g4q2" value="Right"> Right to Left</label><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="10" data-type="text" data-group="4"><p>3. \( 20 - 5 - 5 = \) <input type="text" id="g4q3" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="1,2" data-type="checkbox" data-group="4"><p>4. Which equal 5?</p><label><input type="checkbox" class="g4q4" value="1"> \( 10 - 5 \)</label><label><input type="checkbox" class="g4q4" value="2"> \( 2 + 3 \)</label><label><input type="checkbox" class="g4q4" value="3"> \( 10 \div 2 + 3 \)</label><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="6" data-type="text" data-group="4"><p>5. \( 8 + 4 - 6 = \) <input type="text" id="g4q5" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="60" data-type="text" data-group="4"><p>6. \( 100 - 50 + 10 = \) <input type="text" id="g4q6" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="False" data-type="select" data-group="4"><p>7. Is \( 10 - 2 + 3 = 5 \) ?</p><select id="g4q7" class="q-select"><option value="">-- Select --</option><option value="True">True</option><option value="False">False</option></select><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="5-1" data-type="text" data-group="4"><p>8. First step of \( 5 - 1 + 4 \)? <input type="text" id="g4q8" class="math-input q-text" placeholder="e.g. 5-1"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="20" data-type="text" data-group="4"><p>9. \( 25 + 5 - 10 = \) <input type="text" id="g4q9" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="1,2" data-type="checkbox" data-group="4"><p>10. Which are true?</p><label><input type="checkbox" class="g4q10" value="1"> \( 5+5=10 \)</label><label><input type="checkbox" class="g4q10" value="2"> \( 10-2=8 \)</label><label><input type="checkbox" class="g4q10" value="3"> \( 3 \times 3 = 6 \)</label><div class="feedback"></div></div>
+                        <div style="text-align:center; margin-top:20px;"><button class="canvas-btn" style="background-color:var(--moss-green); padding:10px 20px;" onclick="submitGroup(4)"><i class="fas fa-check"></i> Submit Group 4</button></div>
+                    </div>
+
+                    <div id="tab5" class="tab-content">
+                        <h3 style="color:var(--rock-dark); margin-top:0;">Group 5: Mixed Challenge</h3>
+                        <div class="q-container" data-answer="9" data-type="text" data-group="5"><p>1. \( 2 \times (3 + 4) - 5 = \) <input type="text" id="g5q1" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="3x10-5" data-type="radio" data-group="5"><p>2. 3 boxes of 10 crayons, give 5 away. Equation?</p><label><input type="radio" name="g5q2" value="3x10-5"> \( 3 \times 10 - 5 \)</label><label><input type="radio" name="g5q2" value="10-5x3"> \( 10 - 5 \times 3 \)</label><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="54" data-type="text" data-group="5"><p>3. \( 50 + (10 \times 2) \div (12 - 7) = \) <input type="text" id="g5q3" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="1,2" data-type="checkbox" data-group="5"><p>4. Which equal 42?</p><label><input type="checkbox" class="g5q4" value="1"> \( 6 \times 7 \)</label><label><input type="checkbox" class="g5q4" value="2"> \( 144 \div 12 + 30 \)</label><label><input type="checkbox" class="g5q4" value="3"> \( 5 \times 10 - 8 \)</label><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="35" data-type="text" data-group="5"><p>5. \( (15 + 5) \times 2 - (10 \div 2) = \) <input type="text" id="g5q5" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="23" data-type="text" data-group="5"><p>6. \( 8 \times 4 \div (10 - 6) + 15 = \) <input type="text" id="g5q6" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="No" data-type="select" data-group="5"><p>7. Is \( (10+5)\times2 \) the same as \( 10+(5\times2) \)?</p><select id="g5q7" class="q-select"><option value="">-- Select --</option><option value="Yes">Yes</option><option value="No">No</option></select><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="5x(10+2)" data-type="text" data-group="5"><p>8. Multiply 5 by the sum of 10 and 2. <input type="text" id="g5q8" class="math-input q-text" placeholder="e.g. 5x(10+2)"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="42" data-type="text" data-group="5"><p>9. \( 144 \div (12 \times 1) + (5 - 2) \times 10 = \) <input type="text" id="g5q9" class="math-input q-text"></p><div class="feedback"></div></div>
+                        <div class="q-container" data-answer="1,2" data-type="checkbox" data-group="5"><p>10. Which BODMAS rules apply here \( (4+2) \times 3 \)?</p><label><input type="checkbox" class="g5q10" value="1"> Brackets first</label><label><input type="checkbox" class="g5q10" value="2"> Multiply second</label><label><input type="checkbox" class="g5q10" value="3"> Add second</label><div class="feedback"></div></div>
+                        <div style="text-align:center; margin-top:20px;"><button class="canvas-btn" style="background-color:var(--moss-green); padding:10px 20px;" onclick="submitGroup(5)"><i class="fas fa-check"></i> Submit Group 5</button></div>
+                    </div>
+                </div>
+                <div style="text-align: right; margin-top: 20px; border-top: 2px dashed var(--rock-light); padding-top: 15px;">
+                    <button class="canvas-btn" style="background-color: var(--rock-dark); padding: 12px 25px; font-size: 1rem;" onclick="printAssessment()"><i class="fas fa-print"></i> Print All Results</button>
+                </div>
+            </div>
+
+            <!-- Section 7 -->
+            <div class="section-card" id="sec7">
+                <div class="section-header">
+                    <div class="section-title"><i class="fas fa-medal"></i> Consolidation & Reflection</div>
+                    <div class="timer-badge"><i class="far fa-clock"></i> End of Mission</div>
+                </div>
+                <div class="theory-box" style="background-color: #e8f5e9; border-left-color: var(--moss-green);">
+                    <p><i class="fas fa-trophy"></i> <strong>Amazing work today, Detective!</strong> You've mastered the secret code of BODMAS to unlock the most complex math vaults. Remember: Brackets are the bosses, followed by Orders, then Divide/Multiply (left to right), and finally Add/Subtract (left to right).</p>
+                </div>
+                <div class="reflection-container">
+                    <h3 style="color: var(--rock-dark); margin-top:0;"><i class="fas fa-comment-dots"></i> Mission Debrief</h3>
+                    <p>Before you log off, take a moment to reflect. What was the trickiest part of today's mission?</p>
+                    <textarea id="reflectionText" class="reflection-textarea" placeholder="Type your thoughts here... Was it the brackets? Remembering left to right?"></textarea>
+                </div>
+                <div style="margin-top: 25px; text-align: center;">
+                    <p style="font-size: 1.1rem; color: var(--rock-mid);">Don't forget to claim your rewards and finish today's mission on the platform!</p>
+                    <a href="https://learn.algonova.id/login" target="_blank" class="reward-btn"><i class="fas fa-gift"></i> Claim Rewards at learn.algonova.id</a>
+                </div>
+            </div>
+
+        </div> <!-- End of material-col -->
+
+        <!-- Column 2: Scratchpad Canvas -->
+        <div class="canvas-col">
+            <div class="sticky-canvas">
+                <h3 style="margin:0 0 10px 0; text-align:center; color:var(--rock-dark);"><i class="fas fa-paint-brush"></i> Scratchpad</h3>
+                <div class="canvas-tools">
+                    <div>
+                        <button class="color-btn active" style="background-color: black;" data-color="black"></button>
+                        <button class="color-btn" style="background-color: red;" data-color="red"></button>
+                        <button class="color-btn" style="background-color: #0277bd;" data-color="#0277bd"></button>
+                        <button class="color-btn" style="background-color: #2e7d32;" data-color="#2e7d32"></button>
+                    </div>
+                    <div>
+                        <button class="canvas-btn" id="eraserBtn"><i class="fas fa-eraser"></i> Eraser</button>
+                        <button class="canvas-btn" id="clearBtn"><i class="fas fa-trash"></i> Erase All</button>
+                    </div>
+                </div>
+                <canvas id="scratchpad"></canvas>
+            </div>
+        </div>
+
+    </div> <!-- End of main-container -->
+
+    <!-- JavaScript -->
+    <script>
+        // --- KaTeX Rendering ---
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: "\\(", right: "\\)", display: false},
+                        {left: "\\[", right: "\\]", display: true}
+                    ]
+                });
+            }
+        });
+
+        // --- Scratchpad Logic ---
+        const canvas = document.getElementById('scratchpad');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+        let currentColor = 'black';
+        let isEraser = false;
+
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            const tempData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            canvas.width = rect.width;
+            canvas.height = 400;
+            ctx.putImageData(tempData, 0, 0);
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+        }
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('load', resizeCanvas);
+
+        function startDraw(e) { drawing = true; draw(e); }
+        function draw(e) {
+            if (!drawing) return;
+            ctx.strokeStyle = isEraser ? '#ffffff' : currentColor;
+            ctx.lineWidth = isEraser ? 20 : 3;
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            ctx.lineTo(clientX - rect.left, clientY - rect.top);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(clientX - rect.left, clientY - rect.top);
+        }
+        function stopDraw() { drawing = false; ctx.beginPath(); }
+
+        canvas.addEventListener('mousedown', startDraw);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDraw);
+        canvas.addEventListener('mouseleave', stopDraw);
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDraw(e); });
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
+        canvas.addEventListener('touchend', stopDraw);
+
+        document.querySelectorAll('.color-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentColor = btn.getAttribute('data-color');
+                isEraser = false;
+            });
+        });
+        document.getElementById('eraserBtn').addEventListener('click', () => {
+            isEraser = !isEraser;
+            if(isEraser) document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+            else document.querySelector(`.color-btn[data-color="${currentColor}"]`).classList.add('active');
+        });
+        document.getElementById('clearBtn').addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
+
+        // --- Game Drag & Drop Logic ---
+        let draggedItem = null;
+        document.querySelectorAll('.drag-item').forEach(item => {
+            item.addEventListener('dragstart', (e) => { draggedItem = e.target; setTimeout(() => e.target.style.opacity = '0.5', 0); });
+            item.addEventListener('dragend', (e) => { e.target.style.opacity = '1'; document.querySelectorAll('.drop-zone').forEach(zone => zone.classList.remove('over')); });
+        });
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('over'); });
+            zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault(); zone.classList.remove('over');
+                if (zone.innerHTML === '' && draggedItem) {
+                    zone.appendChild(draggedItem.cloneNode(true)).style.margin = '0';
+                    draggedItem.style.display = 'none';
+                }
+            });
+        });
+
+        // --- Game Click Logic ---
+        function handleClick(element, questionId) {
+            const parent = document.getElementById(questionId);
+            parent.querySelectorAll('.clickable').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        // --- Game Check & Reset ---
+        function checkGames() {
+            let score = 0;
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                const answer = zone.getAttribute('data-answer');
+                const droppedItem = zone.querySelector('.drag-item');
+                zone.classList.remove('correct', 'incorrect');
+                if(droppedItem) {
+                    if(droppedItem.getAttribute('data-value') === answer) { zone.classList.add('correct'); score++; }
+                    else zone.classList.add('incorrect');
+                } else zone.classList.add('incorrect');
+            });
+
+            document.querySelectorAll('.click-question').forEach(q => {
+                const selectedSpan = q.querySelector('.selected');
+                const feedback = q.querySelector('.click-feedback');
+                const correctSpan = q.querySelector('[data-correct="true"]');
+                
+                q.querySelectorAll('.clickable').forEach(el => el.classList.remove('correct-click', 'incorrect-click'));
+                
+                if(selectedSpan) {
+                    if (selectedSpan.getAttribute('data-correct') === 'true') {
+                        selectedSpan.classList.add('correct-click');
+                        feedback.innerHTML = '<span style="color: var(--moss-green);">Correct!</span>';
+                        score++;
+                    } else {
+                        selectedSpan.classList.add('incorrect-click');
+                        feedback.innerHTML = '<span style="color: #d32f2f;">Wrong! Hint: Look for Brackets first.</span>';
+                        if(correctSpan) correctSpan.classList.add('correct-click');
+                    }
+                } else feedback.innerHTML = '<span style="color: var(--fire-orange);">Please select an answer!</span>';
+            });
+
+            document.querySelectorAll('.input-question').forEach(q => {
+                const input = q.querySelector('.math-input');
+                const feedback = q.querySelector('.input-feedback');
+                const answer = input.getAttribute('data-answer');
+                const userVal = input.value;
+                input.style.borderColor = '';
+                if(userVal === answer) { input.style.borderColor = 'var(--moss-green)'; feedback.innerHTML = '<span style="color: var(--moss-green);">Correct!</span>'; score++; }
+                else if(userVal === '') feedback.innerHTML = '<span style="color: var(--fire-orange);">Empty!</span>';
+                else { input.style.borderColor = '#d32f2f'; feedback.innerHTML = `<span style="color: #d32f2f;">Wrong! The answer is ${answer}.</span>`; }
+            });
+            alert(`Detective Score: ${score} out of 16!`);
+        }
+
+        function resetGames() {
+            document.querySelectorAll('.drop-zone').forEach(zone => { zone.classList.remove('correct', 'incorrect'); zone.innerHTML = ''; });
+            document.querySelectorAll('.drag-item').forEach(item => item.style.display = 'inline-block');
+            document.querySelectorAll('.click-question').forEach(q => {
+                q.querySelectorAll('.clickable').forEach(el => el.classList.remove('selected', 'correct-click', 'incorrect-click'));
+                q.querySelector('.click-feedback').innerHTML = '';
+            });
+            document.querySelectorAll('.input-question').forEach(q => {
+                const input = q.querySelector('.math-input'); input.value = ''; input.style.borderColor = '';
+                q.querySelector('.input-feedback').innerHTML = '';
+            });
+        }
+
+        // --- Assessment Tab Logic ---
+        function switchTab(evt, tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        let assessDragItem = null;
+        document.addEventListener('dragstart', (e) => { if (e.target.classList.contains('drag-seq-item')) { assessDragItem = e.target; setTimeout(() => e.target.style.opacity = '0.5', 0); } });
+        document.addEventListener('dragend', (e) => { if (e.target.classList.contains('drag-seq-item')) { e.target.style.opacity = '1'; document.querySelectorAll('.seq-slot').forEach(slot => slot.classList.remove('over')); } });
+        document.addEventListener('dragover', (e) => { if (e.target.classList.contains('seq-slot')) { e.preventDefault(); e.target.classList.add('over'); } });
+        document.addEventListener('dragleave', (e) => { if (e.target.classList.contains('seq-slot')) e.target.classList.remove('over'); });
+        document.addEventListener('drop', (e) => {
+            e.preventDefault();
+            if (e.target.classList.contains('seq-slot') && assessDragItem) {
+                e.target.classList.remove('over');
+                if (e.target.innerHTML === '') { e.target.appendChild(assessDragItem.cloneNode(true)); assessDragItem.style.visibility = 'hidden'; }
+            }
+        });
+
+        let assessmentScores = { 1: -1, 2: -1, 3: -1, 4: -1, 5: -1 };
+        function submitGroup(groupNum) {
+            let score = 0;
+            const questions = document.querySelectorAll(`.q-container[data-group="${groupNum}"]`);
+            questions.forEach(q => {
+                const type = q.getAttribute('data-type');
+                const answer = q.getAttribute('data-answer');
+                let userAnswer = ''; let isCorrect = false;
+                const feedbackDiv = q.querySelector('.feedback');
+                q.classList.remove('correct-q', 'incorrect-q'); feedbackDiv.style.display = 'block';
+
+                if (type === 'radio') { const sel = q.querySelector('input[type="radio"]:checked'); if(sel) userAnswer = sel.value; isCorrect = (userAnswer === answer); } 
+                else if (type === 'select') { const sel = q.querySelector('select'); userAnswer = sel.value; isCorrect = (userAnswer === answer); } 
+                else if (type === 'text') {
+                    const inp = q.querySelector('input[type="text"]');
+                    userAnswer = inp.value.replace(/\s/g, '').toLowerCase().replace(/×/g, 'x').replace(/\*/g, 'x');
+                    let normAnswer = answer.replace(/\s/g, '').toLowerCase().replace(/×/g, 'x').replace(/\*/g, 'x');
+                    isCorrect = (userAnswer === normAnswer);
+                } 
+                else if (type === 'checkbox') {
+                    const checks = q.querySelectorAll('input[type="checkbox"]:checked');
+                    let vals = Array.from(checks).map(c => c.value); userAnswer = vals.sort().join(','); isCorrect = (userAnswer === answer);
+                }
+                else if (type === 'drag-sequence') {
+                    const slots = q.querySelectorAll('.seq-slot'); let vals = [];
+                    slots.forEach(slot => { const item = slot.querySelector('.drag-seq-item'); if(item) vals.push(item.getAttribute('data-value')); });
+                    userAnswer = vals.join(','); isCorrect = (userAnswer === answer);
+                    slots.forEach(slot => {
+                        slot.classList.remove('correct-seq', 'incorrect-seq');
+                        const item = slot.querySelector('.drag-seq-item');
+                        if(item) { if(item.getAttribute('data-value') === answer.split(',')[parseInt(slot.getAttribute('data-index'))-1]) slot.classList.add('correct-seq'); else slot.classList.add('incorrect-seq'); }
+                    });
+                }
+                if (isCorrect) { score++; q.classList.add('correct-q'); feedbackDiv.innerHTML = '<span style="color:var(--moss-green);"><i class="fas fa-check-circle"></i> Correct!</span>'; }
+                else { q.classList.add('incorrect-q'); let hint = type === 'drag-sequence' ? `Correct sequence: ${answer.split(',').join(' then ')}.` : type === 'checkbox' ? `Correct options are: ${answer.replace(/,/g, ' and ')}.` : `Correct answer: ${answer}.`; feedbackDiv.innerHTML = `<span style="color:#d32f2f;"><i class="fas fa-times-circle"></i> Incorrect. ${hint}</span>`; }
+            });
+            assessmentScores[groupNum] = score;
+            alert(`Group ${groupNum} Submitted! Score: ${score}/10`);
+        }
+
+        function printAssessment() {
+            const name = document.getElementById('studentName').value || 'Student';
+            const date = document.getElementById('assessmentDate').value || 'N/A';
+            let printContent = `<html><head><title>Assessment Result - ${name}</title><style>body{font-family:Arial,sans-serif;padding:20px}h1{color:#3e2723;border-bottom:2px solid #3e2723;padding-bottom:10px}.info{margin-bottom:20px;font-size:1.2rem}table{width:100%;border-collapse:collapse;margin-bottom:20px}th,td{border:1px solid #5d4037;padding:8px;text-align:left}th{background-color:#d7ccc8}.correct-print{color:#2e7d32;font-weight:bold}.incorrect-print{color:#d32f2f;font-weight:bold}</style></head><body><h1>BODMAS Assessment Result</h1><div class="info"><strong>Name:</strong> ${name}</div><div class="info"><strong>Date:</strong> ${date}</div>`;
+            let totalScore = 0;
+            for (let i = 1; i <= 5; i++) {
+                const groupScore = assessmentScores[i]; const scoreText = groupScore === -1 ? 'Not Submitted' : `${groupScore}/10`;
+                totalScore += (groupScore > 0 ? groupScore : 0);
+                printContent += `<h2>Group ${i} - Score: ${scoreText}</h2><table><tr><th>#</th><th>Question / Type</th><th>Your Answer</th><th>Correct Answer</th><th>Status</th></tr>`;
+                const questions = document.querySelectorAll(`.q-container[data-group="${i}"]`); let qNum = 1;
+                questions.forEach(q => {
+                    const type = q.getAttribute('data-type'); const answer = q.getAttribute('data-answer'); const isCorrect = q.classList.contains('correct-q');
+                    let userAnswerText = 'N/A';
+                    if(type==='radio'){const s=q.querySelector('input:checked');if(s)userAnswerText=s.parentElement.textContent.trim();}
+                    else if(type==='select'){const s=q.querySelector('select');if(s.selectedIndex>0)userAnswerText=s.options[s.selectedIndex].text;}
+                    else if(type==='text'){const inp=q.querySelector('input[type="text"]');if(inp.value)userAnswerText=inp.value;}
+                    else if(type==='checkbox'){const ch=q.querySelectorAll('input:checked');userAnswerText=Array.from(ch).map(c=>c.parentElement.textContent.trim()).join(', ')||'None selected';}
+                    else if(type==='drag-sequence'){const sl=q.querySelectorAll('.seq-slot');let v=[];sl.forEach(s=>{const it=s.querySelector('.drag-seq-item');v.push(it?it.getAttribute('data-value'):'Empty');});userAnswerText=v.join(' -> ');}
+                    const statusClass = isCorrect ? 'correct-print' : 'incorrect-print'; const statusText = isCorrect ? 'Correct' : 'Incorrect';
+                    printContent += `<tr><td>${qNum}</td><td>${type.toUpperCase()}</td><td>${userAnswerText}</td><td>${answer}</td><td class="${statusClass}">${statusText}</td></tr>`;
+                    qNum++;
+                });
+                printContent += `</table>`;
+            }
+            printContent += `<h2 style="color: #3e2723;">Total Score: ${totalScore} / 50</h2></body></html>`;
+            const printWindow = window.open('', '_blank'); printWindow.document.write(printContent); printWindow.document.close();
+            setTimeout(() => printWindow.print(), 500);
+        }
+    </script>
+</body>
+</html>
