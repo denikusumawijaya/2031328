@@ -455,6 +455,65 @@
         }
         .step-label { width: 100%; text-align: center; font-size: 0.85rem; color: var(--rock-mid); font-weight: bold; margin-bottom: 5px; font-style: italic; }
         .step-math { font-size: 1.2rem; font-weight: bold; color: var(--rock-dark); }
+        /* Warmup Game Quest Styles */
+        #warmup-game-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .game-quest-box {
+            background: linear-gradient(145deg, #ffffff, #f5f0f0);
+            border: 2px solid var(--rock-light); border-radius: 12px; padding: 15px;
+            box-shadow: 3px 3px 0px var(--sand); transition: 0.3s; position: relative; overflow: hidden;
+        }
+        .game-quest-box:hover { transform: translateY(-3px); box-shadow: 6px 6px 0px var(--sand); border-color: var(--fire-orange); }
+        .game-quest-box p { margin: 0 0 10px 0; font-weight: bold; font-size: 1.05rem; color: var(--rock-dark); }
+        .dino-emoji {
+            font-size: 2rem; position: absolute; top: 10px; right: 15px; opacity: 0.2;
+            animation: bounceIn 1s ease-out; /* Reusing bounceIn */
+        }
+        .highlight-num { color: var(--fire-orange); font-size: 1.3rem; text-decoration: underline; }
+        .quest-action { display: flex; align-items: center; gap: 10px; }
+        .quest-input {
+            border: 2px dashed var(--rock-mid); padding: 8px; font-size: 1.1rem; text-align: center;
+            border-radius: 8px; width: 100px; font-weight: bold; background: #fff; transition: 0.3s;
+        }
+        .quest-input:focus { outline: none; border-color: var(--moss-green); background-color: #f1f8e9; box-shadow: 0 0 8px rgba(85, 139, 47, 0.3); }
+        .quest-btn {
+            background: var(--rock-mid); color: white; border: none; padding: 8px 15px; border-radius: 20px;
+            cursor: pointer; transition: 0.2s; box-shadow: 0 3px 0 var(--rock-dark);
+        }
+        .quest-btn:hover { background: var(--rock-dark); transform: translateY(2px); box-shadow: 0 1px 0 var(--rock-dark); }
+        .quest-btn:active { transform: translateY(3px); box-shadow: 0 0px 0 var(--rock-dark); }
+
+        .feedback-icon { font-size: 1.4rem; margin-left: 10px; visibility: hidden; }
+        .correct-anim { visibility: visible !important; animation: bounceIn 0.5s; color: var(--moss-green); }
+        .wrong-anim { visibility: visible !important; animation: shake 0.5s; color: #d32f2f; }
+
+        /* Drag and Drop Digits */
+        .drag-digit {
+            background: var(--sand); padding: 10px; border-radius: 50%; cursor: grab; font-weight: bold;
+            border: 2px solid var(--rock-dark); user-select: none; width: 40px; height: 40px;
+            display: inline-flex; align-items: center; justify-content: center; box-shadow: 2px 2px 0 var(--rock-mid);
+            transition: 0.2s;
+        }
+        .drag-digit:active { cursor: grabbing; transform: scale(1.2); }
+        .drop-digit-zone {
+            width: 45px; height: 45px; border: 3px dashed var(--rock-light); border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center; background: white; transition: 0.2s;
+        }
+        .drop-digit-zone.over { border-color: var(--fire-orange); background-color: #fff3e0; transform: scale(1.1); }
+        .drop-digit-zone.filled { border-style: solid; border-color: var(--rock-dark); background-color: var(--sand); }
+        .drop-digit-zone.correct-seq { border-color: var(--moss-green); background-color: #e8f5e9; color: var(--moss-green); font-weight: bold; border-width: 3px; }
+
+        /* Choice Buttons */
+        .choice-btn {
+            background: var(--sand); border: 2px solid var(--rock-dark); padding: 10px 20px;
+            border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.2s;
+        }
+        .choice-btn:hover { background: var(--rock-light); color: white; transform: scale(1.05); }
+        .choice-btn.selected-correct { background: var(--moss-green); color: white; border-color: var(--moss-green); animation: bounceIn 0.5s; }
+        .choice-btn.selected-wrong { background: #d32f2f; color: white; border-color: #d32f2f; animation: shake 0.5s; }
+
+        /* Animations */
+        @keyframes bounceIn { 0% { transform: scale(0.1); opacity: 0; } 60% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(5px); } }
     </style>
 </head>
 <body>
@@ -1595,65 +1654,7 @@
             const printWindow = window.open('', '_blank'); printWindow.document.write(printContent); printWindow.document.close();
             setTimeout(() => printWindow.print(), 500);
         }
-        /* Warmup Game Quest Styles */
-        #warmup-game-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .game-quest-box {
-            background: linear-gradient(145deg, #ffffff, #f5f0f0);
-            border: 2px solid var(--rock-light); border-radius: 12px; padding: 15px;
-            box-shadow: 3px 3px 0px var(--sand); transition: 0.3s; position: relative; overflow: hidden;
-        }
-        .game-quest-box:hover { transform: translateY(-3px); box-shadow: 6px 6px 0px var(--sand); border-color: var(--fire-orange); }
-        .game-quest-box p { margin: 0 0 10px 0; font-weight: bold; font-size: 1.05rem; color: var(--rock-dark); }
-        .dino-emoji {
-            font-size: 2rem; position: absolute; top: 10px; right: 15px; opacity: 0.2;
-            animation: bounceIn 1s ease-out; /* Reusing bounceIn */
-        }
-        .highlight-num { color: var(--fire-orange); font-size: 1.3rem; text-decoration: underline; }
-        .quest-action { display: flex; align-items: center; gap: 10px; }
-        .quest-input {
-            border: 2px dashed var(--rock-mid); padding: 8px; font-size: 1.1rem; text-align: center;
-            border-radius: 8px; width: 100px; font-weight: bold; background: #fff; transition: 0.3s;
-        }
-        .quest-input:focus { outline: none; border-color: var(--moss-green); background-color: #f1f8e9; box-shadow: 0 0 8px rgba(85, 139, 47, 0.3); }
-        .quest-btn {
-            background: var(--rock-mid); color: white; border: none; padding: 8px 15px; border-radius: 20px;
-            cursor: pointer; transition: 0.2s; box-shadow: 0 3px 0 var(--rock-dark);
-        }
-        .quest-btn:hover { background: var(--rock-dark); transform: translateY(2px); box-shadow: 0 1px 0 var(--rock-dark); }
-        .quest-btn:active { transform: translateY(3px); box-shadow: 0 0px 0 var(--rock-dark); }
 
-        .feedback-icon { font-size: 1.4rem; margin-left: 10px; visibility: hidden; }
-        .correct-anim { visibility: visible !important; animation: bounceIn 0.5s; color: var(--moss-green); }
-        .wrong-anim { visibility: visible !important; animation: shake 0.5s; color: #d32f2f; }
-
-        /* Drag and Drop Digits */
-        .drag-digit {
-            background: var(--sand); padding: 10px; border-radius: 50%; cursor: grab; font-weight: bold;
-            border: 2px solid var(--rock-dark); user-select: none; width: 40px; height: 40px;
-            display: inline-flex; align-items: center; justify-content: center; box-shadow: 2px 2px 0 var(--rock-mid);
-            transition: 0.2s;
-        }
-        .drag-digit:active { cursor: grabbing; transform: scale(1.2); }
-        .drop-digit-zone {
-            width: 45px; height: 45px; border: 3px dashed var(--rock-light); border-radius: 50%;
-            display: inline-flex; align-items: center; justify-content: center; background: white; transition: 0.2s;
-        }
-        .drop-digit-zone.over { border-color: var(--fire-orange); background-color: #fff3e0; transform: scale(1.1); }
-        .drop-digit-zone.filled { border-style: solid; border-color: var(--rock-dark); background-color: var(--sand); }
-        .drop-digit-zone.correct-seq { border-color: var(--moss-green); background-color: #e8f5e9; color: var(--moss-green); font-weight: bold; border-width: 3px; }
-
-        /* Choice Buttons */
-        .choice-btn {
-            background: var(--sand); border: 2px solid var(--rock-dark); padding: 10px 20px;
-            border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.2s;
-        }
-        .choice-btn:hover { background: var(--rock-light); color: white; transform: scale(1.05); }
-        .choice-btn.selected-correct { background: var(--moss-green); color: white; border-color: var(--moss-green); animation: bounceIn 0.5s; }
-        .choice-btn.selected-wrong { background: #d32f2f; color: white; border-color: #d32f2f; animation: shake 0.5s; }
-
-        /* Animations */
-        @keyframes bounceIn { 0% { transform: scale(0.1); opacity: 0; } 60% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); } }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(5px); } }
         // --- Vault Scroll Modal Logic ---
         const scrollData = [
             { q: "What happens if you put on shoes BEFORE socks? (Mess/Neat)", a: "mess" },
@@ -1904,6 +1905,91 @@
                 }, 2000);
             }
         }
+        // --- Warmup Game Logic (Section 1) ---
+        function checkWarmup(id) {
+            const input = document.getElementById(id);
+            const fb = document.getElementById('fb-' + id);
+            const ans = input.getAttribute('data-answer');
+            const val = input.value.trim();
+            fb.className = 'feedback-icon'; // reset class
+            
+            if(val === ans) {
+                fb.innerHTML = '<i class="fas fa-check-circle"></i>';
+                fb.classList.add('correct-anim');
+                input.style.borderColor = 'var(--moss-green)';
+                input.style.background = '#e8f5e9';
+                input.disabled = true; // lock correct answer
+            } else {
+                fb.innerHTML = '<i class="fas fa-times-circle"></i>';
+                fb.classList.add('wrong-anim');
+                input.style.borderColor = '#d32f2f';
+                input.style.background = '#ffebee';
+                // Reset after 1.5 seconds
+                setTimeout(() => {
+                    fb.className = 'feedback-icon'; 
+                    input.style.borderColor = 'var(--rock-mid)'; 
+                    input.style.background = '#fff';
+                }, 1500);
+            }
+        }
+
+        function checkWarmupDrag() {
+            const zones = document.querySelectorAll('.drop-digit-zone');
+            const fb = document.getElementById('fb-wq9');
+            let userNum = "";
+            let allFilled = true;
+            const correctNum = "6309";
+
+            zones.forEach(zone => {
+                const item = zone.querySelector('.drag-digit');
+                if(item) {
+                    userNum += item.getAttribute('data-value');
+                    zone.classList.add('filled');
+                } else {
+                    allFilled = false;
+                }
+            });
+
+            fb.className = 'feedback-icon';
+            if(!allFilled) {
+                fb.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:var(--fire-orange)"></i>';
+                fb.style.visibility = 'visible';
+                return;
+            }
+
+            if(userNum === correctNum) {
+                fb.innerHTML = '<i class="fas fa-check-circle"></i>';
+                fb.classList.add('correct-anim');
+                zones.forEach(zone => zone.classList.add('correct-seq'));
+            } else {
+                fb.innerHTML = '<i class="fas fa-times-circle"></i>';
+                fb.classList.add('wrong-anim');
+                setTimeout(() => { 
+                    fb.className = 'feedback-icon'; 
+                    zones.forEach(z => z.classList.remove('filled')); 
+                }, 1500);
+            }
+        }
+
+        function checkWarmupChoice(element, status) {
+            const fb = document.getElementById('fb-wq10');
+            const btns = document.querySelectorAll('.choice-btn');
+            fb.className = 'feedback-icon';
+            
+            // Disable other button
+            btns.forEach(btn => btn.disabled = true);
+
+            if(status === 'correct') {
+                element.classList.add('selected-correct');
+                fb.innerHTML = '<i class="fas fa-check-circle"></i> Correct! 3 x 15 = 45, which is smaller than 50.';
+                fb.classList.add('correct-anim');
+            } else {
+                element.classList.add('selected-wrong');
+                fb.innerHTML = '<i class="fas fa-times-circle"></i> Oops! 1/2 of 100 is 50. 3 x 15 is 45. 45 is smaller!';
+                fb.classList.add('wrong-anim');
+                setTimeout(() => { btns.forEach(btn => { btn.disabled = false; btn.className = 'choice-btn'; fb.className = 'feedback-icon'; }); }, 2500);
+            }
+        }        
     </script>
 </body>
 </html>
