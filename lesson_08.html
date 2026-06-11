@@ -1220,25 +1220,27 @@
 
                     <h3 class="section-title" style="font-size: 1.2rem; border-bottom: 2px solid var(--sand); padding-bottom:5px;"><i class="fas fa-mouse-pointer"></i> Part B: Click the Operation to Do First</h3>
                     <p style="font-size:0.9rem;">Click on the part of the expression you should calculate first.</p>
+                    <h3 class="section-title" style="font-size: 1.2rem; border-bottom: 2px solid var(--sand); padding-bottom:5px;"><i class="fas fa-mouse-pointer"></i> Part B: Click the Operation to Do First</h3>
+                    <p style="font-size:0.9rem;">Click on the part of the expression you should calculate first.</p>
                     <div id="clickGame" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">
                         <div class="click-question" id="cq1">
-                            <div class="click-expr">\( 3 \times \) <span class="clickable" onclick="handleClick(this, 'cq1')" data-correct="true">\( (8 + 2) \)</span></div>
+                            <div class="click-expr"><span class="clickable" onclick="handleClick(this, 'cq1', false)">\( 3 \times \)</span> <span class="clickable" onclick="handleClick(this, 'cq1', true)">\( (8 + 2) \)</span></div>
                             <div class="click-feedback"></div>
                         </div>
                         <div class="click-question" id="cq2">
-                            <div class="click-expr">\( 10 + \) <span class="clickable" onclick="handleClick(this, 'cq2')" data-correct="true">\( 4 \times 5 \)</span></div>
+                            <div class="click-expr"><span class="clickable" onclick="handleClick(this, 'cq2', false)">\( 10 + \)</span> <span class="clickable" onclick="handleClick(this, 'cq2', true)">\( 4 \times 5 \)</span></div>
                             <div class="click-feedback"></div>
                         </div>
                         <div class="click-question" id="cq3">
-                            <div class="click-expr">\( 20 \div \) <span class="clickable" onclick="handleClick(this, 'cq3')" data-correct="true">\( (15 - 5) \)</span></div>
+                            <div class="click-expr"><span class="clickable" onclick="handleClick(this, 'cq3', false)">\( 20 \div \)</span> <span class="clickable" onclick="handleClick(this, 'cq3', true)">\( (15 - 5) \)</span></div>
                             <div class="click-feedback"></div>
                         </div>
                         <div class="click-question" id="cq4">
-                            <div class="click-expr"><span class="clickable" onclick="handleClick(this, 'cq4')" data-correct="true">\( 12 \div 3 \)</span> \( + 7 \)</div>
+                            <div class="click-expr"><span class="clickable" onclick="handleClick(this, 'cq4', true)">\( 12 \div 3 \)</span> <span class="clickable" onclick="handleClick(this, 'cq4', false)">\( + 7 \)</span></div>
                             <div class="click-feedback"></div>
                         </div>
                         <div class="click-question" id="cq5">
-                            <div class="click-expr">\( 50 - \) <span class="clickable" onclick="handleClick(this, 'cq5')" data-correct="true">\( (2 + 6) \)</span> \( \times 4 \)</div>
+                            <div class="click-expr"><span class="clickable" onclick="handleClick(this, 'cq5', false)">\( 50 - \)</span> <span class="clickable" onclick="handleClick(this, 'cq5', true)">\( (2 + 6) \)</span> <span class="clickable" onclick="handleClick(this, 'cq5', false)">\( \times 4 \)</span></div>
                             <div class="click-feedback"></div>
                         </div>
                     </div>
@@ -1481,29 +1483,12 @@
         });
         document.getElementById('clearBtn').addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
 
-        // --- Game Drag & Drop Logic ---
-        let draggedItem = null;
-        document.querySelectorAll('.drag-item').forEach(item => {
-            item.addEventListener('dragstart', (e) => { draggedItem = e.target; setTimeout(() => e.target.style.opacity = '0.5', 0); });
-            item.addEventListener('dragend', (e) => { e.target.style.opacity = '1'; document.querySelectorAll('.drop-zone').forEach(zone => zone.classList.remove('over')); });
-        });
-        document.querySelectorAll('.drop-zone').forEach(zone => {
-            zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('over'); });
-            zone.addEventListener('dragleave', () => zone.classList.remove('over'));
-            zone.addEventListener('drop', (e) => {
-                e.preventDefault(); zone.classList.remove('over');
-                if (zone.innerHTML === '' && draggedItem) {
-                    zone.appendChild(draggedItem.cloneNode(true)).style.margin = '0';
-                    draggedItem.style.display = 'none';
-                }
-            });
-        });
-
         // --- Game Click Logic ---
-        function handleClick(element, questionId) {
+        function handleClick(element, questionId, isCorrect) {
             const parent = document.getElementById(questionId);
             parent.querySelectorAll('.clickable').forEach(el => el.classList.remove('selected'));
             element.classList.add('selected');
+            element.setAttribute('data-correct', isCorrect); // Set dynamically so inspect element doesn't spoil it initially
         }
 
         // --- Game Check & Reset ---
@@ -1573,19 +1558,6 @@
             evt.currentTarget.classList.add('active');
         }
 
-        let assessDragItem = null;
-        document.addEventListener('dragstart', (e) => { if (e.target.classList.contains('drag-seq-item')) { assessDragItem = e.target; setTimeout(() => e.target.style.opacity = '0.5', 0); } });
-        document.addEventListener('dragend', (e) => { if (e.target.classList.contains('drag-seq-item')) { e.target.style.opacity = '1'; document.querySelectorAll('.seq-slot').forEach(slot => slot.classList.remove('over')); } });
-        document.addEventListener('dragover', (e) => { if (e.target.classList.contains('seq-slot')) { e.preventDefault(); e.target.classList.add('over'); } });
-        document.addEventListener('dragleave', (e) => { if (e.target.classList.contains('seq-slot')) e.target.classList.remove('over'); });
-        document.addEventListener('drop', (e) => {
-            e.preventDefault();
-            if (e.target.classList.contains('seq-slot') && assessDragItem) {
-                e.target.classList.remove('over');
-                if (e.target.innerHTML === '') { e.target.appendChild(assessDragItem.cloneNode(true)); assessDragItem.style.visibility = 'hidden'; }
-            }
-        });
-
         let assessmentScores = { 1: -1, 2: -1, 3: -1, 4: -1, 5: -1 };
         function submitGroup(groupNum) {
             let score = 0;
@@ -1624,35 +1596,6 @@
             });
             assessmentScores[groupNum] = score;
             alert(`Group ${groupNum} Submitted! Score: ${score}/10`);
-        }
-
-        function printAssessment() {
-            const name = document.getElementById('studentName').value || 'Student';
-            const date = document.getElementById('assessmentDate').value || 'N/A';
-            let printContent = `<html><head><title>Assessment Result - ${name}</title><style>body{font-family:Arial,sans-serif;padding:20px}h1{color:#3e2723;border-bottom:2px solid #3e2723;padding-bottom:10px}.info{margin-bottom:20px;font-size:1.2rem}table{width:100%;border-collapse:collapse;margin-bottom:20px}th,td{border:1px solid #5d4037;padding:8px;text-align:left}th{background-color:#d7ccc8}.correct-print{color:#2e7d32;font-weight:bold}.incorrect-print{color:#d32f2f;font-weight:bold}</style></head><body><h1>BODMAS Assessment Result</h1><div class="info"><strong>Name:</strong> ${name}</div><div class="info"><strong>Date:</strong> ${date}</div>`;
-            let totalScore = 0;
-            for (let i = 1; i <= 5; i++) {
-                const groupScore = assessmentScores[i]; const scoreText = groupScore === -1 ? 'Not Submitted' : `${groupScore}/10`;
-                totalScore += (groupScore > 0 ? groupScore : 0);
-                printContent += `<h2>Group ${i} - Score: ${scoreText}</h2><table><tr><th>#</th><th>Question / Type</th><th>Your Answer</th><th>Correct Answer</th><th>Status</th></tr>`;
-                const questions = document.querySelectorAll(`.q-container[data-group="${i}"]`); let qNum = 1;
-                questions.forEach(q => {
-                    const type = q.getAttribute('data-type'); const answer = q.getAttribute('data-answer'); const isCorrect = q.classList.contains('correct-q');
-                    let userAnswerText = 'N/A';
-                    if(type==='radio'){const s=q.querySelector('input:checked');if(s)userAnswerText=s.parentElement.textContent.trim();}
-                    else if(type==='select'){const s=q.querySelector('select');if(s.selectedIndex>0)userAnswerText=s.options[s.selectedIndex].text;}
-                    else if(type==='text'){const inp=q.querySelector('input[type="text"]');if(inp.value)userAnswerText=inp.value;}
-                    else if(type==='checkbox'){const ch=q.querySelectorAll('input:checked');userAnswerText=Array.from(ch).map(c=>c.parentElement.textContent.trim()).join(', ')||'None selected';}
-                    else if(type==='drag-sequence'){const sl=q.querySelectorAll('.seq-slot');let v=[];sl.forEach(s=>{const it=s.querySelector('.drag-seq-item');v.push(it?it.getAttribute('data-value'):'Empty');});userAnswerText=v.join(' -> ');}
-                    const statusClass = isCorrect ? 'correct-print' : 'incorrect-print'; const statusText = isCorrect ? 'Correct' : 'Incorrect';
-                    printContent += `<tr><td>${qNum}</td><td>${type.toUpperCase()}</td><td>${userAnswerText}</td><td>${answer}</td><td class="${statusClass}">${statusText}</td></tr>`;
-                    qNum++;
-                });
-                printContent += `</table>`;
-            }
-            printContent += `<h2 style="color: #3e2723;">Total Score: ${totalScore} / 50</h2></body></html>`;
-            const printWindow = window.open('', '_blank'); printWindow.document.write(printContent); printWindow.document.close();
-            setTimeout(() => printWindow.print(), 500);
         }
 
         // --- Vault Scroll Modal Logic ---
@@ -1766,85 +1709,6 @@
                 }, 2000);
             }
         }
-
-        // 3. Logic for Drag & Drop (Quest 1 & 2)
-        let pkDragItem = null;
-        document.addEventListener('dragstart', (e) => {
-            if (e.target.classList.contains('pk-drag-item')) { pkDragItem = e.target; setTimeout(() => e.target.style.opacity = '0.5', 0); }
-        });
-        document.addEventListener('dragend', (e) => {
-            if (e.target.classList.contains('pk-drag-item')) { e.target.style.opacity = '1'; document.querySelectorAll('.pk-drop-zone').forEach(z => z.classList.remove('over')); }
-        });
-        document.addEventListener('dragover', (e) => {
-            if (e.target.classList.contains('pk-drop-zone')) { e.preventDefault(); e.target.classList.add('over'); }
-        });
-        document.addEventListener('dragleave', (e) => {
-            if (e.target.classList.contains('pk-drop-zone')) e.target.classList.remove('over');
-        });
-        document.addEventListener('drop', (e) => {
-            e.preventDefault();
-            if (e.target.classList.contains('pk-drop-zone') && pkDragItem) {
-                e.target.classList.remove('over');
-                const dropZone = e.target;
-                const dropAnswer = dropZone.getAttribute('data-answer');
-                const dragValue = pkDragItem.getAttribute('data-value');
-                const feedbackId = dropZone.id === 'pk-drop-1' ? 'fb-pk1' : 'fb-pk2';
-                const fb = document.getElementById(feedbackId);
-                fb.className = 'feedback-icon';
-
-                if (dropZone.innerHTML === '') { 
-                    if(dragValue === dropAnswer) {
-                        dropZone.innerHTML = dragValue;
-                        dropZone.classList.add('correct-drop');
-                        pkDragItem.style.visibility = 'hidden';
-                        fb.innerHTML = '<i class="fas fa-check-circle"></i>';
-                        fb.classList.add('correct-anim');
-                    } else {
-                        dropZone.classList.add('incorrect'); // brief red flash
-                        fb.innerHTML = '<i class="fas fa-times-circle"></i>';
-                        fb.classList.add('wrong-anim');
-                        setTimeout(() => { dropZone.classList.remove('incorrect'); fb.className = 'feedback-icon'; }, 1500);
-                    }
-                }
-            }
-        });
-        // --- BODMAS Ladder Drag & Drop Logic (Quest 10) ---
-        let bodmasLetterItem = null;
-        
-        document.addEventListener('dragstart', (e) => {
-            if (e.target.classList.contains('bodmas-letter')) { 
-                bodmasLetterItem = e.target; 
-                setTimeout(() => e.target.style.opacity = '0.5', 0); 
-            }
-        });
-        
-        document.addEventListener('dragend', (e) => {
-            if (e.target.classList.contains('bodmas-letter')) { 
-                e.target.style.opacity = '1'; 
-                document.querySelectorAll('.bodmas-slot').forEach(z => z.classList.remove('over')); 
-            }
-        });
-        
-        document.addEventListener('dragover', (e) => {
-            if (e.target.classList.contains('bodmas-slot')) { e.preventDefault(); e.target.classList.add('over'); }
-        });
-        
-        document.addEventListener('dragleave', (e) => {
-            if (e.target.classList.contains('bodmas-slot')) e.target.classList.remove('over');
-        });
-        
-        document.addEventListener('drop', (e) => {
-            e.preventDefault();
-            if (e.target.classList.contains('bodmas-slot') && bodmasLetterItem) {
-                e.target.classList.remove('over');
-                const slot = e.target;
-                if (slot.innerHTML === '') { 
-                    slot.innerHTML = bodmasLetterItem.getAttribute('data-value');
-                    slot.classList.add('filled');
-                    bodmasLetterItem.style.visibility = 'hidden';
-                }
-            }
-        });
 
         // Check BODMAS Ladder Order
         function checkBodmasLadder() {
@@ -1990,39 +1854,242 @@
                 setTimeout(() => { btns.forEach(btn => { btn.disabled = false; btn.className = 'choice-btn'; fb.className = 'feedback-icon'; }); }, 2500);
             }
         }
-        // --- Warmup Drag & Drop Logic (Quest 9) ---
-        let warmupDragItem = null;
+        // --- ROBUST DRAG & DROP LOGIC (Replaces all previous D&D) ---
+        
+        // Section 6 Game D&D
+        let draggedItem = null;
         document.addEventListener('dragstart', (e) => {
-            if (e.target.classList.contains('drag-digit')) { 
-                warmupDragItem = e.target; 
-                setTimeout(() => e.target.style.opacity = '0.5', 0); 
-            }
+            const item = e.target.closest('.drag-item');
+            if (item) { draggedItem = item; setTimeout(() => item.style.opacity = '0.5', 0); }
         });
         document.addEventListener('dragend', (e) => {
-            if (e.target.classList.contains('drag-digit')) { 
-                e.target.style.opacity = '1'; 
-                document.querySelectorAll('.drop-digit-zone').forEach(z => z.classList.remove('over')); 
-            }
+            const item = e.target.closest('.drag-item');
+            if (item) { item.style.opacity = '1'; document.querySelectorAll('.drop-zone').forEach(zone => zone.classList.remove('over')); }
         });
         document.addEventListener('dragover', (e) => {
-            if (e.target.classList.contains('drop-digit-zone')) { 
-                e.preventDefault(); 
-                e.target.classList.add('over'); 
-            }
+            const zone = e.target.closest('.drop-zone');
+            if (zone) { e.preventDefault(); zone.classList.add('over'); }
         });
         document.addEventListener('dragleave', (e) => {
-            if (e.target.classList.contains('drop-digit-zone')) e.target.classList.remove('over');
+            const zone = e.target.closest('.drop-zone');
+            if (zone) zone.classList.remove('over');
         });
         document.addEventListener('drop', (e) => {
             e.preventDefault();
-            if (e.target.classList.contains('drop-digit-zone') && warmupDragItem) {
-                e.target.classList.remove('over');
-                if (e.target.innerHTML === '') { 
-                    e.target.appendChild(warmupDragItem.cloneNode(true)); 
+            const zone = e.target.closest('.drop-zone');
+            if (zone && draggedItem) {
+                zone.classList.remove('over');
+                if (zone.innerHTML === '') {
+                    zone.appendChild(draggedItem.cloneNode(true)).style.margin = '0';
+                    draggedItem.style.display = 'none';
+                }
+            }
+        });
+
+        // Warmup Quest 9 D&D
+        let warmupDragItem = null;
+        document.addEventListener('dragstart', (e) => {
+            const item = e.target.closest('.drag-digit');
+            if (item) { warmupDragItem = item; setTimeout(() => item.style.opacity = '0.5', 0); }
+        });
+        document.addEventListener('dragend', (e) => {
+            const item = e.target.closest('.drag-digit');
+            if (item) { item.style.opacity = '1'; document.querySelectorAll('.drop-digit-zone').forEach(z => z.classList.remove('over')); }
+        });
+        document.addEventListener('dragover', (e) => {
+            const zone = e.target.closest('.drop-digit-zone');
+            if (zone) { e.preventDefault(); zone.classList.add('over'); }
+        });
+        document.addEventListener('dragleave', (e) => {
+            const zone = e.target.closest('.drop-digit-zone');
+            if (zone) zone.classList.remove('over');
+        });
+        document.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const zone = e.target.closest('.drop-digit-zone');
+            if (zone && warmupDragItem) {
+                zone.classList.remove('over');
+                if (zone.innerHTML === '') { 
+                    zone.appendChild(warmupDragItem.cloneNode(true)); 
                     warmupDragItem.style.visibility = 'hidden'; 
                 }
             }
         });
+
+        // Arena Quest 1 & 2 D&D
+        let pkDragItem = null;
+        document.addEventListener('dragstart', (e) => {
+            const item = e.target.closest('.pk-drag-item');
+            if (item) { pkDragItem = item; setTimeout(() => item.style.opacity = '0.5', 0); }
+        });
+        document.addEventListener('dragend', (e) => {
+            const item = e.target.closest('.pk-drag-item');
+            if (item) { item.style.opacity = '1'; document.querySelectorAll('.pk-drop-zone').forEach(z => z.classList.remove('over')); }
+        });
+        document.addEventListener('dragover', (e) => {
+            const zone = e.target.closest('.pk-drop-zone');
+            if (zone) { e.preventDefault(); zone.classList.add('over'); }
+        });
+        document.addEventListener('dragleave', (e) => {
+            const zone = e.target.closest('.pk-drop-zone');
+            if (zone) zone.classList.remove('over');
+        });
+        document.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const zone = e.target.closest('.pk-drop-zone');
+            if (zone && pkDragItem) {
+                zone.classList.remove('over');
+                const dropAnswer = zone.getAttribute('data-answer');
+                const dragValue = pkDragItem.getAttribute('data-value');
+                const feedbackId = zone.id === 'pk-drop-1' ? 'fb-pk1' : 'fb-pk2';
+                const fb = document.getElementById(feedbackId);
+                fb.className = 'feedback-icon';
+
+                if (zone.innerHTML === '') { 
+                    if(dragValue === dropAnswer) {
+                        zone.innerHTML = dragValue;
+                        zone.classList.add('correct-drop');
+                        pkDragItem.style.visibility = 'hidden';
+                        fb.innerHTML = '<i class="fas fa-check-circle"></i>';
+                        fb.classList.add('correct-anim');
+                    } else {
+                        zone.classList.add('incorrect');
+                        fb.innerHTML = '<i class="fas fa-times-circle"></i>';
+                        fb.classList.add('wrong-anim');
+                        setTimeout(() => { zone.classList.remove('incorrect'); fb.className = 'feedback-icon'; }, 1500);
+                    }
+                }
+            }
+        });
+
+        // Ladder Quest 10 D&D
+        let bodmasLetterItem = null;
+        document.addEventListener('dragstart', (e) => {
+            const item = e.target.closest('.bodmas-letter');
+            if (item) { bodmasLetterItem = item; setTimeout(() => item.style.opacity = '0.5', 0); }
+        });
+        document.addEventListener('dragend', (e) => {
+            const item = e.target.closest('.bodmas-letter');
+            if (item) { item.style.opacity = '1'; document.querySelectorAll('.bodmas-slot').forEach(z => z.classList.remove('over')); }
+        });
+        document.addEventListener('dragover', (e) => {
+            const zone = e.target.closest('.bodmas-slot');
+            if (zone) { e.preventDefault(); zone.classList.add('over'); }
+        });
+        document.addEventListener('dragleave', (e) => {
+            const zone = e.target.closest('.bodmas-slot');
+            if (zone) zone.classList.remove('over');
+        });
+        document.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const zone = e.target.closest('.bodmas-slot');
+            if (zone && bodmasLetterItem) {
+                zone.classList.remove('over');
+                if (zone.innerHTML === '') { 
+                    zone.innerHTML = bodmasLetterItem.getAttribute('data-value');
+                    zone.classList.add('filled');
+                    bodmasLetterItem.style.visibility = 'hidden';
+                }
+            }
+        });
+
+        // Assessment D&D
+        let assessDragItem = null;
+        document.addEventListener('dragstart', (e) => {
+            const item = e.target.closest('.drag-seq-item');
+            if (item) { assessDragItem = item; setTimeout(() => item.style.opacity = '0.5', 0); }
+        });
+        document.addEventListener('dragend', (e) => {
+            const item = e.target.closest('.drag-seq-item');
+            if (item) { item.style.opacity = '1'; document.querySelectorAll('.seq-slot').forEach(slot => slot.classList.remove('over')); }
+        });
+        document.addEventListener('dragover', (e) => {
+            const zone = e.target.closest('.seq-slot');
+            if (zone) { e.preventDefault(); zone.classList.add('over'); }
+        });
+        document.addEventListener('dragleave', (e) => {
+            const zone = e.target.closest('.seq-slot');
+            if (zone) zone.classList.remove('over');
+        });
+        document.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const zone = e.target.closest('.seq-slot');
+            if (zone && assessDragItem) {
+                zone.classList.remove('over');
+                if (zone.innerHTML === '') { zone.appendChild(assessDragItem.cloneNode(true)); assessDragItem.style.visibility = 'hidden'; }
+            }
+        });
+
+
+        // --- PRINT ASSESSMENT LOGIC (Active Tab Only) ---
+        function printAssessment() {
+            const name = document.getElementById('studentName').value || 'Student';
+            const date = document.getElementById('assessmentDate').value || 'N/A';
+            
+            // Find active tab
+            const activeTab = document.querySelector('.tab-content.active');
+            if (!activeTab) return;
+            const tabId = activeTab.id; // e.g., 'tab1'
+            const groupNum = tabId.replace('tab', '');
+            
+            const groupScore = assessmentScores[groupNum];
+            const scoreText = groupScore === -1 ? 'Not Submitted' : `${groupScore}/10`;
+
+            let printContent = `
+                <html>
+                <head>
+                    <title>Assessment Result - Group ${groupNum}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        h1 { color: #3e2723; border-bottom: 2px solid #3e2723; padding-bottom: 10px; }
+                        .info { margin-bottom: 20px; font-size: 1.2rem; }
+                        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                        th, td { border: 1px solid #5d4037; padding: 8px; text-align: left; }
+                        th { background-color: #d7ccc8; }
+                        .correct-print { color: #2e7d32; font-weight: bold; }
+                        .incorrect-print { color: #d32f2f; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                    <h1>BODMAS Assessment Result</h1>
+                    <div class="info"><strong>Name:</strong> ${name}</div>
+                    <div class="info"><strong>Date:</strong> ${date}</div>
+                    <div class="info"><strong>Score:</strong> ${scoreText}</div>
+            `;
+            
+            printContent += `<h2>Group ${groupNum} Details</h2><table><tr><th>#</th><th>Question</th><th>Your Answer</th><th>Correct Answer</th><th>Status</th></tr>`;
+            
+            const questions = activeTab.querySelectorAll('.q-container'); 
+            let qNum = 1;
+            
+            questions.forEach(q => {
+                const type = q.getAttribute('data-type'); 
+                const answer = q.getAttribute('data-answer'); 
+                const isCorrect = q.classList.contains('correct-q');
+                let userAnswerText = 'N/A';
+                
+                // Extract just the text of the question, removing input fields for clean print
+                let questionText = q.querySelector('p').innerText;
+
+                if(type==='radio'){const s=q.querySelector('input:checked');if(s)userAnswerText=s.parentElement.textContent.trim();}
+                else if(type==='select'){const s=q.querySelector('select');if(s.selectedIndex>0)userAnswerText=s.options[s.selectedIndex].text;}
+                else if(type==='text'){const inp=q.querySelector('input[type="text"]');if(inp.value)userAnswerText=inp.value;}
+                else if(type==='checkbox'){const ch=q.querySelectorAll('input:checked');userAnswerText=Array.from(ch).map(c=>c.parentElement.textContent.trim()).join(', ')||'None selected';}
+                else if(type==='drag-sequence'){const sl=q.querySelectorAll('.seq-slot');let v=[];sl.forEach(s=>{const it=s.querySelector('.drag-seq-item');v.push(it?it.getAttribute('data-value'):'Empty');});userAnswerText=v.join(' -> ');}
+                
+                const statusClass = isCorrect ? 'correct-print' : 'incorrect-print'; 
+                const statusText = isCorrect ? 'Correct' : 'Incorrect';
+                
+                printContent += `<tr><td>${qNum}</td><td>${questionText}</td><td>${userAnswerText}</td><td>${answer}</td><td class="${statusClass}">${statusText}</td></tr>`;
+                qNum++;
+            });
+            printContent += `</table></body></html>`;
+            
+            const printWindow = window.open('', '_blank'); 
+            printWindow.document.write(printContent); 
+            printWindow.document.close();
+            setTimeout(() => printWindow.print(), 500);
+        }
     </script>
 </body>
 </html>
