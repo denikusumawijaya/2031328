@@ -2021,7 +2021,7 @@
         });
 
 
-        // --- PRINT ASSESSMENT LOGIC (Active Tab Only) ---
+        // --- PRINT ASSESSMENT LOGIC (Fixed Duplication & Active Tab Only) ---
         function printAssessment() {
             const name = document.getElementById('studentName').value || 'Student';
             const date = document.getElementById('assessmentDate').value || 'N/A';
@@ -2042,22 +2042,32 @@
                     <style>
                         body { font-family: Arial, sans-serif; padding: 20px; }
                         h1 { color: #3e2723; border-bottom: 2px solid #3e2723; padding-bottom: 10px; }
-                        .info { margin-bottom: 20px; font-size: 1.2rem; }
-                        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                        h2 { color: #5d4037; }
+                        .info { margin-bottom: 20px; font-size: 1.1rem; }
+                        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9rem; }
                         th, td { border: 1px solid #5d4037; padding: 8px; text-align: left; }
                         th { background-color: #d7ccc8; }
                         .correct-print { color: #2e7d32; font-weight: bold; }
                         .incorrect-print { color: #d32f2f; font-weight: bold; }
+                        .q-text-col { max-width: 300px; }
                     </style>
                 </head>
                 <body>
                     <h1>BODMAS Assessment Result</h1>
                     <div class="info"><strong>Name:</strong> ${name}</div>
                     <div class="info"><strong>Date:</strong> ${date}</div>
-                    <div class="info"><strong>Score:</strong> ${scoreText}</div>
+                    <div class="info"><strong>Score for Group ${groupNum}:</strong> ${scoreText}</div>
+                    <hr>
             `;
             
-            printContent += `<h2>Group ${groupNum} Details</h2><table><tr><th>#</th><th>Question</th><th>Your Answer</th><th>Correct Answer</th><th>Status</th></tr>`;
+            printContent += `<table>
+                <tr>
+                    <th style="width: 5%">#</th>
+                    <th class="q-text-col" style="width: 40%">Question</th>
+                    <th style="width: 20%">Your Answer</th>
+                    <th style="width: 15%">Correct Answer</th>
+                    <th style="width: 10%">Status</th>
+                </tr>`;
             
             const questions = activeTab.querySelectorAll('.q-container'); 
             let qNum = 1;
@@ -2066,23 +2076,67 @@
                 const type = q.getAttribute('data-type'); 
                 const answer = q.getAttribute('data-answer'); 
                 const isCorrect = q.classList.contains('correct-q');
-                let userAnswerText = 'N/A';
-                
-                // Extract just the text of the question, removing input fields for clean print
-                let questionText = q.querySelector('p').innerText;
+                let userAnswerText = "Not Answered";
 
-                if(type==='radio'){const s=q.querySelector('input:checked');if(s)userAnswerText=s.parentElement.textContent.trim();}
-                else if(type==='select'){const s=q.querySelector('select');if(s.selectedIndex>0)userAnswerText=s.options[s.selectedIndex].text;}
-                else if(type==='text'){const inp=q.querySelector('input[type="text"]');if(inp.value)userAnswerText=inp.value;}
-                else if(type==='checkbox'){const ch=q.querySelectorAll('input:checked');userAnswerText=Array.from(ch).map(c=>c.parentElement.textContent.trim()).join(', ')||'None selected';}
-                else if(type==='drag-sequence'){const sl=q.querySelectorAll('.seq-slot');let v=[];sl.forEach(s=>{const it=s.querySelector('.drag-seq-item');v.push(it?it.getAttribute('data-value'):'Empty');});userAnswerText=v.join(' -> ');}
+                // --- FIX DUPLICATION: Clean Question Text Extraction ---
+                let pTag = q.querySelector('p');
+                let questionText = "";
+                if(pTag) {
+                    // Clone the paragraph to manipulate without breaking the webpage
+                    let cloneP = pTag.cloneNode(true);
+                    // Remove input fields & dropdowns so their text/placeholders aren't printed
+                    cloneP.querySelectorAll('input, select, button').forEach(el => el.remove());
+                    // Remove KaTeX MathML which causes duplicate text in innerText
+                    cloneP.querySelectorAll('.katex-mathml').forEach(el => el.remove());
+                    // Get text and clean up extra whitespace
+                    questionText = cloneP.innerText.trim().replace(/\s+/g, ' ');
+                } else {
+                    questionText = "Question text missing";
+                }
+
+                // --- FIX USER ANSWER EXTRACTION ---
+                if(type==='radio'){
+                    const sel = q.querySelector('input[type="radio"]:checked');
+                    if(sel) userAnswerText = sel.parentElement.textContent.trim();
+                } 
+                else if(type==='select'){
+                    const sel = q.querySelector('select');
+                    if(sel && sel.selectedIndex > 0) userAnswerText = sel.options[sel.selectedIndex].text;
+                } 
+                else if(type==='text'){
+                    const inp = q.querySelector('input[type="text"]');
+                    if(inp && inp.value.trim() !== '') userAnswerText = inp.value.trim();
+                } 
+                else if(type==='checkbox'){
+                    const ch = q.querySelectorAll('input[type="checkbox"]:checked');
+                    if(ch.length > 0) {
+                        userAnswerText = Array.from(ch).map(c => c.parentElement.textContent.trim()).join(', ');
+                    }
+                } 
+                else if(type==='drag-sequence'){
+                    const sl = q.querySelectorAll('.seq-slot');
+                    let v = [];
+                    sl.forEach(s => {
+                        const it = s.querySelector('.drag-seq-item');
+                        v.push(it ? it.getAttribute('data-value') : '?');
+                    });
+                    userAnswerText = v.join(' -> ');
+                }
                 
                 const statusClass = isCorrect ? 'correct-print' : 'incorrect-print'; 
                 const statusText = isCorrect ? 'Correct' : 'Incorrect';
                 
-                printContent += `<tr><td>${qNum}</td><td>${questionText}</td><td>${userAnswerText}</td><td>${answer}</td><td class="${statusClass}">${statusText}</td></tr>`;
+                printContent += `
+                    <tr>
+                        <td>${qNum}</td>
+                        <td class="q-text-col">${questionText}</td>
+                        <td>${userAnswerText}</td>
+                        <td>${answer}</td>
+                        <td class="${statusClass}">${statusText}</td>
+                    </tr>`;
                 qNum++;
             });
+            
             printContent += `</table></body></html>`;
             
             const printWindow = window.open('', '_blank'); 
