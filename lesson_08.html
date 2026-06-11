@@ -1989,7 +1989,40 @@
                 fb.classList.add('wrong-anim');
                 setTimeout(() => { btns.forEach(btn => { btn.disabled = false; btn.className = 'choice-btn'; fb.className = 'feedback-icon'; }); }, 2500);
             }
-        }        
+        }
+        // --- Warmup Drag & Drop Logic (Quest 9) ---
+        let warmupDragItem = null;
+        document.addEventListener('dragstart', (e) => {
+            if (e.target.classList.contains('drag-digit')) { 
+                warmupDragItem = e.target; 
+                setTimeout(() => e.target.style.opacity = '0.5', 0); 
+            }
+        });
+        document.addEventListener('dragend', (e) => {
+            if (e.target.classList.contains('drag-digit')) { 
+                e.target.style.opacity = '1'; 
+                document.querySelectorAll('.drop-digit-zone').forEach(z => z.classList.remove('over')); 
+            }
+        });
+        document.addEventListener('dragover', (e) => {
+            if (e.target.classList.contains('drop-digit-zone')) { 
+                e.preventDefault(); 
+                e.target.classList.add('over'); 
+            }
+        });
+        document.addEventListener('dragleave', (e) => {
+            if (e.target.classList.contains('drop-digit-zone')) e.target.classList.remove('over');
+        });
+        document.addEventListener('drop', (e) => {
+            e.preventDefault();
+            if (e.target.classList.contains('drop-digit-zone') && warmupDragItem) {
+                e.target.classList.remove('over');
+                if (e.target.innerHTML === '') { 
+                    e.target.appendChild(warmupDragItem.cloneNode(true)); 
+                    warmupDragItem.style.visibility = 'hidden'; 
+                }
+            }
+        });
     </script>
 </body>
 </html>
