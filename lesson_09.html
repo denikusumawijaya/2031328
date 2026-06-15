@@ -781,7 +781,65 @@
     }
 
     function resetGame(gameId) {
-        location.reload(); 
+        // 1. Selalu bersihkan feedback teks dan warnanya
+        const fbEl = document.getElementById(`${gameId}-feedback`);
+        fbEl.innerHTML = '';
+        fbEl.className = 'feedback-text text-center';
+
+        // 2. Logika reset spesifik untuk setiap game
+        switch(gameId) {
+            case 'game1':
+                // Hapus kelas selected/correct/wrong dari tombol
+                document.querySelectorAll('#sec1 .opt-btn').forEach(btn => {
+                    btn.classList.remove('selected', 'correct', 'wrong');
+                });
+                // Kosongkan objek pelacak jawaban untuk game 1
+                delete selectedOpts['game1-q1'];
+                delete selectedOpts['game1-q2'];
+                delete selectedOpts['game1-q3'];
+                break;
+
+            case 'game2':
+                // Kembalikan item drag ke wadah awal (pool)
+                const pool2 = document.querySelector('#sec2 .d-flex.justify-content-center');
+                const fpb = document.getElementById('drag-fpb');
+                const kpk = document.getElementById('drag-kpk');
+                if(fpb) pool2.appendChild(fpb);
+                if(kpk) pool2.appendChild(kpk);
+                break;
+
+            case 'game3':
+                // Kosongkan area drop pohon faktor
+                document.getElementById('tree-slot-1').innerHTML = '';
+                document.getElementById('tree-slot-2').innerHTML = '';
+                // Kembalikan item drag ke wadah awal jika sudah terpakai
+                const pool3 = document.querySelector('#sec3 .d-flex.justify-content-center');
+                [document.getElementById('drag-2'), document.getElementById('drag-3'), document.getElementById('drag-5')].forEach(item => {
+                    if(item) pool3.appendChild(item);
+                });
+                break;
+
+            case 'game4':
+                // Reset semua dropdown ke opsi default (Select)
+                document.getElementById('fpb-pow-2').value = '';
+                document.getElementById('fpb-pow-5').value = '';
+                document.getElementById('kpk-pow-2').value = '';
+                document.getElementById('kpk-pow-3').value = '';
+                document.getElementById('kpk-pow-5').value = '';
+                break;
+
+            case 'game5':
+                // Kosongkan input angka
+                document.getElementById('game5-fpb').value = '';
+                document.getElementById('game5-kpk').value = '';
+                break;
+
+            case 'game6':
+                // Kosongkan input angka dan teks
+                document.getElementById('game6-kpk').value = '';
+                document.getElementById('game6-time').value = '';
+                break;
+        }
     }
 
     // --- Assessment Logic ---
