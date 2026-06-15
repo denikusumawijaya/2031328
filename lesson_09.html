@@ -218,20 +218,25 @@
                 left: 0;
                 top: 0;
                 width: 100%;
-                padding: 20px;
+                padding: 10px 15px;
                 display: block !important;
+                font-size: 12px; /* Perkecil font agar muat */
+                box-sizing: border-box;
             }
 
             /* Styling tabel untuk print */
             #printArea table {
                 width: 100%;
                 border-collapse: collapse;
-                margin-top: 20px;
+                margin-top: 15px;
             }
             #printArea th, #printArea td {
                 border: 1px solid #000;
-                padding: 8px;
+                padding: 5px 8px; /* Perkecil padding sel */
                 text-align: left;
+                white-space: normal; /* Paksa teks panjang turun ke bawah, tidak memanjang */
+                word-wrap: break-word;
+                vertical-align: top;
             }
             #printArea th {
                 background-color: #f2f2f2;
@@ -948,12 +953,20 @@
             let correctAnswer = Array.isArray(ansKey[qKey]) ? ansKey[qKey].join(', ') : ansKey[qKey];
 
             if(el) {
-                // Ambil teks soal dengan mengclone node dan menghapus input agar teksnya saja yang terbaca
-                let container = el.closest('div[id^="assess-q"]') || el.closest('p');
-                if(container) {
-                    let clone = container.cloneNode(true);
-                    clone.querySelectorAll('input, select, div, span, label, button').forEach(e => e.remove());
-                    questionText = clone.innerText.trim().replace(/^\d+\.\s*/, ''); // Hapus angka di depan
+                // Cari tag <p> yang memuat soal dengan presisi
+                let pTag = el.closest('p');
+                if (!pTag && el.closest('div[id^="assess-q"]')) {
+                    pTag = el.closest('div[id^="assess-q"]').querySelector('p');
+                }
+                
+                if (pTag) {
+                    let clone = pTag.cloneNode(true);
+                    // Hapus span (terjemahan ID), input, select, dan simbol mathjax agar teks bersih
+                    clone.querySelectorAll('span.id, input, select, script, mjx-container').forEach(e => e.remove());
+                    // Ambil teks, buang angka di depan, dan rapikan spasi/baris baru
+                    questionText = clone.innerText.trim().replace(/^\d+\.\s*/, '').replace(/\s+/g, ' ');
+                } else {
+                    questionText = 'Question text not found';
                 }
 
                 // Ambil jawaban siswa
@@ -972,10 +985,10 @@
 
             tableRows += `
                 <tr>
-                    <td style="text-align: center;">${qNum}</td>
-                    <td>${questionText}</td>
-                    <td>${studentAnswer}</td>
-                    <td>${correctAnswer}</td>
+                    <td style="text-align: center; width: 5%;">${qNum}</td>
+                    <td style="width: 50%;">${questionText}</td>
+                    <td style="width: 20%;">${studentAnswer}</td>
+                    <td style="width: 25%;">${correctAnswer}</td>
                 </tr>
             `;
             qNum++;
@@ -983,22 +996,22 @@
 
         // 5. Susun layout cetak
         const printContent = `
-            <h2 style="text-align: center; margin-bottom: 20px;">Assessment Result</h2>
-            <table style="width: 40%; margin-bottom: 20px; border: none;">
-                <tr style="border: none;"><td style="border: none;"><strong>Nama / Name</strong></td><td style="border: none;">: ${name}</td></tr>
-                <tr style="border: none;"><td style="border: none;"><strong>Tanggal / Date</strong></td><td style="border: none;">: ${date}</td></tr>
-                <tr style="border: none;"><td style="border: none;"><strong>Topik / Topic</strong></td><td style="border: none;">: ${topic}</td></tr>
-                <tr style="border: none;"><td style="border: none;"><strong>Grup / Group</strong></td><td style="border: none;">: ${groupName}</td></tr>
-                <tr style="border: none;"><td style="border: none;"><strong>Skor / Score</strong></td><td style="border: none;">: ${score}</td></tr>
-            </table>
-            <hr style="border: 1px solid #000;">
+            <h2 style="text-align: center; margin-bottom: 15px; font-size: 18px;">Assessment Result</h2>
+            <div style="margin-bottom: 15px; line-height: 1.5; font-size: 13px;">
+                <strong>Nama / Name</strong>: ${name} <br>
+                <strong>Tanggal / Date</strong>: ${date} <br>
+                <strong>Topik / Topic</strong>: ${topic} <br>
+                <strong>Grup / Group</strong>: ${groupName} <br>
+                <strong>Skor / Score</strong>: ${score}
+            </div>
+            <hr style="border: 1px solid #000; margin-bottom: 10px;">
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 5%;">No</th>
-                        <th style="width: 45%;">Soal / Question</th>
-                        <th style="width: 25%;">Jawaban Siswa / Student Answer</th>
-                        <th style="width: 25%;">Jawaban Benar / Correct Answer</th>
+                        <th>No</th>
+                        <th>Soal / Question</th>
+                        <th>Jawaban Siswa / Student Answer</th>
+                        <th>Jawaban Benar / Correct Answer</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1007,10 +1020,14 @@
             </table>
         `;
 
-        // 6. Masukkan ke area print dan trigger print
+        // 6. Masukkan ke area print
         const printArea = document.getElementById('printArea');
         printArea.innerHTML = printContent;
-        window.print();
+        
+        // Beri jeda 300ms agar DOM selesai merender sebelum print dialog muncul
+        setTimeout(() => {
+            window.print();
+        }, 300);
     }
 </script>
 
