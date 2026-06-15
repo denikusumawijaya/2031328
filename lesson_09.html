@@ -247,27 +247,68 @@
             </div>
         </div>
         <div class="col-practice">
-            <div class="p-4 bg-white rounded shadow-sm h-100">
-                <h5>🧠 Quick Fire Challenge!</h5>
+            <div class="p-4 bg-white rounded shadow-sm h-100 overflow-auto" style="max-height: 600px;">
+                <h5>🧠 Quick Fire Challenge! (10 Questions)</h5>
+                
                 <div id="game1-q1" class="mb-3">
-                    <p>1. What is the value of '7' in 4,725? <span class="id">(Berapa nilai 7 pada 4.725?)</span></p>
+                    <p>1. Value of '7' in 4,725? <span class="id">(Nilai 7 pada 4.725?)</span></p>
                     <button class="opt-btn" onclick="selectOpt(this, 'game1-q1', false)">7</button>
                     <button class="opt-btn" onclick="selectOpt(this, 'game1-q1', false)">70</button>
                     <button class="opt-btn" onclick="selectOpt(this, 'game1-q1', true)">700</button>
                     <button class="opt-btn" onclick="selectOpt(this, 'game1-q1', false)">7000</button>
                 </div>
                 <div id="game1-q2" class="mb-3">
-                    <p>2. Which is NOT a multiple of 6? <span class="id">(Manakah yang BUKAN kelipatan 6?)</span></p>
+                    <p>2. Which is NOT a multiple of 6? <span class="id">(Manakah BUKAN kelipatan 6?)</span></p>
                     <button class="opt-btn" onclick="selectOpt(this, 'game1-q2', false)">12</button>
                     <button class="opt-btn" onclick="selectOpt(this, 'game1-q2', true)">20</button>
                     <button class="opt-btn" onclick="selectOpt(this, 'game1-q2', false)">24</button>
                 </div>
                 <div id="game1-q3" class="mb-3">
-                    <p>3. Largest prime number less than 10? <span class="id">(Bilangan prima terbesar kurang dari 10?)</span></p>
+                    <p>3. Largest prime less than 10? <span class="id">(Prima terbesar kurang dari 10?)</span></p>
                     <button class="opt-btn" onclick="selectOpt(this, 'game1-q3', false)">9</button>
                     <button class="opt-btn" onclick="selectOpt(this, 'game1-q3', true)">7</button>
                     <button class="opt-btn" onclick="selectOpt(this, 'game1-q3', false)">5</button>
                 </div>
+                <div id="game1-q4" class="mb-3">
+                    <p>4. Is 1 a prime number? <span class="id">(Apakah 1 bilangan prima?)</span></p>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q4', true)">No</button>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q4', false)">Yes</button>
+                </div>
+                <div id="game1-q5" class="mb-3">
+                    <p>5. First 3 multiples of 4? <span class="id">(3 kelipatan pertama dari 4?)</span></p>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q5', false)">1, 2, 4</button>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q5', true)">4, 8, 12</button>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q5', false)">4, 6, 8</button>
+                </div>
+                <div id="game1-q6" class="mb-3">
+                    <p>6. Factors of 10? <span class="id">(Faktor dari 10?)</span></p>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q6', false)">2, 5</button>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q6', true)">1, 2, 5, 10</button>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q6', false)">1, 10</button>
+                </div>
+                <div id="game1-q7" class="mb-3">
+                    <p>7. Prime factor of 9? <span class="id">(Faktor prima dari 9?)</span></p>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q7', false)">9</button>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q7', true)">3</button>
+                </div>
+                <div id="game1-q8" class="mb-3">
+                    <p>8. Which is composite? <span class="id">(Mana yang komposit?)</span></p>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q8', false)">7</button>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q8', false)">11</button>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q8', true)">15</button>
+                </div>
+                <div id="game1-q9" class="mb-3">
+                    <p>9. Is 2 a prime number? <span class="id">(Apakah 2 bilangan prima?)</span></p>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q9', true)">Yes</button>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q9', false)">No</button>
+                </div>
+                <div id="game1-q10" class="mb-3">
+                    <p>10. Common factor of 4 and 6? <span class="id">(Faktor persekutuan 4 dan 6?)</span></p>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q10', false)">12</button>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q10', true)">2</button>
+                    <button class="opt-btn" onclick="selectOpt(this, 'game1-q10', false)">24</button>
+                </div>
+
                 <div class="text-center mt-3 no-print">
                     <button class="btn btn-primary" onclick="checkGame('game1')"><i class="fas fa-check"></i> Check</button>
                     <button class="btn btn-secondary" onclick="resetGame('game1')"><i class="fas fa-redo"></i> Reset</button>
@@ -302,27 +343,30 @@
             </div>
         </div>
         <div class="col-practice">
-            <div class="p-4 bg-white rounded shadow-sm h-100">
-                <h5>🎲 Categorize the tools! <span class="id">(Kategorikan alatnya!)</span></h5>
-                <p class="en">Drag and drop the concepts into the correct box.</p>
-                <span class="id">Seret dan lepas konsep ke kotak yang benar.</span>
+            <div class="p-4 bg-white rounded shadow-sm h-100 overflow-auto" style="max-height: 600px;">
+                <h5>🎲 Categorize the Scenarios! (10 Questions) <span class="id">(Kategorikan Skenario!)</span></h5>
+                <p class="en">Select whether the scenario requires FPB or KPK.</p>
                 
-                <div class="d-flex justify-content-center mb-4 no-print">
-                    <div class="drag-item" draggable="true" ondragstart="dragStart(event)" id="drag-fpb" data-group="equal">FPB</div>
-                    <div class="drag-item" draggable="true" ondragstart="dragStart(event)" id="drag-kpk" data-group="time">KPK</div>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead class="table-light">
+                            <tr><th>Scenario</th><th style="width: 120px;">FPB / KPK</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1. Greatest Common Factor</td><td><select id="cat1" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
+                            <tr><td>2. Least Common Multiple</td><td><select id="cat2" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
+                            <tr><td>3. Grouping items equally</td><td><select id="cat3" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
+                            <tr><td>4. Flashing lights syncing</td><td><select id="cat4" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
+                            <tr><td>5. Maximum number of bags</td><td><select id="cat5" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
+                            <tr><td>6. Next meeting time</td><td><select id="cat6" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
+                            <tr><td>7. Dividing ribbons equally</td><td><select id="cat7" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
+                            <tr><td>8. Bus schedules aligning</td><td><select id="cat8" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
+                            <tr><td>9. No leftovers in groups</td><td><select id="cat9" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
+                            <tr><td>10. Common repeating cycle</td><td><select id="cat10" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="drop-zone" id="drop-equal" ondragover="dragOver(event)" ondrop="drop(event)">
-                            <span class="en text-center">Equal Distribution / Grouping<br><span class="id">Pembagian Sama Rata</span></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="drop-zone" id="drop-time" ondragover="dragOver(event)" ondrop="drop(event)">
-                            <span class="en text-center">Timing / Synchronization<br><span class="id">Waktu / Bersamaan</span></span>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="text-center mt-3 no-print">
                     <button class="btn btn-primary" onclick="checkGame('game2')"><i class="fas fa-check"></i> Check</button>
                     <button class="btn btn-secondary" onclick="resetGame('game2')"><i class="fas fa-redo"></i> Reset</button>
@@ -346,24 +390,24 @@
             <p class="text-center mt-3 en"><i class="fas fa-arrow-down"></i> Try building one for 18 on the right! <span class="id">Coba buat untuk angka 18 di sebelah kanan!</span></p>
         </div>
         <div class="col-practice">
-            <div class="p-4 bg-white rounded shadow-sm h-100">
-                <h5>🌳 Build the Factor Tree for 18!</h5>
-                <div class="text-center my-3 d-flex justify-content-center gap-2 no-print">
-                    <div class="drag-item" draggable="true" ondragstart="dragStart(event)" id="drag-2" data-val="2">2</div>
-                    <div class="drag-item" draggable="true" ondragstart="dragStart(event)" id="drag-3" data-val="3">3</div>
-                    <div class="drag-item" draggable="true" ondragstart="dragStart(event)" id="drag-5" data-val="5">5</div>
+            <div class="p-4 bg-white rounded shadow-sm h-100 overflow-auto" style="max-height: 600px;">
+                <h5>🌳 Factor Tree Master: 10 Challenges! <span class="id">(Master Pohon Faktor!)</span></h5>
+                <p class="en">Fill in the missing prime factor exponent for each number.</p>
+                
+                <div class="math-display text-start p-3">
+                    1. 12 = 2<sup><input type="number" id="ft1" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="5"></sup> × 3 <br>
+                    2. 18 = 2 × 3<sup><input type="number" id="ft2" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="5"></sup> <br>
+                    3. 24 = 2<sup>3</sup> × <input type="number" id="ft3" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="20"> <br>
+                    4. 30 = 2 × 3 × <input type="number" id="ft4" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="20"> <br>
+                    5. 36 = 2<sup>2</sup> × 3<sup><input type="number" id="ft5" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="5"></sup> <br>
+                    6. 40 = 2<sup>3</sup> × <input type="number" id="ft6" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="20"> <br>
+                    7. 45 = 3<sup>2</sup> × <input type="number" id="ft7" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="20"> <br>
+                    8. 50 = 2 × 5<sup><input type="number" id="ft8" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="5"></sup> <br>
+                    9. 60 = 2<sup>2</sup> × 3 × <input type="number" id="ft9" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="20"> <br>
+                    10. 100 = 2<sup>2</sup> × 5<sup><input type="number" id="ft10" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="5"></sup>
                 </div>
 
-                <div class="text-center mt-5">
-                    <div class="math-display d-inline-block px-5">
-                        18 = <span style="border-bottom: 2px solid #000; padding: 5px;">3</span> × <span style="border-bottom: 2px solid #000;">6</span><br><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳ 6 = 
-                        <div class="drop-zone d-inline-block p-2 w-auto" id="tree-slot-1" style="min-width:50px; min-height: 40px; display:inline-block;" ondragover="dragOver(event)" ondrop="dropTree(event)"></div>
-                        × 
-                        <div class="drop-zone d-inline-block p-2 w-auto" id="tree-slot-2" style="min-width:50px; min-height: 40px; display:inline-block;" ondragover="dragOver(event)" ondrop="dropTree(event)"></div>
-                    </div>
-                </div>
-                <div class="text-center mt-4 no-print">
+                <div class="text-center mt-3 no-print">
                     <button class="btn btn-primary" onclick="checkGame('game3')"><i class="fas fa-check"></i> Check</button>
                     <button class="btn btn-secondary" onclick="resetGame('game3')"><i class="fas fa-redo"></i> Reset</button>
                 </div>
@@ -686,61 +730,43 @@
         selectedOpts[qId] = { element: btn, correct: isCorrect };
     }
 
-    // Drag and Drop
-    function dragStart(e) {
-        e.dataTransfer.setData("text", e.target.id);
-    }
-    function dragOver(e) {
-        e.preventDefault();
-        e.currentTarget.classList.add('over');
-    }
-    function drop(e) {
-        e.preventDefault();
-        e.currentTarget.classList.remove('over');
-        const data = e.dataTransfer.getData("text");
-        e.currentTarget.appendChild(document.getElementById(data));
-    }
-    function dropTree(e) {
-        e.preventDefault();
-        e.currentTarget.classList.remove('over');
-        const data = e.dataTransfer.getData("text");
-        const copy = document.getElementById(data).cloneNode(true);
-        copy.removeAttribute('draggable');
-        copy.style.cursor = 'default';
-        e.currentTarget.innerHTML = '';
-        e.currentTarget.appendChild(copy);
-    }
-
     // Check & Reset
     function checkGame(gameId) {
         let isCorrect = false;
+        let score = 0;
         let feedback = "";
         
         if(gameId === 'game1') {
-            let score = 0;
-            if(selectedOpts['game1-q1'] && selectedOpts['game1-q1'].correct) score++;
-            if(selectedOpts['game1-q2'] && selectedOpts['game1-q2'].correct) score++;
-            if(selectedOpts['game1-q3'] && selectedOpts['game1-q3'].correct) score++;
-            isCorrect = score === 3;
-            feedback = isCorrect ? "Perfect! All correct!" : `You got ${score}/3. Remember: 700 is hundreds, 20 is not divisible by 6, and 7 is the largest prime <10.`;
-            document.querySelectorAll('#game1 .opt-btn.selected').forEach(btn => {
-                btn.classList.remove('selected');
-                btn.classList.add(btn.getAttribute('onclick').includes('true') ? 'correct' : 'wrong');
-            });
+            for(let i=1; i<=10; i++) {
+                let qId = `game1-q${i}`;
+                if(selectedOpts[qId] && selectedOpts[qId].correct) {
+                    score++;
+                }
+                // Visual update
+                if(selectedOpts[qId]) {
+                    let btn = selectedOpts[qId].element;
+                    btn.classList.remove('selected');
+                    btn.classList.add(btn.getAttribute('onclick').includes('true') ? 'correct' : 'wrong');
+                }
+            }
+            isCorrect = score === 10;
+            feedback = isCorrect ? "Perfect! All 10 correct!" : `You got ${score}/10. Review the incorrect ones!`;
         } 
         else if(gameId === 'game2') {
-            const z1 = document.getElementById('drop-equal');
-            const z2 = document.getElementById('drop-time');
-            const hasFPB = z1.contains(document.getElementById('drag-fpb'));
-            const hasKPK = z2.contains(document.getElementById('drag-kpk'));
-            isCorrect = hasFPB && hasKPK;
-            feedback = isCorrect ? "Great job! FPB is for equal groups, KPK is for time!" : "Oops! Remember: FPB divides things equally, KPK synchronizes time.";
+            const ansKey = {cat1:'fpb', cat2:'kpk', cat3:'fpb', cat4:'kpk', cat5:'fpb', cat6:'kpk', cat7:'fpb', cat8:'kpk', cat9:'fpb', cat10:'kpk'};
+            for(let i=1; i<=10; i++) {
+                if(document.getElementById(`cat${i}`).value === ansKey[`cat${i}`]) score++;
+            }
+            isCorrect = score === 10;
+            feedback = isCorrect ? "Great job! All categorized perfectly!" : `You got ${score}/10 correct. Remember: FPB divides equally, KPK syncs time!`;
         }
         else if(gameId === 'game3') {
-            const s1 = document.getElementById('tree-slot-1').innerText.trim();
-            const s2 = document.getElementById('tree-slot-2').innerText.trim();
-            isCorrect = (s1 === '2' && s2 === '3') || (s1 === '3' && s2 === '2');
-            feedback = isCorrect ? "Awesome! 18 = 2 x 3 x 3" : "Not quite. 6 breaks down into 2 and 3.";
+            const ansKey = [2, 2, 3, 5, 2, 5, 5, 2, 5, 2]; // Kunci jawaban ft1-ft10
+            for(let i=1; i<=10; i++) {
+                if(parseInt(document.getElementById(`ft${i}`).value) === ansKey[i-1]) score++;
+            }
+            isCorrect = score === 10;
+            feedback = isCorrect ? "Awesome! You're a Factor Tree Master!" : `You got ${score}/10. Check the prime factorizations!`;
         }
         else if(gameId === 'game4') {
             const p1 = document.getElementById('fpb-pow-2').value;
@@ -750,18 +776,21 @@
             const p5 = document.getElementById('kpk-pow-5').value;
             isCorrect = (p1==='1' && p2==='1' && p3==='2' && p4==='1' && p5==='1');
             feedback = isCorrect ? "Excellent! FPB=10, KPK=60" : "Check the rules: FPB takes smallest power, KPK takes largest power.";
+            score = isCorrect ? 1 : 0;
         }
         else if(gameId === 'game5') {
             const fpb = document.getElementById('game5-fpb').value;
             const kpk = document.getElementById('game5-kpk').value;
             isCorrect = fpb === '10' && kpk === '60';
             feedback = isCorrect ? "Spot on!" : "Incorrect. Hint: 20=2²x5, 30=2x3x5. FPB=2x5, KPK=2²x3x5.";
+            score = isCorrect ? 1 : 0;
         }
         else if(gameId === 'game6') {
             const kpk = document.getElementById('game6-kpk').value;
             const time = document.getElementById('game6-time').value;
             isCorrect = kpk === '60' && (time === '08:60' || time === '09:00');
             feedback = isCorrect ? "Brilliant! 60 mins after 08:00 is 09:00." : "Not right. KPK(15,20)=60. 08:00 + 60 mins = 09:00.";
+            score = isCorrect ? 1 : 0;
         }
 
         const fbEl = document.getElementById(`${gameId}-feedback`);
@@ -770,46 +799,29 @@
     }
 
     function resetGame(gameId) {
-        // 1. Selalu bersihkan feedback teks dan warnanya
+        // 1. Bersihkan feedback teks
         const fbEl = document.getElementById(`${gameId}-feedback`);
         fbEl.innerHTML = '';
         fbEl.className = 'feedback-text text-center';
 
-        // 2. Logika reset spesifik untuk setiap game
+        // 2. Logika reset spesifik
         switch(gameId) {
             case 'game1':
-                // Hapus kelas selected/correct/wrong dari tombol
                 document.querySelectorAll('#sec1 .opt-btn').forEach(btn => {
                     btn.classList.remove('selected', 'correct', 'wrong');
                 });
-                // Kosongkan objek pelacak jawaban untuk game 1
-                delete selectedOpts['game1-q1'];
-                delete selectedOpts['game1-q2'];
-                delete selectedOpts['game1-q3'];
+                for(let i=1; i<=10; i++) { delete selectedOpts[`game1-q${i}`]; }
                 break;
 
             case 'game2':
-                // Kembalikan item drag ke wadah awal (pool)
-                const pool2 = document.querySelector('#sec2 .d-flex.justify-content-center');
-                const fpb = document.getElementById('drag-fpb');
-                const kpk = document.getElementById('drag-kpk');
-                if(fpb) pool2.appendChild(fpb);
-                if(kpk) pool2.appendChild(kpk);
+                for(let i=1; i<=10; i++) { document.getElementById(`cat${i}`).value = ""; }
                 break;
 
             case 'game3':
-                // Kosongkan area drop pohon faktor
-                document.getElementById('tree-slot-1').innerHTML = '';
-                document.getElementById('tree-slot-2').innerHTML = '';
-                // Kembalikan item drag ke wadah awal jika sudah terpakai
-                const pool3 = document.querySelector('#sec3 .d-flex.justify-content-center');
-                [document.getElementById('drag-2'), document.getElementById('drag-3'), document.getElementById('drag-5')].forEach(item => {
-                    if(item) pool3.appendChild(item);
-                });
+                for(let i=1; i<=10; i++) { document.getElementById(`ft${i}`).value = ""; }
                 break;
 
             case 'game4':
-                // Reset semua dropdown ke opsi default (Select)
                 document.getElementById('fpb-pow-2').value = '';
                 document.getElementById('fpb-pow-5').value = '';
                 document.getElementById('kpk-pow-2').value = '';
@@ -818,19 +830,17 @@
                 break;
 
             case 'game5':
-                // Kosongkan input angka
                 document.getElementById('game5-fpb').value = '';
                 document.getElementById('game5-kpk').value = '';
                 break;
 
             case 'game6':
-                // Kosongkan input angka dan teks
                 document.getElementById('game6-kpk').value = '';
                 document.getElementById('game6-time').value = '';
                 break;
         }
     }
-
+    
     // --- Assessment Logic ---
     const answers = {
         1: { q1:'b', q2:'b', q3:'5', q4:['2','7'], q5:'24', q6:'Faktor Persekutuan Terbesar', q7:'Kelipatan Persekutuan Terkecil', q8:'no', q9:'3', q10:'kpk' },
