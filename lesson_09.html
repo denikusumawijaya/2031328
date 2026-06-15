@@ -198,50 +198,6 @@
         .feedback-text { font-weight: bold; margin-top: 15px; }
         .text-correct { color: #2e7d32; }
         .text-wrong { color: #c62828; }
-
-        /* Print Styles */
-        @media print {
-            body { background: white; }
-            .cloud { display: none !important; }
-            
-            /* Sembunyikan semua elemen secara visual */
-            body * {
-                visibility: hidden;
-            }
-            
-            /* Tampilkan hanya area print */
-            #printArea, #printArea * {
-                visibility: visible;
-            }
-            #printArea {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                padding: 10px 15px;
-                display: block !important;
-                font-size: 12px; /* Perkecil font agar muat */
-                box-sizing: border-box;
-            }
-
-            /* Styling tabel untuk print */
-            #printArea table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 15px;
-            }
-            #printArea th, #printArea td {
-                border: 1px solid #000;
-                padding: 5px 8px; /* Perkecil padding sel */
-                text-align: left;
-                white-space: normal; /* Paksa teks panjang turun ke bawah, tidak memanjang */
-                word-wrap: break-word;
-                vertical-align: top;
-            }
-            #printArea th {
-                background-color: #f2f2f2;
-            }
-        }
     </style>
 </head>
 <body>
@@ -716,8 +672,7 @@
             </div>
         </div>
     </div>
-    <!-- Hidden Print Area -->
-    <div id="printArea" class="d-none"></div>
+
 </div>
 
 <script>
@@ -961,9 +916,7 @@
                 
                 if (pTag) {
                     let clone = pTag.cloneNode(true);
-                    // Hapus span (terjemahan ID), input, select, dan simbol mathjax agar teks bersih
                     clone.querySelectorAll('span.id, input, select, script, mjx-container').forEach(e => e.remove());
-                    // Ambil teks, buang angka di depan, dan rapikan spasi/baris baru
                     questionText = clone.innerText.trim().replace(/^\d+\.\s*/, '').replace(/\s+/g, ' ');
                 } else {
                     questionText = 'Question text not found';
@@ -994,40 +947,88 @@
             qNum++;
         }
 
-        // 5. Susun layout cetak
-        const printContent = `
-            <h2 style="text-align: center; margin-bottom: 15px; font-size: 18px;">Assessment Result</h2>
-            <div style="margin-bottom: 15px; line-height: 1.5; font-size: 13px;">
-                <strong>Nama / Name</strong>: ${name} <br>
-                <strong>Tanggal / Date</strong>: ${date} <br>
-                <strong>Topik / Topic</strong>: ${topic} <br>
-                <strong>Grup / Group</strong>: ${groupName} <br>
-                <strong>Skor / Score</strong>: ${score}
-            </div>
-            <hr style="border: 1px solid #000; margin-bottom: 10px;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Soal / Question</th>
-                        <th>Jawaban Siswa / Student Answer</th>
-                        <th>Jawaban Benar / Correct Answer</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${tableRows}
-                </tbody>
-            </table>
-        `;
+        // 5. Buka tab baru dan susun layout cetak di sana
+        const printWindow = window.open('', '_blank');
 
-        // 6. Masukkan ke area print
-        const printArea = document.getElementById('printArea');
-        printArea.innerHTML = printContent;
+        // Tulis HTML dan CSS ke tab baru
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Print Assessment - ${groupName}</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        padding: 20px;
+                        font-size: 12px;
+                        color: #000;
+                    }
+                    h2 {
+                        text-align: center;
+                        margin-bottom: 15px;
+                        font-size: 18px;
+                    }
+                    .info {
+                        margin-bottom: 15px;
+                        line-height: 1.5;
+                        font-size: 13px;
+                    }
+                    hr {
+                        border: 1px solid #000;
+                        margin-bottom: 10px;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 15px;
+                    }
+                    th, td {
+                        border: 1px solid #000;
+                        padding: 5px 8px;
+                        text-align: left;
+                        white-space: normal;
+                        word-wrap: break-word;
+                        vertical-align: top;
+                    }
+                    th {
+                        background-color: #f2f2f2;
+                    }
+                </style>
+            </head>
+            <body>
+                <h2>Assessment Result</h2>
+                <div class="info">
+                    <strong>Nama / Name</strong>: ${name} <br>
+                    <strong>Tanggal / Date</strong>: ${date} <br>
+                    <strong>Topik / Topic</strong>: ${topic} <br>
+                    <strong>Grup / Group</strong>: ${groupName} <br>
+                    <strong>Skor / Score</strong>: ${score}
+                </div>
+                <hr>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Soal / Question</th>
+                            <th>Jawaban Siswa / Student Answer</th>
+                            <th>Jawaban Benar / Correct Answer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tableRows}
+                    </tbody>
+                </table>
+            </body>
+            </html>
+        `);
         
-        // Beri jeda 300ms agar DOM selesai merender sebelum print dialog muncul
-        setTimeout(() => {
-            window.print();
-        }, 300);
+        printWindow.document.close(); // Penting agar browser selesai memuat dokumen
+        
+        // Beri jeda sedikit agar CSS dan DOM di tab baru dirender sempurna sebelum print dialog muncul
+        setTimeout(function() {
+            printWindow.print();
+            // Opsional: printWindow.close(); jika ingin tab langsung tertutup setelah print
+        }, 500);
     }
 </script>
 
