@@ -948,8 +948,13 @@
             for(let i=1; i<=10; i++) {
                 let id = `bus${i}`;
                 let kpk = parseInt(document.getElementById(`${id}a`).value);
-                let time = document.getElementById(`${id}b`).value.replace(/\s/g, '');
-                let isCorrect = kpk === data[id].a && (time === data[id].b || time.toLowerCase() === String(data[id].b).toLowerCase());
+                
+                // Ambil value dan hilangkan semua spasi agar mudah dicocokkan
+                let timeVal = document.getElementById(`${id}b`).value.replace(/\s/g, '').toLowerCase();
+                let expectedVal = String(data[id].b).replace(/\s/g, '').toLowerCase();
+                
+                let isCorrect = (kpk === data[id].a) && (timeVal === expectedVal);
+                
                 if(isCorrect) score++;
                 injectFeedback(id, isCorrect, `KPK:${data[id].a}, Time:${data[id].b}`, data[id].exp, 'block');
             }
