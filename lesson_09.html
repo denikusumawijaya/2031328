@@ -446,51 +446,43 @@
             </div>
         </div>
         <div class="col-practice">
-            <div class="p-4 bg-white rounded shadow-sm h-100">
-                <h5>⚡ Power Selector! <span class="id">(Pilih Pangkatnya!)</span></h5>
-                <p>Find the FPB and KPK of 20 (\(2^2 \times 5\)) and 30 (\(2 \times 3 \times 5\)).</p>
+            <div class="p-4 bg-white rounded shadow-sm h-100 overflow-auto" style="max-height: 600px;">
+                <h5>⚡ Power Selector: 10 Questions! <span class="id">(Pilih Pangkatnya!)</span></h5>
+                <p class="en">Read the prime factorizations. Select the correct exponent for the FPB or KPK.</p>
                 
-                <div class="mb-4 p-3 border rounded bg-light">
-                    <label><strong>FPB:</strong> \(2^{?} \times 5^{?}\)</label><br>
-                    <div class="row mt-2">
-                        <div class="col-6">
-                            Power of 2: 
-                            <select id="fpb-pow-2" class="form-select d-inline-block">
-                                <option value="">Select</option><option value="1">1</option><option value="2">2</option>
-                            </select>
-                        </div>
-                        <div class="col-6">
-                            Power of 5: 
-                            <select id="fpb-pow-5" class="form-select d-inline-block">
-                                <option value="">Select</option><option value="1">1</option><option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
+                <div class="math-display text-start p-3" style="font-size: 1rem;">
+                    1. A = 2<sup>3</sup> × 5, B = 2<sup>2</sup> × 5. Exponent of 2 in FPB? 
+                    <select id="ps1" class="form-select form-select-sm d-inline-block w-auto"><option value="">?</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><br>
+
+                    2. A = 2<sup>3</sup> × 5, B = 2<sup>2</sup> × 5. Exponent of 2 in KPK? 
+                    <select id="ps2" class="form-select form-select-sm d-inline-block w-auto"><option value="">?</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><br>
+
+                    3. A = 3<sup>2</sup> × 7, B = 3 × 7<sup>2</sup>. Exponent of 7 in FPB? 
+                    <select id="ps3" class="form-select form-select-sm d-inline-block w-auto"><option value="">?</option><option value="1">1</option><option value="2">2</option></select><br>
+
+                    4. A = 3<sup>2</sup> × 7, B = 3 × 7<sup>2</sup>. Exponent of 3 in KPK? 
+                    <select id="ps4" class="form-select form-select-sm d-inline-block w-auto"><option value="">?</option><option value="1">1</option><option value="2">2</option></select><br>
+
+                    5. A = 2<sup>4</sup> × 3, B = 2 × 3<sup>3</sup>. Exponent of 2 in FPB? 
+                    <select id="ps5" class="form-select form-select-sm d-inline-block w-auto"><option value="">?</option><option value="1">1</option><option value="2">2</option><option value="4">4</option></select><br>
+
+                    6. A = 2<sup>4</sup> × 3, B = 2 × 3<sup>3</sup>. Exponent of 3 in KPK? 
+                    <select id="ps6" class="form-select form-select-sm d-inline-block w-auto"><option value="">?</option><option value="1">1</option><option value="3">3</option></select><br>
+
+                    7. A = 5<sup>2</sup>, B = 5<sup>3</sup>. Exponent of 5 in FPB? 
+                    <select id="ps7" class="form-select form-select-sm d-inline-block w-auto"><option value="">?</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><br>
+
+                    8. A = 5<sup>2</sup>, B = 5<sup>3</sup>. Exponent of 5 in KPK? 
+                    <select id="ps8" class="form-select form-select-sm d-inline-block w-auto"><option value="">?</option><option value="2">2</option><option value="3">3</option></select><br>
+
+                    9. A = 2<sup>2</sup> × 11, B = 2<sup>3</sup> × 11. Exponent of 11 in KPK? 
+                    <select id="ps9" class="form-select form-select-sm d-inline-block w-auto"><option value="">?</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><br>
+
+                    10. A = 2<sup>5</sup> × 3, B = 2<sup>2</sup> × 3<sup>4</sup>. Exponent of 3 in FPB? 
+                    <select id="ps10" class="form-select form-select-sm d-inline-block w-auto"><option value="">?</option><option value="1">1</option><option value="4">4</option></select>
                 </div>
-                <div class="p-3 border rounded bg-light">
-                    <label><strong>KPK:</strong> \(2^{?} \times 3^{?} \times 5^{?}\)</label><br>
-                    <div class="row mt-2">
-                        <div class="col-4">
-                            Power of 2: 
-                            <select id="kpk-pow-2" class="form-select d-inline-block">
-                                <option value="">Select</option><option value="1">1</option><option value="2">2</option>
-                            </select>
-                        </div>
-                        <div class="col-4">
-                            Power of 3: 
-                            <select id="kpk-pow-3" class="form-select d-inline-block">
-                                <option value="">Select</option><option value="1">1</option><option value="2">2</option>
-                            </select>
-                        </div>
-                        <div class="col-4">
-                            Power of 5: 
-                            <select id="kpk-pow-5" class="form-select d-inline-block">
-                                <option value="">Select</option><option value="1">1</option><option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center mt-4 no-print">
+
+                <div class="text-center mt-3 no-print">
                     <button class="btn btn-primary" onclick="checkGame('game4')"><i class="fas fa-check"></i> Check</button>
                     <button class="btn btn-secondary" onclick="resetGame('game4')"><i class="fas fa-redo"></i> Reset</button>
                 </div>
@@ -519,19 +511,30 @@
             </div>
         </div>
         <div class="col-practice">
-            <div class="p-4 bg-white rounded shadow-sm h-100">
-                <h5>🎯 Calculate! <span class="id">(Hitung!)</span></h5>
-                <p>Find the FPB and KPK of 20 and 30.</p>
-                <div class="row mt-4">
-                    <div class="col-md-6 mb-3">
-                        <label><strong>FPB (20, 30) = </strong></label>
-                        <input type="number" id="game5-fpb" class="form-control form-control-lg" placeholder="Type answer...">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label><strong>KPK (20, 30) = </strong></label>
-                        <input type="number" id="game5-kpk" class="form-control form-control-lg" placeholder="Type answer...">
-                    </div>
+            <div class="p-4 bg-white rounded shadow-sm h-100 overflow-auto" style="max-height: 600px;">
+                <h5>🎯 Calculate: 10 Questions! <span class="id">(Hitung!)</span></h5>
+                <p class="en">Find the FPB and KPK for these number pairs.</p>
+                
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead class="table-light">
+                            <tr><th>Pair</th><th>FPB</th><th>KPK</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1. 4 & 6</td><td><input type="number" id="calc1a" class="form-control form-control-sm"></td><td><input type="number" id="calc1b" class="form-control form-control-sm"></td></tr>
+                            <tr><td>2. 8 & 12</td><td><input type="number" id="calc2a" class="form-control form-control-sm"></td><td><input type="number" id="calc2b" class="form-control form-control-sm"></td></tr>
+                            <tr><td>3. 9 & 15</td><td><input type="number" id="calc3a" class="form-control form-control-sm"></td><td><input type="number" id="calc3b" class="form-control form-control-sm"></td></tr>
+                            <tr><td>4. 10 & 25</td><td><input type="number" id="calc4a" class="form-control form-control-sm"></td><td><input type="number" id="calc4b" class="form-control form-control-sm"></td></tr>
+                            <tr><td>5. 12 & 18</td><td><input type="number" id="calc5a" class="form-control form-control-sm"></td><td><input type="number" id="calc5b" class="form-control form-control-sm"></td></tr>
+                            <tr><td>6. 14 & 21</td><td><input type="number" id="calc6a" class="form-control form-control-sm"></td><td><input type="number" id="calc6b" class="form-control form-control-sm"></td></tr>
+                            <tr><td>7. 16 & 24</td><td><input type="number" id="calc7a" class="form-control form-control-sm"></td><td><input type="number" id="calc7b" class="form-control form-control-sm"></td></tr>
+                            <tr><td>8. 18 & 27</td><td><input type="number" id="calc8a" class="form-control form-control-sm"></td><td><input type="number" id="calc8b" class="form-control form-control-sm"></td></tr>
+                            <tr><td>9. 20 & 30</td><td><input type="number" id="calc9a" class="form-control form-control-sm"></td><td><input type="number" id="calc9b" class="form-control form-control-sm"></td></tr>
+                            <tr><td>10. 24 & 36</td><td><input type="number" id="calc10a" class="form-control form-control-sm"></td><td><input type="number" id="calc10b" class="form-control form-control-sm"></td></tr>
+                        </tbody>
+                    </table>
                 </div>
+
                 <div class="text-center mt-3 no-print">
                     <button class="btn btn-primary" onclick="checkGame('game5')"><i class="fas fa-check"></i> Check</button>
                     <button class="btn btn-secondary" onclick="resetGame('game5')"><i class="fas fa-redo"></i> Reset</button>
@@ -555,21 +558,30 @@
             </div>
         </div>
         <div class="col-practice">
-            <div class="p-4 bg-white rounded shadow-sm h-100">
-                <h5>🚌 Bus Schedule Problem</h5>
-                <p class="en">A bus departs every 15 minutes, and another every 20 minutes. If they leave together at 08:00, when is the next time they leave together?</p>
-                <span class="id">Sebuah bus berangkat tiap 15 menit, dan yang lain tiap 20 menit. Jika berangkat bersama pukul 08:00, kapan berangkat bersama lagi?</span>
+            <div class="p-4 bg-white rounded shadow-sm h-100 overflow-auto" style="max-height: 600px;">
+                <h5>🚌 Time & Schedule: 10 Questions! <span class="id">(Waktu & Jadwal!)</span></h5>
+                <p class="en">Find the KPK (in minutes) and the next time they meet.</p>
                 
-                <div class="row mt-4">
-                    <div class="col-md-6 mb-3">
-                        <label>KPK (15, 20) = </label>
-                        <input type="number" id="game6-kpk" class="form-control" placeholder="KPK in minutes">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label>Next departure time: </label>
-                        <input type="text" id="game6-time" class="form-control" placeholder="e.g., 08:30">
-                    </div>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead class="table-light">
+                            <tr><th>Scenario</th><th>KPK (mins)</th><th>Next Time</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1. Bus A: 15m, B: 20m (Start 08:00)</td><td><input type="number" id="bus1a" class="form-control form-control-sm"></td><td><input type="text" id="bus1b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
+                            <tr><td>2. Light 1: 8s, Light 2: 12s</td><td><input type="number" id="bus2a" class="form-control form-control-sm"></td><td><input type="text" id="bus2b" class="form-control form-control-sm" disabled value="KPK only"></td></tr>
+                            <tr><td>3. Bell 1: 10m, Bell 2: 15m (Start 09:00)</td><td><input type="number" id="bus3a" class="form-control form-control-sm"></td><td><input type="text" id="bus3b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
+                            <tr><td>4. Planet A: 4y, Planet B: 6y</td><td><input type="number" id="bus4a" class="form-control form-control-sm"></td><td><input type="text" id="bus4b" class="form-control form-control-sm" disabled value="KPK only"></td></tr>
+                            <tr><td>5. Train A: 25m, B: 45m (Start 07:00)</td><td><input type="number" id="bus5a" class="form-control form-control-sm"></td><td><input type="text" id="bus5b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
+                            <tr><td>6. Bus: 18m, Train: 24m (Start 10:00)</td><td><input type="number" id="bus6a" class="form-control form-control-sm"></td><td><input type="text" id="bus6b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
+                            <tr><td>7. Red: 40s, Green: 60s</td><td><input type="number" id="bus7a" class="form-control form-control-sm"></td><td><input type="text" id="bus7b" class="form-control form-control-sm" disabled value="KPK only"></td></tr>
+                            <tr><td>8. Boat 1: 12m, Boat 2: 16m (Start 13:00)</td><td><input type="number" id="bus8a" class="form-control form-control-sm"></td><td><input type="text" id="bus8b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
+                            <tr><td>9. Plane A: 3h, Plane B: 4h (Start 06:00)</td><td><input type="number" id="bus9a" class="form-control form-control-sm"></td><td><input type="text" id="bus9b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
+                            <tr><td>10. Sat 1: 9h, Sat 2: 12h (Start 08:00)</td><td><input type="number" id="bus10a" class="form-control form-control-sm"></td><td><input type="text" id="bus10b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
+                        </tbody>
+                    </table>
                 </div>
+
                 <div class="text-center mt-3 no-print">
                     <button class="btn btn-primary" onclick="checkGame('game6')"><i class="fas fa-check"></i> Check</button>
                     <button class="btn btn-secondary" onclick="resetGame('game6')"><i class="fas fa-redo"></i> Reset</button>
@@ -739,10 +751,7 @@
         if(gameId === 'game1') {
             for(let i=1; i<=10; i++) {
                 let qId = `game1-q${i}`;
-                if(selectedOpts[qId] && selectedOpts[qId].correct) {
-                    score++;
-                }
-                // Visual update
+                if(selectedOpts[qId] && selectedOpts[qId].correct) score++;
                 if(selectedOpts[qId]) {
                     let btn = selectedOpts[qId].element;
                     btn.classList.remove('selected');
@@ -758,39 +767,50 @@
                 if(document.getElementById(`cat${i}`).value === ansKey[`cat${i}`]) score++;
             }
             isCorrect = score === 10;
-            feedback = isCorrect ? "Great job! All categorized perfectly!" : `You got ${score}/10 correct. Remember: FPB divides equally, KPK syncs time!`;
+            feedback = isCorrect ? "Great job! All categorized perfectly!" : `You got ${score}/10 correct.`;
         }
         else if(gameId === 'game3') {
-            const ansKey = [2, 2, 3, 5, 2, 5, 5, 2, 5, 2]; // Kunci jawaban ft1-ft10
+            const ansKey = [2, 2, 3, 5, 2, 5, 5, 2, 5, 2]; 
             for(let i=1; i<=10; i++) {
                 if(parseInt(document.getElementById(`ft${i}`).value) === ansKey[i-1]) score++;
             }
             isCorrect = score === 10;
-            feedback = isCorrect ? "Awesome! You're a Factor Tree Master!" : `You got ${score}/10. Check the prime factorizations!`;
+            feedback = isCorrect ? "Awesome! You're a Factor Tree Master!" : `You got ${score}/10.`;
         }
         else if(gameId === 'game4') {
-            const p1 = document.getElementById('fpb-pow-2').value;
-            const p2 = document.getElementById('fpb-pow-5').value;
-            const p3 = document.getElementById('kpk-pow-2').value;
-            const p4 = document.getElementById('kpk-pow-3').value;
-            const p5 = document.getElementById('kpk-pow-5').value;
-            isCorrect = (p1==='1' && p2==='1' && p3==='2' && p4==='1' && p5==='1');
-            feedback = isCorrect ? "Excellent! FPB=10, KPK=60" : "Check the rules: FPB takes smallest power, KPK takes largest power.";
-            score = isCorrect ? 1 : 0;
+            // Kunci Power Selector (String agar mudah dibaca)
+            const ansKey = {ps1:"2", ps2:"3", ps3:"1", ps4:"2", ps5:"1", ps6:"3", ps7:"2", ps8:"3", ps9:"1", ps10:"1"};
+            for(let i=1; i<=10; i++) {
+                if(document.getElementById(`ps${i}`).value === ansKey[`ps${i}`]) score++;
+            }
+            isCorrect = score === 10;
+            feedback = isCorrect ? "Excellent! You know the power rules!" : `You got ${score}/10. FPB=smallest, KPK=largest!`;
         }
         else if(gameId === 'game5') {
-            const fpb = document.getElementById('game5-fpb').value;
-            const kpk = document.getElementById('game5-kpk').value;
-            isCorrect = fpb === '10' && kpk === '60';
-            feedback = isCorrect ? "Spot on!" : "Incorrect. Hint: 20=2²x5, 30=2x3x5. FPB=2x5, KPK=2²x3x5.";
-            score = isCorrect ? 1 : 0;
+            // Kunci Calculate [FPB, KPK]
+            const ansKey = [[2,12], [4,24], [3,45], [5,50], [6,36], [7,42], [8,48], [9,54], [10,60], [12,72]];
+            for(let i=1; i<=10; i++) {
+                let fpb = parseInt(document.getElementById(`calc${i}a`).value);
+                let kpk = parseInt(document.getElementById(`calc${i}b`).value);
+                if(fpb === ansKey[i-1][0] && kpk === ansKey[i-1][1]) score++;
+            }
+            isCorrect = score === 10;
+            feedback = isCorrect ? "Spot on! Perfect calculation!" : `You got ${score}/10 correct pairs.`;
         }
         else if(gameId === 'game6') {
-            const kpk = document.getElementById('game6-kpk').value;
-            const time = document.getElementById('game6-time').value;
-            isCorrect = kpk === '60' && (time === '08:60' || time === '09:00');
-            feedback = isCorrect ? "Brilliant! 60 mins after 08:00 is 09:00." : "Not right. KPK(15,20)=60. 08:00 + 60 mins = 09:00.";
-            score = isCorrect ? 1 : 0;
+            // Kunci Bus Schedule [KPK, "NextTime"]
+            const ansKey = [
+                [60, "09:00"], [24, "KPK only"], [30, "09:30"], [12, "KPK only"], 
+                [225, "10:45"], [72, "11:12"], [120, "KPK only"], [48, "13:48"], 
+                [12, "18:00"], [36, "20:00"]
+            ];
+            for(let i=1; i<=10; i++) {
+                let kpk = parseInt(document.getElementById(`bus${i}a`).value);
+                let time = document.getElementById(`bus${i}b`).value.replace(/\s/g, ''); // hapus spasi
+                if(kpk === ansKey[i-1][0] && (time === ansKey[i-1][1] || time.toLowerCase() === ansKey[i-1][1].toLowerCase())) score++;
+            }
+            isCorrect = score === 10;
+            feedback = isCorrect ? "Brilliant! You're a scheduling master!" : `You got ${score}/10 correct schedules.`;
         }
 
         const fbEl = document.getElementById(`${gameId}-feedback`);
@@ -807,36 +827,29 @@
         // 2. Logika reset spesifik
         switch(gameId) {
             case 'game1':
-                document.querySelectorAll('#sec1 .opt-btn').forEach(btn => {
-                    btn.classList.remove('selected', 'correct', 'wrong');
-                });
-                for(let i=1; i<=10; i++) { delete selectedOpts[`game1-q${i}`]; }
+                document.querySelectorAll('#sec1 .opt-btn').forEach(btn => btn.classList.remove('selected', 'correct', 'wrong'));
+                for(let i=1; i<=10; i++) delete selectedOpts[`game1-q${i}`];
                 break;
-
             case 'game2':
-                for(let i=1; i<=10; i++) { document.getElementById(`cat${i}`).value = ""; }
+                for(let i=1; i<=10; i++) document.getElementById(`cat${i}`).value = "";
                 break;
-
             case 'game3':
-                for(let i=1; i<=10; i++) { document.getElementById(`ft${i}`).value = ""; }
+                for(let i=1; i<=10; i++) document.getElementById(`ft${i}`).value = "";
                 break;
-
             case 'game4':
-                document.getElementById('fpb-pow-2').value = '';
-                document.getElementById('fpb-pow-5').value = '';
-                document.getElementById('kpk-pow-2').value = '';
-                document.getElementById('kpk-pow-3').value = '';
-                document.getElementById('kpk-pow-5').value = '';
+                for(let i=1; i<=10; i++) document.getElementById(`ps${i}`).value = "";
                 break;
-
             case 'game5':
-                document.getElementById('game5-fpb').value = '';
-                document.getElementById('game5-kpk').value = '';
+                for(let i=1; i<=10; i++) {
+                    document.getElementById(`calc${i}a`).value = "";
+                    document.getElementById(`calc${i}b`).value = "";
+                }
                 break;
-
             case 'game6':
-                document.getElementById('game6-kpk').value = '';
-                document.getElementById('game6-time').value = '';
+                for(let i=1; i<=10; i++) {
+                    document.getElementById(`bus${i}a`).value = "";
+                    if(document.getElementById(`bus${i}b`).disabled === false) document.getElementById(`bus${i}b`).value = "";
+                }
                 break;
         }
     }
