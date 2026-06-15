@@ -369,19 +369,59 @@
                 <div class="table-responsive">
                     <table class="table table-sm align-middle">
                         <thead class="table-light">
-                            <tr><th>Scenario</th><th style="width: 120px;">FPB / KPK</th></tr>
+                            <tr><th style="width:60%">Scenario</th><th style="width: 20%;">FPB / KPK</th><th style="width: 20%;">Feedback</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>1. Greatest Common Factor</td><td><select id="cat1" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
-                            <tr><td>2. Least Common Multiple</td><td><select id="cat2" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
-                            <tr><td>3. Grouping items equally</td><td><select id="cat3" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
-                            <tr><td>4. Flashing lights syncing</td><td><select id="cat4" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
-                            <tr><td>5. Maximum number of bags</td><td><select id="cat5" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
-                            <tr><td>6. Next meeting time</td><td><select id="cat6" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
-                            <tr><td>7. Dividing ribbons equally</td><td><select id="cat7" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
-                            <tr><td>8. Bus schedules aligning</td><td><select id="cat8" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
-                            <tr><td>9. No leftovers in groups</td><td><select id="cat9" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
-                            <tr><td>10. Common repeating cycle</td><td><select id="cat10" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td></tr>
+                            <tr>
+                                <td>1. Greatest Common Factor <span class="id">(Faktor Persekutuan Terbesar)</span></td>
+                                <td><select id="cat1" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td>
+                                <td><div class="q-feedback" id="fb-cat1"></div></td>
+                            </tr>
+                            <tr>
+                                <td>2. Least Common Multiple <span class="id">(Kelipatan Persekutuan Terkecil)</span></td>
+                                <td><select id="cat2" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td>
+                                <td><div class="q-feedback" id="fb-cat2"></div></td>
+                            </tr>
+                            <tr>
+                                <td>3. Grouping items equally <span class="id">(Mengelompokkan barang sama rata)</span></td>
+                                <td><select id="cat3" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td>
+                                <td><div class="q-feedback" id="fb-cat3"></div></td>
+                            </tr>
+                            <tr>
+                                <td>4. Flashing lights syncing <span class="id">(Lampu kedip bersamaan)</span></td>
+                                <td><select id="cat4" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td>
+                                <td><div class="q-feedback" id="fb-cat4"></div></td>
+                            </tr>
+                            <tr>
+                                <td>5. Maximum number of bags <span class="id">(Jumlah kantong maksimal)</span></td>
+                                <td><select id="cat5" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td>
+                                <td><div class="q-feedback" id="fb-cat5"></div></td>
+                            </tr>
+                            <tr>
+                                <td>6. Next meeting time <span class="id">(Waktu bertemu selanjutnya)</span></td>
+                                <td><select id="cat6" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td>
+                                <td><div class="q-feedback" id="fb-cat6"></div></td>
+                            </tr>
+                            <tr>
+                                <td>7. Dividing ribbons equally <span class="id">(Membagi pita sama rata)</span></td>
+                                <td><select id="cat7" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td>
+                                <td><div class="q-feedback" id="fb-cat7"></div></td>
+                            </tr>
+                            <tr>
+                                <td>8. Bus schedules aligning <span class="id">(Jadwal bus berangkat bersama)</span></td>
+                                <td><select id="cat8" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td>
+                                <td><div class="q-feedback" id="fb-cat8"></div></td>
+                            </tr>
+                            <tr>
+                                <td>9. No leftovers in groups <span class="id">(Tidak ada sisa dalam kelompok)</span></td>
+                                <td><select id="cat9" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td>
+                                <td><div class="q-feedback" id="fb-cat9"></div></td>
+                            </tr>
+                            <tr>
+                                <td>10. Common repeating cycle <span class="id">(Siklus berulang yang sama)</span></td>
+                                <td><select id="cat10" class="form-select form-select-sm"><option value="">Select</option><option value="fpb">FPB</option><option value="kpk">KPK</option></select></td>
+                                <td><div class="q-feedback" id="fb-cat10"></div></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -411,19 +451,26 @@
         <div class="col-practice">
             <div class="p-4 bg-white rounded shadow-sm h-100 overflow-auto" style="max-height: 600px;">
                 <h5>🌳 Factor Tree Master: 10 Challenges! <span class="id">(Master Pohon Faktor!)</span></h5>
-                <p class="en">Fill in the missing prime factor exponent for each number.</p>
+                <p class="en">Fill in the missing prime factor or exponent.</p>
                 
-                <div class="math-display text-start p-3">
-                    1. 12 = 2<sup><input type="number" id="ft1" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="5"></sup> × 3 <br>
-                    2. 18 = 2 × 3<sup><input type="number" id="ft2" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="5"></sup> <br>
-                    3. 24 = 2<sup>3</sup> × <input type="number" id="ft3" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="20"> <br>
-                    4. 30 = 2 × 3 × <input type="number" id="ft4" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="20"> <br>
-                    5. 36 = 2<sup>2</sup> × 3<sup><input type="number" id="ft5" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="5"></sup> <br>
-                    6. 40 = 2<sup>3</sup> × <input type="number" id="ft6" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="20"> <br>
-                    7. 45 = 3<sup>2</sup> × <input type="number" id="ft7" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="20"> <br>
-                    8. 50 = 2 × 5<sup><input type="number" id="ft8" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="5"></sup> <br>
-                    9. 60 = 2<sup>2</sup> × 3 × <input type="number" id="ft9" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="20"> <br>
-                    10. 100 = 2<sup>2</sup> × 5<sup><input type="number" id="ft10" class="form-control form-control-sm d-inline-block" style="width:50px;" min="0" max="5"></sup>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead class="table-light">
+                            <tr><th>Equation</th><th>Answer</th><th>Feedback</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1. 12 = 2<sup>?</sup> × 3</td><td><input type="number" id="ft1" class="form-control form-control-sm w-auto"></td><td><div class="q-feedback" id="fb-ft1"></div></td></tr>
+                            <tr><td>2. 18 = 2 × 3<sup>?</sup></td><td><input type="number" id="ft2" class="form-control form-control-sm w-auto"></td><td><div class="q-feedback" id="fb-ft2"></div></td></tr>
+                            <tr><td>3. 24 = 2<sup>3</sup> × ?</td><td><input type="number" id="ft3" class="form-control form-control-sm w-auto"></td><td><div class="q-feedback" id="fb-ft3"></div></td></tr>
+                            <tr><td>4. 30 = 2 × 3 × ?</td><td><input type="number" id="ft4" class="form-control form-control-sm w-auto"></td><td><div class="q-feedback" id="fb-ft4"></div></td></tr>
+                            <tr><td>5. 36 = 2<sup>2</sup> × 3<sup>?</sup></td><td><input type="number" id="ft5" class="form-control form-control-sm w-auto"></td><td><div class="q-feedback" id="fb-ft5"></div></td></tr>
+                            <tr><td>6. 40 = 2<sup>3</sup> × ?</td><td><input type="number" id="ft6" class="form-control form-control-sm w-auto"></td><td><div class="q-feedback" id="fb-ft6"></div></td></tr>
+                            <tr><td>7. 45 = 3<sup>2</sup> × ?</td><td><input type="number" id="ft7" class="form-control form-control-sm w-auto"></td><td><div class="q-feedback" id="fb-ft7"></div></td></tr>
+                            <tr><td>8. 50 = 2 × 5<sup>?</sup></td><td><input type="number" id="ft8" class="form-control form-control-sm w-auto"></td><td><div class="q-feedback" id="fb-ft8"></div></td></tr>
+                            <tr><td>9. 60 = 2<sup>2</sup> × 3 × ?</td><td><input type="number" id="ft9" class="form-control form-control-sm w-auto"></td><td><div class="q-feedback" id="fb-ft9"></div></td></tr>
+                            <tr><td>10. 100 = 2<sup>2</sup> × 5<sup>?</sup></td><td><input type="number" id="ft10" class="form-control form-control-sm w-auto"></td><td><div class="q-feedback" id="fb-ft10"></div></td></tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="text-center mt-3 no-print">
@@ -444,7 +491,7 @@
             <span class="id">Mari kita lihat faktor dari 12 dan 18.</span>
 
             <table class="table table-bordered mt-4 bg-white">
-                <tr class="table-info"><th>Number</th><th>Prime Factorization</th></tr>
+                <tr class="table-info" colspan="2"><th>Number</th><th>Prime Factorization</th></tr>
                 <tr><td>12</td><td class="text-danger">\(2^2\)</td><td class="text-primary">\( \times 3\)</td></tr>
                 <tr><td>18</td><td class="text-danger">\(2\)</td><td class="text-primary">\( \times 3^2\)</td></tr>
             </table>
@@ -532,24 +579,23 @@
         <div class="col-practice">
             <div class="p-4 bg-white rounded shadow-sm h-100 overflow-auto" style="max-height: 600px;">
                 <h5>🎯 Calculate: 10 Questions! <span class="id">(Hitung!)</span></h5>
-                <p class="en">Find the FPB and KPK for these number pairs.</p>
                 
                 <div class="table-responsive">
                     <table class="table table-sm align-middle">
                         <thead class="table-light">
-                            <tr><th>Pair</th><th>FPB</th><th>KPK</th></tr>
+                            <tr><th>Pair</th><th>FPB</th><th>KPK</th><th>Feedback</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>1. 4 & 6</td><td><input type="number" id="calc1a" class="form-control form-control-sm"></td><td><input type="number" id="calc1b" class="form-control form-control-sm"></td></tr>
-                            <tr><td>2. 8 & 12</td><td><input type="number" id="calc2a" class="form-control form-control-sm"></td><td><input type="number" id="calc2b" class="form-control form-control-sm"></td></tr>
-                            <tr><td>3. 9 & 15</td><td><input type="number" id="calc3a" class="form-control form-control-sm"></td><td><input type="number" id="calc3b" class="form-control form-control-sm"></td></tr>
-                            <tr><td>4. 10 & 25</td><td><input type="number" id="calc4a" class="form-control form-control-sm"></td><td><input type="number" id="calc4b" class="form-control form-control-sm"></td></tr>
-                            <tr><td>5. 12 & 18</td><td><input type="number" id="calc5a" class="form-control form-control-sm"></td><td><input type="number" id="calc5b" class="form-control form-control-sm"></td></tr>
-                            <tr><td>6. 14 & 21</td><td><input type="number" id="calc6a" class="form-control form-control-sm"></td><td><input type="number" id="calc6b" class="form-control form-control-sm"></td></tr>
-                            <tr><td>7. 16 & 24</td><td><input type="number" id="calc7a" class="form-control form-control-sm"></td><td><input type="number" id="calc7b" class="form-control form-control-sm"></td></tr>
-                            <tr><td>8. 18 & 27</td><td><input type="number" id="calc8a" class="form-control form-control-sm"></td><td><input type="number" id="calc8b" class="form-control form-control-sm"></td></tr>
-                            <tr><td>9. 20 & 30</td><td><input type="number" id="calc9a" class="form-control form-control-sm"></td><td><input type="number" id="calc9b" class="form-control form-control-sm"></td></tr>
-                            <tr><td>10. 24 & 36</td><td><input type="number" id="calc10a" class="form-control form-control-sm"></td><td><input type="number" id="calc10b" class="form-control form-control-sm"></td></tr>
+                            <tr><td>1. 4 & 6</td><td><input type="number" id="calc1a" class="form-control form-control-sm"></td><td><input type="number" id="calc1b" class="form-control form-control-sm"></td><td><div class="q-feedback" id="fb-calc1"></div></td></tr>
+                            <tr><td>2. 8 & 12</td><td><input type="number" id="calc2a" class="form-control form-control-sm"></td><td><input type="number" id="calc2b" class="form-control form-control-sm"></td><td><div class="q-feedback" id="fb-calc2"></div></td></tr>
+                            <tr><td>3. 9 & 15</td><td><input type="number" id="calc3a" class="form-control form-control-sm"></td><td><input type="number" id="calc3b" class="form-control form-control-sm"></td><td><div class="q-feedback" id="fb-calc3"></div></td></tr>
+                            <tr><td>4. 10 & 25</td><td><input type="number" id="calc4a" class="form-control form-control-sm"></td><td><input type="number" id="calc4b" class="form-control form-control-sm"></td><td><div class="q-feedback" id="fb-calc4"></div></td></tr>
+                            <tr><td>5. 12 & 18</td><td><input type="number" id="calc5a" class="form-control form-control-sm"></td><td><input type="number" id="calc5b" class="form-control form-control-sm"></td><td><div class="q-feedback" id="fb-calc5"></div></td></tr>
+                            <tr><td>6. 14 & 21</td><td><input type="number" id="calc6a" class="form-control form-control-sm"></td><td><input type="number" id="calc6b" class="form-control form-control-sm"></td><td><div class="q-feedback" id="fb-calc6"></div></td></tr>
+                            <tr><td>7. 16 & 24</td><td><input type="number" id="calc7a" class="form-control form-control-sm"></td><td><input type="number" id="calc7b" class="form-control form-control-sm"></td><td><div class="q-feedback" id="fb-calc7"></div></td></tr>
+                            <tr><td>8. 18 & 27</td><td><input type="number" id="calc8a" class="form-control form-control-sm"></td><td><input type="number" id="calc8b" class="form-control form-control-sm"></td><td><div class="q-feedback" id="fb-calc8"></div></td></tr>
+                            <tr><td>9. 20 & 30</td><td><input type="number" id="calc9a" class="form-control form-control-sm"></td><td><input type="number" id="calc9b" class="form-control form-control-sm"></td><td><div class="q-feedback" id="fb-calc9"></div></td></tr>
+                            <tr><td>10. 24 & 36</td><td><input type="number" id="calc10a" class="form-control form-control-sm"></td><td><input type="number" id="calc10b" class="form-control form-control-sm"></td><td><div class="q-feedback" id="fb-calc10"></div></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -579,24 +625,23 @@
         <div class="col-practice">
             <div class="p-4 bg-white rounded shadow-sm h-100 overflow-auto" style="max-height: 600px;">
                 <h5>🚌 Time & Schedule: 10 Questions! <span class="id">(Waktu & Jadwal!)</span></h5>
-                <p class="en">Find the KPK (in minutes) and the next time they meet.</p>
                 
                 <div class="table-responsive">
                     <table class="table table-sm align-middle">
                         <thead class="table-light">
-                            <tr><th>Scenario</th><th>KPK (mins)</th><th>Next Time</th></tr>
+                            <tr><th>Scenario</th><th>KPK (mins)</th><th>Next Time</th><th>Feedback</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>1. Bus A: 15m, B: 20m (Start 08:00)</td><td><input type="number" id="bus1a" class="form-control form-control-sm"></td><td><input type="text" id="bus1b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
-                            <tr><td>2. Light 1: 8s, Light 2: 12s</td><td><input type="number" id="bus2a" class="form-control form-control-sm"></td><td><input type="text" id="bus2b" class="form-control form-control-sm" disabled value="KPK only"></td></tr>
-                            <tr><td>3. Bell 1: 10m, Bell 2: 15m (Start 09:00)</td><td><input type="number" id="bus3a" class="form-control form-control-sm"></td><td><input type="text" id="bus3b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
-                            <tr><td>4. Planet A: 4y, Planet B: 6y</td><td><input type="number" id="bus4a" class="form-control form-control-sm"></td><td><input type="text" id="bus4b" class="form-control form-control-sm" disabled value="KPK only"></td></tr>
-                            <tr><td>5. Train A: 25m, B: 45m (Start 07:00)</td><td><input type="number" id="bus5a" class="form-control form-control-sm"></td><td><input type="text" id="bus5b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
-                            <tr><td>6. Bus: 18m, Train: 24m (Start 10:00)</td><td><input type="number" id="bus6a" class="form-control form-control-sm"></td><td><input type="text" id="bus6b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
-                            <tr><td>7. Red: 40s, Green: 60s</td><td><input type="number" id="bus7a" class="form-control form-control-sm"></td><td><input type="text" id="bus7b" class="form-control form-control-sm" disabled value="KPK only"></td></tr>
-                            <tr><td>8. Boat 1: 12m, Boat 2: 16m (Start 13:00)</td><td><input type="number" id="bus8a" class="form-control form-control-sm"></td><td><input type="text" id="bus8b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
-                            <tr><td>9. Plane A: 3h, Plane B: 4h (Start 06:00)</td><td><input type="number" id="bus9a" class="form-control form-control-sm"></td><td><input type="text" id="bus9b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
-                            <tr><td>10. Sat 1: 9h, Sat 2: 12h (Start 08:00)</td><td><input type="number" id="bus10a" class="form-control form-control-sm"></td><td><input type="text" id="bus10b" class="form-control form-control-sm" placeholder="HH:MM"></td></tr>
+                            <tr><td>1. Bus A: 15m, B: 20m (Start 08:00)</td><td><input type="number" id="bus1a" class="form-control form-control-sm"></td><td><input type="text" id="bus1b" class="form-control form-control-sm" placeholder="HH:MM"></td><td><div class="q-feedback" id="fb-bus1"></div></td></tr>
+                            <tr><td>2. Light 1: 8s, Light 2: 12s</td><td><input type="number" id="bus2a" class="form-control form-control-sm"></td><td><input type="text" id="bus2b" class="form-control form-control-sm" disabled value="KPK only"></td><td><div class="q-feedback" id="fb-bus2"></div></td></tr>
+                            <tr><td>3. Bell 1: 10m, Bell 2: 15m (Start 09:00)</td><td><input type="number" id="bus3a" class="form-control form-control-sm"></td><td><input type="text" id="bus3b" class="form-control form-control-sm" placeholder="HH:MM"></td><td><div class="q-feedback" id="fb-bus3"></div></td></tr>
+                            <tr><td>4. Planet A: 4y, Planet B: 6y</td><td><input type="number" id="bus4a" class="form-control form-control-sm"></td><td><input type="text" id="bus4b" class="form-control form-control-sm" disabled value="KPK only"></td><td><div class="q-feedback" id="fb-bus4"></div></td></tr>
+                            <tr><td>5. Train A: 25m, B: 45m (Start 07:00)</td><td><input type="number" id="bus5a" class="form-control form-control-sm"></td><td><input type="text" id="bus5b" class="form-control form-control-sm" placeholder="HH:MM"></td><td><div class="q-feedback" id="fb-bus5"></div></td></tr>
+                            <tr><td>6. Bus: 18m, Train: 24m (Start 10:00)</td><td><input type="number" id="bus6a" class="form-control form-control-sm"></td><td><input type="text" id="bus6b" class="form-control form-control-sm" placeholder="HH:MM"></td><td><div class="q-feedback" id="fb-bus6"></div></td></tr>
+                            <tr><td>7. Red: 40s, Green: 60s</td><td><input type="number" id="bus7a" class="form-control form-control-sm"></td><td><input type="text" id="bus7b" class="form-control form-control-sm" disabled value="KPK only"></td><td><div class="q-feedback" id="fb-bus7"></div></td></tr>
+                            <tr><td>8. Boat 1: 12m, Boat 2: 16m (Start 13:00)</td><td><input type="number" id="bus8a" class="form-control form-control-sm"></td><td><input type="text" id="bus8b" class="form-control form-control-sm" placeholder="HH:MM"></td><td><div class="q-feedback" id="fb-bus8"></div></td></tr>
+                            <tr><td>9. Plane A: 3h, Plane B: 4h (Start 06:00)</td><td><input type="number" id="bus9a" class="form-control form-control-sm"></td><td><input type="text" id="bus9b" class="form-control form-control-sm" placeholder="HH:MM"></td><td><div class="q-feedback" id="fb-bus9"></div></td></tr>
+                            <tr><td>10. Sat 1: 9h, Sat 2: 12h (Start 08:00)</td><td><input type="number" id="bus10a" class="form-control form-control-sm"></td><td><input type="text" id="bus10b" class="form-control form-control-sm" placeholder="HH:MM"></td><td><div class="q-feedback" id="fb-bus10"></div></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -767,11 +812,21 @@
         selectedOpts[qId] = { element: btn, correct: isCorrect };
     }
 
+    function injectFeedback(id, isCorrect, correctAns, explanation) {
+        const fbEl = document.getElementById(`fb-${id}`);
+        if(isCorrect) {
+            fbEl.className = 'q-feedback q-correct';
+            fbEl.innerHTML = `<small>✔️ Benar</small>`;
+        } else {
+            fbEl.className = 'q-feedback q-wrong';
+            fbEl.innerHTML = `<small>❌ Salah.<br>Jawaban: ${correctAns}<br>Langkah: ${explanation}</small>`;
+        }
+    }
+
     // Check & Reset
     function checkGame(gameId) {
-        let isCorrect = false;
         let score = 0;
-        let feedback = "";
+        let totalQ = 10;
         
         if(gameId === 'game1') {
             for(let i=1; i<=10; i++) {
@@ -783,71 +838,126 @@
                     btn.classList.add(btn.getAttribute('onclick').includes('true') ? 'correct' : 'wrong');
                 }
             }
-            isCorrect = score === 10;
-            feedback = isCorrect ? "Perfect! All 10 correct!" : `You got ${score}/10. Review the incorrect ones!`;
+            document.getElementById('game1-feedback').innerHTML = `Score: ${score}/10`;
         } 
         else if(gameId === 'game2') {
-            const ansKey = {cat1:'fpb', cat2:'kpk', cat3:'fpb', cat4:'kpk', cat5:'fpb', cat6:'kpk', cat7:'fpb', cat8:'kpk', cat9:'fpb', cat10:'kpk'};
+            const data = {
+                cat1:  { ans: 'fpb', exp: "Mencari faktor terbesar yang sama (pengelompokan)." },
+                cat2:  { ans: 'kpk', exp: "Mencari kelipatan terkecil yang sama (waktu bersama)." },
+                cat3:  { ans: 'fpb', exp: "Membagi barang secara sama rata." },
+                cat4:  { ans: 'kpk', exp: "Lampu menyala bersama = siklus waktu bertemu." },
+                cat5:  { ans: 'fpb', exp: "Jumlah kantong maksimal = pembagian sama rata." },
+                cat6:  { ans: 'kpk', exp: "Waktu bertemu lagi = sinkronisasi waktu." },
+                cat7:  { ans: 'fpb', exp: "Membagi pita secara merata." },
+                cat8:  { ans: 'kpk', exp: "Jadwal bus berangkat bersamaan." },
+                cat9:  { ans: 'fpb', exp: "Tidak ada sisa = pembagian sama rata (FPB)." },
+                cat10: { ans: 'kpk', exp: "Siklus berulang bertemu = KPK." }
+            };
             for(let i=1; i<=10; i++) {
-                if(document.getElementById(`cat${i}`).value === ansKey[`cat${i}`]) score++;
+                let id = `cat${i}`;
+                let userAns = document.getElementById(id).value;
+                let isCorrect = userAns === data[id].ans;
+                if(isCorrect) score++;
+                injectFeedback(id, isCorrect, data[id].ans.toUpperCase(), data[id].exp);
             }
-            isCorrect = score === 10;
-            feedback = isCorrect ? "Great job! All categorized perfectly!" : `You got ${score}/10 correct.`;
+            document.getElementById('game2-feedback').innerHTML = `Score: ${score}/10`;
         }
         else if(gameId === 'game3') {
-            const ansKey = [2, 2, 3, 5, 2, 5, 5, 2, 5, 2]; 
+            const data = {
+                ft1:  { ans: 2, exp: "12 = 2 x 2 x 3 = 2² x 3" },
+                ft2:  { ans: 2, exp: "18 = 2 x 3 x 3 = 2 x 3²" },
+                ft3:  { ans: 3, exp: "24 = 2 x 2 x 2 x 3 = 2³ x 3" },
+                ft4:  { ans: 5, exp: "30 = 2 x 3 x 5" },
+                ft5:  { ans: 2, exp: "36 = 4 x 9 = 2² x 3²" },
+                ft6:  { ans: 5, exp: "40 = 8 x 5 = 2³ x 5" },
+                ft7:  { ans: 5, exp: "45 = 9 x 5 = 3² x 5" },
+                ft8:  { ans: 2, exp: "50 = 2 x 25 = 2 x 5²" },
+                ft9:  { ans: 5, exp: "60 = 4 x 15 = 2² x 3 x 5" },
+                ft10: { ans: 2, exp: "100 = 4 x 25 = 2² x 5²" }
+            };
             for(let i=1; i<=10; i++) {
-                if(parseInt(document.getElementById(`ft${i}`).value) === ansKey[i-1]) score++;
+                let id = `ft${i}`;
+                let userAns = parseInt(document.getElementById(id).value);
+                let isCorrect = userAns === data[id].ans;
+                if(isCorrect) score++;
+                injectFeedback(id, isCorrect, data[id].ans, data[id].exp);
             }
-            isCorrect = score === 10;
-            feedback = isCorrect ? "Awesome! You're a Factor Tree Master!" : `You got ${score}/10.`;
+            document.getElementById('game3-feedback').innerHTML = `Score: ${score}/10`;
         }
         else if(gameId === 'game4') {
-            // Kunci Power Selector (String agar mudah dibaca)
-            const ansKey = {ps1:"2", ps2:"3", ps3:"1", ps4:"2", ps5:"1", ps6:"3", ps7:"2", ps8:"3", ps9:"1", ps10:"1"};
+            const data = {
+                ps1: { ans: "2", exp: "FPB ambil pangkat terkecil. Min(3,2)=2" },
+                ps2: { ans: "3", exp: "KPK ambil pangkat terbesar. Max(3,2)=3" },
+                ps3: { ans: "1", exp: "FPB ambil pangkat terkecil. Min(1,2)=1" },
+                ps4: { ans: "2", exp: "KPK ambil pangkat terbesar. Max(2,1)=2" },
+                ps5: { ans: "1", exp: "FPB ambil pangkat terkecil. Min(4,1)=1" },
+                ps6: { ans: "3", exp: "KPK ambil pangkat terbesar. Max(1,3)=3" },
+                ps7: { ans: "2", exp: "FPB ambil pangkat terkecil. Min(2,3)=2" },
+                ps8: { ans: "3", exp: "KPK ambil pangkat terbesar. Max(2,3)=3" },
+                ps9: { ans: "1", exp: "KPK ambil pangkat terbesar, tapi 11 tidak berulang (pangkat 1)." },
+                ps10:{ ans: "1", exp: "FPB ambil pangkat terkecil. Min(1,4)=1" }
+            };
             for(let i=1; i<=10; i++) {
-                if(document.getElementById(`ps${i}`).value === ansKey[`ps${i}`]) score++;
+                let id = `ps${i}`;
+                let userAns = document.getElementById(id).value;
+                let isCorrect = userAns === data[id].ans;
+                if(isCorrect) score++;
+                injectFeedback(id, isCorrect, data[id].ans, data[id].exp);
             }
-            isCorrect = score === 10;
-            feedback = isCorrect ? "Excellent! You know the power rules!" : `You got ${score}/10. FPB=smallest, KPK=largest!`;
+            document.getElementById('game4-feedback').innerHTML = `Score: ${score}/10`;
         }
         else if(gameId === 'game5') {
-            // Kunci Calculate [FPB, KPK]
-            const ansKey = [[2,12], [4,24], [3,45], [5,50], [6,36], [7,42], [8,48], [9,54], [10,60], [12,72]];
+            const data = {
+                calc1:  { a:2, b:12, exp:"4=2², 6=2x3. FPB=2, KPK=2²x3=12" },
+                calc2:  { a:4, b:24, exp:"8=2³, 12=2²x3. FPB=2²=4, KPK=2³x3=24" },
+                calc3:  { a:3, b:45, exp:"9=3², 15=3x5. FPB=3, KPK=3²x5=45" },
+                calc4:  { a:5, b:50, exp:"10=2x5, 25=5². FPB=5, KPK=2x5²=50" },
+                calc5:  { a:6, b:36, exp:"12=2²x3, 18=2x3². FPB=2x3=6, KPK=2²x3²=36" },
+                calc6:  { a:7, b:42, exp:"14=2x7, 21=3x7. FPB=7, KPK=2x3x7=42" },
+                calc7:  { a:8, b:48, exp:"16=2⁴, 24=2³x3. FPB=2³=8, KPK=2⁴x3=48" },
+                calc8:  { a:9, b:54, exp:"18=2x3², 27=3³. FPB=3²=9, KPK=2x3³=54" },
+                calc9:  { a:10,b:60, exp:"20=2²x5, 30=2x3x5. FPB=2x5=10, KPK=2²x3x5=60" },
+                calc10: { a:12,b:72, exp:"24=2³x3, 36=2²x3². FPB=2²x3=12, KPK=2³x3²=72" }
+            };
             for(let i=1; i<=10; i++) {
-                let fpb = parseInt(document.getElementById(`calc${i}a`).value);
-                let kpk = parseInt(document.getElementById(`calc${i}b`).value);
-                if(fpb === ansKey[i-1][0] && kpk === ansKey[i-1][1]) score++;
+                let id = `calc${i}`;
+                let fpb = parseInt(document.getElementById(`${id}a`).value);
+                let kpk = parseInt(document.getElementById(`${id}b`).value);
+                let isCorrect = fpb === data[id].a && kpk === data[id].b;
+                if(isCorrect) score++;
+                injectFeedback(id, isCorrect, `FPB:${data[id].a}, KPK:${data[id].b}`, data[id].exp);
             }
-            isCorrect = score === 10;
-            feedback = isCorrect ? "Spot on! Perfect calculation!" : `You got ${score}/10 correct pairs.`;
+            document.getElementById('game5-feedback').innerHTML = `Score: ${score}/10`;
         }
         else if(gameId === 'game6') {
-            // Kunci Bus Schedule [KPK, "NextTime"]
-            const ansKey = [
-                [60, "09:00"], [24, "KPK only"], [30, "09:30"], [12, "KPK only"], 
-                [225, "10:45"], [72, "11:12"], [120, "KPK only"], [48, "13:48"], 
-                [12, "18:00"], [36, "20:00"]
-            ];
+            const data = {
+                bus1:  { a:60, b:"09:00", exp:"KPK(15,20)=60. 08:00 + 60m = 09:00" },
+                bus2:  { a:24, b:"KPK only", exp:"KPK(8,12)=24." },
+                bus3:  { a:30, b:"09:30", exp:"KPK(10,15)=30. 09:00 + 30m = 09:30" },
+                bus4:  { a:12, b:"KPK only", exp:"KPK(4,6)=12." },
+                bus5:  { a:225,b:"10:45", exp:"KPK(25,45)=225m (3j 45m). 07:00+3j45m=10:45" },
+                bus6:  { a:72, b:"11:12", exp:"KPK(18,24)=72m (1j 12m). 10:00+1j12m=11:12" },
+                bus7:  { a:120,b:"KPK only", exp:"KPK(40,60)=120." },
+                bus8:  { a:48, b:"13:48", exp:"KPK(12,16)=48m. 13:00 + 48m = 13:48" },
+                bus9:  { a:12, b:"18:00", exp:"KPK(3,4)=12 jam. 06:00 + 12j = 18:00" },
+                bus10: { a:36, b:"20:00", exp:"KPK(9,12)=36 jam. 08:00 + 36j = 20:00 (hari+1)" }
+            };
             for(let i=1; i<=10; i++) {
-                let kpk = parseInt(document.getElementById(`bus${i}a`).value);
-                let time = document.getElementById(`bus${i}b`).value.replace(/\s/g, ''); // hapus spasi
-                if(kpk === ansKey[i-1][0] && (time === ansKey[i-1][1] || time.toLowerCase() === ansKey[i-1][1].toLowerCase())) score++;
+                let id = `bus${i}`;
+                let kpk = parseInt(document.getElementById(`${id}a`).value);
+                let time = document.getElementById(`${id}b`).value.replace(/\s/g, '');
+                let isCorrect = kpk === data[id].a && (time === data[id].b || time.toLowerCase() === String(data[id].b).toLowerCase());
+                if(isCorrect) score++;
+                injectFeedback(id, isCorrect, `KPK:${data[id].a}, Time:${data[id].b}`, data[id].exp);
             }
-            isCorrect = score === 10;
-            feedback = isCorrect ? "Brilliant! You're a scheduling master!" : `You got ${score}/10 correct schedules.`;
+            document.getElementById('game6-feedback').innerHTML = `Score: ${score}/10`;
         }
-
-        const fbEl = document.getElementById(`${gameId}-feedback`);
-        fbEl.innerHTML = feedback;
-        fbEl.className = `feedback-text text-center ${isCorrect ? 'text-correct' : 'text-wrong'}`;
     }
 
     function resetGame(gameId) {
-        // 1. Bersihkan feedback teks
+        // 1. Bersihkan feedback utama
         const fbEl = document.getElementById(`${gameId}-feedback`);
         fbEl.innerHTML = '';
-        fbEl.className = 'feedback-text text-center';
 
         // 2. Logika reset spesifik
         switch(gameId) {
@@ -856,24 +966,25 @@
                 for(let i=1; i<=10; i++) delete selectedOpts[`game1-q${i}`];
                 break;
             case 'game2':
-                for(let i=1; i<=10; i++) document.getElementById(`cat${i}`).value = "";
+                for(let i=1; i<=10; i++) { document.getElementById(`cat${i}`).value = ""; document.getElementById(`fb-cat${i}`).innerHTML=""; document.getElementById(`fb-cat${i}`).className="q-feedback"; }
                 break;
             case 'game3':
-                for(let i=1; i<=10; i++) document.getElementById(`ft${i}`).value = "";
+                for(let i=1; i<=10; i++) { document.getElementById(`ft${i}`).value = ""; document.getElementById(`fb-ft${i}`).innerHTML=""; document.getElementById(`fb-ft${i}`).className="q-feedback"; }
                 break;
             case 'game4':
-                for(let i=1; i<=10; i++) document.getElementById(`ps${i}`).value = "";
+                for(let i=1; i<=10; i++) { document.getElementById(`ps${i}`).value = ""; document.getElementById(`fb-ps${i}`).innerHTML=""; document.getElementById(`fb-ps${i}`).className="q-feedback"; }
                 break;
             case 'game5':
-                for(let i=1; i<=10; i++) {
-                    document.getElementById(`calc${i}a`).value = "";
-                    document.getElementById(`calc${i}b`).value = "";
+                for(let i=1; i<=10; i++) { 
+                    document.getElementById(`calc${i}a`).value = ""; document.getElementById(`calc${i}b`).value = ""; 
+                    document.getElementById(`fb-calc${i}`).innerHTML=""; document.getElementById(`fb-calc${i}`).className="q-feedback";
                 }
                 break;
             case 'game6':
-                for(let i=1; i<=10; i++) {
-                    document.getElementById(`bus${i}a`).value = "";
+                for(let i=1; i<=10; i++) { 
+                    document.getElementById(`bus${i}a`).value = ""; 
                     if(document.getElementById(`bus${i}b`).disabled === false) document.getElementById(`bus${i}b`).value = "";
+                    document.getElementById(`fb-bus${i}`).innerHTML=""; document.getElementById(`fb-bus${i}`).className="q-feedback";
                 }
                 break;
         }
