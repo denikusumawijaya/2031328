@@ -202,12 +202,40 @@
         /* Print Styles */
         @media print {
             body { background: white; }
-            .no-print { display: none !important; }
-            .cloud { display: none; }
-            .section-row { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
-            .col-theory, .col-practice { border: none; }
-            #assessmentSection { display: block !important; }
-            .tab-content > .tab-pane { display: block !important; opacity: 1 !important; }
+            .cloud { display: none !important; }
+            
+            /* Sembunyikan semua elemen secara visual */
+            body * {
+                visibility: hidden;
+            }
+            
+            /* Tampilkan hanya area print */
+            #printArea, #printArea * {
+                visibility: visible;
+            }
+            #printArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 20px;
+                display: block !important;
+            }
+
+            /* Styling tabel untuk print */
+            #printArea table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            #printArea th, #printArea td {
+                border: 1px solid #000;
+                padding: 8px;
+                text-align: left;
+            }
+            #printArea th {
+                background-color: #f2f2f2;
+            }
         }
     </style>
 </head>
@@ -683,7 +711,8 @@
             </div>
         </div>
     </div>
-
+    <!-- Hidden Print Area -->
+    <div id="printArea" class="d-none"></div>
 </div>
 
 <script>
@@ -890,6 +919,97 @@
     }
 
     function printAssessment() {
+        // 1. Ambil data siswa
+        const name = document.getElementById('studentName').value || '-';
+        const date = document.getElementById('assessmentDate').value || '-';
+        const topic = "KPK & FPB";
+
+        // 2. Cari tab grup yang sedang aktif
+        const activeTabLink = document.querySelector('#assessmentTabs .nav-link.active');
+        if(!activeTabLink) return alert("Please select an assessment group first!");
+        
+        const groupId = activeTabLink.getAttribute('href').replace('#tab', '');
+        const groupName = activeTabLink.textContent.trim();
+
+        // 3. Ambil skor dari feedback yang sudah di-submit
+        const feedbackEl = document.getElementById(`assess-feedback-${groupId}`);
+        const scoreMatch = feedbackEl.innerHTML.match(/Score: (\d+\/10)/);
+        const score = scoreMatch ? scoreMatch[1] : 'Belum di-submit / Not submitted';
+
+        // 4. Ekstrak soal, jawaban siswa, dan jawaban benar
+        const ansKey = answers[groupId];
+        let tableRows = '';
+        let qNum = 1;
+
+        for(let qKey in ansKey) {
+            const el = document.getElementById(qKey);
+            let questionText = '';
+            let studentAnswer = '-';
+            let correctAnswer = Array.isArray(ansKey[qKey]) ? ansKey[qKey].join(', ') : ansKey[qKey];
+
+            if(el) {
+                // Ambil teks soal dengan mengclone node dan menghapus input agar teksnya saja yang terbaca
+                let container = el.closest('div[id^="assess-q"]') || el.closest('p');
+                if(container) {
+                    let clone = container.cloneNode(true);
+                    clone.querySelectorAll('input, select, div, span, label, button').forEach(e => e.remove());
+                    questionText = clone.innerText.trim().replace(/^\d+\.\s*/, ''); // Hapus angka di depan
+                }
+
+                // Ambil jawaban siswa
+                if(el.type === 'radio') {
+                    const selected = document.querySelector(`input[name="${qKey}"]:checked`);
+                    studentAnswer = selected ? selected.value : '-';
+                } else if(el.type === 'checkbox') {
+                    const checkedBoxes = el.closest('div').querySelectorAll('input[type="checkbox"]:checked');
+                    studentAnswer = Array.from(checkedBoxes).map(c => c.value).join(', ') || '-';
+                } else if(el.tagName === 'SELECT') {
+                    studentAnswer = el.options[el.selectedIndex].text !== 'Select...' ? el.options[el.selectedIndex].text : '-';
+                } else {
+                    studentAnswer = el.value || '-';
+                }
+            }
+
+            tableRows += `
+                <tr>
+                    <td style="text-align: center;">${qNum}</td>
+                    <td>${questionText}</td>
+                    <td>${studentAnswer}</td>
+                    <td>${correctAnswer}</td>
+                </tr>
+            `;
+            qNum++;
+        }
+
+        // 5. Susun layout cetak
+        const printContent = `
+            <h2 style="text-align: center; margin-bottom: 20px;">Assessment Result</h2>
+            <table style="width: 40%; margin-bottom: 20px; border: none;">
+                <tr style="border: none;"><td style="border: none;"><strong>Nama / Name</strong></td><td style="border: none;">: ${name}</td></tr>
+                <tr style="border: none;"><td style="border: none;"><strong>Tanggal / Date</strong></td><td style="border: none;">: ${date}</td></tr>
+                <tr style="border: none;"><td style="border: none;"><strong>Topik / Topic</strong></td><td style="border: none;">: ${topic}</td></tr>
+                <tr style="border: none;"><td style="border: none;"><strong>Grup / Group</strong></td><td style="border: none;">: ${groupName}</td></tr>
+                <tr style="border: none;"><td style="border: none;"><strong>Skor / Score</strong></td><td style="border: none;">: ${score}</td></tr>
+            </table>
+            <hr style="border: 1px solid #000;">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">No</th>
+                        <th style="width: 45%;">Soal / Question</th>
+                        <th style="width: 25%;">Jawaban Siswa / Student Answer</th>
+                        <th style="width: 25%;">Jawaban Benar / Correct Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${tableRows}
+                </tbody>
+            </table>
+        `;
+
+        // 6. Masukkan ke area print dan trigger print
+        const printArea = document.getElementById('printArea');
+        printArea.innerHTML = printContent;
         window.print();
     }
 </script>
