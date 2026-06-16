@@ -48,7 +48,7 @@
         @keyframes wrongShake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
 
         /* Section Content Area */
-        .section-content { display: none; background: var(--duo-card); border-top-left-radius: 30px; border-top-right-radius: 30px; padding: 30px 20px; min-height: 80vh; animation: slideIn 0.4s ease-out; }
+        .section-content { display: none; background: var(--duo-card); border-top-left-radius: 30px; border-top-right-radius: 30px; padding: 30px 20px; min-height: 80vh; animation: slideIn 0.4s ease-out; max-width: 600px; margin: 0 auto; /* Tambahkan ini agar tidak terlalu lebar */ }
         .section-content.visible { display: block; }
         .back-btn { background: none; border: 2px solid var(--duo-dark); color: var(--duo-blue); padding: 8px 15px; border-radius: 15px; cursor: pointer; font-weight: bold; margin-bottom: 20px; }
         
@@ -322,41 +322,140 @@ function initApp() {
     });
 }
 
+// --- MESIN TAMPILAN 1 PER 1 (DUOLINGO STYLE) ---
+let stepState = {}; // Menyimpan progres soal per section
+
 function generateSectionHTML(sec, idx) {
     let html = `<button class="back-btn" onclick="backToMap()"><i class="fas fa-arrow-left"></i> Back / Kembali</button>`;
-    html += `<h2 style="color:var(--duo-green); margin-bottom:20px;"><i class="fas ${sec.icon}"></i> ${sec.title}</h2>`;
-    
-    // Special layout for Assessment
-    if (sec.id === 5) {
-        html += generateAssessmentHTML();
-        return html;
-    }
-    // Special layout for Consolidation
-    if (sec.id === 6) {
-        html += `<div class="card"><h2>Congratulations! / Selamat!</h2>${sec.materials[0].en}<br><div class="bilingual">${sec.materials[0].id}</div><br><a href="https://learn.algonova.id/login" target="_blank" class="consolidation-link">Go to Algonova Portal <i class="fas fa-external-link-alt"></i></a></div>`;
-        return html;
-    }
-
-    // Regular Sections
-    let totalQ = sec.quests.length;
+    html += `<h2 style="color:var(--duo-green); margin-bottom:20px; text-align:center;"><i class="fas ${sec.icon}"></i> ${sec.title}</h2>`;
     html += `<div class="progress-section"><div class="progress-section-fill" id="prog-sec-${idx}"></div></div>`;
     
-    // Materials
-    sec.materials.forEach(mat => {
-        html += `<div class="card"><h2>${mat.title}</h2><p>${mat.en}</p><p class="bilingual" style="color:#666; margin-top:5px;">${mat.id}</p></div>`;
-    });
-
-    // Quests
-    sec.quests.forEach((q, qIdx) => {
-        html += `<div class="card quest-card" id="q-${idx}-${qIdx}">`;
-        html += `<p><strong>Q${qIdx+1}:</strong> ${q.q}</p><p class="bilingual">${q.id}</p>`;
-        html += generateInputHTML(q, idx, qIdx);
-        html += `<div class="feedback" id="fb-${idx}-${qIdx}"></div>`;
-        html += `</div>`;
-    });
-
-    html += `<button class="btn-duo" onclick="checkSection(${idx})"><i class="fas fa-check"></i> Check Answers / Periksa Jawaban</button>`;
+    // Area Dinamis untuk Soal
+    html += `<div id="content-area-${idx}"></div>`;
+    
+    // Tombol Dinamis
+    html += `<button class="btn-duo" id="main-btn-${idx}" onclick="handleStep(${idx})"><i class="fas fa-check"></i> Check / Periksa</button>`;
     return html;
+}
+
+function openSection(idx) {
+    currentSection = idx;
+    // Inisialisasi state untuk section ini
+    stepState[idx] = { currentQ: 0, isChecked: false, totalQ: sections[idx].quests.length };
+    
+    document.getElementById('pathMap').style.display = 'none';
+    document.querySelectorAll('.section-content').forEach(el => el.classList.remove('visible'));
+    document.getElementById(`section-${idx}`).classList.add('visible');
+    window.scrollTo(0,0);
+    
+    // Render langkah pertama
+    renderStep(idx);
+}
+
+function renderStep(secIdx) {
+    let sec = sections[secIdx];
+    let state = stepState[secIdx];
+    let area = document.getElementById(`content-area-${secIdx}`);
+    let btn = document.getElementById(`main-btn-${secIdx}`);
+    
+    // Tampilkan Materi Pengantar di atas (hanya saat soal pertama atau selalu tampil)
+    let matHTML = '';
+    sec.materials.forEach(mat => {
+        matHTML += `<div class="card"><h2>${mat.title}</h2><p>${mat.en}</p><p class="bilingual" style="color:#666; margin-top:5px;">${mat.id}</p></div>`;
+    });
+
+    if (state.currentQ < state.totalQ) {
+        // Masih ada soal
+        let q = sec.quests[state.currentQ];
+        let qHTML = `<div class="card quest-card" id="q-${secIdx}-${state.currentQ}" style="animation: slideIn 0.4s ease-out;">`;
+        qHTML += `<p style="font-size:0.9rem; color:var(--duo-blue); margin-bottom:5px;">Question ${state.currentQ + 1} of ${state.totalQ}</p>`;
+        qHTML += `<p><strong>${q.q}</strong></p><p class="bilingual">${q.id}</p>`;
+        qHTML += generateInputHTML(q, secIdx, state.currentQ);
+        qHTML += `<div class="feedback" id="fb-${secIdx}-${state.currentQ}"></div>`;
+        qHTML += `</div>`;
+        
+        area.innerHTML = matHTML + qHTML;
+        
+        // Update progress bar
+        let progressPct = (state.currentQ / state.totalQ) * 100;
+        document.getElementById(`prog-sec-${secIdx}`).style.width = progressPct + '%';
+        
+        // Set tombol sesuai state
+        if(state.isChecked) {
+            btn.innerHTML = '<i class="fas fa-arrow-right"></i> Continue / Lanjut';
+        } else {
+            btn.innerHTML = '<i class="fas fa-check"></i> Check / Periksa';
+        }
+    } else {
+        // Soal sudah habis (Selesai)
+        area.innerHTML = matHTML + `<div class="card" style="text-align:center; border-left: 5px solid var(--duo-green);"><h2 style="color:var(--duo-green);">Section Complete! / Bagian Selesai!</h2><p>Great job! Kamu sudah menyelesaikan level ini.</p></div>`;
+        document.getElementById(`prog-sec-${secIdx}`).style.width = '100%';
+        btn.innerHTML = '<i class="fas fa-home"></i> Back to Map / Peta';
+        
+        completedSections.add(secIdx);
+        updateGlobalProgress();
+    }
+    
+    renderMathInElement(area, { delimiters: [{left: "\\(", right: "\\)", display: false}] });
+}
+
+function handleStep(secIdx) {
+    let state = stepState[secIdx];
+    
+    // Jika soal sudah habis, tombol berfungsi kembali ke peta
+    if (state.currentQ >= state.totalQ) {
+        backToMap();
+        return;
+    }
+
+    if (!state.isChecked) {
+        // TAHAP 1: Cek Jawaban
+        checkCurrentQuestion(secIdx, state.currentQ);
+        state.isChecked = true;
+        document.getElementById(`main-btn-${secIdx}`).innerHTML = '<i class="fas fa-arrow-right"></i> Continue / Lanjut';
+    } else {
+        // TAHAP 2: Lanjut ke soal berikutnya
+        state.currentQ++;
+        state.isChecked = false;
+        renderStep(secIdx);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function checkCurrentQuestion(secIdx, qIdx) {
+    let q = sections[secIdx].quests[qIdx];
+    let fb = document.getElementById(`fb-${secIdx}-${qIdx}`);
+    let isCorrect = false;
+    let userAns = '';
+
+    if (q.type === 'radio') {
+        let sel = document.querySelector(`input[name="input-${secIdx}-${qIdx}"]:checked`);
+        userAns = sel ? sel.value : '';
+        isCorrect = userAns === q.answer;
+    } else if (q.type === 'text') {
+        userAns = document.querySelector(`input[name="input-${secIdx}-${qIdx}"]`).value.replace(/\s/g, '').replace(/,/g, ''); 
+        isCorrect = userAns === q.answer.replace(/\s/g, '');
+    } else if (q.type === 'dropdown') {
+        userAns = document.querySelector(`select[name="input-${secIdx}-${qIdx}"]`).value;
+        isCorrect = userAns === q.answer;
+    } else if (q.type === 'checkbox') {
+        let labels = document.querySelectorAll(`#q-${secIdx}-${qIdx} .checkbox-label.selected`);
+        userAns = Array.from(labels).map(l => l.textContent.trim()).sort().join(',');
+        let correctAns = q.answer.sort().join(',');
+        isCorrect = userAns === correctAns;
+    } else if (q.type === 'drag') {
+        let target = document.getElementById(`drag-target-${secIdx}-${qIdx}`);
+        let items = target.querySelectorAll('.drag-item');
+        userAns = Array.from(items).map(i => i.textContent.trim()).join(',');
+        isCorrect = userAns === q.answer;
+    }
+
+    if(isCorrect) {
+        fb.className = 'feedback correct'; fb.innerHTML = '<i class="fas fa-check-circle"></i> Correct! / Benar!';
+    } else {
+        fb.className = 'feedback wrong'; 
+        fb.innerHTML = `<i class="fas fa-times-circle"></i> Incorrect / Salah.<br><b>Correct Answer / Jawaban Benar:</b> ${q.answer}<br><i>Review the material above! / Ulangi materi di atas!</i>`;
+    }
 }
 
 function generateInputHTML(q, secIdx, qIdx) {
@@ -430,56 +529,6 @@ function dragDrop(e, idPair) {
     let data = e.dataTransfer.getData("text/plain");
     let el = document.getElementById(data);
     e.target.appendChild(el);
-}
-
-// --- VALIDATION LOGIC ---
-function checkSection(secIdx) {
-    let sec = sections[secIdx];
-    let correct = 0;
-    sec.quests.forEach((q, qIdx) => {
-        let fb = document.getElementById(`fb-${secIdx}-${qIdx}`);
-        let isCorrect = false;
-        let userAns = '';
-
-        if (q.type === 'radio') {
-            let sel = document.querySelector(`input[name="input-${secIdx}-${qIdx}"]:checked`);
-            userAns = sel ? sel.value : '';
-            isCorrect = userAns === q.answer;
-        } else if (q.type === 'text') {
-            userAns = document.querySelector(`input[name="input-${secIdx}-${qIdx}"]`).value.replace(/\s/g, '').replace(/,/g, ''); // clean
-            isCorrect = userAns === q.answer.replace(/\s/g, '');
-        } else if (q.type === 'dropdown') {
-            userAns = document.querySelector(`select[name="input-${secIdx}-${qIdx}"]`).value;
-            isCorrect = userAns === q.answer;
-        } else if (q.type === 'checkbox') {
-            let labels = document.querySelectorAll(`#q-${secIdx}-${qIdx} .checkbox-label.selected`);
-            userAns = Array.from(labels).map(l => l.textContent.trim()).sort().join(',');
-            let correctAns = q.answer.sort().join(',');
-            isCorrect = userAns === correctAns;
-        } else if (q.type === 'drag') {
-            let target = document.getElementById(`drag-target-${secIdx}-${qIdx}`);
-            let items = target.querySelectorAll('.drag-item');
-            userAns = Array.from(items).map(i => i.textContent.trim()).join(',');
-            isCorrect = userAns === q.answer;
-        }
-
-        if(isCorrect) {
-            fb.className = 'feedback correct'; fb.innerHTML = '<i class="fas fa-check-circle"></i> Correct! / Benar!';
-            correct++;
-        } else {
-            fb.className = 'feedback wrong'; 
-            fb.innerHTML = `<i class="fas fa-times-circle"></i> Incorrect / Salah.<br><b>Correct Answer / Jawaban Benar:</b> ${q.answer}<br><i>Review the material above! / Ulangi materi di atas!</i>`;
-        }
-    });
-
-    // Update progress
-    let pct = (correct / sec.quests.length) * 100;
-    document.getElementById(`prog-sec-${secIdx}`).style.width = pct + '%';
-    
-    if(pct >= 70) { // Duolingo passing rate
-        completedSections.add(secIdx);
-        updateGlobalProgress();
-    }
 }
 
 function updateGlobalProgress() {
