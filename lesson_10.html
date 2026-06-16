@@ -420,8 +420,10 @@ function generateInputHTML(q, prefix) {
     if (q.type === 'radio') {
         let h = '<div class="radio-group">';
         q.options.forEach((opt, i) => {
-            h += `<label class="radio-label" onclick="selectRadio(this, 'step-radio')">${opt}</label>`;
-            h += `<input type="radio" name="step-radio" value="${opt}">`;
+            let radioId = `${prefix}-radio-${i}`;
+            let radioName = `${prefix}-radio`;
+            h += `<input type="radio" name="${radioName}" value="${opt}" id="${radioId}" style="display:none;">`;
+            h += `<label class="radio-label" for="${radioId}" onclick="selectRadio(this)">${opt}</label>`;
         });
         return h + '</div>';
     }
@@ -451,11 +453,11 @@ function generateInputHTML(q, prefix) {
 }
 
 // UI Helpers
-function selectRadio(el, name) {
+function selectRadio(el) {
     let parent = el.parentElement;
     parent.querySelectorAll('.radio-label').forEach(l => l.classList.remove('selected'));
     el.classList.add('selected');
-    el.previousElementSibling.checked = true; // check the hidden input
+    // Tidak perlu kode tambahan, karena atribut 'for' di label otomatis mencentang radio-nya!
 }
 function toggleCheckbox(el) { el.classList.toggle('selected'); }
 function dragDrop(e, srcId, targetId) {
@@ -537,8 +539,10 @@ function generateAssessInputHTML(q, idx) {
     if (q.type === 'radio') {
         let h = '<div class="radio-group">';
         q.options.forEach((opt, i) => {
-            h += `<label class="radio-label" onclick="selectRadio(this, 'assess-radio-${idx}')">${opt}</label>`;
-            h += `<input type="radio" name="assess-radio-${idx}" value="${opt}">`;
+            let radioId = `assess-radio-${idx}-${i}`;
+            let radioName = `assess-radio-${idx}`;
+            h += `<input type="radio" name="${radioName}" value="${opt}" id="${radioId}" style="display:none;">`;
+            h += `<label class="radio-label" for="${radioId}" onclick="selectRadio(this)">${opt}</label>`;
         });
         return h + '</div>';
     }
