@@ -130,68 +130,68 @@ const sections = [
     {
         id: 1, title: "Spiral Review", icon: "fa-brain", timer: "00:00 - 00:10",
         steps: [
-            { type: 'mat', en: "Let's remember our numbers! The value of a digit depends on its place. For example, in 7,205, the digit 7 is in the thousands place.", id: "Mari kita ingat angka kita! Nilai digit tergantung pada tempatnya. Misalnya, di 7.205, digit 7 ada di tempat ribuan." },
-            { type: 'q', q: "What is the value of the digit 7 in 7,205?", id: "Berapa nilai digit 7 pada 7.205?", type: "radio", options: ["7", "70", "700", "7,000"], answer: "7,000" },
-            { type: 'q', q: "3 thousands blocks + 4 tens blocks = ?", id: "3 blok ribuan + 4 blok puluhan = ?", type: "text", answer: "3040" },
-            { type: 'mat', en: "Quick addition and subtraction helps our fraction skills later! If I add 150 to 850, what is the total?", id: "Penjumlahan dan pengurangan cepat membantu keterampilan pecahan kita nanti! Jika saya menambahkan 150 ke 850, berapa totalnya?" },
-            { type: 'q', q: "850 + 150 = ?", id: "850 + 150 = ?", type: "radio", options: ["900", "1,000", "1,050"], answer: "1,000" },
-            { type: 'q', q: "1,200 - 300 = ?", id: "1.200 - 300 = ?", type: "text", answer: "900" },
-            { type: 'q', q: "Which is greater: 1,020 or 1,200?", id: "Mana yang lebih besar: 1.020 atau 1.200?", type: "radio", options: ["1,020", "1,200"], answer: "1,200" },
-            { type: 'q', q: "Write the number for: 5 thousands + 2 hundreds + 0 tens + 8 ones", id: "Tulis angkanya: 5 ribuan + 2 ratusan + 0 puluhan + 8 satuan", type: "text", answer: "5208" },
-            { type: 'q', q: "How many hundreds are in 8,000?", id: "Berapa banyak ratusan dalam 8.000?", type: "radio", options: ["8", "80", "800"], answer: "80" },
-            { type: 'q', q: "2,500 - ? = 1,750", id: "2.500 - ? = 1.750", type: "text", answer: "750" },
-            { type: 'q', q: "If you double 1,250 and subtract 500, what is the result?", id: "Jika 1.250 digandakan dan dikurangi 500, berapa hasilnya?", type: "text", answer: "2000" },
-            { type: 'q', q: "If you have 3,456 and swap the thousands and tens digits, what is the new number?", id: "Jika Anda memiliki 3.456 dan menukar digit ribuan dan puluhan, berapa angka baru tersebut?", type: "text", answer: "5436" }
+            { stepType: 'material', en: "Let's remember our numbers! The value of a digit depends on its place. For example, in 7,205, the digit 7 is in the thousands place.", id: "Mari kita ingat angka kita! Nilai digit tergantung pada tempatnya. Misalnya, di 7.205, digit 7 ada di tempat ribuan." },
+            { stepType: 'question', q: "What is the value of the digit 7 in 7,205?", id: "Berapa nilai digit 7 pada 7.205?", type: "radio", options: ["7", "70", "700", "7,000"], answer: "7,000" },
+            { stepType: 'question', q: "3 thousands blocks + 4 tens blocks = ?", id: "3 blok ribuan + 4 blok puluhan = ?", type: "text", answer: "3040" },
+            { stepType: 'material', en: "Quick addition and subtraction helps our fraction skills later! If I add 150 to 850, what is the total?", id: "Penjumlahan dan pengurangan cepat membantu keterampilan pecahan kita nanti! Jika saya menambahkan 150 ke 850, berapa totalnya?" },
+            { stepType: 'question', q: "850 + 150 = ?", id: "850 + 150 = ?", type: "radio", options: ["900", "1,000", "1,050"], answer: "1,000" },
+            { stepType: 'question', q: "1,200 - 300 = ?", id: "1.200 - 300 = ?", type: "text", answer: "900" },
+            { stepType: 'question', q: "Which is greater: 1,020 or 1,200?", id: "Mana yang lebih besar: 1.020 atau 1.200?", type: "radio", options: ["1,020", "1,200"], answer: "1,200" },
+            { stepType: 'question', q: "Write the number for: 5 thousands + 2 hundreds + 0 tens + 8 ones", id: "Tulis angkanya: 5 ribuan + 2 ratusan + 0 puluhan + 8 satuan", type: "text", answer: "5208" },
+            { stepType: 'question', q: "How many hundreds are in 8,000?", id: "Berapa banyak ratusan dalam 8.000?", type: "radio", options: ["8", "80", "800"], answer: "80" },
+            { stepType: 'question', q: "2,500 - ? = 1,750", id: "2.500 - ? = 1.750", type: "text", answer: "750" },
+            { stepType: 'question', q: "If you double 1,250 and subtract 500, what is the result?", id: "Jika 1.250 digandakan dan dikurangi 500, berapa hasilnya?", type: "text", answer: "2000" },
+            { stepType: 'question', q: "If you have 3,456 and swap the thousands and tens digits, what is the new number?", id: "Jika Anda memiliki 3.456 dan menukar digit ribuan dan puluhan, berapa angka baru tersebut?", type: "text", answer: "5436" }
         ]
     },
     {
         id: 2, title: "Intro Fractions", icon: "fa-pizza-slice", timer: "00:10 - 00:20",
         steps: [
-            { type: 'mat', en: "Imagine you eat \\(\\frac{1}{2}\\) of a pizza, and a friend eats \\(\\frac{2}{4}\\). Who ate more? They are the same! These are Equivalent Fractions.", id: "Bayangkan Anda memakan \\(\\frac{1}{2}\\) pizza, dan teman memakan \\(\\frac{2}{4}\\). Siapa yang lebih banyak? Mereka sama! Ini disebut Pecahan Setara." },
-            { type: 'q', q: "Is \\(\\frac{1}{2}\\) equal to \\(\\frac{2}{4}\\)?", id: "Apakah \\(\\frac{1}{2}\\) sama dengan \\(\\frac{2}{4}\\)?", type: "radio", options: ["Yes / Ya", "No / Tidak"], answer: "Yes / Ya" },
-            { type: 'mat', en: "Multiplying by 1 doesn't change a number's value. In fractions, \\(\\frac{2}{2}\\) or \\(\\frac{3}{3}\\) equals 1. We use this to make equivalent fractions!", id: "Mengalikan dengan 1 tidak mengubah nilai angka. Dalam pecahan, \\(\\frac{2}{2}\\) atau \\(\\frac{3}{3}\\) sama dengan 1. Kami menggunakan ini untuk membuat pecahan setara!" },
-            { type: 'q', q: "What is \\(\\frac{3}{3}\\) equal to?", id: "Berapa nilai \\(\\frac{3}{3}\\)?", type: "radio", options: ["0", "1", "3"], answer: "1" },
-            { type: 'q', q: "To make an equivalent fraction, you must multiply the top and bottom by the ____ number.", id: "Untuk membuat pecahan setara, Anda harus mengalikan atas dan bawah dengan angka ____.", type: "text", answer: "same" },
-            { type: 'q', q: "Multiply \\(\\frac{1}{3}\\) by \\(\\frac{2}{2}\\). What is the result?", id: "Kalikan \\(\\frac{1}{3}\\) dengan \\(\\frac{2}{2}\\). Hasilnya apa?", type: "radio", options: ["\\(\\frac{2}{6}\\)", "\\(\\frac{1}{6}\\)", "\\(\\frac{2}{3}\\)"], answer: "\\(\\frac{2}{6}\\)" },
-            { type: 'q', q: "Are \\(\\frac{4}{10}\\) and \\(\\frac{2}{5}\\) equivalent?", id: "Apakah \\(\\frac{4}{10}\\) dan \\(\\frac{2}{5}\\) setara?", type: "radio", options: ["Yes / Ya", "No / Tidak"], answer: "Yes / Ya" },
-            { type: 'q', q: "Find the missing number: \\(\\frac{2}{3} = \\frac{?}{15}\\)", id: "Temukan angka yang hilang: \\(\\frac{2}{3} = \\frac{?}{15}\\)", type: "text", answer: "10" },
-            { type: 'q', q: "\\(\\frac{5}{5}\\) is a fancy way of writing which number?", id: "\\(\\frac{5}{5}\\) adalah cara lain menulis angka berapa?", type: "radio", options: ["5", "0", "1"], answer: "1" },
-            { type: 'q', q: "If you multiply the numerator by 4, you must multiply the denominator by ____.", id: "Jika Anda mengalikan pembilang dengan 4, Anda harus mengalikan penyebut dengan ____.", type: "text", answer: "4" },
-            { type: 'q', q: "Which fraction is equivalent to \\(\\frac{1}{2}\\)?", id: "Pecahan mana yang setara dengan \\(\\frac{1}{2}\\)?", type: "radio", options: ["\\(\\frac{3}{4}\\)", "\\(\\frac{5}{10}\\)", "\\(\\frac{2}{3}\\)"], answer: "\\(\\frac{5}{10}\\)" },
-            { type: 'q', q: "What is 3 times 4?", id: "Berapa 3 kali 4?", type: "text", answer: "12" }
+            { stepType: 'material', en: "Imagine you eat \\(\\frac{1}{2}\\) of a pizza, and a friend eats \\(\\frac{2}{4}\\). Who ate more? They are the same! These are Equivalent Fractions.", id: "Bayangkan Anda memakan \\(\\frac{1}{2}\\) pizza, dan teman memakan \\(\\frac{2}{4}\\). Siapa yang lebih banyak? Mereka sama! Ini disebut Pecahan Setara." },
+            { stepType: 'question', q: "Is \\(\\frac{1}{2}\\) equal to \\(\\frac{2}{4}\\)?", id: "Apakah \\(\\frac{1}{2}\\) sama dengan \\(\\frac{2}{4}\\)?", type: "radio", options: ["Yes / Ya", "No / Tidak"], answer: "Yes / Ya" },
+            { stepType: 'material', en: "Multiplying by 1 doesn't change a number's value. In fractions, \\(\\frac{2}{2}\\) or \\(\\frac{3}{3}\\) equals 1. We use this to make equivalent fractions!", id: "Mengalikan dengan 1 tidak mengubah nilai angka. Dalam pecahan, \\(\\frac{2}{2}\\) atau \\(\\frac{3}{3}\\) sama dengan 1. Kami menggunakan ini untuk membuat pecahan setara!" },
+            { stepType: 'question', q: "What is \\(\\frac{3}{3}\\) equal to?", id: "Berapa nilai \\(\\frac{3}{3}\\)?", type: "radio", options: ["0", "1", "3"], answer: "1" },
+            { stepType: 'question', q: "To make an equivalent fraction, you must multiply the top and bottom by the ____ number.", id: "Untuk membuat pecahan setara, Anda harus mengalikan atas dan bawah dengan angka ____.", type: "text", answer: "same" },
+            { stepType: 'question', q: "Multiply \\(\\frac{1}{3}\\) by \\(\\frac{2}{2}\\). What is the result?", id: "Kalikan \\(\\frac{1}{3}\\) dengan \\(\\frac{2}{2}\\). Hasilnya apa?", type: "radio", options: ["\\(\\frac{2}{6}\\)", "\\(\\frac{1}{6}\\)", "\\(\\frac{2}{3}\\)"], answer: "\\(\\frac{2}{6}\\)" },
+            { stepType: 'question', q: "Are \\(\\frac{4}{10}\\) and \\(\\frac{2}{5}\\) equivalent?", id: "Apakah \\(\\frac{4}{10}\\) dan \\(\\frac{2}{5}\\) setara?", type: "radio", options: ["Yes / Ya", "No / Tidak"], answer: "Yes / Ya" },
+            { stepType: 'question', q: "Find the missing number: \\(\\frac{2}{3} = \\frac{?}{15}\\)", id: "Temukan angka yang hilang: \\(\\frac{2}{3} = \\frac{?}{15}\\)", type: "text", answer: "10" },
+            { stepType: 'question', q: "\\(\\frac{5}{5}\\) is a fancy way of writing which number?", id: "\\(\\frac{5}{5}\\) adalah cara lain menulis angka berapa?", type: "radio", options: ["5", "0", "1"], answer: "1" },
+            { stepType: 'question', q: "If you multiply the numerator by 4, you must multiply the denominator by ____.", id: "Jika Anda mengalikan pembilang dengan 4, Anda harus mengalikan penyebut dengan ____.", type: "text", answer: "4" },
+            { stepType: 'question', q: "Which fraction is equivalent to \\(\\frac{1}{2}\\)?", id: "Pecahan mana yang setara dengan \\(\\frac{1}{2}\\)?", type: "radio", options: ["\\(\\frac{3}{4}\\)", "\\(\\frac{5}{10}\\)", "\\(\\frac{2}{3}\\)"], answer: "\\(\\frac{5}{10}\\)" },
+            { stepType: 'question', q: "What is 3 times 4?", id: "Berapa 3 kali 4?", type: "text", answer: "12" }
         ]
     },
     {
         id: 3, title: "Comparing Fractions", icon: "fa-scale-balanced", timer: "00:20 - 00:30",
         steps: [
-            { type: 'mat', en: "Comparing \\(\\frac{2}{3}\\) and \\(\\frac{3}{4}\\) is hard because they have different denominators. We need a Common Denominator!", id: "Membandingkan \\(\\frac{2}{3}\\) dan \\(\\frac{3}{4}\\) sulit karena penyebutnya berbeda. Kita butuh Penyebut Bersama!" },
-            { type: 'q', q: "True or False: You can easily compare fractions with unlike denominators without changing them.", id: "Benar atau Salah: Anda bisa membandingkan pecahan dengan penyebut berbeda tanpa mengubahnya.", type: "radio", options: ["True / Benar", "False / Salah"], answer: "False / Salah" },
-            { type: 'mat', en: "Find the Least Common Multiple (LCM). For 3 and 4, skip count: 3, 6, 9, 12 and 4, 8, 12. 12 is our magic number!", id: "Temukan Kelipatan Persekutuan Terkecil (KPK). Untuk 3 dan 4, hitung: 3, 6, 9, 12 dan 4, 8, 12. 12 adalah angka ajaib kita!" },
-            { type: 'q', q: "What is the Least Common Multiple (LCM) for 2 and 5?", id: "Berapa KPK untuk 2 dan 5?", type: "radio", options: ["5", "10", "15"], answer: "10" },
-            { type: 'q', q: "Convert \\(\\frac{1}{2}\\) and \\(\\frac{1}{3}\\) to have a denominator of 6. Which is larger?", id: "Ubah \\(\\frac{1}{2}\\) dan \\(\\frac{1}{3}\\) agar memiliki penyebut 6. Mana yang lebih besar?", type: "radio", options: ["\\(\\frac{1}{2}\\)", "\\(\\frac{1}{3}\\)"], answer: "\\(\\frac{1}{2}\\)" },
-            { type: 'q', q: "Compare \\(\\frac{5}{8}\\) and \\(\\frac{3}{4}\\). Which is larger?", id: "Bandingkan \\(\\frac{5}{8}\\) dan \\(\\frac{3}{4}\\). Mana yang lebih besar?", type: "radio", options: ["\\(\\frac{5}{8}\\)", "\\(\\frac{3}{4}\\)"], answer: "\\(\\frac{3}{4}\\)" },
-            { type: 'q', q: "What symbol makes this true? \\(\\frac{2}{3}\\) ___ \\(\\frac{3}{4}\\)", id: "Simbol apa yang membuat ini benar? \\(\\frac{2}{3}\\) ___ \\(\\frac{3}{4}\\)", type: "dropdown", options: ["<", ">", "="], answer: "<" },
-            { type: 'q', q: "Find the LCM for 3 and 6.", id: "Temukan KPK untuk 3 dan 6.", type: "text", answer: "6" },
-            { type: 'q', q: "Compare \\(\\frac{7}{9}\\) and \\(\\frac{5}{6}\\). Which is larger?", id: "Bandingkan \\(\\frac{7}{9}\\) dan \\(\\frac{5}{6}\\). Mana yang lebih besar?", type: "radio", options: ["\\(\\frac{7}{9}\\)", "\\(\\frac{5}{6}\\)"], answer: "\\(\\frac{5}{6}\\)" },
-            { type: 'q', q: "\\(\\frac{3}{4}\\) is equal to how many twelfths? \\(\\frac{?}{12}\\)", id: "\\(\\frac{3}{4}\\) sama dengan berapa per dua belas? \\(\\frac{?}{12}\\)", type: "text", answer: "9" },
-            { type: 'q', q: "Which is smaller: \\(\\frac{1}{4}\\) or \\(\\frac{2}{6}\\)?", id: "Mana yang lebih kecil: \\(\\frac{1}{4}\\) atau \\(\\frac{2}{6}\\)?", type: "radio", options: ["\\(\\frac{1}{4}\\)", "\\(\\frac{2}{6}\\)"], answer: "\\(\\frac{1}{4}\\)" },
-            { type: 'q', q: "What is the LCM for 4, 5, and 10?", id: "Berapa KPK untuk 4, 5, dan 10?", type: "text", answer: "20" }
+            { stepType: 'material', en: "Comparing \\(\\frac{2}{3}\\) and \\(\\frac{3}{4}\\) is hard because they have different denominators. We need a Common Denominator!", id: "Membandingkan \\(\\frac{2}{3}\\) dan \\(\\frac{3}{4}\\) sulit karena penyebutnya berbeda. Kita butuh Penyebut Bersama!" },
+            { stepType: 'question', q: "True or False: You can easily compare fractions with unlike denominators without changing them.", id: "Benar atau Salah: Anda bisa membandingkan pecahan dengan penyebut berbeda tanpa mengubahnya.", type: "radio", options: ["True / Benar", "False / Salah"], answer: "False / Salah" },
+            { stepType: 'material', en: "Find the Least Common Multiple (LCM). For 3 and 4, skip count: 3, 6, 9, 12 and 4, 8, 12. 12 is our magic number!", id: "Temukan Kelipatan Persekutuan Terkecil (KPK). Untuk 3 dan 4, hitung: 3, 6, 9, 12 dan 4, 8, 12. 12 adalah angka ajaib kita!" },
+            { stepType: 'question', q: "What is the Least Common Multiple (LCM) for 2 and 5?", id: "Berapa KPK untuk 2 dan 5?", type: "radio", options: ["5", "10", "15"], answer: "10" },
+            { stepType: 'question', q: "Convert \\(\\frac{1}{2}\\) and \\(\\frac{1}{3}\\) to have a denominator of 6. Which is larger?", id: "Ubah \\(\\frac{1}{2}\\) dan \\(\\frac{1}{3}\\) agar memiliki penyebut 6. Mana yang lebih besar?", type: "radio", options: ["\\(\\frac{1}{2}\\)", "\\(\\frac{1}{3}\\)"], answer: "\\(\\frac{1}{2}\\)" },
+            { stepType: 'question', q: "Compare \\(\\frac{5}{8}\\) and \\(\\frac{3}{4}\\). Which is larger?", id: "Bandingkan \\(\\frac{5}{8}\\) dan \\(\\frac{3}{4}\\). Mana yang lebih besar?", type: "radio", options: ["\\(\\frac{5}{8}\\)", "\\(\\frac{3}{4}\\)"], answer: "\\(\\frac{3}{4}\\)" },
+            { stepType: 'question', q: "What symbol makes this true? \\(\\frac{2}{3}\\) ___ \\(\\frac{3}{4}\\)", id: "Simbol apa yang membuat ini benar? \\(\\frac{2}{3}\\) ___ \\(\\frac{3}{4}\\)", type: "dropdown", options: ["<", ">", "="], answer: "<" },
+            { stepType: 'question', q: "Find the LCM for 3 and 6.", id: "Temukan KPK untuk 3 dan 6.", type: "text", answer: "6" },
+            { stepType: 'question', q: "Compare \\(\\frac{7}{9}\\) and \\(\\frac{5}{6}\\). Which is larger?", id: "Bandingkan \\(\\frac{7}{9}\\) dan \\(\\frac{5}{6}\\). Mana yang lebih besar?", type: "radio", options: ["\\(\\frac{7}{9}\\)", "\\(\\frac{5}{6}\\)"], answer: "\\(\\frac{5}{6}\\)" },
+            { stepType: 'question', q: "\\(\\frac{3}{4}\\) is equal to how many twelfths? \\(\\frac{?}{12}\\)", id: "\\(\\frac{3}{4}\\) sama dengan berapa per dua belas? \\(\\frac{?}{12}\\)", type: "text", answer: "9" },
+            { stepType: 'question', q: "Which is smaller: \\(\\frac{1}{4}\\) or \\(\\frac{2}{6}\\)?", id: "Mana yang lebih kecil: \\(\\frac{1}{4}\\) atau \\(\\frac{2}{6}\\)?", type: "radio", options: ["\\(\\frac{1}{4}\\)", "\\(\\frac{2}{6}\\)"], answer: "\\(\\frac{1}{4}\\)" },
+            { stepType: 'question', q: "What is the LCM for 4, 5, and 10?", id: "Berapa KPK untuk 4, 5, dan 10?", type: "text", answer: "20" }
         ]
     },
     {
         id: 4, title: "Ordering Fractions", icon: "fa-sort-amount-down", timer: "00:30 - 00:45",
         steps: [
-            { type: 'mat', en: "To order \\(\\frac{1}{2}\\), \\(\\frac{3}{10}\\), and \\(\\frac{2}{5}\\), find a common denominator first (10). Then convert: \\(\\frac{5}{10}\\), \\(\\frac{3}{10}\\), \\(\\frac{4}{10}\\). Now it's easy to sort!", id: "Untuk mengurutkan \\(\\frac{1}{2}\\), \\(\\frac{3}{10}\\), dan \\(\\frac{2}{5}\\), temukan penyebut bersama (10). Lalu ubah: \\(\\frac{5}{10}\\), \\(\\frac{3}{10}\\), \\(\\frac{4}{10}\\). Sekarang mudah diurutkan!" },
-            { type: 'q', q: "Order from least to greatest: \\(\\frac{3}{10}\\), \\(\\frac{2}{5}\\), \\(\\frac{1}{2}\\)", id: "Urutkan dari terkecil ke terbesar: \\(\\frac{3}{10}\\), \\(\\frac{2}{5}\\), \\(\\frac{1}{2}\\)", type: "drag", options: ["\\(\\frac{1}{2}\\)", "\\(\\frac{3}{10}\\)", "\\(\\frac{2}{5}\\)"], answer: "\\(\\frac{3}{10}\\),\\(\\frac{2}{5}\\),\\(\\frac{1}{2}\\)" },
-            { type: 'q', q: "Order from least to greatest: \\(\\frac{1}{3}\\), \\(\\frac{1}{4}\\), \\(\\frac{1}{6}\\)", id: "Urutkan dari terkecil ke terbesar: \\(\\frac{1}{3}\\), \\(\\frac{1}{4}\\), \\(\\frac{1}{6}\\)", type: "drag", options: ["\\(\\frac{1}{6}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{1}{4}\\)"], answer: "\\(\\frac{1}{6}\\),\\(\\frac{1}{4}\\),\\(\\frac{1}{3}\\)" },
-            { type: 'q', q: "Simplify \\(\\frac{18}{24}\\) to its simplest form.", id: "Sederhanakan \\(\\frac{18}{24}\\) ke bentuk paling sederhana.", type: "radio", options: ["\\(\\frac{9}{12}\\)", "\\(\\frac{3}{4}\\)", "\\(\\frac{6}{8}\\)"], answer: "\\(\\frac{3}{4}\\)" },
-            { type: 'q', q: "Which fraction is between \\(\\frac{1}{4}\\) and \\(\\frac{1}{2}\\)?", id: "Pecahan mana yang ada di antara \\(\\frac{1}{4}\\) dan \\(\\frac{1}{2}\\)?", type: "radio", options: ["\\(\\frac{1}{3}\\)", "\\(\\frac{3}{4}\\)", "\\(\\frac{1}{5}\\)"], answer: "\\(\\frac{1}{3}\\)" },
-            { type: 'q', q: "You ate \\(\\frac{5}{6}\\) of a cake, friend ate \\(\\frac{7}{12}\\). Who ate more?", id: "Anda memakan \\(\\frac{5}{6}\\) kue, teman memakan \\(\\frac{7}{12}\\). Siapa yang lebih banyak?", type: "radio", options: ["Me / Saya", "Friend / Teman"], answer: "Me / Saya" },
-            { type: 'q', q: "How much more did you eat in 12ths? (Previous question)", id: "Berapa banyak lagi yang Anda makan dalam per-12? (Pertanyaan sebelumnya)", type: "text", answer: "3/12" },
-            { type: 'q', q: "Create an equivalent fraction for \\(\\frac{12}{20}\\) by dividing by 2.", id: "Buat pecahan setara untuk \\(\\frac{12}{20}\\) dengan membagi 2.", type: "text", answer: "6/10" },
-            { type: 'q', q: "Create another equivalent fraction for \\(\\frac{12}{20}\\) by dividing by 4.", id: "Buat pecahan setara lain untuk \\(\\frac{12}{20}\\) dengan membagi 4.", type: "text", answer: "3/5" },
-            { type: 'q', q: "Order: \\(\\frac{2}{3}\\), \\(\\frac{5}{6}\\), \\(\\frac{1}{2}\\) from greatest to least.", id: "Urutkan: \\(\\frac{2}{3}\\), \\(\\frac{5}{6}\\), \\(\\frac{1}{2}\\) dari terbesar ke terkecil.", type: "drag", options: ["\\(\\frac{5}{6}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{2}{3}\\)"], answer: "\\(\\frac{5}{6}\\),\\(\\frac{2}{3}\\),\\(\\frac{1}{2}\\)" },
-            { type: 'q', q: "Which is the smallest? \\(\\frac{3}{8}\\), \\(\\frac{1}{3}\\), \\(\\frac{2}{5}\\)", id: "Mana yang paling kecil? \\(\\frac{3}{8}\\), \\(\\frac{1}{3}\\), \\(\\frac{2}{5}\\)", type: "radio", options: ["\\(\\frac{3}{8}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{2}{5}\\)"], answer: "\\(\\frac{1}{3}\\)" }
+            { stepType: 'material', en: "To order \\(\\frac{1}{2}\\), \\(\\frac{3}{10}\\), and \\(\\frac{2}{5}\\), find a common denominator first (10). Then convert: \\(\\frac{5}{10}\\), \\(\\frac{3}{10}\\), \\(\\frac{4}{10}\\). Now it's easy to sort!", id: "Untuk mengurutkan \\(\\frac{1}{2}\\), \\(\\frac{3}{10}\\), dan \\(\\frac{2}{5}\\), temukan penyebut bersama (10). Lalu ubah: \\(\\frac{5}{10}\\), \\(\\frac{3}{10}\\), \\(\\frac{4}{10}\\). Sekarang mudah diurutkan!" },
+            { stepType: 'question', q: "Order from least to greatest: \\(\\frac{3}{10}\\), \\(\\frac{2}{5}\\), \\(\\frac{1}{2}\\)", id: "Urutkan dari terkecil ke terbesar: \\(\\frac{3}{10}\\), \\(\\frac{2}{5}\\), \\(\\frac{1}{2}\\)", type: "drag", options: ["\\(\\frac{1}{2}\\)", "\\(\\frac{3}{10}\\)", "\\(\\frac{2}{5}\\)"], answer: "\\(\\frac{3}{10}\\),\\(\\frac{2}{5}\\),\\(\\frac{1}{2}\\)" },
+            { stepType: 'question', q: "Order from least to greatest: \\(\\frac{1}{3}\\), \\(\\frac{1}{4}\\), \\(\\frac{1}{6}\\)", id: "Urutkan dari terkecil ke terbesar: \\(\\frac{1}{3}\\), \\(\\frac{1}{4}\\), \\(\\frac{1}{6}\\)", type: "drag", options: ["\\(\\frac{1}{6}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{1}{4}\\)"], answer: "\\(\\frac{1}{6}\\),\\(\\frac{1}{4}\\),\\(\\frac{1}{3}\\)" },
+            { stepType: 'question', q: "Simplify \\(\\frac{18}{24}\\) to its simplest form.", id: "Sederhanakan \\(\\frac{18}{24}\\) ke bentuk paling sederhana.", type: "radio", options: ["\\(\\frac{9}{12}\\)", "\\(\\frac{3}{4}\\)", "\\(\\frac{6}{8}\\)"], answer: "\\(\\frac{3}{4}\\)" },
+            { stepType: 'question', q: "Which fraction is between \\(\\frac{1}{4}\\) and \\(\\frac{1}{2}\\)?", id: "Pecahan mana yang ada di antara \\(\\frac{1}{4}\\) dan \\(\\frac{1}{2}\\)?", type: "radio", options: ["\\(\\frac{1}{3}\\)", "\\(\\frac{3}{4}\\)", "\\(\\frac{1}{5}\\)"], answer: "\\(\\frac{1}{3}\\)" },
+            { stepType: 'question', q: "You ate \\(\\frac{5}{6}\\) of a cake, friend ate \\(\\frac{7}{12}\\). Who ate more?", id: "Anda memakan \\(\\frac{5}{6}\\) kue, teman memakan \\(\\frac{7}{12}\\). Siapa yang lebih banyak?", type: "radio", options: ["Me / Saya", "Friend / Teman"], answer: "Me / Saya" },
+            { stepType: 'question', q: "How much more did you eat in 12ths? (Previous question)", id: "Berapa banyak lagi yang Anda makan dalam per-12? (Pertanyaan sebelumnya)", type: "text", answer: "3/12" },
+            { stepType: 'question', q: "Create an equivalent fraction for \\(\\frac{12}{20}\\) by dividing by 2.", id: "Buat pecahan setara untuk \\(\\frac{12}{20}\\) dengan membagi 2.", type: "text", answer: "6/10" },
+            { stepType: 'question', q: "Create another equivalent fraction for \\(\\frac{12}{20}\\) by dividing by 4.", id: "Buat pecahan setara lain untuk \\(\\frac{12}{20}\\) dengan membagi 4.", type: "text", answer: "3/5" },
+            { stepType: 'question', q: "Order: \\(\\frac{2}{3}\\), \\(\\frac{5}{6}\\), \\(\\frac{1}{2}\\) from greatest to least.", id: "Urutkan: \\(\\frac{2}{3}\\), \\(\\frac{5}{6}\\), \\(\\frac{1}{2}\\) dari terbesar ke terkecil.", type: "drag", options: ["\\(\\frac{5}{6}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{2}{3}\\)"], answer: "\\(\\frac{5}{6}\\),\\(\\frac{2}{3}\\),\\(\\frac{1}{2}\\)" },
+            { stepType: 'question', q: "Which is the smallest? \\(\\frac{3}{8}\\), \\(\\frac{1}{3}\\), \\(\\frac{2}{5}\\)", id: "Mana yang paling kecil? \\(\\frac{3}{8}\\), \\(\\frac{1}{3}\\), \\(\\frac{2}{5}\\)", type: "radio", options: ["\\(\\frac{3}{8}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{2}{5}\\)"], answer: "\\(\\frac{1}{3}\\)" }
         ]
     },
     {
@@ -307,10 +307,10 @@ function backToMap() {
 // --- MESIN TAMPILAN 1 PER 1 (DUOLINGO STYLE) ---
 function renderStep() {
     const sec = sections[currentSecIdx];
-    // Hitung total soal dan soal yang sudah dilewati
-    const totalQ = sec.steps.filter(s => s.stepType === 'q').length; 
+    // Hitung total soal dan soal yang sudah dilewati berdasarkan 'stepType'
+    const totalQ = sec.steps.filter(s => s.stepType === 'question').length; 
     let passedQ = 0;
-    for(let i=0; i<currentStepIdx; i++) { if(sec.steps[i].stepType === 'q') passedQ++; }
+    for(let i=0; i<currentStepIdx; i++) { if(sec.steps[i].stepType === 'question') passedQ++; }
 
     let progressPct = totalQ > 0 ? (passedQ / totalQ) * 100 : 0;
     
@@ -325,7 +325,7 @@ function renderStep() {
     if (currentStepIdx < sec.steps.length) {
         let step = sec.steps[currentStepIdx];
         
-        if (step.stepType === 'mat') {
+        if (step.stepType === 'material') {
             html += `
                 <div class="card" style="animation: slideIn 0.4s ease-out;">
                     <h2><i class="fas fa-lightbulb" style="color:var(--duo-yellow)"></i> Material</h2>
@@ -334,7 +334,7 @@ function renderStep() {
                 </div>
                 <button class="btn-duo btn-blue" onclick="nextStep()"><i class="fas fa-arrow-right"></i> Continue / Lanjut</button>
             `;
-        } else {
+        } else if (step.stepType === 'question') {
             html += `
                 <div class="card" style="animation: slideIn 0.4s ease-out;">
                     <div class="q-num">Question ${passedQ + 1} of ${totalQ}</div>
