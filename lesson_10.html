@@ -398,7 +398,8 @@ function checkStep() {
     } else if (step.type === 'drag') {
         let target = document.getElementById(`step-drag-target`);
         let items = target.querySelectorAll('.drag-item');
-        userAns = Array.from(items).map(i => i.textContent.trim()).join(',');
+        // Baca dari data-value, bukan textContent
+        userAns = Array.from(items).map(i => i.getAttribute('data-value')).join(',');
         isCorrect = userAns === step.answer;
     }
 
@@ -446,7 +447,7 @@ function generateInputHTML(q, prefix) {
     if (q.type === 'drag') {
         let h = `<div class="drag-zone" id="step-drag-src" ondragover="event.preventDefault()" ondrop="dragDrop(event, 'step-drag-src', 'step-drag-target')">`;
         q.options.forEach((opt, i) => {
-            h += `<div class="drag-item" draggable="true" id="drag-${prefix}-${i}" ondragstart="event.dataTransfer.setData('text/plain', event.target.id)">${opt}</div>`;
+            h += `<div class="drag-item" draggable="true" id="drag-${prefix}-${i}" data-value="${opt}" ondragstart="event.dataTransfer.setData('text/plain', event.target.id)">${opt}</div>`;
         });
         h += `</div><p style="margin:8px 0; text-align:center; font-size:0.8rem; color:#666;">Drag & drop to order ⬇️</p>`;
         h += `<div class="drag-zone drop-target" id="step-drag-target" ondragover="event.preventDefault()" ondrop="dragDrop(event, 'step-drag-src', 'step-drag-target')"></div>`;
@@ -565,7 +566,7 @@ function generateAssessInputHTML(q, idx) {
     if (q.type === 'drag') {
         let h = `<div class="drag-zone" id="assess-drag-src-${idx}" ondragover="event.preventDefault()" ondrop="dragDrop(event, 'assess-drag-src-${idx}', 'assess-drag-target-${idx}')">`;
         q.options.forEach((opt, i) => {
-            h += `<div class="drag-item" draggable="true" id="adrag-${idx}-${i}" ondragstart="event.dataTransfer.setData('text/plain', event.target.id)">${opt}</div>`;
+            h += `<div class="drag-item" draggable="true" id="adrag-${idx}-${i}" data-value="${opt}" ondragstart="event.dataTransfer.setData('text/plain', event.target.id)">${opt}</div>`;
         });
         h += `</div><div class="drag-zone drop-target" id="assess-drag-target-${idx}" ondragover="event.preventDefault()" ondrop="dragDrop(event, 'assess-drag-src-${idx}', 'assess-drag-target-${idx}')"></div>`;
         return h;
@@ -598,12 +599,13 @@ function submitAssessment() {
             userAns = Array.from(labels).map(l => l.textContent.trim()).sort().join(',');
             let correctAns = q.answer.sort().join(',');
             isCorrect = userAns === correctAns;
-        } else if (q.type === 'drag') {
-            let target = document.getElementById(`assess-drag-target-${idx}`);
-            let items = target.querySelectorAll('.drag-item');
-            userAns = Array.from(items).map(i => i.textContent.trim()).join(',');
-            isCorrect = userAns === q.answer;
-        }
+		} else if (q.type === 'drag') {
+			let target = document.getElementById(`assess-drag-target-${idx}`);
+			let items = target.querySelectorAll('.drag-item');
+			// Baca dari data-value, bukan textContent
+			userAns = Array.from(items).map(i => i.getAttribute('data-value')).join(',');
+			isCorrect = userAns === q.answer;
+		}
 
         if(isCorrect) {
             fb.className = 'feedback correct'; fb.innerHTML = '<i class="fas fa-check-circle"></i> Correct!';
@@ -616,7 +618,13 @@ function submitAssessment() {
         // --- TAMBAHAN: Render ulang KaTeX di dalam elemen Feedback Assessment ---
         renderMathInElement(fb, {delimiters: [{left: "\\(", right: "\\)", display: false}]});
 
-        results.push({ no: idx+1, question: q.q.replace(/\\\(|\\\)/g, ''), userAnswer: userAns, correctAnswer: q.answer.toString() });
+        results.push({ 
+            no: idx+1, 
+            question: q.q, // Biarkan mentah, akan dirender saat print
+            userAnswer: userAns, 
+            correctAnswer: q.answer.toString(), 
+            isCorrect: isCorrect // Tambahkan status benar/salah
+        });
     });
 
     window.assessmentResults = results;
@@ -626,8 +634,24 @@ function submitAssessment() {
     updateGlobalProgress();
 }
 
+// Fungsi untuk merender KaTeX ke string HTML (untuk cetak)
+function renderKatexToString(text) {
+    if (!text) return "";
+    // Ganti semua \( ... \) dengan HTML KaTeX yang sudah dirender
+    return text.replace(/\\\((.*?)\\\)/g, (match, p1) => {
+        try {
+            return katex.renderToString(p1, { throwOnError: false });
+        } catch (e) {
+            return match;
+        }
+    });
+}
+
 function printAssessment() {
-    if(!window.assessmentResults) { alert("Please submit the assessment first!"); return; }
+    if(!window.assessmentResults || window.assessmentResults.length === 0) { 
+        alert("Please submit the assessment first! / Harap kirim assessment terlebih dahulu!"); 
+        return; 
+    }
     let name = document.getElementById('assess-name').value || 'Student';
     let date = document.getElementById('assess-date').value || 'N/A';
     let score = window.assessmentScore;
@@ -635,29 +659,67 @@ function printAssessment() {
 
     let tableRows = '';
     results.forEach(r => {
-        tableRows += `<tr><td style="text-align:center">${r.no}</td><td>${r.question}</td><td>${r.userAnswer}</td><td>${r.correctAnswer}</td></tr>`;
+        // Tentukan simbol berdasarkan status isCorrect
+        let statusSymbol = r.isCorrect ? 
+            '<span style="color:green; font-size:1.2rem;">✓</span>' : 
+            '<span style="color:red; font-size:1.2rem;">✗</span>';
+        
+        // Render teks matematika mentah menjadi HTML pecahan
+        let qText = renderKatexToString(r.question);
+        let caText = renderKatexToString(r.correctAnswer);
+
+        tableRows += `
+            <tr>
+                <td style="text-align:center; width:5%;">${r.no}</td>
+                <td style="width:40%;">${qText}</td>
+                <td style="width:20%;">${r.userAnswer}</td>
+                <td style="width:25%;">${caText}</td>
+                <td style="text-align:center; width:10%;">${statusSymbol}</td>
+            </tr>
+        `;
     });
 
     let printContent = `
-        <html><head><title>Assessment Result</title><style>body{font-family:Arial; padding:20px;} table{width:100%;border-collapse:collapse;margin-top:20px;} th,td{border:1px solid #000;padding:8px;text-align:left;} th{background:#f2f2f;}</style></head>
+        <html>
+        <head>
+            <title>Assessment Result</title>
+            <!-- Load KaTeX CSS agar pecahan terrender saat print -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+            <style>
+                body { font-family: Arial, sans-serif; padding: 20px; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #000; padding: 8px; text-align: left; font-size: 11pt; }
+                th { background: #f2f2f2; }
+                h2 { color: #1CB0F6; }
+            </style>
+        </head>
         <body>
-            <h2 style="color:#1CB0F6;">Assessment Result</h2>
-            <p><strong>Topic:</strong> Pecahan Setara & Pembandingan Pecahan</p>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Date:</strong> ${date}</p>
+            <h2>Assessment Result</h2>
+            <p><strong>Topic / Topik:</strong> Pecahan Setara & Pembandingan Pecahan</p>
+            <p><strong>Name / Nama:</strong> ${name}</p>
+            <p><strong>Date / Tanggal:</strong> ${date}</p>
             <p><strong>Assessment Group:</strong> ${selectedAssessGroup}</p>
-            <p><strong>Score:</strong> ${score}/10</p>
+            <p><strong>Score / Nilai:</strong> ${score}/10</p>
             <table>
-                <tr><th>No</th><th>Question / Soal</th><th>Student Answer</th><th>Correct Answer</th></tr>
+                <tr>
+                    <th>No</th>
+                    <th>Question / Soal</th>
+                    <th>Student Answer</th>
+                    <th>Correct Answer</th>
+                    <th>Result</th>
+                </tr>
                 ${tableRows}
             </table>
-        </body></html>
+        </body>
+        </html>
     `;
 
     let win = window.open('', '_blank');
     win.document.write(printContent);
     win.document.close();
-    win.print();
+    
+    // Beri jeda 500ms agar KaTeX CSS selesai dimuat sebelum dialog Print muncul
+    setTimeout(() => { win.print(); }, 500);
 }
 
 // --- CONSOLIDATION ---
