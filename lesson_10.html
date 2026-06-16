@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equivalent & Comparing Fractions</title>
+    <!-- KaTeX for Math Equations -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --duo-green: #58CC02; --duo-green-dark: #46A302; --duo-blue: #1CB0F6; --duo-red: #FF4B4B;
+            --duo-yellow: #FFC800; --duo-gray: #E5E5E5; --duo-dark: #4B4B4B; --duo-white: #FFFFFF;
+            --duo-bg: #131F24; --duo-card: #1A2E35;
+        }
+        * { box-sizing: border-box; font-family: 'Nunito', sans-serif; margin: 0; padding: 0; }
+        body { background-color: var(--duo-bg); color: var(--duo-white); overflow-x: hidden; }
+        
+        /* Header & Rules */
+        .header { background: var(--duo-card); padding: 15px; text-align: center; border-bottom: 4px solid var(--duo-dark); position: sticky; top: 0; z-index: 100; }
+        .header h1 { color: var(--duo-green); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .header p { color: var(--duo-blue); font-size: 1rem; margin-top: 5px; }
+        .rules-box { background: var(--duo-yellow); color: var(--duo-dark); margin: 15px; padding: 15px; border-radius: 15px; border-bottom: 4px solid #E6B400; }
+        .rules-box h3 { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .rules-box ul { margin-left: 20px; font-weight: bold; }
+        .bilingual { font-size: 0.85rem; color: #555; margin-top: 2px; font-weight: normal; }
+
+        /* Duolingo Path Map */
+        .path-container { padding: 40px 20px; max-width: 600px; margin: 0 auto; }
+        .progress-global { background: var(--duo-gray); height: 10px; border-radius: 5px; margin-bottom: 30px; overflow: hidden; }
+        .progress-global-fill { height: 100%; background: var(--duo-green); width: 0%; transition: width 0.5s; }
+        
+        .level-path { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .level-node { width: 60px; height: 60px; border-radius: 50%; background: var(--duo-gray); border-bottom: 6px solid #CCC; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; color: var(--duo-dark); cursor: pointer; transition: transform 0.2s, background 0.2s; position: relative; }
+        .level-node:hover { transform: scale(1.1); }
+        .level-node.active { background: var(--duo-green); border-bottom-color: var(--duo-green-dark); color: white; animation: bounce 2s infinite; }
+        .level-node.completed { background: var(--duo-yellow); border-bottom-color: #E6B400; color: var(--duo-dark); }
+        .level-node i { pointer-events: none; }
+        .level-connector { width: 6px; height: 40px; background: var(--duo-gray); }
+        .timer-badge { position: absolute; top: -25px; font-size: 0.7rem; background: var(--duo-dark); color: white; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes correctPop { 0% { transform: scale(1); } 50% { transform: scale(1.2); background: var(--duo-green); } 100% { transform: scale(1); } }
+        @keyframes wrongShake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+        /* Section Content Area */
+        .section-content { display: none; background: var(--duo-card); border-top-left-radius: 30px; border-top-right-radius: 30px; padding: 30px 20px; min-height: 80vh; animation: slideIn 0.4s ease-out; }
+        .section-content.visible { display: block; }
+        .back-btn { background: none; border: 2px solid var(--duo-dark); color: var(--duo-blue); padding: 8px 15px; border-radius: 15px; cursor: pointer; font-weight: bold; margin-bottom: 20px; }
+        
+        /* Material & Quest Cards */
+        .card { background: var(--duo-white); color: var(--duo-dark); border-radius: 15px; padding: 20px; margin-bottom: 20px; border-bottom: 4px solid #DDD; }
+        .card h2 { color: var(--duo-blue); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .math-block { background: #F7F7F7; padding: 10px; border-radius: 10px; text-align: center; font-size: 1.2rem; margin: 10px 0; }
+        
+        .quest-card { border-left: 5px solid var(--duo-blue); }
+        .progress-section { background: var(--duo-gray); height: 6px; border-radius: 3px; margin-bottom: 15px; }
+        .progress-section-fill { height: 100%; background: var(--duo-blue); width: 0%; transition: width 0.3s; }
+        
+        input[type="text"], select { width: 100%; padding: 12px; border: 2px solid #E5E5E5; border-radius: 10px; font-size: 1rem; border-bottom: 4px solid #CCC; outline: none; transition: border-color 0.2s; }
+        input[type="text"]:focus, select:focus { border-color: var(--duo-blue); border-bottom-color: var(--duo-blue); }
+        
+        .radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+        .radio-label, .checkbox-label { background: var(--duo-white); border: 2px solid #E5E5E5; border-bottom: 4px solid #CCC; padding: 10px 20px; border-radius: 15px; cursor: pointer; font-weight: bold; transition: all 0.2s; }
+        .radio-label:hover, .checkbox-label:hover { background: #F0F0F0; }
+        .radio-label.selected { background: #DDFAFF; border-color: var(--duo-blue); color: var(--duo-blue); }
+        .checkbox-label.selected { background: #DDFFD9; border-color: var(--duo-green); color: var(--duo-green); }
+        input[type="radio"], input[type="checkbox"] { display: none; }
+
+        .btn-duo { background: var(--duo-green); color: white; font-weight: bold; padding: 15px 30px; border: none; border-bottom: 4px solid var(--duo-green-dark); border-radius: 15px; font-size: 1.1rem; cursor: pointer; width: 100%; margin-top: 15px; transition: all 0.2s; }
+        .btn-duo:active { border-bottom-width: 0; margin-top: 19px; }
+        .btn-duo:disabled { background: #3C3C3C; border-bottom-color: #2F2F2F; color: #666; cursor: not-allowed; }
+        
+        /* Assessment Styles */
+        .assess-header { background: var(--duo-blue); color: white; padding: 20px; border-radius: 15px 15px 0 0; text-align: center; }
+        .assess-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #F0F0F0; padding: 20px; border-bottom: 4px solid #DDD; }
+        .group-selector { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
+        .group-btn { padding: 10px 20px; border-radius: 10px; border: 2px solid var(--duo-gray); background: white; cursor: pointer; font-weight: bold; }
+        .group-btn.active { background: var(--duo-blue); color: white; border-color: var(--duo-blue); }
+        .two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .two-col-grid { grid-template-columns: 1fr; } }
+
+        /* Drag and Drop */
+        .drag-zone { min-height: 50px; border: 2px dashed #CCC; border-radius: 10px; padding: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .drag-item { background: var(--duo-yellow); color: var(--duo-dark); padding: 8px 15px; border-radius: 10px; cursor: grab; font-weight: bold; border-bottom: 3px solid #E6B400; }
+        .drag-item:active { cursor: grabbing; }
+        .drop-target { min-width: 80px; min-height: 40px; border: 2px solid var(--duo-blue); border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; margin: 0 5px; background: #Eefcff; }
+
+        /* Feedback */
+        .feedback { margin-top: 10px; padding: 10px; border-radius: 10px; display: none; font-weight: bold; animation: slideIn 0.3s; }
+        .feedback.correct { display: block; background: #DDFFD9; color: var(--duo-green-dark); border-left: 5px solid var(--duo-green); }
+        .feedback.wrong { display: block; background: #FFDEDE; color: var(--duo-red); border-left: 5px solid var(--duo-red); }
+        
+        .print-btn { background: var(--duo-blue); border-bottom-color: #1A8FD6; }
+        .consolidation-link { display: inline-block; background: var(--duo-green); color: white; padding: 15px 30px; border-radius: 15px; text-decoration: none; font-weight: bold; font-size: 1.2rem; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h1><i class="fas fa-pizza-slice"></i> Equivalent & Comparing Fractions</h1>
+    <p>Tutor: Deni | Cambridge Curriculum</p>
+</div>
+
+<!-- CLASS RULES -->
+<div class="rules-box">
+    <h3><i class="fas fa-gavel"></i> Class Rules / Aturan Kelas</h3>
+    <ul>
+        <li>Speak in turns and raise your hand. <div class="bilingual">Berbicara secara bergantian dan angkat tangan.</div></li>
+        <li>Ask permission if you need to leave Zoom (e.g., toilet/drink). <div class="bilingual">Minta izin ketika ingin meninggalkan zoom (misal: izin ke toilet atau minum).</div></li>
+    </ul>
+</div>
+
+<!-- DUOLINGO PATH MAP -->
+<div class="path-container" id="pathMap">
+    <div class="progress-global"><div class="progress-global-fill" id="globalProgress"></div></div>
+    <div class="level-path" id="levelPath">
+        <!-- Nodes generated by JS -->
+    </div>
+</div>
+
+<!-- SECTIONS DYNAMIC CONTAINER -->
+<div id="sectionContainer"></div>
+
+<!-- MULAI BAGIAN 2 -->
+
+<script>
+// --- DATA STRUCTURE FOR SECTIONS & QUESTS ---
+const sections = [
+    {
+        id: 1, title: "Spiral Review Warm-up", icon: "fa-brain", timer: "00:00 - 00:10",
+        materials: [
+            { type: 'mat', title: "Place Value Review", en: "Let's remember our numbers! The value of a digit depends on its place. For example, in 7,205, the digit 7 is in the thousands place.", id: "In 7,205, nilai digit 7 berada di tempat ribuan." },
+            { type: 'mat', title: "Mental Math Sprint", en: "Quick addition and subtraction helps our fraction skills later! If I add 150 to 850, what is the total?", id: "Penjumlahan dan pengurangan cepat membantu keterampilan pecahan kita nanti! Jika saya menambahkan 150 ke 850, berapa totalnya?" }
+        ],
+        quests: [
+            { q: "What is the value of the digit 7 in 7,205?", id: "Berapa nilai digit 7 pada 7,205?", type: "radio", options: ["7", "70", "700", "7,000"], answer: "7,000" },
+            { q: "3 thousands blocks + 4 tens blocks = ?", id: "3 blok ribuan + 4 blok puluhan = ?", type: "text", answer: "3040" },
+            { q: "850 + 150 = ?", id: "850 + 150 = ?", type: "radio", options: ["900", "1,000", "1,050", "950"], answer: "1,000" },
+            { q: "1,200 - 300 = ?", id: "1,200 - 300 = ?", type: "text", answer: "900" },
+            { q: "Which is greater: 1,020 or 1,200?", id: "Mana yang lebih besar: 1.020 atau 1.200?", type: "radio", options: ["1,020", "1,200"], answer: "1,200" },
+            { q: "Write the number for: 5 thousands + 2 hundreds + 0 tens + 8 ones", id: "Tulis angkanya: 5 ribuan + 2 ratusan + 0 puluhan + 8 satuan", type: "text", answer: "5208" },
+            { q: "How many hundreds are in 8,000?", id: "Berapa banyak ratusan dalam 8.000?", type: "radio", options: ["8", "80", "800"], answer: "80" },
+            { q: "2,500 - ? = 1,750", id: "2.500 - ? = 1.750", type: "text", answer: "750" },
+            { q: "If you double 1,250 and subtract 500, what is the result?", id: "Jika 1.250 digandakan dan dikurangi 500, berapa hasilnya?", type: "text", answer: "2000" },
+            { q: "If you have 3,456 and swap the thousands and tens digits, what is the new number?", id: "Jika Anda memiliki 3.456 dan menukar digit ribuan dan puluhan, berapa angka baru tersebut?", type: "text", answer: "5436" }
+        ]
+    },
+    {
+        id: 2, title: "Intro & Prior Knowledge", icon: "fa-pizza-slice", timer: "00:10 - 00:20",
+        materials: [
+            { type: 'mat', title: "The Pizza Problem", en: "Imagine you eat \\(\\frac{1}{2}\\) of a pizza, and a friend eats \\(\\frac{2}{4}\\). Who ate more? They are the same! These are Equivalent Fractions.", id: "Bayangkan Anda memakan \\(\\frac{1}{2}\\) pizza, dan teman memakan \\(\\frac{2}{4}\\). Siapa yang lebih banyak? Mereka sama! Ini disebut Pecahan Setara." },
+            { type: 'mat', title: "The Magic of '1'", en: "Multiplying by 1 doesn't change a number's value. In fractions, \\(\\frac{2}{2}\\) or \\(\\frac{3}{3}\\) equals 1. We use this to make equivalent fractions!", id: "Mengalikan dengan 1 tidak mengubah nilai angka. Dalam pecahan, \\(\\frac{2}{2}\\) atau \\(\\frac{3}{3}\\) sama dengan 1. Kami menggunakan ini untuk membuat pecahan setara!" }
+        ],
+        quests: [
+            { q: "Is \\(\\frac{1}{2}\\) equal to \\(\\frac{2}{4}\\)?", id: "Apakah \\(\\frac{1}{2}\\) sama dengan \\(\\frac{2}{4}\\)?", type: "radio", options: ["Yes / Ya", "No / Tidak"], answer: "Yes / Ya" },
+            { q: "What is \\(\\frac{3}{3}\\) equal to?", id: "Berapa nilai \\(\\frac{3}{3}\\)?", type: "radio", options: ["0", "1", "3"], answer: "1" },
+            { q: "To make an equivalent fraction, you must multiply the top and bottom by the ____ number.", id: "Untuk membuat pecahan setara, Anda harus mengalikan atas dan bawah dengan angka ____.", type: "text", answer: "same" },
+            { q: "Multiply \\(\\frac{1}{3}\\) by \\(\\frac{2}{2}\\). What is the result?", id: "Kalikan \\(\\frac{1}{3}\\) dengan \\(\\frac{2}{2}\\). Hasilnya apa?", type: "radio", options: ["\\(\\frac{2}{6}\\)", "\\(\\frac{1}{6}\\)", "\\(\\frac{2}{3}\\)"], answer: "\\(\\frac{2}{6}\\)" },
+            { q: "Are \\(\\frac{4}{10}\\) and \\(\\frac{2}{5}\\) equivalent?", id: "Apakah \\(\\frac{4}{10}\\) dan \\(\\frac{2}{5}\\) setara?", type: "radio", options: ["Yes / Ya", "No / Tidak"], answer: "Yes / Ya" },
+            { q: "Find the missing number: \\(\\frac{2}{3} = \\frac{?}{15}\\)", id: "Temukan angka yang hilang: \\(\\frac{2}{3} = \\frac{?}{15}\\)", type: "text", answer: "10" },
+            { q: "\\(\\frac{5}{5}\\) is a fancy way of writing which number?", id: "\\(\\frac{5}{5}\\) adalah cara lain menulis angka berapa?", type: "radio", options: ["5", "0", "1"], answer: "1" },
+            { q: "If you multiply the numerator by 4, you must multiply the denominator by ____.", id: "Jika Anda mengalikan pembilang dengan 4, Anda harus mengalikan penyebut dengan ____.", type: "text", answer: "4" },
+            { q: "Which fraction is equivalent to \\(\\frac{1}{2}\\)?", id: "Pecahan mana yang setara dengan \\(\\frac{1}{2}\\)?", type: "radio", options: ["\\(\\frac{3}{4}\\)", "\\(\\frac{5}{10}\\)", "\\(\\frac{2}{3}\\)"], answer: "\\(\\frac{5}{10}\\)" },
+            { q: "What is 3 times 4?", id: "Berapa 3 kali 4?", type: "text", answer: "12" }
+        ]
+    },
+    {
+        id: 3, title: "Comparing Fractions", icon: "fa-scale-balanced", timer: "00:20 - 00:30",
+        materials: [
+            { type: 'mat', title: "Apples to Oranges", en: "Comparing \\(\\frac{2}{3}\\) and \\(\\frac{3}{4}\\) is hard because they have different denominators. We need a Common Denominator!", id: "Membandingkan \\(\\frac{2}{3}\\) dan \\(\\frac{3}{4}\\) sulit karena penyebutnya berbeda. Kita butuh Penyebut Bersama!" },
+            { type: 'mat', title: "Finding the Magic Number (LCM)", en: "Find the Least Common Multiple (LCM). For 3 and 4, skip count: 3, 6, 9, 12 and 4, 8, 12. 12 is our magic number!", id: "Temukan Kelipatan Persekutuan Terkecil (KPK). Untuk 3 dan 4, hitung: 3, 6, 9, 12 dan 4, 8, 12. 12 adalah angka ajaib kita!" }
+        ],
+        quests: [
+            { q: "What is the Least Common Multiple (LCM) for 2 and 5?", id: "Berapa Kelipatan Persekutuan Terkecil (KPK) untuk 2 dan 5?", type: "radio", options: ["5", "10", "15"], answer: "10" },
+            { q: "True or False: You can easily compare fractions with unlike denominators without changing them.", id: "Benar atau Salah: Anda bisa membandingkan pecahan dengan penyebut berbeda tanpa mengubahnya.", type: "radio", options: ["True / Benar", "False / Salah"], answer: "False / Salah" },
+            { q: "Convert \\(\\frac{1}{2}\\) and \\(\\frac{1}{3}\\) to have a denominator of 6. Which is larger?", id: "Ubah \\(\\frac{1}{2}\\) dan \\(\\frac{1}{3}\\) agar memiliki penyebut 6. Mana yang lebih besar?", type: "radio", options: ["\\(\\frac{1}{2}\\)", "\\(\\frac{1}{3}\\)"], answer: "\\(\\frac{1}{2}\\)" },
+            { q: "Compare \\(\\frac{5}{8}\\) and \\(\\frac{3}{4}\\). Which is larger?", id: "Bandingkan \\(\\frac{5}{8}\\) dan \\(\\frac{3}{4}\\). Mana yang lebih besar?", type: "radio", options: ["\\(\\frac{5}{8}\\)", "\\(\\frac{3}{4}\\)"], answer: "\\(\\frac{3}{4}\\)" },
+            { q: "What symbol makes this true? \\(\\frac{2}{3}\\) ___ \\(\\frac{3}{4}\\)", id: "Simbol apa yang membuat ini benar? \\(\\frac{2}{3}\\) ___ \\(\\frac{3}{4}\\)", type: "dropdown", options: ["<", ">", "="], answer: "<" },
+            { q: "Find the LCM for 3 and 6.", id: "Temukan KPK untuk 3 dan 6.", type: "text", answer: "6" },
+            { q: "Compare \\(\\frac{7}{9}\\) and \\(\\frac{5}{6}\\). Which is larger?", id: "Bandingkan \\(\\frac{7}{9}\\) dan \\(\\frac{5}{6}\\). Mana yang lebih besar?", type: "radio", options: ["\\(\\frac{7}{9}\\)", "\\(\\frac{5}{6}\\)"], answer: "\\(\\frac{5}{6}\\)" },
+            { q: "\\(\\frac{3}{4}\\) is equal to how many twelfths? \\(\\frac{?}{12}\\)", id: "\\(\\frac{3}{4}\\) sama dengan berapa per dua belas? \\(\\frac{?}{12}\\)", type: "text", answer: "9" },
+            { q: "Which is smaller: \\(\\frac{1}{4}\\) or \\(\\frac{2}{6}\\)?", id: "Mana yang lebih kecil: \\(\\frac{1}{4}\\) atau \\(\\frac{2}{6}\\)?", type: "radio", options: ["\\(\\frac{1}{4}\\)", "\\(\\frac{2}{6}\\)"], answer: "\\(\\frac{1}{4}\\)" },
+            { q: "What is the LCM for 4, 5, and 10?", id: "Berapa KPK untuk 4, 5, dan 10?", type: "text", answer: "20" }
+        ]
+    },
+    {
+        id: 4, title: "Ordering Fractions", icon: "fa-sort-amount-down", timer: "00:30 - 00:45",
+        materials: [
+            { type: 'mat', title: "Order from Least to Greatest", en: "To order \\(\\frac{1}{2}\\), \\(\\frac{3}{10}\\), and \\(\\frac{2}{5}\\), find a common denominator first (10). Then convert: \\(\\frac{5}{10}\\), \\(\\frac{3}{10}\\), \\(\\frac{4}{10}\\). Now it's easy!", id: "Untuk mengurutkan \\(\\frac{1}{2}\\), \\(\\frac{3}{10}\\), dan \\(\\frac{2}{5}\\), temukan penyebut bersama (10). Lalu ubah: \\(\\frac{5}{10}\\), \\(\\frac{3}{10}\\), \\(\\frac{4}{10}\\). Sekarti mudah!" }
+        ],
+        quests: [
+            { q: "Order from least to greatest: \\(\\frac{3}{10}\\), \\(\\frac{2}{5}\\), \\(\\frac{1}{2}\\)", id: "Urutkan dari terkecil ke terbesar: \\(\\frac{3}{10}\\), \\(\\frac{2}{5}\\), \\(\\frac{1}{2}\\)", type: "radio", options: ["\\(\\frac{1}{2}\\), \\(\\frac{2}{5}\\), \\(\\frac{3}{10}\\)", "\\(\\frac{3}{10}\\), \\(\\frac{2}{5}\\), \\(\\frac{1}{2}\\)", "\\(\\frac{2}{5}\\), \\(\\frac{3}{10}\\), \\(\\frac{1}{2}\\)"], answer: "\\(\\frac{3}{10}\\), \\(\\frac{2}{5}\\), \\(\\frac{1}{2}\\)" },
+            { q: "Order from least to greatest: \\(\\frac{1}{3}\\), \\(\\frac{1}{4}\\), \\(\\frac{1}{6}\\)", id: "Urutkan dari terkecil ke terbesar: \\(\\frac{1}{3}\\), \\(\\frac{1}{4}\\), \\(\\frac{1}{6}\\)", type: "radio", options: ["\\(\\frac{1}{6}\\), \\(\\frac{1}{4}\\), \\(\\frac{1}{3}\\)", "\\(\\frac{1}{3}\\), \\(\\frac{1}{4}\\), \\(\\frac{1}{6}\\)"], answer: "\\(\\frac{1}{6}\\), \\(\\frac{1}{4}\\), \\(\\frac{1}{3}\\)" },
+            { q: "Simplify \\(\\frac{18}{24}\\) to its simplest form.", id: "Sederhanakan \\(\\frac{18}{24}\\) ke bentuk paling sederhana.", type: "radio", options: ["\\(\\frac{9}{12}\\)", "\\(\\frac{3}{4}\\)", "\\(\\frac{6}{8}\\)"], answer: "\\(\\frac{3}{4}\\)" },
+            { q: "Which fraction is between \\(\\frac{1}{4}\\) and \\(\\frac{1}{2}\\)?", id: "Pecahan mana yang ada di antara \\(\\frac{1}{4}\\) dan \\(\\frac{1}{2}\\)?", type: "radio", options: ["\\(\\frac{1}{3}\\)", "\\(\\frac{3}{4}\\)", "\\(\\frac{1}{5}\\)"], answer: "\\(\\frac{1}{3}\\)" },
+            { q: "You ate \\(\\frac{5}{6}\\) of a cake, friend ate \\(\\frac{7}{12}\\). Who ate more?", id: "Anda memakan \\(\\frac{5}{6}\\) kue, teman memakan \\(\\frac{7}{12}\\). Siapa yang lebih banyak?", type: "radio", options: ["Me / Saya", "Friend / Teman"], answer: "Me / Saya" },
+            { q: "How much more did you eat in 12ths? (Previous question)", id: "Berapa banyak lagi yang Anda makan dalam per-12? (Pertanyaan sebelumnya)", type: "text", answer: "3/12" },
+            { q: "Create an equivalent fraction for \\(\\frac{12}{20}\\) by dividing by 2.", id: "Buat pecahan setara untuk \\(\\frac{12}{20}\\) dengan membagi 2.", type: "text", answer: "6/10" },
+            { q: "Create another equivalent fraction for \\(\\frac{12}{20}\\) by dividing by 4.", id: "Buat pecahan setara lain untuk \\(\\frac{12}{20}\\) dengan membagi 4.", type: "text", answer: "3/5" },
+            { q: "Order: \\(\\frac{2}{3}\\), \\(\\frac{5}{6}\\), \\(\\frac{1}{2}\\) from greatest to least.", id: "Urutkan: \\(\\frac{2}{3}\\), \\(\\frac{5}{6}\\), \\(\\frac{1}{2}\\) dari terbesar ke terkecil.", type: "radio", options: ["\\(\\frac{5}{6}\\), \\(\\frac{2}{3}\\), \\(\\frac{1}{2}\\)", "\\(\\frac{1}{2}\\), \\(\\frac{2}{3}\\), \\(\\frac{5}{6}\\)"], answer: "\\(\\frac{5}{6}\\), \\(\\frac{2}{3}\\), \\(\\frac{1}{2}\\)" },
+            { q: "Which is the smallest? \\(\\frac{3}{8}\\), \\(\\frac{1}{3}\\), \\(\\frac{2}{5}\\)", id: "Mana yang paling kecil? \\(\\frac{3}{8}\\), \\(\\frac{1}{3}\\), \\(\\frac{2}{5}\\)", type: "radio", options: ["\\(\\frac{3}{8}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{2}{5}\\)"], answer: "\\(\\frac{1}{3}\\)" }
+        ]
+    },
+    {
+        id: 5, title: "Assessment", icon: "fa-file-pen", timer: "00:45 - 00:55",
+        materials: [], quests: [] // Handled separately by Assessment Engine
+    },
+    {
+        id: 6, title: "Consolidation", icon: "fa-flag-checkered", timer: "00:55 - 01:00",
+        materials: [
+            { type: 'mat', title: "Fantastic Job!", en: "You were a master chef today! We learned that fractions are just like costumes—they can look different (2/4) but still be the same person underneath (1/2). Keep practicing!", id: "Anda adalah koki hebat hari ini! Kami belajar bahwa pecahan seperti kostum—mereka bisa terlihat berbeda (2/4) tetapi tetap orang yang sama di dalamnya (1/2). Terus berlatih!" }
+        ],
+        quests: []
+    }
+];
+
+// AKHIR BAGIAN 2<!-- MULAI BAGIAN 3 -->
+
+// --- ASSESSMENT QUESTION BANK (50 Questions, 5 Groups) ---
+const assessmentBank = {
+    A: [
+        { q: "Find an equivalent fraction for \\(\\frac{3}{7}\\) by multiplying by 3.", id: "Temukan pecahan setara untuk \\(\\frac{3}{7}\\) dengan mengalikan 3.", type: "text", answer: "9/21" },
+        { q: "Are \\(\\frac{4}{10}\\) and \\(\\frac{2}{5}\\) equivalent?", id: "Apakah \\(\\frac{4}{10}\\) dan \\(\\frac{2}{5}\\) setara?", type: "radio", options: ["Yes / Ya", "No / Tidak"], answer: "Yes / Ya" },
+        { q: "Compare \\(\\frac{5}{8}\\) and \\(\\frac{3}{4}\\). Which is larger?", id: "Bandingkan \\(\\frac{5}{8}\\) dan \\(\\frac{3}{4}\\). Mana yang lebih besar?", type: "radio", options: ["\\(\\frac{5}{8}\\)", "\\(\\frac{3}{4}\\)"], answer: "\\(\\frac{3}{4}\\)" },
+        { q: "Fill in the missing number: \\(\\frac{2}{3} = \\frac{?}{15}\\)", id: "Isi angka yang hilang: \\(\\frac{2}{3} = \\frac{?}{15}\\)", type: "text", answer: "10" },
+        { q: "What is the value of the digit 9 in 9,432?", id: "Berapa nilai digit 9 pada 9.432?", type: "text", answer: "9000" },
+        { q: "Write the number for: 5 thousands + 2 hundreds + 0 tens + 8 ones", id: "Tulis angkanya: 5 ribuan + 2 ratusan + 0 puluhan + 8 satuan", type: "text", answer: "5208" },
+        { q: "Solve 450 + 550", id: "Selesaikan 450 + 550", type: "text", answer: "1000" },
+        { q: "Which is greater: 1,020 or 1,200?", id: "Mana yang lebih besar: 1.020 atau 1.200?", type: "radio", options: ["1,020", "1,200"], answer: "1,200" },
+        { q: "Order from least to greatest: \\(\\frac{1}{2}\\), \\(\\frac{3}{10}\\), \\(\\frac{2}{5}\\)", id: "Urutkan dari terkecil ke terbesar: \\(\\frac{1}{2}\\), \\(\\frac{3}{10}\\), \\(\\frac{2}{5}\\)", type: "drag", options: ["\\(\\frac{1}{2}\\)", "\\(\\frac{3}{10}\\)", "\\(\\frac{2}{5}\\)"], answer: "\\(\\frac{3}{10}\\),\\(\\frac{2}{5}\\),\\(\\frac{1}{2}\\)" },
+        { q: "Simplify \\(\\frac{18}{24}\\) to its simplest form.", id: "Sederhanakan \\(\\frac{18}{24}\\) ke bentuk paling sederhana.", type: "dropdown", options: ["\\(\\frac{9}{12}\\)", "\\(\\frac{3}{4}\\)", "\\(\\frac{6}{8}\\)"], answer: "\\(\\frac{3}{4}\\)" }
+    ],
+    B: [
+        { q: "Find a common denominator for \\(\\frac{1}{3}\\), \\(\\frac{1}{4}\\), and \\(\\frac{1}{6}\\).", id: "Temukan penyebut bersama untuk \\(\\frac{1}{3}\\), \\(\\frac{1}{4}\\), dan \\(\\frac{1}{6}\\).", type: "text", answer: "12" },
+        { q: "You ate \\(\\frac{5}{6}\\) of a cake and friend ate \\(\\frac{7}{12}\\). Who ate more?", id: "Anda makan \\(\\frac{5}{6}\\) kue dan teman makan \\(\\frac{7}{12}\\). Siapa lebih banyak?", type: "radio", options: ["Me / Saya", "Friend / Teman"], answer: "Me / Saya" },
+        { q: "By how much more did you eat? (in 12ths)", id: "Berapa selisihnya? (dalam per-12)", type: "text", answer: "3/12" },
+        { q: "Compare \\(\\frac{7}{9}\\) and \\(\\frac{5}{6}\\). Which is larger?", id: "Bandingkan \\(\\frac{7}{9}\\) dan \\(\\frac{5}{6}\\). Mana yang lebih besar?", type: "radio", options: ["\\(\\frac{7}{9}\\)", "\\(\\frac{5}{6}\\)"], answer: "\\(\\frac{5}{6}\\)" },
+        { q: "Create two different equivalent fractions for \\(\\frac{12}{20}\\). (Separate with comma)", id: "Buat dua pecahan setara berbeda untuk \\(\\frac{12}{20}\\). (Pisahkan dengan koma)", type: "checkbox", options: ["\\(\\frac{6}{10}\\)", "\\(\\frac{3}{5}\\)", "\\(\\frac{2}{4}\\)"], answer: ["\\(\\frac{6}{10}\\)", "\\(\\frac{3}{5}\\)"] },
+        { q: "If you have 3,456 and swap the thousands and tens digits, what is the new number?", id: "Jika Anda punya 3.456 dan tukar digit ribuan dan puluhan, berapa angka barunya?", type: "text", answer: "5436" },
+        { q: "How many hundreds are in 8,000?", id: "Berapa banyak ratusan dalam 8.000?", type: "text", answer: "80" },
+        { q: "Find the missing number: 2,500 - ? = 1,750", id: "Temukan angka yang hilang: 2.500 - ? = 1.750", type: "text", answer: "750" },
+        { q: "If I double 1,250 and then subtract 500, what is the result?", id: "Jika saya menggandakan 1.250 lalu mengurangi 500, berapa hasilnya?", type: "text", answer: "2000" },
+        { q: "Match the fraction to its equivalent: \\(\\frac{1}{2}\\)", id: "Cocokkan pecahan dengan setaranya: \\(\\frac{1}{2}\\)", type: "dropdown", options: ["\\(\\frac{3}{6}\\)", "\\(\\frac{2}{6}\\)", "\\(\\frac{4}{6}\\)"], answer: "\\(\\frac{3}{6}\\)" }
+    ],
+    C: [
+        { q: "What is \\(\\frac{4}{5}\\) equivalent to if the denominator is 20?", id: "Berapa setara \\(\\frac{4}{5}\\) jika penyebutnya 20?", type: "text", answer: "16/20" },
+        { q: "True or False: \\(\\frac{5}{10}\\) is bigger than \\(\\frac{1}{2}\\).", id: "Benar atau Salah: \\(\\frac{5}{10}\\) lebih besar dari \\(\\frac{1}{2}\\).", type: "radio", options: ["True / Benar", "False / Salah"], answer: "False / Salah" },
+        { q: "Order these from least to greatest: \\(\\frac{1}{4}\\), \\(\\frac{1}{2}\\), \\(\\frac{1}{8}\\)", id: "Urutkan dari terkecil: \\(\\frac{1}{4}\\), \\(\\frac{1}{2}\\), \\(\\frac{1}{8}\\)", type: "drag", options: ["\\(\\frac{1}{4}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{1}{8}\\)"], answer: "\\(\\frac{1}{8}\\),\\(\\frac{1}{4}\\),\\(\\frac{1}{2}\\)" },
+        { q: "Which fraction is NOT equivalent to \\(\\frac{1}{3}\\)?", id: "Pecahan mana yang TIDAK setara dengan \\(\\frac{1}{3}\\)?", type: "radio", options: ["\\(\\frac{2}{6}\\)", "\\(\\frac{3}{9}\\)", "\\(\\frac{4}{10}\\)"], answer: "\\(\\frac{4}{10}\\)" },
+        { q: "Find LCM of 6 and 8.", id: "Temukan KPK dari 6 dan 8.", type: "text", answer: "24" },
+        { q: "What is 7,000 + 500 + 30 + 1?", id: "Berapa 7.000 + 500 + 30 + 1?", type: "text", answer: "7531" },
+        { q: "1,500 - 450 = ?", id: "1.500 - 450 = ?", type: "text", answer: "1050" },
+        { q: "Which is smaller: \\(\\frac{2}{5}\\) or \\(\\frac{3}{8}\\)?", id: "Mana yang lebih kecil: \\(\\frac{2}{5}\\) atau \\(\\frac{3}{8}\\)?", type: "radio", options: ["\\(\\frac{2}{5}\\)", "\\(\\frac{3}{8}\\)"], answer: "\\(\\frac{3}{8}\\)" },
+        { q: "Select all equivalent to \\(\\frac{2}{4}\\)", id: "Pilih semua yang setara dengan \\(\\frac{2}{4}\\)", type: "checkbox", options: ["\\(\\frac{1}{2}\\)", "\\(\\frac{4}{8}\\)", "\\(\\frac{3}{5}\\)"], answer: ["\\(\\frac{1}{2}\\)", "\\(\\frac{4}{8}\\)"] },
+        { q: "Simplify \\(\\frac{10}{100}\\).", id: "Sederhanakan \\(\\frac{10}{100}\\).", type: "dropdown", options: ["\\(\\frac{1}{10}\\)", "\\(\\frac{1}{5}\\)", "\\(\\frac{2}{20}\\)"], answer: "\\(\\frac{1}{10}\\)" }
+    ],
+    D: [
+        { q: "Convert \\(\\frac{3}{4}\\) to 16ths.", id: "Ubah \\(\\frac{3}{4}\\) ke per-16.", type: "text", answer: "12/16" },
+        { q: "Is \\(\\frac{5}{6}\\) greater than \\(\\frac{4}{5}\\)?", id: "Apakah \\(\\frac{5}{6}\\) lebih besar dari \\(\\frac{4}{5}\\)?", type: "radio", options: ["Yes / Ya", "No / Tidak"], answer: "Yes / Ya" },
+        { q: "What is the LCM of 5 and 10?", id: "Berapa KPK dari 5 dan 10?", type: "text", answer: "10" },
+        { q: "Value of 5 in 5,234", id: "Nilai 5 pada 5.234", type: "text", answer: "5000" },
+        { q: "800 + 600 = ?", id: "800 + 600 = ?", type: "text", answer: "1400" },
+        { q: "Order greatest to least: \\(\\frac{1}{2}\\), \\(\\frac{3}{4}\\), \\(\\frac{1}{4}\\)", id: "Urutkan terbesar ke terkecil: \\(\\frac{1}{2}\\), \\(\\frac{3}{4}\\), \\(\\frac{1}{4}\\)", type: "drag", options: ["\\(\\frac{1}{2}\\)", "\\(\\frac{3}{4}\\)", "\\(\\frac{1}{4}\\)"], answer: "\\(\\frac{3}{4}\\),\\(\\frac{1}{2}\\),\\(\\frac{1}{4}\\)" },
+        { q: "Which is equivalent to \\(\\frac{3}{5}\\)?", id: "Mana yang setara dengan \\(\\frac{3}{5}\\)?", type: "dropdown", options: ["\\(\\frac{6}{10}\\)", "\\(\\frac{6}{12}\\)", "\\(\\frac{9}{15}\\)"], answer: "\\(\\frac{6}{10}\\)" }, // Multiple right, drop one
+        { q: "Select equivalent to 1:", id: "Pilih setara dengan 1:", type: "checkbox", options: ["\\(\\frac{4}{4}\\)", "\\(\\frac{10}{10}\\)", "\\(\\frac{1}{2}\\)"], answer: ["\\(\\frac{4}{4}\\)", "\\(\\frac{10}{10}\\)"] },
+        { q: "Subtract: 2,000 - 1,350", id: "Kurangi: 2.000 - 1.350", type: "text", answer: "650" },
+        { q: "\\(\\frac{7}{8}\\) ___ \\(\\frac{5}{6}\\) (Use >, <, =)", id: "\\(\\frac{7}{8}\\) ___ \\(\\frac{5}{6}\\) (Gunakan >, <, =)", type: "text", answer: ">" }
+    ],
+    E: [
+        { q: "Write \\(\\frac{1}{4}\\) with denominator 8.", id: "Tulis \\(\\frac{1}{4}\\) dengan penyebut 8.", type: "text", answer: "2/8" },
+        { q: "Compare: \\(\\frac{4}{9}\\) and \\(\\frac{2}{3}\\). Which is smaller?", id: "Bandingkan: \\(\\frac{4}{9}\\) dan \\(\\frac{2}{3}\\). Mana yang lebih kecil?", type: "radio", options: ["\\(\\frac{4}{9}\\)", "\\(\\frac{2}{3}\\)"], answer: "\\(\\frac{4}{9}\\)" },
+        { q: "What is 9,999 rounded to the nearest thousand?", id: "Berapa 9.999 dibulatkan ke ribuan terdekat?", type: "text", answer: "10000" },
+        { q: "5,400 - 2,300 = ?", id: "5.400 - 2.300 = ?", type: "text", answer: "3100" },
+        { q: "Order least to greatest: \\(\\frac{2}{3}\\), \\(\\frac{1}{6}\\), \\(\\frac{1}{2}\\)", id: "Urutkan terkecil ke terbesar: \\(\\frac{2}{3}\\), \\(\\frac{1}{6}\\), \\(\\frac{1}{2}\\)", type: "drag", options: ["\\(\\frac{2}{3}\\)", "\\(\\frac{1}{6}\\)", "\\(\\frac{1}{2}\\)"], answer: "\\(\\frac{1}{6}\\),\\(\\frac{1}{2}\\),\\(\\frac{2}{3}\\)" },
+        { q: "Simplify \\(\\frac{20}{50}\\)", id: "Sederhanakan \\(\\frac{20}{50}\\)", type: "dropdown", options: ["\\(\\frac{2}{5}\\)", "\\(\\frac{10}{25}\\)", "\\(\\frac{1}{2}\\)"], answer: "\\(\\frac{2}{5}\\)" },
+        { q: "Select all fractions greater than \\(\\frac{1}{2}\\)", id: "Pilih semua pecahan lebih besar dari \\(\\frac{1}{2}\\)", type: "checkbox", options: ["\\(\\frac{3}{4}\\)", "\\(\\frac{2}{5}\\)", "\\(\\frac{5}{6}\\)"], answer: ["\\(\\frac{3}{4}\\)", "\\(\\frac{5}{6}\\)"] },
+        { q: "\\(\\frac{5}{8}\\) ___ \\(\\frac{5}{8}\\)", id: "\\(\\frac{5}{8}\\) ___ \\(\\frac{5}{8}\\)", type: "radio", options: ["<", ">", "="], answer: "=" },
+        { q: "Find missing: \\(\\frac{7}{9} = \\frac{14}{?}\\)", id: "Temukan yang hilang: \\(\\frac{7}{9} = \\frac{14}{?}\\)", type: "text", answer: "18" },
+        { q: "You have \\(\\frac{3}{8}\\) of a pizza and add \\(\\frac{2}{8}\\) more. What fraction do you have?", id: "Anda punya \\(\\frac{3}{8}\\) pizza dan tambah \\(\\frac{2}{8}\\). Berapa pecahan Anda sekarang?", type: "text", answer: "5/8" }
+    ]
+};
+
+// --- GLOBAL VARIABLES & ENGINE ---
+let currentSection = 0;
+let completedSections = new Set();
+
+function initApp() {
+    const path = document.getElementById('levelPath');
+    const container = document.getElementById('sectionContainer');
+    
+    sections.forEach((sec, idx) => {
+        // Create Path Node
+        let node = document.createElement('div');
+        node.className = 'level-node' + (idx === 0 ? ' active' : '');
+        node.dataset.idx = idx;
+        node.innerHTML = `<i class="fas ${sec.icon}"></i><div class="timer-badge">${sec.timer}</div>`;
+        node.onclick = () => openSection(idx);
+        
+        if (idx > 0) {
+            let conn = document.createElement('div');
+            conn.className = 'level-connector';
+            path.appendChild(conn);
+        }
+        path.appendChild(node);
+
+        // Create Section Container
+        let secDiv = document.createElement('div');
+        secDiv.className = 'section-content';
+        secDiv.id = `section-${idx}`;
+        secDiv.innerHTML = generateSectionHTML(sec, idx);
+        container.appendChild(secDiv);
+    });
+
+    renderMathInElement(document.body, {
+        delimiters: [{left: "\\(", right: "\\)", display: false}]
+    });
+}
+
+function generateSectionHTML(sec, idx) {
+    let html = `<button class="back-btn" onclick="backToMap()"><i class="fas fa-arrow-left"></i> Back / Kembali</button>`;
+    html += `<h2 style="color:var(--duo-green); margin-bottom:20px;"><i class="fas ${sec.icon}"></i> ${sec.title}</h2>`;
+    
+    // Special layout for Assessment
+    if (sec.id === 5) {
+        html += generateAssessmentHTML();
+        return html;
+    }
+    // Special layout for Consolidation
+    if (sec.id === 6) {
+        html += `<div class="card"><h2>Congratulations! / Selamat!</h2>${sec.materials[0].en}<br><div class="bilingual">${sec.materials[0].id}</div><br><a href="https://learn.algonova.id/login" target="_blank" class="consolidation-link">Go to Algonova Portal <i class="fas fa-external-link-alt"></i></a></div>`;
+        return html;
+    }
+
+    // Regular Sections
+    let totalQ = sec.quests.length;
+    html += `<div class="progress-section"><div class="progress-section-fill" id="prog-sec-${idx}"></div></div>`;
+    
+    // Materials
+    sec.materials.forEach(mat => {
+        html += `<div class="card"><h2>${mat.title}</h2><p>${mat.en}</p><p class="bilingual" style="color:#666; margin-top:5px;">${mat.id}</p></div>`;
+    });
+
+    // Quests
+    sec.quests.forEach((q, qIdx) => {
+        html += `<div class="card quest-card" id="q-${idx}-${qIdx}">`;
+        html += `<p><strong>Q${qIdx+1}:</strong> ${q.q}</p><p class="bilingual">${q.id}</p>`;
+        html += generateInputHTML(q, idx, qIdx);
+        html += `<div class="feedback" id="fb-${idx}-${qIdx}"></div>`;
+        html += `</div>`;
+    });
+
+    html += `<button class="btn-duo" onclick="checkSection(${idx})"><i class="fas fa-check"></i> Check Answers / Periksa Jawaban</button>`;
+    return html;
+}
+
+function generateInputHTML(q, secIdx, qIdx) {
+    let name = `input-${secIdx}-${qIdx}`;
+    if (q.type === 'radio') {
+        let h = '<div class="radio-group">';
+        q.options.forEach((opt, i) => {
+            h += `<label class="radio-label" id="rl-${secIdx}-${qIdx}-${i}" onclick="selectRadio('${name}', ${i}, ${secIdx}, ${qIdx})">${opt}</label>`;
+            h += `<input type="radio" name="${name}" value="${opt}">`;
+        });
+        h += '</div>'; return h;
+    }
+    if (q.type === 'text') return `<input type="text" name="${name}" placeholder="Type answer here...">`;
+    if (q.type === 'dropdown') {
+        let h = `<select name="${name}"><option value="">Select / Pilih</option>`;
+        q.options.forEach(opt => h += `<option value="${opt}">${opt}</option>`);
+        h += '</select>'; return h;
+    }
+    if (q.type === 'checkbox') {
+        let h = '<div class="checkbox-group">';
+        q.options.forEach((opt, i) => {
+            h += `<label class="checkbox-label" id="cl-${secIdx}-${qIdx}-${i}" onclick="toggleCheckbox(this, '${opt}')">${opt}</label>`;
+        });
+        h += '</div>'; return h;
+    }
+    if (q.type === 'drag') {
+        let h = `<div class="drag-zone" id="drag-source-${secIdx}-${qIdx}" ondragover="event.preventDefault()" ondrop="dragDrop(event, '${secIdx}-${qIdx}')">`;
+        q.options.forEach(opt => {
+            h += `<div class="drag-item" draggable="true" id="drag-${secIdx}-${qIdx}-${Math.random()}" ondragstart="dragStart(event)">${opt}</div>`;
+        });
+        h += `</div><p style="margin:10px 0; text-align:center;">Drag here ⬇️</p>`;
+        h += `<div class="drag-zone drop-target" id="drag-target-${secIdx}-${qIdx}" ondragover="event.preventDefault()" ondrop="dragDrop(event, '${secIdx}-${qIdx}')"></div>`;
+        return h;
+    }
+    return '';
+}
+
+// --- UI INTERACTIONS ---
+function openSection(idx) {
+    currentSection = idx;
+    document.getElementById('pathMap').style.display = 'none';
+    document.querySelectorAll('.section-content').forEach(el => el.classList.remove('visible'));
+    document.getElementById(`section-${idx}`).classList.add('visible');
+    window.scrollTo(0,0);
+    renderMathInElement(document.getElementById(`section-${idx}`), { delimiters: [{left: "\\(", right: "\\)", display: false}] });
+}
+
+function backToMap() {
+    document.getElementById('pathMap').style.display = 'block';
+    document.querySelectorAll('.section-content').forEach(el => el.classList.remove('visible'));
+    window.scrollTo(0,0);
+}
+
+function selectRadio(name, i, secIdx, qIdx) {
+    document.querySelectorAll(`#q-${secIdx}-${qIdx} .radio-label`).forEach(l => l.classList.remove('selected'));
+    document.getElementById(`rl-${secIdx}-${qIdx}-${i}`).classList.add('selected');
+    document.querySelector(`input[name="${name}"]`).value = sections[secIdx].quests[qIdx].options[i]; // Fake value for checking
+}
+
+function toggleCheckbox(el, val) {
+    el.classList.toggle('selected');
+    if(!el.dataset.vals) el.dataset.vals = [];
+    if(el.classList.contains('selected')) el.dataset.vals.push(val);
+    else el.dataset.vals = el.dataset.vals.filter(v => v !== val);
+}
+
+// Drag & Drop
+function dragStart(e) { e.dataTransfer.setData("text/plain", e.target.id); }
+function dragDrop(e, idPair) {
+    e.preventDefault();
+    let data = e.dataTransfer.getData("text/plain");
+    let el = document.getElementById(data);
+    e.target.appendChild(el);
+}
+
+// --- VALIDATION LOGIC ---
+function checkSection(secIdx) {
+    let sec = sections[secIdx];
+    let correct = 0;
+    sec.quests.forEach((q, qIdx) => {
+        let fb = document.getElementById(`fb-${secIdx}-${qIdx}`);
+        let isCorrect = false;
+        let userAns = '';
+
+        if (q.type === 'radio') {
+            let sel = document.querySelector(`input[name="input-${secIdx}-${qIdx}"]:checked`);
+            userAns = sel ? sel.value : '';
+            isCorrect = userAns === q.answer;
+        } else if (q.type === 'text') {
+            userAns = document.querySelector(`input[name="input-${secIdx}-${qIdx}"]`).value.replace(/\s/g, '').replace(/,/g, ''); // clean
+            isCorrect = userAns === q.answer.replace(/\s/g, '');
+        } else if (q.type === 'dropdown') {
+            userAns = document.querySelector(`select[name="input-${secIdx}-${qIdx}"]`).value;
+            isCorrect = userAns === q.answer;
+        } else if (q.type === 'checkbox') {
+            let labels = document.querySelectorAll(`#q-${secIdx}-${qIdx} .checkbox-label.selected`);
+            userAns = Array.from(labels).map(l => l.textContent.trim()).sort().join(',');
+            let correctAns = q.answer.sort().join(',');
+            isCorrect = userAns === correctAns;
+        } else if (q.type === 'drag') {
+            let target = document.getElementById(`drag-target-${secIdx}-${qIdx}`);
+            let items = target.querySelectorAll('.drag-item');
+            userAns = Array.from(items).map(i => i.textContent.trim()).join(',');
+            isCorrect = userAns === q.answer;
+        }
+
+        if(isCorrect) {
+            fb.className = 'feedback correct'; fb.innerHTML = '<i class="fas fa-check-circle"></i> Correct! / Benar!';
+            correct++;
+        } else {
+            fb.className = 'feedback wrong'; 
+            fb.innerHTML = `<i class="fas fa-times-circle"></i> Incorrect / Salah.<br><b>Correct Answer / Jawaban Benar:</b> ${q.answer}<br><i>Review the material above! / Ulangi materi di atas!</i>`;
+        }
+    });
+
+    // Update progress
+    let pct = (correct / sec.quests.length) * 100;
+    document.getElementById(`prog-sec-${secIdx}`).style.width = pct + '%';
+    
+    if(pct >= 70) { // Duolingo passing rate
+        completedSections.add(secIdx);
+        updateGlobalProgress();
+    }
+}
+
+function updateGlobalProgress() {
+    let pct = (completedSections.size / sections.length) * 100;
+    document.getElementById('globalProgress').style.width = pct + '%';
+    document.querySelectorAll('.level-node').forEach((n, i) => {
+        if(completedSections.has(i)) n.classList.add('completed');
+    });
+}
+
+
+// --- ASSESSMENT ENGINE ---
+let selectedAssessmentGroup = 'A';
+
+function generateAssessmentHTML() {
+    let html = `
+    <div class="card assess-header">
+        <h2><i class="fas fa-file-pen"></i> Final Assessment</h2>
+        <p>Choose your group and test your knowledge!</p>
+    </div>
+    <div class="card">
+        <div class="assess-form">
+            <div><label>Name / Nama:</label><input type="text" id="assess-name"></div>
+            <div><label>Date / Tanggal:</label><input type="date" id="assess-date"></div>
+        </div>
+        <div class="group-selector" id="groupSelector">
+            <button class="group-btn active" onclick="selectGroup('A')">Group A</button>
+            <button class="group-btn" onclick="selectGroup('B')">Group B</button>
+            <button class="group-btn" onclick="selectGroup('C')">Group C</button>
+            <button class="group-btn" onclick="selectGroup('D')">Group D</button>
+            <button class="group-btn" onclick="selectGroup('E')">Group E</button>
+        </div>
+        <div id="assessQuestionsGrid" class="two-col-grid"></div>
+        <button class="btn-duo" onclick="submitAssessment()"><i class="fas fa-paper-plane"></i> Submit Assessment</button>
+        <button class="btn-duo print-btn" onclick="printAssessment()"><i class="fas fa-print"></i> Print Result</button>
+    </div>`;
+    return html;
+}
+
+function selectGroup(grp) {
+    selectedAssessmentGroup = grp;
+    document.querySelectorAll('.group-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    renderAssessmentQuestions();
+}
+
+function renderAssessmentQuestions() {
+    let grid = document.getElementById('assessQuestionsGrid');
+    grid.innerHTML = '';
+    let qs = assessmentBank[selectedAssessmentGroup];
+    
+    qs.forEach((q, idx) => {
+        let div = document.createElement('div');
+        div.className = 'card quest-card';
+        div.id = `assess-q-${idx}`;
+        div.innerHTML = `<p><strong>${idx+1}.</strong> ${q.q}</p><p class="bilingual">${q.id}</p>${generateAssessInput(q, idx)}<div class="feedback" id="assess-fb-${idx}"></div>`;
+        grid.appendChild(div);
+    });
+    renderMathInElement(grid, { delimiters: [{left: "\\(", right: "\\)", display: false}] });
+}
+
+function generateAssessInput(q, idx) {
+    let name = `assess-input-${idx}`;
+    if (q.type === 'radio') {
+        let h = '<div class="radio-group">';
+        q.options.forEach((opt, i) => {
+            h += `<label class="radio-label" id="arl-${idx}-${i}" onclick="selectAssessRadio('${name}', ${idx}, ${i})">${opt}</label>`;
+            h += `<input type="radio" name="${name}" value="${opt}" style="display:none">`;
+        });
+        h += '</div>'; return h;
+    }
+    if (q.type === 'text') return `<input type="text" name="${name}" placeholder="Your answer...">`;
+    if (q.type === 'dropdown') {
+        let h = `<select name="${name}"><option value="">Select...</option>`;
+        q.options.forEach(opt => h += `<option value="${opt}">${opt}</option>`);
+        h += '</select>'; return h;
+    }
+    if (q.type === 'checkbox') {
+        let h = '<div class="checkbox-group">';
+        q.options.forEach((opt, i) => {
+            h += `<label class="checkbox-label" id="acl-${idx}-${i}" onclick="toggleAssessCheckbox(this, '${opt}', ${idx})">${opt}</label>`;
+        });
+        h += '</div>'; return h;
+    }
+    if (q.type === 'drag') {
+        let h = `<div class="drag-zone" id="assess-drag-src-${idx}" ondragover="event.preventDefault()" ondrop="assessDragDrop(event, ${idx})">`;
+        q.options.forEach((opt, i) => {
+            h += `<div class="drag-item" draggable="true" id="adrag-${idx}-${i}" ondragstart="dragStart(event)">${opt}</div>`;
+        });
+        h += `</div><p style="margin:10px 0; text-align:center;">Drag here ⬇️</p>`;
+        h += `<div class="drag-zone drop-target" id="assess-drag-target-${idx}" ondragover="event.preventDefault()" ondrop="assessDragDrop(event, ${idx})"></div>`;
+        return h;
+    }
+    return '';
+}
+
+function selectAssessRadio(name, qIdx, i) {
+    document.querySelectorAll(`#assess-q-${qIdx} .radio-label`).forEach(l => l.classList.remove('selected'));
+    document.getElementById(`arl-${qIdx}-${i}`).classList.add('selected');
+    document.querySelector(`input[name="${name}"]`).checked = true;
+}
+
+function toggleAssessCheckbox(el, val, qIdx) {
+    el.classList.toggle('selected');
+    if(!el.dataset.vals) el.dataset.vals = [];
+    if(el.classList.contains('selected')) el.dataset.vals.push(val);
+    else el.dataset.vals = el.dataset.vals.filter(v => v !== val);
+}
+
+function assessDragDrop(e, idx) {
+    e.preventDefault();
+    let data = e.dataTransfer.getData("text/plain");
+    let el = document.getElementById(data);
+    e.target.appendChild(el);
+}
+
+function submitAssessment() {
+    let qs = assessmentBank[selectedAssessmentGroup];
+    let score = 0;
+    let results = [];
+
+    qs.forEach((q, idx) => {
+        let fb = document.getElementById(`assess-fb-${idx}`);
+        let isCorrect = false;
+        let userAns = '';
+
+        if (q.type === 'radio') {
+            let sel = document.querySelector(`input[name="assess-input-${idx}"]:checked`);
+            userAns = sel ? sel.value : '';
+            isCorrect = userAns === q.answer;
+        } else if (q.type === 'text') {
+            userAns = document.querySelector(`input[name="assess-input-${idx}"]`).value.replace(/\s/g, '').replace(/,/g, '');
+            isCorrect = userAns === q.answer.replace(/\s/g, '');
+        } else if (q.type === 'dropdown') {
+            userAns = document.querySelector(`select[name="assess-input-${idx}"]`).value;
+            isCorrect = userAns === q.answer;
+        } else if (q.type === 'checkbox') {
+            let labels = document.querySelectorAll(`#assess-q-${idx} .checkbox-label.selected`);
+            userAns = Array.from(labels).map(l => l.textContent.trim()).sort().join(',');
+            let correctAns = q.answer.sort().join(',');
+            isCorrect = userAns === correctAns;
+        } else if (q.type === 'drag') {
+            let target = document.getElementById(`assess-drag-target-${idx}`);
+            let items = target.querySelectorAll('.drag-item');
+            userAns = Array.from(items).map(i => i.textContent.trim()).join(',');
+            isCorrect = userAns === q.answer;
+        }
+
+        if(isCorrect) {
+            fb.className = 'feedback correct'; fb.innerHTML = '<i class="fas fa-check-circle"></i> Correct!';
+            score++;
+        } else {
+            fb.className = 'feedback wrong'; 
+            fb.innerHTML = `<i class="fas fa-times-circle"></i> Incorrect.<br><b>Correct:</b> ${q.answer}`;
+        }
+
+        results.push({ no: idx+1, question: q.q.replace(/\\\(|\\\)/g, ''), userAnswer: userAns, correctAnswer: q.answer.toString() });
+    });
+
+    window.assessmentResults = results;
+    window.assessmentScore = score;
+    alert(`Assessment Submitted! Score / Nilai: ${score}/10`);
+    completedSections.add(4); // Mark assessment as done
+    updateGlobalProgress();
+}
+
+function printAssessment() {
+    if(!window.assessmentResults) { alert("Please submit the assessment first! / Harap kirim assessment terlebih dahulu!"); return; }
+    let name = document.getElementById('assess-name').value || 'Student';
+    let date = document.getElementById('assess-date').value || 'N/A';
+    let score = window.assessmentScore;
+    let results = window.assessmentResults;
+
+    let tableRows = '';
+    results.forEach(r => {
+        tableRows += `<tr><td>${r.no}</td><td>${r.question}</td><td>${r.userAnswer}</td><td>${r.correctAnswer}</td></tr>`;
+    });
+
+    let printContent = `
+        <html><head><title>Assessment Result</title><style>body{font-family:Arial;} table{width:100%;border-collapse:collapse;margin-top:20px;} th,td{border:1px solid #000;padding:8px;text-align:left;} th{background:#f2f2f2;}</style></head>
+        <body>
+            <h2>Assessment Result - Equivalent & Comparing Fractions</h2>
+            <p><strong>Topic:</strong> Pecahan Setara & Pembandingan Pecahan</p>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Date:</strong> ${date}</p>
+            <p><strong>Assessment Group:</strong> ${selectedAssessmentGroup}</p>
+            <p><strong>Score:</strong> ${score}/10</p>
+            <table>
+                <tr><th>No</th><th>Question / Soal</th><th>Student Answer</th><th>Correct Answer</th></tr>
+                ${tableRows}
+            </table>
+        </body></html>
+    `;
+
+    let win = window.open('', '_blank');
+    win.document.write(printContent);
+    win.document.close();
+    win.print();
+}
+
+// Initialize on load
+window.onload = () => {
+    initApp();
+    // Pre-render assessment questions for Group A
+    if(document.getElementById('assessQuestionsGrid')) renderAssessmentQuestions();
+};
+
+</script>
+</body>
+</html>
