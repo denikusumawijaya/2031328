@@ -1139,9 +1139,9 @@
         const groupId = activeTabLink.getAttribute('href').replace('#tab', '');
         const groupName = activeTabLink.textContent.trim();
 
-        // 3. Ambil skor dari feedback yang sudah di-submit
+        // 3. Ambil skor dari feedback
         const feedbackEl = document.getElementById(`assess-feedback-${groupId}`);
-        const scoreMatch = feedbackEl.innerHTML.match(/Score: (\d+\/10)/);
+        const scoreMatch = feedbackEl.innerHTML.match(/Skor Akhir: (\d+\/10)/);
         const score = scoreMatch ? scoreMatch[1] : 'Belum di-submit / Not submitted';
 
         // 4. Ekstrak soal, jawaban siswa, dan jawaban benar
@@ -1150,37 +1150,38 @@
         let qNum = 1;
 
         for(let qKey in ansKey) {
-            const el = document.getElementById(qKey);
-            let questionText = '';
+            let questionText = 'Question text not found';
             let studentAnswer = '-';
-            let correctAnswer = Array.isArray(ansKey[qKey]) ? ansKey[qKey].join(', ') : ansKey[qKey];
+            
+            // Ambil jawaban benar dari dalam objek { ans: 'b', exp: '...' }
+            let correctData = ansKey[qKey];
+            let correctAnswer = Array.isArray(correctData.ans) ? correctData.ans.join(', ') : correctData.ans;
 
-            if(el) {
-                // Cari tag <p> yang memuat soal dengan presisi
-                let pTag = el.closest('p');
-                if (!pTag && el.closest('div[id^="assess-q"]')) {
-                    pTag = el.closest('div[id^="assess-q"]').querySelector('p');
-                }
-                
-                if (pTag) {
-                    let clone = pTag.cloneNode(true);
-                    clone.querySelectorAll('span.id, input, select, script, mjx-container').forEach(e => e.remove());
-                    questionText = clone.innerText.trim().replace(/^\d+\.\s*/, '').replace(/\s+/g, ' ');
-                } else {
-                    questionText = 'Question text not found';
-                }
+            // Cari wrapper soal utama (misal: id="assess-q1" atau id="assess-g2q1")
+            let wrapper = document.getElementById(`assess-${qKey}`);
+            
+            if (wrapper) {
+                // Ekstrak teks soal dengan clone dan hapus elemen input/select/feedback
+                let clone = wrapper.cloneNode(true);
+                clone.querySelectorAll('span.id, input, select, div.q-feedback, label').forEach(e => e.remove());
+                questionText = clone.innerText.trim().replace(/^\d+\.\s*/, '').replace(/\s+/g, ' ');
 
-                // Ambil jawaban siswa
-                if(el.type === 'radio') {
-                    const selected = document.querySelector(`input[name="${qKey}"]:checked`);
-                    studentAnswer = selected ? selected.value : '-';
-                } else if(el.type === 'checkbox') {
-                    const checkedBoxes = el.closest('div').querySelectorAll('input[type="checkbox"]:checked');
-                    studentAnswer = Array.from(checkedBoxes).map(c => c.value).join(', ') || '-';
-                } else if(el.tagName === 'SELECT') {
-                    studentAnswer = el.options[el.selectedIndex].text !== 'Select...' ? el.options[el.selectedIndex].text : '-';
-                } else {
-                    studentAnswer = el.value || '-';
+                // Cari elemen interaktif di dalam wrapper tersebut
+                let radioSelected = wrapper.querySelector(`input[name="${qKey}"]:checked`);
+                let checkboxes = wrapper.querySelectorAll('input[type="checkbox"]:checked');
+                let el = wrapper.querySelector(`#${qKey}`); // Untuk text, number, select
+
+                if (radioSelected) {
+                    studentAnswer = radioSelected.value;
+                } else if (checkboxes.length > 0) {
+                    studentAnswer = Array.from(checkboxes).map(c => c.value).join(', ');
+                } else if (el) {
+                    if(el.tagName === 'SELECT') {
+                        studentAnswer = el.options[el.selectedIndex].text;
+                        if(studentAnswer === 'Select...' || studentAnswer === 'Select') studentAnswer = '-';
+                    } else {
+                        studentAnswer = el.value || '-';
+                    }
                 }
             }
 
@@ -1198,7 +1199,6 @@
         // 5. Buka tab baru dan susun layout cetak di sana
         const printWindow = window.open('', '_blank');
 
-        // Tulis HTML dan CSS ke tab baru
         printWindow.document.write(`
             <!DOCTYPE html>
             <html>
@@ -1270,12 +1270,10 @@
             </html>
         `);
         
-        printWindow.document.close(); // Penting agar browser selesai memuat dokumen
+        printWindow.document.close();
         
-        // Beri jeda sedikit agar CSS dan DOM di tab baru dirender sempurna sebelum print dialog muncul
         setTimeout(function() {
             printWindow.print();
-            // Opsional: printWindow.close(); jika ingin tab langsung tertutup setelah print
         }, 500);
     }
 </script>
