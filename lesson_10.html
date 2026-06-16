@@ -412,8 +412,11 @@ function checkStep() {
     isChecked = true;
     let btn = document.getElementById('step-check-btn');
     btn.innerHTML = '<i class="fas fa-arrow-right"></i> Continue / Lanjut';
-    btn.style.background = "var(--duo-blue)"; // Langsung ubah warna tombol jadi Biru
-    btn.style.borderBottom = "4px solid #1A8FD6"; // Border bawah biru
+    btn.style.background = "var(--duo-blue)";
+    btn.style.borderBottom = "4px solid #1A8FD6";
+
+    // --- TAMBAHAN: Render ulang KaTeX di dalam elemen Feedback ---
+    renderMathInElement(fb, {delimiters: [{left: "\\(", right: "\\)", display: false}]});
 }
 
 function generateInputHTML(q, prefix) {
@@ -609,6 +612,10 @@ function submitAssessment() {
             fb.className = 'feedback wrong'; 
             fb.innerHTML = `<i class="fas fa-times-circle"></i> Incorrect.<br><b>Correct:</b> ${q.answer}`;
         }
+        
+        // --- TAMBAHAN: Render ulang KaTeX di dalam elemen Feedback Assessment ---
+        renderMathInElement(fb, {delimiters: [{left: "\\(", right: "\\)", display: false}]});
+
         results.push({ no: idx+1, question: q.q.replace(/\\\(|\\\)/g, ''), userAnswer: userAns, correctAnswer: q.answer.toString() });
     });
 
